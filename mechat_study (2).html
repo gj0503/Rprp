@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-<title>로봇공학·정역학</title>
+<title>일반물리학</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Noto Sans KR','Malgun Gothic',sans-serif;background:#f8fafc;color:#1e293b;min-height:100vh}
@@ -30,36 +30,70 @@ body{font-family:'Noto Sans KR','Malgun Gothic',sans-serif;background:#f8fafc;co
 .bb{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:520px;background:rgba(248,250,252,.97);backdrop-filter:blur(16px);border-top:1px solid #e2e8f0;display:flex;z-index:200}
 .bs{flex:1;padding:9px 0 13px;text-align:center;border-right:1px solid #e2e8f0}
 .bs:last-child{border-right:none}
+.nb{width:34px;height:34px;border-radius:10px;background:#fff;border:1px solid #e2e8f0;color:#1e293b;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center}
 </style>
 </head>
 <body>
 <div class="app" id="app"><div style="display:flex;align-items:center;justify-content:center;height:200px;color:#3b82f6;font-size:14px">불러오는 중...</div></div>
 <script>
-function mkLP(p, n) {
-  return [{id: p+'_L', n: n},{id: p+'_P', n: '📝 ' + n.trim() + ' 문제풀이'}];
-}
-function fl(arr){ return arr.flatMap(([p,n])=>mkLP(p,n)); }
-
 const CUR=[
-{id:'RB',name:'로봇공학',color:'#d97706',info:'엥지유니버스 1단계 · 18강',chapters:[
-  {id:'RB1',t:'1~6강 · 시스템 설계',s:fl([['RB01','1강 강의소개 - 1단계 강의 구성 및 학습방법'],['RB02','2강 프로젝트 요구사항 정의 및 시스템 블록 다이어그램 그리기'],['RB03','3강 현업에서 사용하는 통신 프로토콜 직접 구현하고 테스트하기'],['RB04','4강 CRC16, CRC32'],['RB05','5강 내 프로젝트에 필요한 모터 선정 방법'],['RB06','6강 모터 제어기 설계 및 테스트하기']])},
-  {id:'RB2',t:'7~10강 · 비전·ROS',s:fl([['RB07','7강 카메라와 YOLO 모델 활용하기'],['RB08','8강 ROS2와 YOLOv8 연동하기'],['RB09','9강 Camera 연동하여 YOLOv8 제어하기'],['RB10','10강 Git으로 협업하기']])},
-  {id:'RB3',t:'11~13강 · AI·음성·LLM',s:fl([['RB11','11강 STT(Speech To Text) 사용하기'],['RB12','12강 GPT API 사용하여 Action Generator/Action Interpreter 개발하기'],['RB13','13강 오픈소스 LLM & VLM Transformer 모델 활용하기']])},
-  {id:'RB4',t:'14~18강 · 하드웨어·통신',s:fl([['RB14','14강 하드웨어 실무 정복-1'],['RB15','15강 하드웨어 실무 정복-2'],['RB16','16강 하드웨어 실무 정복-3'],['RB17','17강 하드웨어 실무 정복-FW편'],['RB18','18강 통신과 네트워크 이해하기']])},
-]},
-
-{id:'ST',name:'정역학',color:'#6366f1',info:'문제로 마스터하는 정역학 · 51강',chapters:[
-  {id:'ST1',t:'1~7강 · 벡터·힘',s:[{id:'ST01',n:'1. 힘의 합성 벡터'},{id:'ST02',n:'2. 평면 벡터의 덧셈 예제 풀이'},{id:'ST03',n:'3. 공간 벡터의 덧셈 예제 풀이'},{id:'ST04',n:'4. 위치 벡터의 정의와 관련 예제 풀이'},{id:'ST05',n:'5. 내적(Dot Product)'},{id:'ST06',n:'6. 질점의 평형(2D)'},{id:'ST07',n:'7. 3차원 공간상의 질점의 평형'}]},
-  {id:'ST2',t:'8~14강 · 모멘트',s:[{id:'ST08',n:'8. 모멘트의 스칼라양'},{id:'ST09',n:'9. 외적(cross product)'},{id:'ST10',n:'10. 바리뇽의 정리'},{id:'ST11',n:'11. 임의의 축의 모멘트'},{id:'ST12',n:'12. 우력 모멘트(couple moment)'},{id:'ST13',n:'13. 힘과 우력계의 단순화'},{id:'ST14',n:'14. FORCE SYSTEM'}]},
-  {id:'ST3',t:'15~20강 · 평형',s:[{id:'ST15',n:'15. 강체의 평형(2D) - 평형 방정식과 지지 방법(Support)'},{id:'ST16',n:'16. 강체의 평형(3D) - 평형방정식과 지지방법'},{id:'ST17',n:'17. 평면트러스 해석-1 절점법(Method of joints)'},{id:'ST18',n:'18. 평면트러스 해석-2 zero force members'},{id:'ST19',n:'19. 평면트러스 해석-3 단면법(method of sections)'},{id:'ST20',n:'20. 공간트러스 해석'}]},
-  {id:'ST4',t:'21~28강 · 케이블·프레임',s:[{id:'ST21',n:'21. 프레임과 기계-1'},{id:'ST22',n:'22. 프레임과 기계-2'},{id:'ST23',n:'23. 부재의 내력(internal force)'},{id:'ST24',n:'24. 보의 전단력 및 모멘트 방정식과 선도'},{id:'ST25',n:'25. 분포력, 전단력, 굽힘모멘트 사이의 관계'},{id:'ST26',n:'26. 케이블-1 집중하중만 작용하는 케이블'},{id:'ST27',n:'27. 케이블-2 포물선형 케이블(Parabolic Cable)'},{id:'ST28',n:'28. 케이블-3 현수선형 케이블(Catenary Cable)'}]},
-  {id:'ST5',t:'29~35강 · 마찰력',s:[{id:'ST29',n:'29. 마찰력-1 Dry Friction'},{id:'ST30',n:'30. 마찰력-2 쐐기(wedge)'},{id:'ST31',n:'31. 마찰력-3 나사(screw)'},{id:'ST32',n:'32. 마찰력-4 저널 베어링(Journal Bearing)'},{id:'ST33',n:'33. 마찰력-5 스러스트 베어링(Thrust Bearing)'},{id:'ST34',n:'34. 마찰력-6 평벨트(flat belt)'},{id:'ST35',n:'35. 마찰력-7 구름 저항(Rolling Resistance)'}]},
-  {id:'ST6',t:'36~42강 · 도심',s:[{id:'ST36',n:'36. 도심(centroid)-1 분포력과 도심'},{id:'ST37',n:'37. 도심-2 무게중심, 질량중심, 선도심(Centroid of a Line)'},{id:'ST38',n:'38. 도심-3 단일도형의 도심2-면적도심1'},{id:'ST39',n:'39. 도심-4 면적도심 예제풀이'},{id:'ST40',n:'40. 도심-5 체적 도심'},{id:'ST41',n:'41. 도심-6 복합도형의 도심'},{id:'ST42',n:'42. 파푸스의 정리(Theorems of Pappus)'}]},
-  {id:'ST7',t:'43~51강 · 관성모멘트',s:[{id:'ST43',n:'43. 단면 1차 모멘트(면적 모멘트)'},{id:'ST44',n:'44. 단면 2차 모멘트-1 관성 모멘트(moment of inertia)와 회전 반경(radius of gyration)'},{id:'ST45',n:'45. 단면 2차 모멘트-2 평행축 정리(PARALLEL-AXIS THEOREM)'},{id:'ST46',n:'46. 관성 상승 모멘트(Product of Inertia)'},{id:'ST47',n:'47. 주관성 모멘트(Principal Moments of Inertia)'},{id:'ST48',n:'48. 질량 관성 모멘트(mass moment of inertia)-1'},{id:'ST49',n:'49. 질량 관성 모멘트-2 평행축 정리, 복합 물체의 질량 관성 모멘트'},{id:'ST50',n:'50. 가상일의 원리(Principle of Virtual Work)'},{id:'ST51',n:'51. 퍼텐셜 에너지와 안정성(Potential Energy and Stability)'}]},
+{id:'PH',name:'일반물리학',color:'#0ea5e9',info:'유니스터디 일반물리학 · 33강',chapters:[
+  {id:'PH0',t:'OT',s:[{id:'PH00',n:'OT'}]},
+  {id:'PH1',t:'Ch1~3 · 물리량·벡터',s:[
+    {id:'PH01',n:'Ch1. 물리량과 측정'},
+    {id:'PH02',n:'Ch3. 벡터'},
+    {id:'PH03',n:'Ch3. 좌표계와 벡터 해석'},
+  ]},
+  {id:'PH2',t:'Ch2·4 · 운동',s:[
+    {id:'PH04',n:'Ch2. 1차원 운동의 표현'},
+    {id:'PH05',n:'Ch2. 1차원 운동의 종류'},
+    {id:'PH06',n:'Ch4. 2차원 운동의 표현'},
+    {id:'PH07',n:'Ch4. 직교 좌표계와 포물선 운동'},
+    {id:'PH08',n:'Ch4. 극 좌표계와 원운동'},
+  ]},
+  {id:'PH3',t:'Ch5~6 · Newton 법칙',s:[
+    {id:'PH09',n:'Ch5. 운동법칙과 여러가지 힘'},
+    {id:'PH10',n:'Ch5. Newton 운동법칙 활용연습'},
+    {id:'PH11',n:'Ch6. 등속 원운동과 Newton 법칙 적용'},
+    {id:'PH12',n:'Ch6. 비등속 원운동과 Newton 법칙 적용'},
+  ]},
+  {id:'PH4',t:'Ch7~8 · 에너지',s:[
+    {id:'PH13',n:'Ch7. 일과 에너지'},
+    {id:'PH14',n:'Ch7. 일-운동에너지 정리와 퍼텐셜 에너지'},
+    {id:'PH15',n:'Ch8. 에너지 보존과 전환'},
+    {id:'PH16',n:'Ch8. 에너지 보존과 전환 예제풀이'},
+  ]},
+  {id:'PH5',t:'Ch9 · 운동량',s:[
+    {id:'PH17',n:'Ch9. 운동량 보존법칙'},
+    {id:'PH18',n:'Ch9. 충돌과 질량중심'},
+  ]},
+  {id:'PH6',t:'Ch10~11 · 회전운동',s:[
+    {id:'PH19',n:'Ch10. 회전운동학'},
+    {id:'PH20',n:'Ch10. 강체와 회전운동법칙'},
+    {id:'PH21',n:'Ch10. 관성모멘트와 굴림운동'},
+    {id:'PH22',n:'Ch11. 각운동량과 회전운동법칙'},
+  ]},
+  {id:'PH7',t:'Ch12~15 · 평형·중력·유체·진동',s:[
+    {id:'PH23',n:'Ch12. 강체의 평형과 탄성'},
+    {id:'PH24',n:'Ch13. 중력과 행성의 운동'},
+    {id:'PH25',n:'Ch14. 유체역학'},
+    {id:'PH26',n:'Ch15. 단진동과 진자의 운동'},
+  ]},
+  {id:'PH8',t:'Ch16~17 · 파동',s:[
+    {id:'PH27',n:'Ch16. 파동의 전파'},
+    {id:'PH28',n:'Ch16. 파동 에너지와 음파의 특성'},
+    {id:'PH29',n:'Ch17. 중첩과 정상파'},
+  ]},
+  {id:'PH9',t:'Ch18~21 · 열역학',s:[
+    {id:'PH30',n:'Ch18. 온도와 열현상'},
+    {id:'PH31',n:'Ch19. 열역학 제1법칙'},
+    {id:'PH32',n:'Ch20. 이상기체 분자 운동론'},
+    {id:'PH33',n:'Ch21. 열역학 제2법칙과 엔트로피'},
+  ]},
 ]},
 ];
 
-const SS='2026-05-20';
+const SS='2026-05-23';
 const DK=['일','월','화','수','목','금','토'];
 function pl(s){const[y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d);}
 function ds(d){return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
@@ -67,44 +101,40 @@ function ts(){return ds(new Date());}
 function fd(s){const d=pl(s);return `${d.getMonth()+1}/${d.getDate()} (${DK[d.getDay()]})`;}
 function gc(s){const w=pl(s).getDay();return w===0?0:w===6?6:8;}
 function ga(){const a=[];CUR.forEach(sj=>sj.chapters.forEach(ch=>ch.s.forEach(s=>a.push({id:s.id,n:s.n,sid:sj.id,sname:sj.name,cht:ch.t,color:sj.color}))));return a;}
-function bs(){const all=ga(),sc={};let rb=[],sm=[];all.forEach(it=>{if(it.sid==='RB')rb.push(it);else sm.push(it);});let d=0,ri=0,si=0;const st=pl(SS);while(ri<rb.length||si<sm.length){const dt=new Date(st);dt.setDate(st.getDate()+d);const dstr=ds(dt);const c=gc(dstr);if(c>0){const day=[];const half=Math.ceil(c/2);while(day.length<half&&ri<rb.length)day.push(rb[ri++]);while(day.length<c&&si<sm.length)day.push(sm[si++]);sc[dstr]=day;}else sc[dstr]=[];d++;}return sc;}
+function bs(){const all=ga(),sc={};let i=0,d=0;const st=pl(SS);while(i<all.length&&d<2000){const dt=new Date(st);dt.setDate(st.getDate()+d);const dstr=ds(dt);const c=gc(dstr);if(c>0){sc[dstr]=all.slice(i,i+c);i+=c;}else sc[dstr]=[];d++;}return sc;}
 const SC=bs();
 function ld(k){try{const v=localStorage.getItem(k);return v?JSON.parse(v):null;}catch{return null;}}
 function sv(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch{}}
 let STA={},SK={n:0,last:''},tab='today',off=0,cs=CUR[0].id,oc={};
-function init(){const s=ld('mcs1');const sk=ld('mcs2');if(s)STA=s;if(sk)SK=sk;render();}
+function init(){const s=ld('ph1');const sk=ld('ph2');if(s)STA=s;if(sk)SK=sk;render();}
 function us(){const t=ts();const y=ds(new Date(pl(t).getTime()-86400000));if(SK.last===t)return;SK=SK.last===y?{n:SK.n+1,last:t}:{n:1,last:t};}
-function tg(id){STA[id]=!STA[id];us();sv('mcs1',STA);sv('mcs2',SK);render();}
+function tg(id){STA[id]=!STA[id];us();sv('ph1',STA);sv('ph2',SK);render();}
 function ov(){const a=ga();const d=a.filter(i=>STA[i.id]).length;return{d,t:a.length,p:a.length?Math.round(d/a.length*100):0};}
 function sp(sid){const a=ga().filter(i=>i.sid===sid);const d=a.filter(i=>STA[i.id]).length;return{d,t:a.length,p:a.length?Math.round(d/a.length*100):0};}
 function vd(){const d=new Date();d.setDate(d.getDate()+off);return ds(d);}
 function render(){
   const o=ov();const v=vd();const ti=SC[v]||[];const cap=gc(v);const td=ti.filter(i=>STA[i.id]).length;
-  document.getElementById('app').innerHTML=`<div class="header"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><div style="font-size:15px;font-weight:900"><span style="color:#d97706">로봇공학</span><span style="color:#94a3b8;margin:0 4px">·</span><span style="color:#6366f1">정역학</span></div><div style="font-size:11px;color:#64748b">${SK.n}일 연속</div></div><div style="display:flex;align-items:center;gap:10px"><div style="flex:1;height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden"><div style="height:100%;width:${o.p}%;background:linear-gradient(90deg,#d97706,#6366f1);border-radius:3px;transition:width .6s"></div></div><span style="font-size:12px;color:#3b82f6;font-weight:800;min-width:36px">${o.p}%</span><span style="font-size:11px;color:#94a3b8;min-width:50px;text-align:right">${o.d}/${o.t}</span></div></div><div class="tabs"><button class="tb ${tab==='today'?'on':''}" onclick="setTab('today')">📚 오늘</button><button class="tb ${tab==='toc'?'on':''}" onclick="setTab('toc')">📖 목차</button></div><div id="cnt"></div><div class="bb"><div class="bs"><div style="font-size:15px;font-weight:900;color:#10b981">${td}/${cap}</div><div style="font-size:9px;color:#94a3b8;margin-top:2px">오늘완료</div></div><div class="bs"><div style="font-size:15px;font-weight:900;color:#3b82f6">${o.p}%</div><div style="font-size:9px;color:#94a3b8;margin-top:2px">전체진행</div></div><div class="bs"><div style="font-size:15px;font-weight:900;color:#f59e0b">${SK.n}일</div><div style="font-size:9px;color:#94a3b8;margin-top:2px">연속학습</div></div><div class="bs"><div style="font-size:15px;font-weight:900;color:#94a3b8">${o.t-o.d}</div><div style="font-size:9px;color:#94a3b8;margin-top:2px">남은항목</div></div></div>`;
+  document.getElementById('app').innerHTML=`<div class="header"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><div style="font-size:15px;font-weight:900;color:#0ea5e9">일반물리학</div><div style="font-size:11px;color:#64748b">${SK.n}일 연속</div></div><div style="display:flex;align-items:center;gap:10px"><div style="flex:1;height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden"><div style="height:100%;width:${o.p}%;background:#0ea5e9;border-radius:3px;transition:width .6s"></div></div><span style="font-size:12px;color:#0ea5e9;font-weight:800;min-width:36px">${o.p}%</span><span style="font-size:11px;color:#94a3b8;min-width:50px;text-align:right">${o.d}/${o.t}</span></div></div><div class="tabs"><button class="tb ${tab==='today'?'on':''}" onclick="setTab('today')">📚 오늘</button><button class="tb ${tab==='toc'?'on':''}" onclick="setTab('toc')">📖 목차</button></div><div id="cnt"></div><div class="bb"><div class="bs"><div style="font-size:15px;font-weight:900;color:#10b981">${td}/${cap}</div><div style="font-size:9px;color:#94a3b8;margin-top:2px">오늘완료</div></div><div class="bs"><div style="font-size:15px;font-weight:900;color:#0ea5e9">${o.p}%</div><div style="font-size:9px;color:#94a3b8;margin-top:2px">전체진행</div></div><div class="bs"><div style="font-size:15px;font-weight:900;color:#f59e0b">${SK.n}일</div><div style="font-size:9px;color:#94a3b8;margin-top:2px">연속학습</div></div><div class="bs"><div style="font-size:15px;font-weight:900;color:#94a3b8">${o.t-o.d}</div><div style="font-size:9px;color:#94a3b8;margin-top:2px">남은항목</div></div></div>`;
   if(tab==='today')rT();else rC();
 }
 function rT(){
   const v=vd();const ti=SC[v]||[];const cap=gc(v);const td=ti.filter(i=>STA[i.id]).length;
   const dow=pl(v).getDay();const isR=dow===0;
   const ml=dow===0?'😴 일요일 · 완전 휴식':dow===6?'📖 토요일 · 6항목':'💻 평일 · 8항목';
-  const g={};ti.forEach(it=>{if(!g[it.sid])g[it.sid]={sname:it.sname,color:it.color,items:[]};g[it.sid].items.push(it);});
-  let h=`<div style="display:flex;align-items:center;justify-content:center;gap:12px;padding:12px 16px 8px"><button class="nb" onclick="setOff(${off-1})">‹</button><div style="text-align:center;flex:1"><div style="font-size:16px;font-weight:900;color:#3b82f6">${fd(v)}</div><div style="font-size:11px;color:#64748b;margin-top:2px">${ml}</div>${off!==0?`<div style="font-size:11px;color:#3b82f6;cursor:pointer;margin-top:2px" onclick="setOff(0)">오늘로 이동</div>`:''}</div><button class="nb" onclick="setOff(${off+1})">›</button></div><div style="margin:0 14px 12px;background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:14px"><div style="display:flex;justify-content:space-between;margin-bottom:8px"><span style="font-size:11px;color:#64748b;font-weight:600">오늘 진행률 · ${td}/${cap}개 완료</span><span style="font-size:20px;font-weight:900;color:#10b981">${cap>0?Math.round(td/cap*100):0}%</span></div><div style="height:8px;background:#e2e8f0;border-radius:4px;overflow:hidden"><div style="height:100%;width:${cap>0?td/cap*100:0}%;background:linear-gradient(90deg,#10b981,#3b82f6);border-radius:4px;transition:width .4s"></div></div></div>`;
+  let h=`<div style="display:flex;align-items:center;justify-content:center;gap:12px;padding:12px 16px 8px"><button class="nb" onclick="setOff(${off-1})">‹</button><div style="text-align:center;flex:1"><div style="font-size:16px;font-weight:900;color:#0ea5e9">${fd(v)}</div><div style="font-size:11px;color:#64748b;margin-top:2px">${ml}</div>${off!==0?`<div style="font-size:11px;color:#0ea5e9;cursor:pointer;margin-top:2px" onclick="setOff(0)">오늘로 이동</div>`:''}</div><button class="nb" onclick="setOff(${off+1})">›</button></div><div style="margin:0 14px 12px;background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:14px"><div style="display:flex;justify-content:space-between;margin-bottom:8px"><span style="font-size:11px;color:#64748b;font-weight:600">오늘 진행률 · ${td}/${cap}개 완료</span><span style="font-size:20px;font-weight:900;color:#10b981">${cap>0?Math.round(td/cap*100):0}%</span></div><div style="height:8px;background:#e2e8f0;border-radius:4px;overflow:hidden"><div style="height:100%;width:${cap>0?td/cap*100:0}%;background:linear-gradient(90deg,#10b981,#0ea5e9);border-radius:4px;transition:width .4s"></div></div></div>`;
   if(isR){h+=`<div style="text-align:center;padding:40px 20px;color:#94a3b8;font-size:13px">😴 일요일은 완전 휴식</div>`;}
   else if(!ti.length){h+=`<div style="text-align:center;padding:40px 20px;color:#94a3b8">배정 항목 없음</div>`;}
-  else{Object.entries(g).forEach(([sid,gv])=>{const dc=gv.items.filter(i=>STA[i.id]).length;h+=`<div><div style="padding:10px 14px 4px;display:flex;align-items:center;gap:8px"><div style="width:8px;height:8px;border-radius:50%;background:${gv.color}"></div><span style="font-size:12px;font-weight:700;color:${gv.color}">${gv.sname}</span><span style="font-size:11px;color:#94a3b8">${dc}/${gv.items.length}</span></div><div class="card">`;gv.items.forEach(it=>{const dn=!!STA[it.id];const isP=it.n.startsWith('📝');h+=`<div class="item" style="${dn?'background:rgba(16,185,129,0.04)':isP?'background:#fffbeb':''}" onclick="tg('${it.id}')"><div class="chk ${dn?'on':''}">${dn?'✓':''}</div><div style="flex:1;min-width:0"><div style="font-size:10px;color:#94a3b8;margin-bottom:2px">${it.cht}</div><div style="font-size:12px;color:${dn?'#94a3b8':'#334155'};line-height:1.4;text-decoration:${dn?'line-through':'none'}">${it.n}</div></div></div>`;});h+=`</div></div>`;});}
+  else{h+=`<div class="card">`;ti.forEach(it=>{const dn=!!STA[it.id];h+=`<div class="item" style="${dn?'background:rgba(16,185,129,0.04)':''}" onclick="tg('${it.id}')"><div class="chk ${dn?'on':''}">${dn?'✓':''}</div><div style="flex:1;min-width:0"><div style="font-size:10px;color:#94a3b8;margin-bottom:2px">${it.cht}</div><div style="font-size:12px;color:${dn?'#94a3b8':'#334155'};line-height:1.4;text-decoration:${dn?'line-through':'none'}">${it.n}</div></div></div>`;});h+=`</div>`;}
   document.getElementById('cnt').innerHTML=h;
 }
 function rC(){
-  const sj=CUR.find(s=>s.id===cs);const pg=sp(cs);
-  let h=`<div class="st">`;
-  CUR.forEach(s=>{const p=sp(s.id);const ac=cs===s.id;h+=`<button class="stb" style="${ac?`background:${s.color}22;border-color:${s.color}88;color:${s.color}`:''}" onclick="setCS('${s.id}')">${s.name} <span style="opacity:.7;font-size:10px">${p.p}%</span></button>`;});
-  h+=`</div><div style="padding:14px 14px 8px"><div style="display:flex;align-items:center;justify-content:space-between"><div><span style="font-size:16px;font-weight:900;color:${sj.color}">${sj.name}</span><div style="font-size:11px;color:#64748b;margin-top:3px">${sj.info}</div></div><div style="text-align:right"><div style="font-size:24px;font-weight:900;color:${sj.color}">${pg.p}%</div><div style="font-size:11px;color:#64748b">${pg.d}/${pg.t}</div></div></div><div style="height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden;margin-top:10px"><div style="height:100%;width:${pg.p}%;background:${sj.color};border-radius:3px;transition:width .4s"></div></div></div>`;
-  sj.chapters.forEach(ch=>{const op=!!oc[ch.id];const cd=ch.s.filter(s=>STA[s.id]).length;const ad=cd===ch.s.length&&ch.s.length>0;const pt=cd>0&&!ad;h+=`<div class="card"><div class="ch" onclick="tC('${ch.id}')"><div class="cc2 ${ad?'dn':pt?'pt':''}">${ad?'✓':''}</div><span style="font-size:13px;font-weight:700;color:${ad?'#94a3b8':'#1e293b'};flex:1;text-decoration:${ad?'line-through':'none'}">${ch.t}</span><span style="font-size:11px;color:#94a3b8;margin-right:6px">${cd}/${ch.s.length}</span><span style="font-size:11px;color:#94a3b8;display:inline-block;transition:transform .2s;transform:${op?'rotate(180deg)':'none'}">▼</span></div><div class="cb"><div style="height:100%;width:${ch.s.length?cd/ch.s.length*100:0}%;background:${sj.color};transition:width .3s"></div></div>`;if(op){ch.s.forEach(s=>{const dn=!!STA[s.id];const isP=s.n.startsWith('📝');h+=`<div class="si" style="${isP&&!dn?'background:#fffbeb':''}" onclick="tg('${s.id}')"><div class="sc2 ${dn?'on':''}">${dn?'✓':''}</div><span style="font-size:12px;color:${dn?'#94a3b8':'#475569'};text-decoration:${dn?'line-through':'none'};flex:1;line-height:1.4">${s.n}</span></div>`;});}h+=`</div>`;});
+  const sj=CUR[0];const pg=sp(sj.id);
+  let h=`<div style="padding:14px 14px 8px"><div style="display:flex;align-items:center;justify-content:space-between"><div><span style="font-size:16px;font-weight:900;color:#0ea5e9">${sj.name}</span><div style="font-size:11px;color:#64748b;margin-top:3px">${sj.info}</div></div><div style="text-align:right"><div style="font-size:24px;font-weight:900;color:#0ea5e9">${pg.p}%</div><div style="font-size:11px;color:#64748b">${pg.d}/${pg.t}</div></div></div><div style="height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden;margin-top:10px"><div style="height:100%;width:${pg.p}%;background:#0ea5e9;border-radius:3px;transition:width .4s"></div></div></div>`;
+  sj.chapters.forEach(ch=>{const op=!!oc[ch.id];const cd=ch.s.filter(s=>STA[s.id]).length;const ad=cd===ch.s.length&&ch.s.length>0;const pt=cd>0&&!ad;h+=`<div class="card"><div class="ch" onclick="tC('${ch.id}')"><div class="cc2 ${ad?'dn':pt?'pt':''}">${ad?'✓':''}</div><span style="font-size:13px;font-weight:700;color:${ad?'#94a3b8':'#1e293b'};flex:1;text-decoration:${ad?'line-through':'none'}">${ch.t}</span><span style="font-size:11px;color:#94a3b8;margin-right:6px">${cd}/${ch.s.length}</span><span style="font-size:11px;color:#94a3b8;display:inline-block;transition:transform .2s;transform:${op?'rotate(180deg)':'none'}">▼</span></div><div class="cb"><div style="height:100%;width:${ch.s.length?cd/ch.s.length*100:0}%;background:#0ea5e9;transition:width .3s"></div></div>`;if(op){ch.s.forEach(s=>{const dn=!!STA[s.id];h+=`<div class="si" onclick="tg('${s.id}')"><div class="sc2 ${dn?'on':''}">${dn?'✓':''}</div><span style="font-size:12px;color:${dn?'#94a3b8':'#475569'};text-decoration:${dn?'line-through':'none'};flex:1;line-height:1.4">${s.n}</span></div>`;});}h+=`</div>`;});
   document.getElementById('cnt').innerHTML=h;
 }
 function setTab(t){tab=t;render();}
 function setOff(o){off=o;render();}
-function setCS(id){cs=id;oc={};render();}
 function tC(id){oc[id]=!oc[id];render();}
 init();
 </script>
