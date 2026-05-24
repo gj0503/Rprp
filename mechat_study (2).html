@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-<title>일반물리학</title>
+<title>일반물리학·선형대수학</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Noto Sans KR','Malgun Gothic',sans-serif;background:#f8fafc;color:#1e293b;min-height:100vh}
@@ -39,61 +39,30 @@ body{font-family:'Noto Sans KR','Malgun Gothic',sans-serif;background:#f8fafc;co
 const CUR=[
 {id:'PH',name:'일반물리학',color:'#0ea5e9',info:'유니스터디 일반물리학 · 33강',chapters:[
   {id:'PH0',t:'OT',s:[{id:'PH00',n:'OT'}]},
-  {id:'PH1',t:'Ch1~3 · 물리량·벡터',s:[
-    {id:'PH01',n:'Ch1. 물리량과 측정'},
-    {id:'PH02',n:'Ch3. 벡터'},
-    {id:'PH03',n:'Ch3. 좌표계와 벡터 해석'},
-  ]},
-  {id:'PH2',t:'Ch2·4 · 운동',s:[
-    {id:'PH04',n:'Ch2. 1차원 운동의 표현'},
-    {id:'PH05',n:'Ch2. 1차원 운동의 종류'},
-    {id:'PH06',n:'Ch4. 2차원 운동의 표현'},
-    {id:'PH07',n:'Ch4. 직교 좌표계와 포물선 운동'},
-    {id:'PH08',n:'Ch4. 극 좌표계와 원운동'},
-  ]},
-  {id:'PH3',t:'Ch5~6 · Newton 법칙',s:[
-    {id:'PH09',n:'Ch5. 운동법칙과 여러가지 힘'},
-    {id:'PH10',n:'Ch5. Newton 운동법칙 활용연습'},
-    {id:'PH11',n:'Ch6. 등속 원운동과 Newton 법칙 적용'},
-    {id:'PH12',n:'Ch6. 비등속 원운동과 Newton 법칙 적용'},
-  ]},
-  {id:'PH4',t:'Ch7~8 · 에너지',s:[
-    {id:'PH13',n:'Ch7. 일과 에너지'},
-    {id:'PH14',n:'Ch7. 일-운동에너지 정리와 퍼텐셜 에너지'},
-    {id:'PH15',n:'Ch8. 에너지 보존과 전환'},
-    {id:'PH16',n:'Ch8. 에너지 보존과 전환 예제풀이'},
-  ]},
-  {id:'PH5',t:'Ch9 · 운동량',s:[
-    {id:'PH17',n:'Ch9. 운동량 보존법칙'},
-    {id:'PH18',n:'Ch9. 충돌과 질량중심'},
-  ]},
-  {id:'PH6',t:'Ch10~11 · 회전운동',s:[
-    {id:'PH19',n:'Ch10. 회전운동학'},
-    {id:'PH20',n:'Ch10. 강체와 회전운동법칙'},
-    {id:'PH21',n:'Ch10. 관성모멘트와 굴림운동'},
-    {id:'PH22',n:'Ch11. 각운동량과 회전운동법칙'},
-  ]},
-  {id:'PH7',t:'Ch12~15 · 평형·중력·유체·진동',s:[
-    {id:'PH23',n:'Ch12. 강체의 평형과 탄성'},
-    {id:'PH24',n:'Ch13. 중력과 행성의 운동'},
-    {id:'PH25',n:'Ch14. 유체역학'},
-    {id:'PH26',n:'Ch15. 단진동과 진자의 운동'},
-  ]},
-  {id:'PH8',t:'Ch16~17 · 파동',s:[
-    {id:'PH27',n:'Ch16. 파동의 전파'},
-    {id:'PH28',n:'Ch16. 파동 에너지와 음파의 특성'},
-    {id:'PH29',n:'Ch17. 중첩과 정상파'},
-  ]},
-  {id:'PH9',t:'Ch18~21 · 열역학',s:[
-    {id:'PH30',n:'Ch18. 온도와 열현상'},
-    {id:'PH31',n:'Ch19. 열역학 제1법칙'},
-    {id:'PH32',n:'Ch20. 이상기체 분자 운동론'},
-    {id:'PH33',n:'Ch21. 열역학 제2법칙과 엔트로피'},
-  ]},
+  {id:'PH1',t:'Ch1~3 · 물리량·벡터',s:[{id:'PH01',n:'Ch1. 물리량과 측정'},{id:'PH02',n:'Ch3. 벡터'},{id:'PH03',n:'Ch3. 좌표계와 벡터 해석'}]},
+  {id:'PH2',t:'Ch2·4 · 운동',s:[{id:'PH04',n:'Ch2. 1차원 운동의 표현'},{id:'PH05',n:'Ch2. 1차원 운동의 종류'},{id:'PH06',n:'Ch4. 2차원 운동의 표현'},{id:'PH07',n:'Ch4. 직교 좌표계와 포물선 운동'},{id:'PH08',n:'Ch4. 극 좌표계와 원운동'}]},
+  {id:'PH3',t:'Ch5~6 · Newton 법칙',s:[{id:'PH09',n:'Ch5. 운동법칙과 여러가지 힘'},{id:'PH10',n:'Ch5. Newton 운동법칙 활용연습'},{id:'PH11',n:'Ch6. 등속 원운동과 Newton 법칙 적용'},{id:'PH12',n:'Ch6. 비등속 원운동과 Newton 법칙 적용'}]},
+  {id:'PH4',t:'Ch7~8 · 에너지',s:[{id:'PH13',n:'Ch7. 일과 에너지'},{id:'PH14',n:'Ch7. 일-운동에너지 정리와 퍼텐셜 에너지'},{id:'PH15',n:'Ch8. 에너지 보존과 전환'},{id:'PH16',n:'Ch8. 에너지 보존과 전환 예제풀이'}]},
+  {id:'PH5',t:'Ch9 · 운동량',s:[{id:'PH17',n:'Ch9. 운동량 보존법칙'},{id:'PH18',n:'Ch9. 충돌과 질량중심'}]},
+  {id:'PH6',t:'Ch10~11 · 회전운동',s:[{id:'PH19',n:'Ch10. 회전운동학'},{id:'PH20',n:'Ch10. 강체와 회전운동법칙'},{id:'PH21',n:'Ch10. 관성모멘트와 굴림운동'},{id:'PH22',n:'Ch11. 각운동량과 회전운동법칙'}]},
+  {id:'PH7',t:'Ch12~15 · 평형·중력·유체·진동',s:[{id:'PH23',n:'Ch12. 강체의 평형과 탄성'},{id:'PH24',n:'Ch13. 중력과 행성의 운동'},{id:'PH25',n:'Ch14. 유체역학'},{id:'PH26',n:'Ch15. 단진동과 진자의 운동'}]},
+  {id:'PH8',t:'Ch16~17 · 파동',s:[{id:'PH27',n:'Ch16. 파동의 전파'},{id:'PH28',n:'Ch16. 파동 에너지와 음파의 특성'},{id:'PH29',n:'Ch17. 중첩과 정상파'}]},
+  {id:'PH9',t:'Ch18~21 · 열역학',s:[{id:'PH30',n:'Ch18. 온도와 열현상'},{id:'PH31',n:'Ch19. 열역학 제1법칙'},{id:'PH32',n:'Ch20. 이상기체 분자 운동론'},{id:'PH33',n:'Ch21. 열역학 제2법칙과 엔트로피'}]},
+]},
+{id:'LA',name:'선형대수학',color:'#8b5cf6',info:'유니스터디 선형대수학 · 65강',chapters:[
+  {id:'LA0',t:'OT',s:[{id:'LA00',n:'O.T'}]},
+  {id:'LA1',t:'1~6강 · 행렬과 연립방정식',s:[{id:'LA01',n:'1강 연립일차방정식과 행렬'},{id:'LA02',n:'2강 연립일차방정식의 풀이'},{id:'LA03',n:'3강 행렬과 행렬연산'},{id:'LA04',n:'4강 행렬의 연산 - 곱셈'},{id:'LA05',n:'5강 정방행렬의 대각합, 행렬의 거듭제곱, 대각행렬, 특수행렬'},{id:'LA06',n:'6강 예제풀이'}]},
+  {id:'LA2',t:'7~14강 · 역행렬·가우스',s:[{id:'LA07',n:'7강 역행렬과 그 성질'},{id:'LA08',n:'8강 가우스 소거법, 기본 행 연산, 행 동치, 기본 행렬'},{id:'LA09',n:'9강 가우스 소거법 문제풀이'},{id:'LA10',n:'10강 역행렬과 연립일차방정식 (1)'},{id:'LA11',n:'11강 역행렬과 연립일차방정식 (2)'},{id:'LA12',n:'12강 블록행렬'},{id:'LA13',n:'13강 예제 5.2'},{id:'LA14',n:'14강 LU분해와 연립일차방정식 문제풀이'}]},
+  {id:'LA3',t:'15~20강 · 행렬식',s:[{id:'LA15',n:'15강 행렬식'},{id:'LA16',n:'16강 행렬식의 성질'},{id:'LA17',n:'17강 블록행렬과 행렬식, 예제풀이'},{id:'LA18',n:'18강 수반행렬'},{id:'LA19',n:'19강 예제풀이, 크래머공식'},{id:'LA20',n:'20강 예제풀이'}]},
+  {id:'LA4',t:'21~27강 · 벡터공간',s:[{id:'LA21',n:'21강 벡터공간'},{id:'LA22',n:'22강 부분공간(Subspace)'},{id:'LA23',n:'23강 문제풀이 (p.68)'},{id:'LA24',n:'24강 기저와 차원'},{id:'LA25',n:'25강 기저와 차원'},{id:'LA26',n:'26강 표준 기저, 기저와 차원의 성질, 좌표, 좌표벡터, 좌표행렬'},{id:'LA27',n:'27강 예제풀이'}]},
+  {id:'LA5',t:'28~35강 · 행공간·선형변환',s:[{id:'LA28',n:'28강 행공간과 열공간 (1)'},{id:'LA29',n:'29강 행공간과 열공간 (2)'},{id:'LA30',n:'30강 가역행렬과 계수(Rank)와의 관계'},{id:'LA31',n:'31강 선형변환'},{id:'LA32',n:'32강 선형사상의 기본성질'},{id:'LA33',n:'33강 선형사상 주요관련 정리'},{id:'LA34',n:'34강 선형사상과 행렬'},{id:'LA35',n:'35강 벡터공간에서 선형사상의 행렬표현'}]},
+  {id:'LA6',t:'36~45강 · 직교화',s:[{id:'LA36',n:'36강 예제풀이'},{id:'LA37',n:'37강 직교변환의 행렬'},{id:'LA38',n:'38강 예제풀이'},{id:'LA39',n:'39강 사영변환'},{id:'LA40',n:'40강 예제풀이'},{id:'LA41',n:'41강 기저의 변환과 행렬의 닮음'},{id:'LA42',n:'42강 행렬의 닮음'},{id:'LA43',n:'43강 내적공간과 직교화'},{id:'LA44',n:'44강 기본적인 내적공간의 몇가지 예'},{id:'LA45',n:'45강 예제풀이&직교여공간'}]},
+  {id:'LA7',t:'46~54강 · 고윳값',s:[{id:'LA46',n:'46강 노름 공간(Normed space)&수반사상'},{id:'LA47',n:'47강 예제풀이 (p.130)'},{id:'LA48',n:'48강 예제풀이 (p.131)'},{id:'LA49',n:'49강 직교성과 그람-슈미트 직교화과정 (1)'},{id:'LA50',n:'50강 그람-슈미트 직교화과정 (2)'},{id:'LA51',n:'51강 예제풀이'},{id:'LA52',n:'52강 최소제곱문제'},{id:'LA53',n:'53강 고윳값과 대각화'},{id:'LA54',n:'54강 고윳값과 고유벡터의 기본성질'}]},
+  {id:'LA8',t:'55~65강 · 대각화·이차형식',s:[{id:'LA55',n:'55강 예제 문제풀이 (1)'},{id:'LA56',n:'56강 예제 문제풀이 (2)'},{id:'LA57',n:'57강 예제 문제풀이 (1)'},{id:'LA58',n:'58강 예제 문제풀이 (2)'},{id:'LA59',n:'59강 예제 문제풀이 (3)'},{id:'LA60',n:'60강 대칭행렬과 직교대각화'},{id:'LA61',n:'61강 예제 문제풀이'},{id:'LA62',n:'62강 정방행렬의 거듭제곱, 차분 방정식, 케일리 해밀턴 정리'},{id:'LA63',n:'63강 행렬지수'},{id:'LA64',n:'64강 이차형식'},{id:'LA65',n:'65강 이차곡면, 양의정부호와 촐레스키 분해'}]},
 ]},
 ];
 
-const SS='2026-05-23';
+const SS='2026-05-24';
 const DK=['일','월','화','수','목','금','토'];
 function pl(s){const[y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d);}
 function ds(d){return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
@@ -101,40 +70,44 @@ function ts(){return ds(new Date());}
 function fd(s){const d=pl(s);return `${d.getMonth()+1}/${d.getDate()} (${DK[d.getDay()]})`;}
 function gc(s){const w=pl(s).getDay();return w===0?0:w===6?6:8;}
 function ga(){const a=[];CUR.forEach(sj=>sj.chapters.forEach(ch=>ch.s.forEach(s=>a.push({id:s.id,n:s.n,sid:sj.id,sname:sj.name,cht:ch.t,color:sj.color}))));return a;}
-function bs(){const all=ga(),sc={};let i=0,d=0;const st=pl(SS);while(i<all.length&&d<2000){const dt=new Date(st);dt.setDate(st.getDate()+d);const dstr=ds(dt);const c=gc(dstr);if(c>0){sc[dstr]=all.slice(i,i+c);i+=c;}else sc[dstr]=[];d++;}return sc;}
+function bs(){const all=ga(),sc={};let ph=[],la=[];all.forEach(it=>{if(it.sid==='PH')ph.push(it);else la.push(it);});let d=0,pi=0,li=0;const st=pl(SS);while(pi<ph.length||li<la.length){const dt=new Date(st);dt.setDate(st.getDate()+d);const dstr=ds(dt);const c=gc(dstr);if(c>0){const day=[];const half=Math.ceil(c/2);while(day.length<half&&pi<ph.length)day.push(ph[pi++]);while(day.length<c&&li<la.length)day.push(la[li++]);sc[dstr]=day;}else sc[dstr]=[];d++;}return sc;}
 const SC=bs();
 function ld(k){try{const v=localStorage.getItem(k);return v?JSON.parse(v):null;}catch{return null;}}
 function sv(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch{}}
 let STA={},SK={n:0,last:''},tab='today',off=0,cs=CUR[0].id,oc={};
-function init(){const s=ld('ph1');const sk=ld('ph2');if(s)STA=s;if(sk)SK=sk;render();}
+function init(){const s=ld('plla1');const sk=ld('plla2');if(s)STA=s;if(sk)SK=sk;render();}
 function us(){const t=ts();const y=ds(new Date(pl(t).getTime()-86400000));if(SK.last===t)return;SK=SK.last===y?{n:SK.n+1,last:t}:{n:1,last:t};}
-function tg(id){STA[id]=!STA[id];us();sv('ph1',STA);sv('ph2',SK);render();}
+function tg(id){STA[id]=!STA[id];us();sv('plla1',STA);sv('plla2',SK);render();}
 function ov(){const a=ga();const d=a.filter(i=>STA[i.id]).length;return{d,t:a.length,p:a.length?Math.round(d/a.length*100):0};}
 function sp(sid){const a=ga().filter(i=>i.sid===sid);const d=a.filter(i=>STA[i.id]).length;return{d,t:a.length,p:a.length?Math.round(d/a.length*100):0};}
 function vd(){const d=new Date();d.setDate(d.getDate()+off);return ds(d);}
 function render(){
   const o=ov();const v=vd();const ti=SC[v]||[];const cap=gc(v);const td=ti.filter(i=>STA[i.id]).length;
-  document.getElementById('app').innerHTML=`<div class="header"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><div style="font-size:15px;font-weight:900;color:#0ea5e9">일반물리학</div><div style="font-size:11px;color:#64748b">${SK.n}일 연속</div></div><div style="display:flex;align-items:center;gap:10px"><div style="flex:1;height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden"><div style="height:100%;width:${o.p}%;background:#0ea5e9;border-radius:3px;transition:width .6s"></div></div><span style="font-size:12px;color:#0ea5e9;font-weight:800;min-width:36px">${o.p}%</span><span style="font-size:11px;color:#94a3b8;min-width:50px;text-align:right">${o.d}/${o.t}</span></div></div><div class="tabs"><button class="tb ${tab==='today'?'on':''}" onclick="setTab('today')">📚 오늘</button><button class="tb ${tab==='toc'?'on':''}" onclick="setTab('toc')">📖 목차</button></div><div id="cnt"></div><div class="bb"><div class="bs"><div style="font-size:15px;font-weight:900;color:#10b981">${td}/${cap}</div><div style="font-size:9px;color:#94a3b8;margin-top:2px">오늘완료</div></div><div class="bs"><div style="font-size:15px;font-weight:900;color:#0ea5e9">${o.p}%</div><div style="font-size:9px;color:#94a3b8;margin-top:2px">전체진행</div></div><div class="bs"><div style="font-size:15px;font-weight:900;color:#f59e0b">${SK.n}일</div><div style="font-size:9px;color:#94a3b8;margin-top:2px">연속학습</div></div><div class="bs"><div style="font-size:15px;font-weight:900;color:#94a3b8">${o.t-o.d}</div><div style="font-size:9px;color:#94a3b8;margin-top:2px">남은항목</div></div></div>`;
+  document.getElementById('app').innerHTML=`<div class="header"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><div style="font-size:15px;font-weight:900"><span style="color:#0ea5e9">일반물리학</span><span style="color:#94a3b8;margin:0 4px">·</span><span style="color:#8b5cf6">선형대수학</span></div><div style="font-size:11px;color:#64748b">${SK.n}일 연속</div></div><div style="display:flex;align-items:center;gap:10px"><div style="flex:1;height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden"><div style="height:100%;width:${o.p}%;background:linear-gradient(90deg,#0ea5e9,#8b5cf6);border-radius:3px;transition:width .6s"></div></div><span style="font-size:12px;color:#3b82f6;font-weight:800;min-width:36px">${o.p}%</span><span style="font-size:11px;color:#94a3b8;min-width:50px;text-align:right">${o.d}/${o.t}</span></div></div><div class="tabs"><button class="tb ${tab==='today'?'on':''}" onclick="setTab('today')">📚 오늘</button><button class="tb ${tab==='toc'?'on':''}" onclick="setTab('toc')">📖 목차</button></div><div id="cnt"></div><div class="bb"><div class="bs"><div style="font-size:15px;font-weight:900;color:#10b981">${td}/${cap}</div><div style="font-size:9px;color:#94a3b8;margin-top:2px">오늘완료</div></div><div class="bs"><div style="font-size:15px;font-weight:900;color:#3b82f6">${o.p}%</div><div style="font-size:9px;color:#94a3b8;margin-top:2px">전체진행</div></div><div class="bs"><div style="font-size:15px;font-weight:900;color:#f59e0b">${SK.n}일</div><div style="font-size:9px;color:#94a3b8;margin-top:2px">연속학습</div></div><div class="bs"><div style="font-size:15px;font-weight:900;color:#94a3b8">${o.t-o.d}</div><div style="font-size:9px;color:#94a3b8;margin-top:2px">남은항목</div></div></div>`;
   if(tab==='today')rT();else rC();
 }
 function rT(){
   const v=vd();const ti=SC[v]||[];const cap=gc(v);const td=ti.filter(i=>STA[i.id]).length;
   const dow=pl(v).getDay();const isR=dow===0;
   const ml=dow===0?'😴 일요일 · 완전 휴식':dow===6?'📖 토요일 · 6항목':'💻 평일 · 8항목';
-  let h=`<div style="display:flex;align-items:center;justify-content:center;gap:12px;padding:12px 16px 8px"><button class="nb" onclick="setOff(${off-1})">‹</button><div style="text-align:center;flex:1"><div style="font-size:16px;font-weight:900;color:#0ea5e9">${fd(v)}</div><div style="font-size:11px;color:#64748b;margin-top:2px">${ml}</div>${off!==0?`<div style="font-size:11px;color:#0ea5e9;cursor:pointer;margin-top:2px" onclick="setOff(0)">오늘로 이동</div>`:''}</div><button class="nb" onclick="setOff(${off+1})">›</button></div><div style="margin:0 14px 12px;background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:14px"><div style="display:flex;justify-content:space-between;margin-bottom:8px"><span style="font-size:11px;color:#64748b;font-weight:600">오늘 진행률 · ${td}/${cap}개 완료</span><span style="font-size:20px;font-weight:900;color:#10b981">${cap>0?Math.round(td/cap*100):0}%</span></div><div style="height:8px;background:#e2e8f0;border-radius:4px;overflow:hidden"><div style="height:100%;width:${cap>0?td/cap*100:0}%;background:linear-gradient(90deg,#10b981,#0ea5e9);border-radius:4px;transition:width .4s"></div></div></div>`;
+  const g={};ti.forEach(it=>{if(!g[it.sid])g[it.sid]={sname:it.sname,color:it.color,items:[]};g[it.sid].items.push(it);});
+  let h=`<div style="display:flex;align-items:center;justify-content:center;gap:12px;padding:12px 16px 8px"><button class="nb" onclick="setOff(${off-1})">‹</button><div style="text-align:center;flex:1"><div style="font-size:16px;font-weight:900;color:#3b82f6">${fd(v)}</div><div style="font-size:11px;color:#64748b;margin-top:2px">${ml}</div>${off!==0?`<div style="font-size:11px;color:#3b82f6;cursor:pointer;margin-top:2px" onclick="setOff(0)">오늘로 이동</div>`:''}</div><button class="nb" onclick="setOff(${off+1})">›</button></div><div style="margin:0 14px 12px;background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:14px"><div style="display:flex;justify-content:space-between;margin-bottom:8px"><span style="font-size:11px;color:#64748b;font-weight:600">오늘 진행률 · ${td}/${cap}개 완료</span><span style="font-size:20px;font-weight:900;color:#10b981">${cap>0?Math.round(td/cap*100):0}%</span></div><div style="height:8px;background:#e2e8f0;border-radius:4px;overflow:hidden"><div style="height:100%;width:${cap>0?td/cap*100:0}%;background:linear-gradient(90deg,#10b981,#3b82f6);border-radius:4px;transition:width .4s"></div></div></div>`;
   if(isR){h+=`<div style="text-align:center;padding:40px 20px;color:#94a3b8;font-size:13px">😴 일요일은 완전 휴식</div>`;}
   else if(!ti.length){h+=`<div style="text-align:center;padding:40px 20px;color:#94a3b8">배정 항목 없음</div>`;}
-  else{h+=`<div class="card">`;ti.forEach(it=>{const dn=!!STA[it.id];h+=`<div class="item" style="${dn?'background:rgba(16,185,129,0.04)':''}" onclick="tg('${it.id}')"><div class="chk ${dn?'on':''}">${dn?'✓':''}</div><div style="flex:1;min-width:0"><div style="font-size:10px;color:#94a3b8;margin-bottom:2px">${it.cht}</div><div style="font-size:12px;color:${dn?'#94a3b8':'#334155'};line-height:1.4;text-decoration:${dn?'line-through':'none'}">${it.n}</div></div></div>`;});h+=`</div>`;}
+  else{Object.entries(g).forEach(([sid,gv])=>{const dc=gv.items.filter(i=>STA[i.id]).length;h+=`<div><div style="padding:10px 14px 4px;display:flex;align-items:center;gap:8px"><div style="width:8px;height:8px;border-radius:50%;background:${gv.color}"></div><span style="font-size:12px;font-weight:700;color:${gv.color}">${gv.sname}</span><span style="font-size:11px;color:#94a3b8">${dc}/${gv.items.length}</span></div><div class="card">`;gv.items.forEach(it=>{const dn=!!STA[it.id];h+=`<div class="item" style="${dn?'background:rgba(16,185,129,0.04)':''}" onclick="tg('${it.id}')"><div class="chk ${dn?'on':''}">${dn?'✓':''}</div><div style="flex:1;min-width:0"><div style="font-size:10px;color:#94a3b8;margin-bottom:2px">${it.cht}</div><div style="font-size:12px;color:${dn?'#94a3b8':'#334155'};line-height:1.4;text-decoration:${dn?'line-through':'none'}">${it.n}</div></div></div>`;});h+=`</div></div>`;});}
   document.getElementById('cnt').innerHTML=h;
 }
 function rC(){
-  const sj=CUR[0];const pg=sp(sj.id);
-  let h=`<div style="padding:14px 14px 8px"><div style="display:flex;align-items:center;justify-content:space-between"><div><span style="font-size:16px;font-weight:900;color:#0ea5e9">${sj.name}</span><div style="font-size:11px;color:#64748b;margin-top:3px">${sj.info}</div></div><div style="text-align:right"><div style="font-size:24px;font-weight:900;color:#0ea5e9">${pg.p}%</div><div style="font-size:11px;color:#64748b">${pg.d}/${pg.t}</div></div></div><div style="height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden;margin-top:10px"><div style="height:100%;width:${pg.p}%;background:#0ea5e9;border-radius:3px;transition:width .4s"></div></div></div>`;
-  sj.chapters.forEach(ch=>{const op=!!oc[ch.id];const cd=ch.s.filter(s=>STA[s.id]).length;const ad=cd===ch.s.length&&ch.s.length>0;const pt=cd>0&&!ad;h+=`<div class="card"><div class="ch" onclick="tC('${ch.id}')"><div class="cc2 ${ad?'dn':pt?'pt':''}">${ad?'✓':''}</div><span style="font-size:13px;font-weight:700;color:${ad?'#94a3b8':'#1e293b'};flex:1;text-decoration:${ad?'line-through':'none'}">${ch.t}</span><span style="font-size:11px;color:#94a3b8;margin-right:6px">${cd}/${ch.s.length}</span><span style="font-size:11px;color:#94a3b8;display:inline-block;transition:transform .2s;transform:${op?'rotate(180deg)':'none'}">▼</span></div><div class="cb"><div style="height:100%;width:${ch.s.length?cd/ch.s.length*100:0}%;background:#0ea5e9;transition:width .3s"></div></div>`;if(op){ch.s.forEach(s=>{const dn=!!STA[s.id];h+=`<div class="si" onclick="tg('${s.id}')"><div class="sc2 ${dn?'on':''}">${dn?'✓':''}</div><span style="font-size:12px;color:${dn?'#94a3b8':'#475569'};text-decoration:${dn?'line-through':'none'};flex:1;line-height:1.4">${s.n}</span></div>`;});}h+=`</div>`;});
+  const sj=CUR.find(s=>s.id===cs);const pg=sp(cs);
+  let h=`<div class="st">`;
+  CUR.forEach(s=>{const p=sp(s.id);const ac=cs===s.id;h+=`<button class="stb" style="${ac?`background:${s.color}22;border-color:${s.color}88;color:${s.color}`:''}" onclick="setCS('${s.id}')">${s.name} <span style="opacity:.7;font-size:10px">${p.p}%</span></button>`;});
+  h+=`</div><div style="padding:14px 14px 8px"><div style="display:flex;align-items:center;justify-content:space-between"><div><span style="font-size:16px;font-weight:900;color:${sj.color}">${sj.name}</span><div style="font-size:11px;color:#64748b;margin-top:3px">${sj.info}</div></div><div style="text-align:right"><div style="font-size:24px;font-weight:900;color:${sj.color}">${pg.p}%</div><div style="font-size:11px;color:#64748b">${pg.d}/${pg.t}</div></div></div><div style="height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden;margin-top:10px"><div style="height:100%;width:${pg.p}%;background:${sj.color};border-radius:3px;transition:width .4s"></div></div></div>`;
+  sj.chapters.forEach(ch=>{const op=!!oc[ch.id];const cd=ch.s.filter(s=>STA[s.id]).length;const ad=cd===ch.s.length&&ch.s.length>0;const pt=cd>0&&!ad;h+=`<div class="card"><div class="ch" onclick="tC('${ch.id}')"><div class="cc2 ${ad?'dn':pt?'pt':''}">${ad?'✓':''}</div><span style="font-size:13px;font-weight:700;color:${ad?'#94a3b8':'#1e293b'};flex:1;text-decoration:${ad?'line-through':'none'}">${ch.t}</span><span style="font-size:11px;color:#94a3b8;margin-right:6px">${cd}/${ch.s.length}</span><span style="font-size:11px;color:#94a3b8;display:inline-block;transition:transform .2s;transform:${op?'rotate(180deg)':'none'}">▼</span></div><div class="cb"><div style="height:100%;width:${ch.s.length?cd/ch.s.length*100:0}%;background:${sj.color};transition:width .3s"></div></div>`;if(op){ch.s.forEach(s=>{const dn=!!STA[s.id];h+=`<div class="si" onclick="tg('${s.id}')"><div class="sc2 ${dn?'on':''}">${dn?'✓':''}</div><span style="font-size:12px;color:${dn?'#94a3b8':'#475569'};text-decoration:${dn?'line-through':'none'};flex:1;line-height:1.4">${s.n}</span></div>`;});}h+=`</div>`;});
   document.getElementById('cnt').innerHTML=h;
 }
 function setTab(t){tab=t;render();}
 function setOff(o){off=o;render();}
+function setCS(id){cs=id;oc={};render();}
 function tC(id){oc[id]=!oc[id];render();}
 init();
 </script>
