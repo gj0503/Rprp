@@ -37,17 +37,66 @@ body{font-family:'Noto Sans KR','Malgun Gothic',sans-serif;background:#f8fafc;co
 <div class="app" id="app"><div style="display:flex;align-items:center;justify-content:center;height:200px;color:#3b82f6;font-size:14px">불러오는 중...</div></div>
 <script>
 const CUR=[
-{id:'PH',name:'일반물리학',color:'#0ea5e9',info:'유니스터디 일반물리학 · 33강',chapters:[
+{id:'PH',name:'일반물리학',color:'#0ea5e9',info:'유니스터디 일반물리학 · 42강',chapters:[
   {id:'PH0',t:'OT',s:[{id:'PH00',n:'OT'}]},
-  {id:'PH1',t:'Ch1~3 · 물리량·벡터',s:[{id:'PH01',n:'Ch1. 물리량과 측정'},{id:'PH02',n:'Ch3. 벡터'},{id:'PH03',n:'Ch3. 좌표계와 벡터 해석'}]},
-  {id:'PH2',t:'Ch2·4 · 운동',s:[{id:'PH04',n:'Ch2. 1차원 운동의 표현'},{id:'PH05',n:'Ch2. 1차원 운동의 종류'},{id:'PH06',n:'Ch4. 2차원 운동의 표현'},{id:'PH07',n:'Ch4. 직교 좌표계와 포물선 운동'},{id:'PH08',n:'Ch4. 극 좌표계와 원운동'}]},
-  {id:'PH3',t:'Ch5~6 · Newton 법칙',s:[{id:'PH09',n:'Ch5. 운동법칙과 여러가지 힘'},{id:'PH10',n:'Ch5. Newton 운동법칙 활용연습'},{id:'PH11',n:'Ch6. 등속 원운동과 Newton 법칙 적용'},{id:'PH12',n:'Ch6. 비등속 원운동과 Newton 법칙 적용'}]},
-  {id:'PH4',t:'Ch7~8 · 에너지',s:[{id:'PH13',n:'Ch7. 일과 에너지'},{id:'PH14',n:'Ch7. 일-운동에너지 정리와 퍼텐셜 에너지'},{id:'PH15',n:'Ch8. 에너지 보존과 전환'},{id:'PH16',n:'Ch8. 에너지 보존과 전환 예제풀이'}]},
-  {id:'PH5',t:'Ch9 · 운동량',s:[{id:'PH17',n:'Ch9. 운동량 보존법칙'},{id:'PH18',n:'Ch9. 충돌과 질량중심'}]},
-  {id:'PH6',t:'Ch10~11 · 회전운동',s:[{id:'PH19',n:'Ch10. 회전운동학'},{id:'PH20',n:'Ch10. 강체와 회전운동법칙'},{id:'PH21',n:'Ch10. 관성모멘트와 굴림운동'},{id:'PH22',n:'Ch11. 각운동량과 회전운동법칙'}]},
-  {id:'PH7',t:'Ch12~15 · 평형·중력·유체·진동',s:[{id:'PH23',n:'Ch12. 강체의 평형과 탄성'},{id:'PH24',n:'Ch13. 중력과 행성의 운동'},{id:'PH25',n:'Ch14. 유체역학'},{id:'PH26',n:'Ch15. 단진동과 진자의 운동'}]},
-  {id:'PH8',t:'Ch16~17 · 파동',s:[{id:'PH27',n:'Ch16. 파동의 전파'},{id:'PH28',n:'Ch16. 파동 에너지와 음파의 특성'},{id:'PH29',n:'Ch17. 중첩과 정상파'}]},
-  {id:'PH9',t:'Ch18~21 · 열역학',s:[{id:'PH30',n:'Ch18. 온도와 열현상'},{id:'PH31',n:'Ch19. 열역학 제1법칙'},{id:'PH32',n:'Ch20. 이상기체 분자 운동론'},{id:'PH33',n:'Ch21. 열역학 제2법칙과 엔트로피'}]},
+  {id:'PH1',t:'Ch3·2 · 물리량·운동',s:[
+    {id:'PH01',n:'Ch3. 물리량의 표현'},
+    {id:'PH02',n:'Ch3. 벡터와 좌표계'},
+    {id:'PH03',n:'Ch2. 1차원 운동학 물리량'},
+    {id:'PH04',n:'Ch2. 1차원 운동의 종류'},
+    {id:'PH05',n:'Ch4. 2차원 운동과 좌표계'},
+    {id:'PH06',n:'Ch4. 포물선 운동'},
+    {id:'PH07',n:'Ch4. 원운동과 상대운동'},
+  ]},
+  {id:'PH2',t:'Ch5~6 · Newton 법칙',s:[
+    {id:'PH08',n:'Ch5. 힘과 운동법칙'},
+    {id:'PH09',n:'Ch5. 여러가지 힘과 운동법칙 활용 ①'},
+    {id:'PH10',n:'Ch5. 여러가지 힘과 운동법칙 활용 ②'},
+    {id:'PH11',n:'Ch6. 마찰력과 운동법칙 활용'},
+    {id:'PH12',n:'Ch6. 저항력과 원운동 분석'},
+  ]},
+  {id:'PH3',t:'Ch7~9 · 에너지·운동량',s:[
+    {id:'PH13',n:'Ch7. 일과 에너지'},
+    {id:'PH14',n:'Ch7. 일과 일률'},
+    {id:'PH15',n:'Ch8. 고립계와 역학적 에너지'},
+    {id:'PH16',n:'Ch8. 역학적 에너지 보존'},
+    {id:'PH17',n:'Ch9. 질량 중심과 선운동량'},
+    {id:'PH18',n:'Ch9. 충돌과 분열'},
+  ]},
+  {id:'PH4',t:'Ch10~11 · 회전',s:[
+    {id:'PH19',n:'Ch10. 강체와 의전운동'},
+    {id:'PH20',n:'Ch10. 강체와 회전관성'},
+    {id:'PH21',n:'Ch11. 강체 운동법칙'},
+    {id:'PH22',n:'Ch11. 굴림운동'},
+    {id:'PH23',n:'Ch11. 각운동량과 토크'},
+  ]},
+  {id:'PH5',t:'Ch12~13 · 평형·중력',s:[
+    {id:'PH24',n:'Ch12. 정적평형'},
+    {id:'PH25',n:'Ch12. 탄성과 변형률'},
+    {id:'PH26',n:'Ch13. 중력과 에너지'},
+    {id:'PH27',n:'Ch13. 케플러 법칙과 위성의 운동'},
+  ]},
+  {id:'PH6',t:'Ch14~15 · 유체·진동',s:[
+    {id:'PH28',n:'Ch14. 유체 정역학'},
+    {id:'PH29',n:'Ch14. 유체 동역학'},
+    {id:'PH30',n:'Ch15. 단진동과 용수철 진자'},
+    {id:'PH31',n:'Ch15. 단조화 진동 발전 개념'},
+    {id:'PH32',n:'Ch15. 단진자와 물리진자'},
+  ]},
+  {id:'PH7',t:'Ch16~17 · 파동·음파',s:[
+    {id:'PH33',n:'Ch16. 파동의 표현과 파동함수'},
+    {id:'PH34',n:'Ch16. 파동의 중첩과 위상자'},
+    {id:'PH35',n:'Ch16. 현에서의 정상파'},
+    {id:'PH36',n:'Ch17. 음파의 표현과 세기'},
+    {id:'PH37',n:'Ch17. 음파의 성질'},
+  ]},
+  {id:'PH8',t:'Ch18~20 · 열역학',s:[
+    {id:'PH38',n:'Ch18. 온도와 열현상'},
+    {id:'PH39',n:'Ch19. 기체분자 운동'},
+    {id:'PH40',n:'Ch18,19. 열역학 1법칙과 열역학 과정'},
+    {id:'PH41',n:'Ch18. 열전달'},
+    {id:'PH42',n:'Ch20. 열역학 2법칙과 거시적 엔트로피'},
+  ]},
 ]},
 {id:'LA',name:'선형대수학',color:'#8b5cf6',info:'유니스터디 선형대수학 · 65강',chapters:[
   {id:'LA0',t:'OT',s:[{id:'LA00',n:'O.T'}]},
@@ -62,13 +111,13 @@ const CUR=[
 ]},
 ];
 
-const SS='2026-05-24';
+const SS='2026-05-31';
 const DK=['일','월','화','수','목','금','토'];
 function pl(s){const[y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d);}
 function ds(d){return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
 function ts(){return ds(new Date());}
 function fd(s){const d=pl(s);return `${d.getMonth()+1}/${d.getDate()} (${DK[d.getDay()]})`;}
-function gc(s){const w=pl(s).getDay();return w===0?0:w===6?6:8;}
+function gc(s){const w=pl(s).getDay();if(s===SS)return 8;return w===0?0:w===6?6:8;}
 function ga(){const a=[];CUR.forEach(sj=>sj.chapters.forEach(ch=>ch.s.forEach(s=>a.push({id:s.id,n:s.n,sid:sj.id,sname:sj.name,cht:ch.t,color:sj.color}))));return a;}
 function bs(){const all=ga(),sc={};let ph=[],la=[];all.forEach(it=>{if(it.sid==='PH')ph.push(it);else la.push(it);});let d=0,pi=0,li=0;const st=pl(SS);while(pi<ph.length||li<la.length){const dt=new Date(st);dt.setDate(st.getDate()+d);const dstr=ds(dt);const c=gc(dstr);if(c>0){const day=[];const half=Math.ceil(c/2);while(day.length<half&&pi<ph.length)day.push(ph[pi++]);while(day.length<c&&li<la.length)day.push(la[li++]);sc[dstr]=day;}else sc[dstr]=[];d++;}return sc;}
 const SC=bs();
@@ -88,8 +137,8 @@ function render(){
 }
 function rT(){
   const v=vd();const ti=SC[v]||[];const cap=gc(v);const td=ti.filter(i=>STA[i.id]).length;
-  const dow=pl(v).getDay();const isR=dow===0;
-  const ml=dow===0?'😴 일요일 · 완전 휴식':dow===6?'📖 토요일 · 6항목':'💻 평일 · 8항목';
+  const dow=pl(v).getDay();const isR=dow===0&&v!==SS;
+  const ml=isR?'😴 일요일 · 완전 휴식':dow===6?'📖 토요일 · 6항목':'💻 8항목';
   const g={};ti.forEach(it=>{if(!g[it.sid])g[it.sid]={sname:it.sname,color:it.color,items:[]};g[it.sid].items.push(it);});
   let h=`<div style="display:flex;align-items:center;justify-content:center;gap:12px;padding:12px 16px 8px"><button class="nb" onclick="setOff(${off-1})">‹</button><div style="text-align:center;flex:1"><div style="font-size:16px;font-weight:900;color:#3b82f6">${fd(v)}</div><div style="font-size:11px;color:#64748b;margin-top:2px">${ml}</div>${off!==0?`<div style="font-size:11px;color:#3b82f6;cursor:pointer;margin-top:2px" onclick="setOff(0)">오늘로 이동</div>`:''}</div><button class="nb" onclick="setOff(${off+1})">›</button></div><div style="margin:0 14px 12px;background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:14px"><div style="display:flex;justify-content:space-between;margin-bottom:8px"><span style="font-size:11px;color:#64748b;font-weight:600">오늘 진행률 · ${td}/${cap}개 완료</span><span style="font-size:20px;font-weight:900;color:#10b981">${cap>0?Math.round(td/cap*100):0}%</span></div><div style="height:8px;background:#e2e8f0;border-radius:4px;overflow:hidden"><div style="height:100%;width:${cap>0?td/cap*100:0}%;background:linear-gradient(90deg,#10b981,#3b82f6);border-radius:4px;transition:width .4s"></div></div></div>`;
   if(isR){h+=`<div style="text-align:center;padding:40px 20px;color:#94a3b8;font-size:13px">😴 일요일은 완전 휴식</div>`;}
