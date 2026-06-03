@@ -213,8 +213,78 @@ function ds(d){return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0
 function ts(){return ds(new Date());}
 function fd(s){const d=pl(s);return `${d.getMonth()+1}/${d.getDate()} (${DK[d.getDay()]})`;}
 function gc(s){const w=pl(s).getDay();if(s===SS)return 8;return w===0?0:w===6?6:8;}
-function ga(){const a=[];CUR.forEach(sj=>sj.chapters.forEach(ch=>ch.s.forEach(s=>a.push({id:s.id,n:s.n,sid:sj.id,sname:sj.name,cht:ch.t,color:sj.color}))));return a;}
-function bs(){const all=ga(),sc={};let ph=[],la=[],py=[];all.forEach(it=>{if(it.sid==='PH')ph.push(it);else if(it.sid==='LA')la.push(it);else py.push(it);});let d=0,pi=0,li=0,yi=0;const st=pl(SS);while(pi<ph.length||li<la.length||yi<py.length){const dt=new Date(st);dt.setDate(st.getDate()+d);const dstr=ds(dt);const c=gc(dstr);if(c>0){const day=[];const third=Math.ceil(c/3);while(day.length<third&&pi<ph.length)day.push(ph[pi++]);while(day.length<third*2&&li<la.length)day.push(la[li++]);while(day.length<c&&yi<py.length)day.push(py[yi++]);sc[dstr]=day;}else sc[dstr]=[];d++;}return sc;}
+function ga(){
+  const a=[];
+  CUR.forEach(sj=>{
+    if(sj.id==='PH'){
+      // 개념챕터(p없는것)와 문풀챕터(p있는것)를 쌍으로 묶어서 [개념들, 문풀들] 순으로
+      const chs=sj.chapters;
+      const pairs=[];
+      for(let i=0;i<chs.length;i++){
+        const ch=chs[i];
+        ch.s.forEach(s=>pairs.push({id:s.id,n:s.n,sid:sj.id,sname:sj.name,cht:ch.t,color:sj.color,isPair:ch.id.endsWith('p')}));
+      }
+      pairs.forEach(it=>a.push(it));
+    } else {
+      sj.chapters.forEach(ch=>ch.s.forEach(s=>a.push({id:s.id,n:s.n,sid:sj.id,sname:sj.name,cht:ch.t,color:sj.color})));
+    }
+  });
+  return a;
+}
+function bs(){
+  const sc={};
+  const phCur=CUR.find(s=>s.id==='PH');
+  const phPairs=[];
+  const chs=phCur.chapters;
+  let i=0;
+  while(i<chs.length){
+    const ch=chs[i];
+    if(!ch.id.endsWith('p')){
+      const next=chs[i+1];
+      const probItems=next&&next.id.endsWith('p')?next.s.map(s=>({id:s.id,n:s.n,sid:'PH',sname:'일반물리학',cht:next.t,color:'#0ea5e9'})):[];
+      ch.s.forEach((s,idx)=>{
+        const pair=[];
+        pair.push({id:s.id,n:s.n,sid:'PH',sname:'일반물리학',cht:ch.t,color:'#0ea5e9'});
+        if(probItems[idx])pair.push(probItems[idx]);
+        phPairs.push(pair);
+      });
+      if(probItems.length>ch.s.length){
+        for(let j=ch.s.length;j<probItems.length;j++)phPairs.push([probItems[j]]);
+      }
+      if(next&&next.id.endsWith('p'))i+=2;else i++;
+    }else{i++;}
+  }
+  let la=[],py=[];
+  CUR.forEach(sj=>{
+    if(sj.id==='LA')sj.chapters.forEach(ch=>ch.s.forEach(s=>la.push({id:s.id,n:s.n,sid:'LA',sname:'선형대수학',cht:ch.t,color:'#8b5cf6'})));
+    if(sj.id==='PY')sj.chapters.forEach(ch=>ch.s.forEach(s=>py.push({id:s.id,n:s.n,sid:'PY',sname:'파이썬',cht:ch.t,color:'#10b981'})));
+  });
+  let d=0,pi=0,li=0,yi=0;
+  const st=pl(SS);
+  while(pi<phPairs.length||li<la.length||yi<py.length){
+    const dt=new Date(st);dt.setDate(st.getDate()+d);
+    const dstr=ds(dt);const c=gc(dstr);
+    if(c>0){
+      const day=[];
+      // PH: 쌍 2개 (개념+문풀 각 1강씩 = 최대 4항목)
+      let phc=0;
+      while(phc<2&&pi<phPairs.length){phPairs[pi].forEach(it=>day.push(it));pi++;phc++;}
+      // LA: 2강
+      let lac=0;
+      while(lac<2&&li<la.length){day.push(la[li++]);lac++;}
+      // PY: 2강
+      let pyc=0;
+      while(pyc<2&&yi<py.length){day.push(py[yi++]);pyc++;}
+      // 남은 자리는 순서대로 채우기
+      while(day.length<c&&pi<phPairs.length){phPairs[pi].forEach(it=>day.push(it));pi++;}
+      while(day.length<c&&li<la.length)day.push(la[li++]);
+      while(day.length<c&&yi<py.length)day.push(py[yi++]);
+      sc[dstr]=day;
+    }else sc[dstr]=[];
+    d++;
+  }
+  return sc;
+}
 const SC=bs();
 function ld(k){try{const v=localStorage.getItem(k);return v?JSON.parse(v):null;}catch{return null;}}
 function sv(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch{}}
@@ -222,8 +292,9 @@ let STA={},SK={n:0,last:''},tab='today',off=0,cs=CUR[0].id,oc={},cm=0;
 function init(){const s=ld('plla1');const sk=ld('plla2');if(s)STA=s;if(sk)SK=sk;const now=new Date();cm=now.getFullYear()*12+now.getMonth();render();}
 function us(){const t=ts();const y=ds(new Date(pl(t).getTime()-86400000));if(SK.last===t)return;SK=SK.last===y?{n:SK.n+1,last:t}:{n:1,last:t};}
 function tg(id){STA[id]=!STA[id];us();sv('plla1',STA);sv('plla2',SK);render();}
-function ov(){const a=ga();const d=a.filter(i=>STA[i.id]).length;return{d,t:a.length,p:a.length?Math.round(d/a.length*100):0};}
-function sp(sid){const a=ga().filter(i=>i.sid===sid);const d=a.filter(i=>STA[i.id]).length;return{d,t:a.length,p:a.length?Math.round(d/a.length*100):0};}
+function gaAll(){const a=[];CUR.forEach(sj=>sj.chapters.forEach(ch=>ch.s.forEach(s=>a.push({id:s.id,n:s.n,sid:sj.id,sname:sj.name,cht:ch.t,color:sj.color}))));return a;}
+function ov(){const a=gaAll();const d=a.filter(i=>STA[i.id]).length;return{d,t:a.length,p:a.length?Math.round(d/a.length*100):0};}
+function sp(sid){const a=gaAll().filter(i=>i.sid===sid);const d=a.filter(i=>STA[i.id]).length;return{d,t:a.length,p:a.length?Math.round(d/a.length*100):0};}
 function vd(){const d=new Date();d.setDate(d.getDate()+off);return ds(d);}
 function render(){
   const o=ov();const v=vd();const ti=SC[v]||[];const cap=gc(v);const td=ti.filter(i=>STA[i.id]).length;
