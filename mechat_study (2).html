@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-<title>일반물리학·선형대수학</title>
+<title>일반물리학·선형대수학·파이썬</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Noto Sans KR','Malgun Gothic',sans-serif;background:#f8fafc;color:#1e293b;min-height:100vh}
@@ -37,9 +37,9 @@ body{font-family:'Noto Sans KR','Malgun Gothic',sans-serif;background:#f8fafc;co
 <div class="app" id="app"><div style="display:flex;align-items:center;justify-content:center;height:200px;color:#3b82f6;font-size:14px">불러오는 중...</div></div>
 <script>
 const CUR=[
-{id:'PH',name:'일반물리학',color:'#0ea5e9',info:'유니스터디 일반물리학 · 42강',chapters:[
-  {id:'PH0',t:'OT',s:[{id:'PH00',n:'OT'}]},
-  {id:'PH1',t:'Ch3·2 · 물리량·운동',s:[
+{id:'PH',name:'일반물리학',color:'#0ea5e9',info:'유니스터디 일반물리학 개념+문제풀이',chapters:[
+  {id:'PH0',t:'OT',s:[{id:'PH00',n:'OT (개념)'},{id:'PH00b',n:'OT (문풀)'}]},
+  {id:'PH1',t:'Ch3·2 · 물리량·운동 (개념)',s:[
     {id:'PH01',n:'Ch3. 물리량의 표현'},
     {id:'PH02',n:'Ch3. 벡터와 좌표계'},
     {id:'PH03',n:'Ch2. 1차원 운동학 물리량'},
@@ -48,14 +48,25 @@ const CUR=[
     {id:'PH06',n:'Ch4. 포물선 운동'},
     {id:'PH07',n:'Ch4. 원운동과 상대운동'},
   ]},
-  {id:'PH2',t:'Ch5~6 · Newton 법칙',s:[
+  {id:'PH1p',t:'Ch3·2 · 물리량·운동 (문제풀이)',s:[
+    {id:'PH01p',n:'[문풀] SI 단위와 차원분석'},
+    {id:'PH02p',n:'[문풀] 1차원 운동학'},
+    {id:'PH03p',n:'[문풀] 벡터 연산'},
+    {id:'PH04p',n:'[문풀] 속도의 합성과 2차원 운동'},
+    {id:'PH05p',n:'[문풀] 포물선 운동과 원운동'},
+  ]},
+  {id:'PH2',t:'Ch5~6 · Newton 법칙 (개념)',s:[
     {id:'PH08',n:'Ch5. 힘과 운동법칙'},
     {id:'PH09',n:'Ch5. 여러가지 힘과 운동법칙 활용 ①'},
     {id:'PH10',n:'Ch5. 여러가지 힘과 운동법칙 활용 ②'},
     {id:'PH11',n:'Ch6. 마찰력과 운동법칙 활용'},
     {id:'PH12',n:'Ch6. 저항력과 원운동 분석'},
   ]},
-  {id:'PH3',t:'Ch7~9 · 에너지·운동량',s:[
+  {id:'PH2p',t:'Ch5~6 · Newton 법칙 (문제풀이)',s:[
+    {id:'PH08p',n:'[문풀] 여러가지 힘과 힘의 평형'},
+    {id:'PH09p',n:'[문풀] 물체군의 운동법칙 적용'},
+  ]},
+  {id:'PH3',t:'Ch7~9 · 에너지·운동량 (개념)',s:[
     {id:'PH13',n:'Ch7. 일과 에너지'},
     {id:'PH14',n:'Ch7. 일과 일률'},
     {id:'PH15',n:'Ch8. 고립계와 역학적 에너지'},
@@ -63,39 +74,79 @@ const CUR=[
     {id:'PH17',n:'Ch9. 질량 중심과 선운동량'},
     {id:'PH18',n:'Ch9. 충돌과 분열'},
   ]},
-  {id:'PH4',t:'Ch10~11 · 회전',s:[
+  {id:'PH3p',t:'Ch7~9 · 에너지·운동량 (문제풀이)',s:[
+    {id:'PH13p',n:'[문풀] 일-에너지 정리'},
+    {id:'PH14p',n:'[문풀] 에너지 보존'},
+    {id:'PH15p',n:'[문풀] 질량중심과 질량중심의 운동'},
+    {id:'PH16p',n:'[문풀] 충돌과 에너지'},
+  ]},
+  {id:'PH4',t:'Ch10~11 · 회전 (개념)',s:[
     {id:'PH19',n:'Ch10. 강체와 의전운동'},
     {id:'PH20',n:'Ch10. 강체와 회전관성'},
     {id:'PH21',n:'Ch11. 강체 운동법칙'},
     {id:'PH22',n:'Ch11. 굴림운동'},
     {id:'PH23',n:'Ch11. 각운동량과 토크'},
   ]},
-  {id:'PH5',t:'Ch12~13 · 평형·중력',s:[
+  {id:'PH4p',t:'Ch10~11 · 회전 (문제풀이)',s:[
+    {id:'PH19p',n:'[문풀] 회전운동과 토크 - 선다형 문제풀이'},
+    {id:'PH20p',n:'[문풀] 회전관성과 강체 운동법칙 - 선택형 문제풀이'},
+    {id:'PH21p',n:'[문풀] 회전운동과 회전운동에너지 - 단답형 문제풀이'},
+    {id:'PH22p',n:'[문풀] 강체 운동 법칙 - 단답형'},
+    {id:'PH23p',n:'[문풀] 굴림운동 - 선다형'},
+    {id:'PH24p',n:'[문풀] 굴림운동 - 단답형'},
+    {id:'PH25p',n:'[문풀] 각운동량과 운동법칙 - 선다형'},
+    {id:'PH26p',n:'[문풀] 각운동량과 운동법칙 - 단답형'},
+  ]},
+  {id:'PH5',t:'Ch12~13 · 평형·중력 (개념)',s:[
     {id:'PH24',n:'Ch12. 정적평형'},
     {id:'PH25',n:'Ch12. 탄성과 변형률'},
     {id:'PH26',n:'Ch13. 중력과 에너지'},
     {id:'PH27',n:'Ch13. 케플러 법칙과 위성의 운동'},
   ]},
-  {id:'PH6',t:'Ch14~15 · 유체·진동',s:[
+  {id:'PH5p',t:'Ch12~13 · 평형·중력 (문제풀이)',s:[
+    {id:'PH27p',n:'[문풀] 강체의 평형 - 선다형'},
+    {id:'PH28p',n:'[문풀] 강체의 평형 - 단답형'},
+    {id:'PH29p',n:'[문풀] 단진동과 물리진자 - 선다형'},
+    {id:'PH30p',n:'[문풀] 단진동과 물리진자 - 단답형'},
+    {id:'PH31p',n:'[문풀] 중력과 케플러 법칙 - 선다형 part 1'},
+    {id:'PH32p',n:'[문풀] 중력과 케플러 법칙 - 선다형 part 2'},
+    {id:'PH33p',n:'[문풀] 중력과 케플러 법칙 - 단답형'},
+  ]},
+  {id:'PH6',t:'Ch14~15 · 유체·진동 (개념)',s:[
     {id:'PH28',n:'Ch14. 유체 정역학'},
     {id:'PH29',n:'Ch14. 유체 동역학'},
     {id:'PH30',n:'Ch15. 단진동과 용수철 진자'},
     {id:'PH31',n:'Ch15. 단조화 진동 발전 개념'},
     {id:'PH32',n:'Ch15. 단진자와 물리진자'},
   ]},
-  {id:'PH7',t:'Ch16~17 · 파동·음파',s:[
+  {id:'PH6p',t:'Ch14~15 · 유체·진동 (문제풀이)',s:[
+    {id:'PH34p',n:'[문풀] 유체역학 - 선다형'},
+    {id:'PH35p',n:'[문풀] 유체역학 - 단답형'},
+  ]},
+  {id:'PH7',t:'Ch16~17 · 파동·음파 (개념)',s:[
     {id:'PH33',n:'Ch16. 파동의 표현과 파동함수'},
     {id:'PH34',n:'Ch16. 파동의 중첩과 위상자'},
     {id:'PH35',n:'Ch16. 현에서의 정상파'},
     {id:'PH36',n:'Ch17. 음파의 표현과 세기'},
     {id:'PH37',n:'Ch17. 음파의 성질'},
   ]},
-  {id:'PH8',t:'Ch18~20 · 열역학',s:[
+  {id:'PH7p',t:'Ch16~17 · 파동·음파 (문제풀이)',s:[
+    {id:'PH36p',n:'[문풀] 파동막 - 선다형 part 1'},
+    {id:'PH37p',n:'[문풀] 파동막(음파) - 선택형 part 2'},
+    {id:'PH38p',n:'[문풀] 파동학 - 단답형 part 1'},
+    {id:'PH39p',n:'[문풀] 파동학 - 단답형 part 2'},
+  ]},
+  {id:'PH8',t:'Ch18~20 · 열역학 (개념)',s:[
     {id:'PH38',n:'Ch18. 온도와 열현상'},
     {id:'PH39',n:'Ch19. 기체분자 운동'},
     {id:'PH40',n:'Ch18,19. 열역학 1법칙과 열역학 과정'},
     {id:'PH41',n:'Ch18. 열전달'},
     {id:'PH42',n:'Ch20. 열역학 2법칙과 거시적 엔트로피'},
+  ]},
+  {id:'PH8p',t:'Ch18~20 · 열역학 (문제풀이)',s:[
+    {id:'PH40p',n:'[문풀] 열현상 - 선택형'},
+    {id:'PH41p',n:'[문풀] 열역학 - 법칙과 과정'},
+    {id:'PH42p',n:'[문풀] 열역학 - 법칙과 엔트로피'},
   ]},
 ]},
 {id:'PY',name:'파이썬',color:'#10b981',info:'유니스터디 파이썬 기본+심화 · 34강',chapters:[
@@ -163,12 +214,12 @@ function ts(){return ds(new Date());}
 function fd(s){const d=pl(s);return `${d.getMonth()+1}/${d.getDate()} (${DK[d.getDay()]})`;}
 function gc(s){const w=pl(s).getDay();if(s===SS)return 8;return w===0?0:w===6?6:8;}
 function ga(){const a=[];CUR.forEach(sj=>sj.chapters.forEach(ch=>ch.s.forEach(s=>a.push({id:s.id,n:s.n,sid:sj.id,sname:sj.name,cht:ch.t,color:sj.color}))));return a;}
-function bs(){const all=ga(),sc={};let ph=[],la=[];all.forEach(it=>{if(it.sid==='PH')ph.push(it);else la.push(it);});let d=0,pi=0,li=0;const st=pl(SS);while(pi<ph.length||li<la.length){const dt=new Date(st);dt.setDate(st.getDate()+d);const dstr=ds(dt);const c=gc(dstr);if(c>0){const day=[];const half=Math.ceil(c/2);while(day.length<half&&pi<ph.length)day.push(ph[pi++]);while(day.length<c&&li<la.length)day.push(la[li++]);sc[dstr]=day;}else sc[dstr]=[];d++;}return sc;}
+function bs(){const all=ga(),sc={};let ph=[],la=[],py=[];all.forEach(it=>{if(it.sid==='PH')ph.push(it);else if(it.sid==='LA')la.push(it);else py.push(it);});let d=0,pi=0,li=0,yi=0;const st=pl(SS);while(pi<ph.length||li<la.length||yi<py.length){const dt=new Date(st);dt.setDate(st.getDate()+d);const dstr=ds(dt);const c=gc(dstr);if(c>0){const day=[];const third=Math.ceil(c/3);while(day.length<third&&pi<ph.length)day.push(ph[pi++]);while(day.length<third*2&&li<la.length)day.push(la[li++]);while(day.length<c&&yi<py.length)day.push(py[yi++]);sc[dstr]=day;}else sc[dstr]=[];d++;}return sc;}
 const SC=bs();
 function ld(k){try{const v=localStorage.getItem(k);return v?JSON.parse(v):null;}catch{return null;}}
 function sv(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch{}}
-let STA={},SK={n:0,last:''},tab='today',off=0,cs=CUR[0].id,oc={};
-function init(){const s=ld('plla1');const sk=ld('plla2');if(s)STA=s;if(sk)SK=sk;render();}
+let STA={},SK={n:0,last:''},tab='today',off=0,cs=CUR[0].id,oc={},cm=0;
+function init(){const s=ld('plla1');const sk=ld('plla2');if(s)STA=s;if(sk)SK=sk;const now=new Date();cm=now.getFullYear()*12+now.getMonth();render();}
 function us(){const t=ts();const y=ds(new Date(pl(t).getTime()-86400000));if(SK.last===t)return;SK=SK.last===y?{n:SK.n+1,last:t}:{n:1,last:t};}
 function tg(id){STA[id]=!STA[id];us();sv('plla1',STA);sv('plla2',SK);render();}
 function ov(){const a=ga();const d=a.filter(i=>STA[i.id]).length;return{d,t:a.length,p:a.length?Math.round(d/a.length*100):0};}
@@ -176,9 +227,54 @@ function sp(sid){const a=ga().filter(i=>i.sid===sid);const d=a.filter(i=>STA[i.i
 function vd(){const d=new Date();d.setDate(d.getDate()+off);return ds(d);}
 function render(){
   const o=ov();const v=vd();const ti=SC[v]||[];const cap=gc(v);const td=ti.filter(i=>STA[i.id]).length;
-  document.getElementById('app').innerHTML=`<div class="header"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><div style="font-size:15px;font-weight:900"><span style="color:#0ea5e9">일반물리학</span><span style="color:#94a3b8;margin:0 4px">·</span><span style="color:#8b5cf6">선형대수학</span></div><div style="font-size:11px;color:#64748b">${SK.n}일 연속</div></div><div style="display:flex;align-items:center;gap:10px"><div style="flex:1;height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden"><div style="height:100%;width:${o.p}%;background:linear-gradient(90deg,#0ea5e9,#8b5cf6);border-radius:3px;transition:width .6s"></div></div><span style="font-size:12px;color:#3b82f6;font-weight:800;min-width:36px">${o.p}%</span><span style="font-size:11px;color:#94a3b8;min-width:50px;text-align:right">${o.d}/${o.t}</span></div></div><div class="tabs"><button class="tb ${tab==='today'?'on':''}" onclick="setTab('today')">📚 오늘</button><button class="tb ${tab==='toc'?'on':''}" onclick="setTab('toc')">📖 목차</button></div><div id="cnt"></div><div class="bb"><div class="bs"><div style="font-size:15px;font-weight:900;color:#10b981">${td}/${cap}</div><div style="font-size:9px;color:#94a3b8;margin-top:2px">오늘완료</div></div><div class="bs"><div style="font-size:15px;font-weight:900;color:#3b82f6">${o.p}%</div><div style="font-size:9px;color:#94a3b8;margin-top:2px">전체진행</div></div><div class="bs"><div style="font-size:15px;font-weight:900;color:#f59e0b">${SK.n}일</div><div style="font-size:9px;color:#94a3b8;margin-top:2px">연속학습</div></div><div class="bs"><div style="font-size:15px;font-weight:900;color:#94a3b8">${o.t-o.d}</div><div style="font-size:9px;color:#94a3b8;margin-top:2px">남은항목</div></div></div>`;
-  if(tab==='today')rT();else rC();
+  document.getElementById('app').innerHTML=`<div class="header"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><div style="font-size:15px;font-weight:900"><span style="color:#0ea5e9">일반물리학</span><span style="color:#94a3b8;margin:0 4px">·</span><span style="color:#8b5cf6">선형대수학</span><span style="color:#94a3b8;margin:0 4px">·</span><span style="color:#10b981">파이썬</span></div><div style="font-size:11px;color:#64748b">${SK.n}일 연속</div></div><div style="display:flex;align-items:center;gap:10px"><div style="flex:1;height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden"><div style="height:100%;width:${o.p}%;background:linear-gradient(90deg,#0ea5e9,#8b5cf6);border-radius:3px;transition:width .6s"></div></div><span style="font-size:12px;color:#3b82f6;font-weight:800;min-width:36px">${o.p}%</span><span style="font-size:11px;color:#94a3b8;min-width:50px;text-align:right">${o.d}/${o.t}</span></div></div><div class="tabs"><button class="tb ${tab==='today'?'on':''}" onclick="setTab('today')">📚 오늘</button><button class="tb ${tab==='toc'?'on':''}" onclick="setTab('toc')">📖 목차</button><button class="tb ${tab==='cal'?'on':''}" onclick="setTab('cal')">🗓 달력</button></div><div id="cnt"></div><div class="bb"><div class="bs"><div style="font-size:15px;font-weight:900;color:#10b981">${td}/${cap}</div><div style="font-size:9px;color:#94a3b8;margin-top:2px">오늘완료</div></div><div class="bs"><div style="font-size:15px;font-weight:900;color:#3b82f6">${o.p}%</div><div style="font-size:9px;color:#94a3b8;margin-top:2px">전체진행</div></div><div class="bs"><div style="font-size:15px;font-weight:900;color:#f59e0b">${SK.n}일</div><div style="font-size:9px;color:#94a3b8;margin-top:2px">연속학습</div></div><div class="bs"><div style="font-size:15px;font-weight:900;color:#94a3b8">${o.t-o.d}</div><div style="font-size:9px;color:#94a3b8;margin-top:2px">남은항목</div></div></div>`;
+  if(tab==='today')rT();else if(tab==='toc')rC();else rCal();
 }
+function rCal(){
+  const yr=Math.floor(cm/12);const mo=cm%12;
+  const first=new Date(yr,mo,1);const last=new Date(yr,mo+1,0);
+  const today=ts();
+  let h=`<div style="padding:14px 14px 8px;display:flex;align-items:center;justify-content:space-between">
+    <button class="nb" onclick="pm()">‹</button>
+    <div style="font-size:16px;font-weight:900;color:#1e293b">${yr}년 ${mo+1}월</div>
+    <button class="nb" onclick="nm()">›</button>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;padding:0 14px;margin-bottom:4px">`;
+  ['일','월','화','수','목','금','토'].forEach((d,i)=>{h+=`<div style="text-align:center;font-size:11px;font-weight:700;color:${i===0?'#ef4444':i===6?'#3b82f6':'#94a3b8'};padding:4px 0">${d}</div>`;});
+  h+=`</div><div style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;padding:0 14px">`;
+  const startDay=first.getDay();
+  for(let i=0;i<startDay;i++)h+=`<div></div>`;
+  for(let d=1;d<=last.getDate();d++){
+    const dstr=`${yr}-${String(mo+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const items=SC[dstr]||[];
+    const done=items.filter(i=>STA[i.id]).length;
+    const total=items.length;
+    const cap2=gc(dstr);
+    const isT=dstr===today;
+    const isSun=(new Date(yr,mo,d)).getDay()===0;
+    const isSat=(new Date(yr,mo,d)).getDay()===6;
+    const allDone=total>0&&done===total;
+    const someD=total>0&&done>0&&done<total;
+    const noStudy=cap2===0;
+    let bg=allDone?'#dcfce7':someD?'#fef9c3':isT?'#dbeafe':'#fff';
+    let border=isT?'2px solid #3b82f6':'1.5px solid #e2e8f0';
+    let tc=isSun?'#ef4444':isSat?'#3b82f6':'#1e293b';
+    h+=`<div onclick="goDay('${dstr}')" style="aspect-ratio:1;border-radius:10px;background:${bg};border:${border};display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;gap:2px">
+      <div style="font-size:13px;font-weight:700;color:${tc}">${d}</div>`;
+    if(noStudy){h+=`<div style="font-size:9px;color:#cbd5e1">휴식</div>`;}
+    else if(total>0){h+=`<div style="width:70%;height:3px;background:#e2e8f0;border-radius:2px;overflow:hidden"><div style="height:100%;width:${Math.round(done/total*100)}%;background:${allDone?'#10b981':'#3b82f6'};border-radius:2px"></div></div><div style="font-size:9px;color:#94a3b8">${done}/${total}</div>`;}
+    h+=`</div>`;
+  }
+  h+=`</div>`;
+  document.getElementById('cnt').innerHTML=h;
+}
+function goDay(dstr){
+  const today=ts();const d=pl(dstr);const t=pl(today);
+  off=Math.round((d-t)/86400000);
+  setTab('today');
+}
+function pm(){cm--;render();}
+function nm(){cm++;render();}
 function rT(){
   const v=vd();const ti=SC[v]||[];const cap=gc(v);const td=ti.filter(i=>STA[i.id]).length;
   const dow=pl(v).getDay();const isR=dow===0&&v!==SS;
