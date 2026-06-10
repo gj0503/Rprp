@@ -226,13 +226,13 @@ function bs(){
     if(c>0){
       const day=[];
       if(!phase1Done()){
-        // Phase1: PM 2강, KM 2강, PY 2강, LA 2강
+        // Phase1: PM 2강, KM 2강, PY 1강, LA 1강 = 6개
         let pmc=0;while(pmc<2&&pmi<pm.length){day.push(pm[pmi++]);pmc++;}
         let kmc=0;while(kmc<2&&kmi<km.length){day.push(km[kmi++]);kmc++;}
-        let pyc=0;while(pyc<2&&pyi<py.length){day.push(py[pyi++]);pyc++;}
-        let lac=0;while(lac<2&&lai<la.length){day.push(la[lai++]);lac++;}
+        let pyc=0;while(pyc<1&&pyi<py.length){day.push(py[pyi++]);pyc++;}
+        let lac=0;while(lac<1&&lai<la.length){day.push(la[lai++]);lac++;}
       } else {
-        // Phase2: PH쌍 2개, PY 2강, LA 2강
+        // Phase2: PH쌍 2개, PY 2강, LA 2강 = 6개
         let phc=0;while(phc<2&&phi<phPairs.length){phPairs[phi].forEach(it=>day.push(it));phi++;phc++;}
         let pyc=0;while(pyc<2&&pyi<py.length){day.push(py[pyi++]);pyc++;}
         let lac=0;while(lac<2&&lai<la.length){day.push(la[lai++]);lac++;}
