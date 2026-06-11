@@ -37,6 +37,48 @@ body{font-family:'Noto Sans KR','Malgun Gothic',sans-serif;background:#f8fafc;co
 <div class="app" id="app"><div style="display:flex;align-items:center;justify-content:center;height:200px;color:#3b82f6;font-size:14px">불러오는 중...</div></div>
 <script>
 const CUR=[
+{id:'CE',name:'제어공학',color:'#6366f1',info:'유니스터디 제어공학 · 29강',chapters:[
+  {id:'CE0',t:'OT',s:[{id:'CE00',n:'OT'}]},
+  {id:'CE1',t:'1~8강 · 블록선도·모델·라플라스',s:[
+    {id:'CE01',n:'1강 Block Diagram'},
+    {id:'CE02',n:'2강 Block diagram 문제풀이'},
+    {id:'CE03',n:'3강 Dynamic models(Plants) - 회로와 기계적 시스템'},
+    {id:'CE04',n:'4강 모델 분석 - 문제풀이'},
+    {id:'CE05',n:'5강 선형 시스템과 라플라스 변환'},
+    {id:'CE06',n:'6강 라플라스 변환의 특성, FVP, poles'},
+    {id:'CE07',n:'7강 System characteristics, Stability'},
+    {id:'CE08',n:'8강 3단원 문제풀이'},
+  ]},
+  {id:'CE2',t:'9~13강 · 피드백·PID',s:[
+    {id:'CE09',n:'9강 Feedback Controls'},
+    {id:'CE10',n:'10강 Sensitivity, System Types, PID 제어의 소개'},
+    {id:'CE11',n:'11강 PID controls'},
+    {id:'CE12',n:'12강 PID Controls - Tuning'},
+    {id:'CE13',n:'13강 4단원 문제풀이'},
+  ]},
+  {id:'CE3',t:'14~19강 · Root Locus',s:[
+    {id:'CE14',n:'14강 Root locus - Introduction'},
+    {id:'CE15',n:'15강 Root Locus - How to draw (1)'},
+    {id:'CE16',n:'16강 Root Locus - How to draw (2)'},
+    {id:'CE17',n:'17강 dynamic compensations'},
+    {id:'CE18',n:'18강 Root locus 문제풀이(1)'},
+    {id:'CE19',n:'19강 Root locus 문제풀이(2)'},
+  ]},
+  {id:'CE4',t:'20~24강 · Bode·Nyquist·안정도',s:[
+    {id:'CE20',n:'20강 Bode plots - shape (How can we relate to root locus?)'},
+    {id:'CE21',n:'21강 Nyquist plots'},
+    {id:'CE22',n:'22강 stability analysis & stability margins'},
+    {id:'CE23',n:'23강 Dynamic compensations / 6단원 문제풀이 (1)'},
+    {id:'CE24',n:'24강 6단원 문제풀이(2)'},
+  ]},
+  {id:'CE5',t:'25~29강 · 상태공간',s:[
+    {id:'CE25',n:'25강 State space design - Introduction (선대 review)'},
+    {id:'CE26',n:'26강 Controllability & Observability'},
+    {id:'CE27',n:'27강 Canonical forms & its block diagram'},
+    {id:'CE28',n:'28강 State Feedback Control & LQR'},
+    {id:'CE29',n:'29강 7단원 문제풀이'},
+  ]},
+]},
 {id:'PM',name:'내일은물리량',color:'#f97316',info:'내일은 물리량 기초 개념 · 19강',chapters:[
   {id:'PM0',t:'OT',s:[{id:'PM00',n:'OT'}]},
   {id:'PM1',t:'1~10강 · 운동·힘·에너지',s:[
@@ -186,16 +228,17 @@ function pl(s){const[y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d);}
 function ds(d){return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
 function ts(){return ds(new Date());}
 function fd(s){const d=pl(s);return `${d.getMonth()+1}/${d.getDate()} (${DK[d.getDay()]})`;}
-function gc(s){const w=pl(s).getDay();if(s===SS)return 6;return w===0?0:w===6?4:6;}
+function gc(s){const w=pl(s).getDay();if(s===SS)return 6;return w===0?0:6;}
 function bs(){
   const sc={};
   // PM, KM: 순서대로
-  let pm=[],km=[],py=[],la=[];
+  let pm=[],km=[],py=[],la=[],ce=[];
   CUR.forEach(sj=>{
     if(sj.id==='PM')sj.chapters.forEach(ch=>ch.s.forEach(s=>pm.push({id:s.id,n:s.n,sid:'PM',sname:'내일은물리량',cht:ch.t,color:'#f97316'})));
     if(sj.id==='KM')sj.chapters.forEach(ch=>ch.s.forEach(s=>km.push({id:s.id,n:s.n,sid:'KM',sname:'물아일체',cht:ch.t,color:'#ec4899'})));
     if(sj.id==='PY')sj.chapters.forEach(ch=>ch.s.forEach(s=>py.push({id:s.id,n:s.n,sid:'PY',sname:'파이썬',cht:ch.t,color:'#10b981'})));
     if(sj.id==='LA')sj.chapters.forEach(ch=>ch.s.forEach(s=>la.push({id:s.id,n:s.n,sid:'LA',sname:'선형대수학',cht:ch.t,color:'#8b5cf6'})));
+    if(sj.id==='CE')sj.chapters.forEach(ch=>ch.s.forEach(s=>ce.push({id:s.id,n:s.n,sid:'CE',sname:'제어공학',cht:ch.t,color:'#6366f1'})));
   });
   // PH: 개념+문풀 쌍
   const phCur=CUR.find(s=>s.id==='PH');
@@ -216,28 +259,35 @@ function bs(){
       if(next&&next.id.endsWith('p'))i+=2;else i++;
     }else{i++;}
   }
-  let d=0,pmi=0,kmi=0,phi=0,pyi=0,lai=0;
+  let d=0,pmi=0,kmi=0,phi=0,pyi=0,lai=0,cei=0;
   const st=pl(SS);
-  // PM+KM 먼저 소화, 그 다음 PH+PY+LA
   const phase1Done=()=>pmi>=pm.length&&kmi>=km.length;
-  while(!phase1Done()||phi<phPairs.length||pyi<py.length||lai<la.length){
+  while(!phase1Done()||phi<phPairs.length||pyi<py.length||lai<la.length||cei<ce.length){
     const dt=new Date(st);dt.setDate(st.getDate()+d);
     const dstr=ds(dt);const c=gc(dstr);
     if(c>0){
       const day=[];
       if(!phase1Done()){
-        // Phase1: PM 2강, KM 2강, PY 1강, LA 1강 = 6개
+        // Phase1: PM 2강, KM 2강, PY 1강, LA 1강 = 6개 (PM 소진시 KM으로 채움)
         let pmc=0;while(pmc<2&&pmi<pm.length){day.push(pm[pmi++]);pmc++;}
         let kmc=0;while(kmc<2&&kmi<km.length){day.push(km[kmi++]);kmc++;}
+        // PM 소진시 남은 자리 KM으로 채우기
+        while(day.length<4&&kmi<km.length){day.push(km[kmi++]);}
         let pyc=0;while(pyc<1&&pyi<py.length){day.push(py[pyi++]);pyc++;}
         let lac=0;while(lac<1&&lai<la.length){day.push(la[lai++]);lac++;}
+        // 그래도 6개 안되면 채우기
+        while(day.length<c&&kmi<km.length){day.push(km[kmi++]);}
+        while(day.length<c&&pyi<py.length){day.push(py[pyi++]);}
+        while(day.length<c&&lai<la.length){day.push(la[lai++]);}
       } else {
-        // Phase2: PH쌍 2개, PY 2강, LA 2강 = 6개
+        // Phase2: PH쌍 2개(~4항목), CE 1강, PY 1강 = 6개
         let phc=0;while(phc<2&&phi<phPairs.length){phPairs[phi].forEach(it=>day.push(it));phi++;phc++;}
-        let pyc=0;while(pyc<2&&pyi<py.length){day.push(py[pyi++]);pyc++;}
-        let lac=0;while(lac<2&&lai<la.length){day.push(la[lai++]);lac++;}
+        let cec=0;while(cec<1&&cei<ce.length){day.push(ce[cei++]);cec++;}
+        let pyc=0;while(pyc<1&&pyi<py.length){day.push(py[pyi++]);pyc++;}
+        let lac=0;while(lac<1&&lai<la.length){day.push(la[lai++]);lac++;}
         // 남은 자리
         while(day.length<c&&phi<phPairs.length){phPairs[phi].forEach(it=>day.push(it));phi++;}
+        while(day.length<c&&cei<ce.length)day.push(ce[cei++]);
         while(day.length<c&&lai<la.length)day.push(la[lai++]);
         while(day.length<c&&pyi<py.length)day.push(py[pyi++]);
       }
@@ -260,7 +310,7 @@ function sp(sid){const a=gaAll().filter(i=>i.sid===sid);const d=a.filter(i=>STA[
 function vd(){const d=new Date();d.setDate(d.getDate()+off);return ds(d);}
 function render(){
   const o=ov();const v=vd();const ti=SC[v]||[];const cap=gc(v);const td=ti.filter(i=>STA[i.id]).length;
-  document.getElementById('app').innerHTML=`<div class="header"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><div style="font-size:14px;font-weight:900"><span style="color:#f97316">물리량</span><span style="color:#94a3b8;margin:0 3px">·</span><span style="color:#ec4899">물아일체</span><span style="color:#94a3b8;margin:0 3px">·</span><span style="color:#0ea5e9">물리학</span><span style="color:#94a3b8;margin:0 3px">·</span><span style="color:#10b981">파이썬</span><span style="color:#94a3b8;margin:0 3px">·</span><span style="color:#8b5cf6">선대</span></div><div style="font-size:11px;color:#64748b">${SK.n}일 연속</div></div><div style="display:flex;align-items:center;gap:10px"><div style="flex:1;height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden"><div style="height:100%;width:${o.p}%;background:linear-gradient(90deg,#f97316,#8b5cf6);border-radius:3px;transition:width .6s"></div></div><span style="font-size:12px;color:#3b82f6;font-weight:800;min-width:36px">${o.p}%</span><span style="font-size:11px;color:#94a3b8;min-width:50px;text-align:right">${o.d}/${o.t}</span></div></div><div class="tabs"><button class="tb ${tab==='today'?'on':''}" onclick="setTab('today')">📚 오늘</button><button class="tb ${tab==='toc'?'on':''}" onclick="setTab('toc')">📖 목차</button><button class="tb ${tab==='cal'?'on':''}" onclick="setTab('cal')">🗓 달력</button></div><div id="cnt"></div><div class="bb"><div class="bs"><div style="font-size:15px;font-weight:900;color:#10b981">${td}/${cap}</div><div style="font-size:9px;color:#94a3b8;margin-top:2px">오늘완료</div></div><div class="bs"><div style="font-size:15px;font-weight:900;color:#3b82f6">${o.p}%</div><div style="font-size:9px;color:#94a3b8;margin-top:2px">전체진행</div></div><div class="bs"><div style="font-size:15px;font-weight:900;color:#f59e0b">${SK.n}일</div><div style="font-size:9px;color:#94a3b8;margin-top:2px">연속학습</div></div><div class="bs"><div style="font-size:15px;font-weight:900;color:#94a3b8">${o.t-o.d}</div><div style="font-size:9px;color:#94a3b8;margin-top:2px">남은항목</div></div></div>`;
+  document.getElementById('app').innerHTML=`<div class="header"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><div style="font-size:14px;font-weight:900"><span style="color:#f97316">물리량</span><span style="color:#94a3b8;margin:0 3px">·</span><span style="color:#ec4899">물아일체</span><span style="color:#94a3b8;margin:0 3px">·</span><span style="color:#0ea5e9">물리학</span><span style="color:#94a3b8;margin:0 3px">·</span><span style="color:#10b981">파이썬</span><span style="color:#94a3b8;margin:0 3px">·</span><span style="color:#8b5cf6">선대</span><span style="color:#94a3b8;margin:0 3px">·</span><span style="color:#6366f1">제어</span></div><div style="font-size:11px;color:#64748b">${SK.n}일 연속</div></div><div style="display:flex;align-items:center;gap:10px"><div style="flex:1;height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden"><div style="height:100%;width:${o.p}%;background:linear-gradient(90deg,#f97316,#8b5cf6);border-radius:3px;transition:width .6s"></div></div><span style="font-size:12px;color:#3b82f6;font-weight:800;min-width:36px">${o.p}%</span><span style="font-size:11px;color:#94a3b8;min-width:50px;text-align:right">${o.d}/${o.t}</span></div></div><div class="tabs"><button class="tb ${tab==='today'?'on':''}" onclick="setTab('today')">📚 오늘</button><button class="tb ${tab==='toc'?'on':''}" onclick="setTab('toc')">📖 목차</button><button class="tb ${tab==='cal'?'on':''}" onclick="setTab('cal')">🗓 달력</button></div><div id="cnt"></div><div class="bb"><div class="bs"><div style="font-size:15px;font-weight:900;color:#10b981">${td}/${cap}</div><div style="font-size:9px;color:#94a3b8;margin-top:2px">오늘완료</div></div><div class="bs"><div style="font-size:15px;font-weight:900;color:#3b82f6">${o.p}%</div><div style="font-size:9px;color:#94a3b8;margin-top:2px">전체진행</div></div><div class="bs"><div style="font-size:15px;font-weight:900;color:#f59e0b">${SK.n}일</div><div style="font-size:9px;color:#94a3b8;margin-top:2px">연속학습</div></div><div class="bs"><div style="font-size:15px;font-weight:900;color:#94a3b8">${o.t-o.d}</div><div style="font-size:9px;color:#94a3b8;margin-top:2px">남은항목</div></div></div>`;
   if(tab==='today')rT();else if(tab==='toc')rC();else rCal();
 }
 function rCal(){
@@ -295,7 +345,7 @@ function nm(){cm++;render();}
 function rT(){
   const v=vd();const ti=SC[v]||[];const cap=gc(v);const td=ti.filter(i=>STA[i.id]).length;
   const dow=pl(v).getDay();const isR=dow===0&&v!==SS;
-  const ml=isR?'😴 일요일 · 완전 휴식':dow===6?'📖 토요일 · 4항목':'💻 6항목';
+  const ml=isR?'😴 일요일 · 완전 휴식':'💻 6항목';
   const g={};ti.forEach(it=>{if(!g[it.sid])g[it.sid]={sname:it.sname,color:it.color,items:[]};g[it.sid].items.push(it);});
   let h=`<div style="display:flex;align-items:center;justify-content:center;gap:12px;padding:12px 16px 8px"><button class="nb" onclick="setOff(${off-1})">‹</button><div style="text-align:center;flex:1"><div style="font-size:16px;font-weight:900;color:#3b82f6">${fd(v)}</div><div style="font-size:11px;color:#64748b;margin-top:2px">${ml}</div>${off!==0?`<div style="font-size:11px;color:#3b82f6;cursor:pointer;margin-top:2px" onclick="setOff(0)">오늘로 이동</div>`:''}</div><button class="nb" onclick="setOff(${off+1})">›</button></div><div style="margin:0 14px 12px;background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:14px"><div style="display:flex;justify-content:space-between;margin-bottom:8px"><span style="font-size:11px;color:#64748b;font-weight:600">오늘 진행률 · ${td}/${cap}개 완료</span><span style="font-size:20px;font-weight:900;color:#10b981">${cap>0?Math.round(td/cap*100):0}%</span></div><div style="height:8px;background:#e2e8f0;border-radius:4px;overflow:hidden"><div style="height:100%;width:${cap>0?td/cap*100:0}%;background:linear-gradient(90deg,#10b981,#3b82f6);border-radius:4px;transition:width .4s"></div></div></div>`;
   if(isR){h+=`<div style="text-align:center;padding:40px 20px;color:#94a3b8;font-size:13px">😴 일요일은 완전 휴식</div>`;}
