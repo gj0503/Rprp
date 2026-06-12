@@ -37,46 +37,133 @@ body{font-family:'Noto Sans KR','Malgun Gothic',sans-serif;background:#f8fafc;co
 <div class="app" id="app"><div style="display:flex;align-items:center;justify-content:center;height:200px;color:#3b82f6;font-size:14px">불러오는 중...</div></div>
 <script>
 const CUR=[
-{id:'CE',name:'제어공학',color:'#6366f1',info:'유니스터디 제어공학 · 29강',chapters:[
-  {id:'CE0',t:'OT',s:[{id:'CE00',n:'OT'}]},
-  {id:'CE1',t:'1~8강 · 블록선도·모델·라플라스',s:[
-    {id:'CE01',n:'1강 Block Diagram'},
-    {id:'CE02',n:'2강 Block diagram 문제풀이'},
-    {id:'CE03',n:'3강 Dynamic models(Plants) - 회로와 기계적 시스템'},
-    {id:'CE04',n:'4강 모델 분석 - 문제풀이'},
-    {id:'CE05',n:'5강 선형 시스템과 라플라스 변환'},
-    {id:'CE06',n:'6강 라플라스 변환의 특성, FVP, poles'},
-    {id:'CE07',n:'7강 System characteristics, Stability'},
-    {id:'CE08',n:'8강 3단원 문제풀이'},
+{id:'MA',name:'미적분학',color:'#e11d48',info:'유니스터디 미적분학1 기본 · 111강',chapters:[
+  {id:'MA0',t:'OT',s:[{id:'MA00',n:'미적분학1 OT'}]},
+  {id:'MA1',t:'1~14강 · 함수',s:[
+    {id:'MA01',n:'1강 제1장 실수계&초등함수. 1.1 실수계 ①'},
+    {id:'MA02',n:'2강 1.1 실수계 ②'},
+    {id:'MA03',n:'3강 1.2 함수의 개념 및 종류 ①'},
+    {id:'MA04',n:'4강 1.2 함수의 개념 및 종류 ②'},
+    {id:'MA05',n:'5강 1.3 다항함수, 거듭제곱함수, 유리함수 및 대수함수'},
+    {id:'MA06',n:'6강 1.4 지수함수'},
+    {id:'MA07',n:'7강 1.5 로그함수'},
+    {id:'MA08',n:'8강 1.6 삼각함수 ①'},
+    {id:'MA09',n:'9강 1.6 삼각함수 ②'},
+    {id:'MA10',n:'10강 1.7 역삼각함수 ①-1'},
+    {id:'MA11',n:'11강 1.7 역삼각함수 ①-2'},
+    {id:'MA12',n:'12강 1.7 역삼각함수 ②'},
+    {id:'MA13',n:'13강 1.8 쌍곡선함수'},
+    {id:'MA14',n:'14강 1.9 역쌍곡선함수'},
   ]},
-  {id:'CE2',t:'9~13강 · 피드백·PID',s:[
-    {id:'CE09',n:'9강 Feedback Controls'},
-    {id:'CE10',n:'10강 Sensitivity, System Types, PID 제어의 소개'},
-    {id:'CE11',n:'11강 PID controls'},
-    {id:'CE12',n:'12강 PID Controls - Tuning'},
-    {id:'CE13',n:'13강 4단원 문제풀이'},
+  {id:'MA2',t:'15~18강 · 극한·연속',s:[
+    {id:'MA15',n:'15강 제2장 함수의 극한과 연속. 2.1 함수의 극한 ①'},
+    {id:'MA16',n:'16강 2.1 함수의 극한 ②'},
+    {id:'MA17',n:'17강 2.2 함수의 연속 ①'},
+    {id:'MA18',n:'18강 2.2 함수의 연속 ②'},
   ]},
-  {id:'CE3',t:'14~19강 · Root Locus',s:[
-    {id:'CE14',n:'14강 Root locus - Introduction'},
-    {id:'CE15',n:'15강 Root Locus - How to draw (1)'},
-    {id:'CE16',n:'16강 Root Locus - How to draw (2)'},
-    {id:'CE17',n:'17강 dynamic compensations'},
-    {id:'CE18',n:'18강 Root locus 문제풀이(1)'},
-    {id:'CE19',n:'19강 Root locus 문제풀이(2)'},
+  {id:'MA3',t:'19~28강 · 미분',s:[
+    {id:'MA19',n:'19강 제3장 함수의 미분. 3.1 미분계수와 도함수'},
+    {id:'MA20',n:'20강 3.1 미분계수와 도함수 문제풀이'},
+    {id:'MA21',n:'21강 3.2 도함수의 성질'},
+    {id:'MA22',n:'22강 3.3 합성함수의 미분'},
+    {id:'MA23',n:'23강 3.4 음함수미분법과 역함수의 미분'},
+    {id:'MA24',n:'24강 3.5 다항함수, 거듭제곱함수, 유리함수 및 대수함수의 미분'},
+    {id:'MA25',n:'25강 3.6 삼각함수와 역삼각함수의 미분'},
+    {id:'MA26',n:'26강 3.7 지수·로그함수의 미분 및 로그미분법 ①'},
+    {id:'MA27',n:'27강 3.7 지수·로그함수의 미분 및 로그미분법 ②'},
+    {id:'MA28',n:'28강 3.8 쌍곡선함수와 역쌍곡선함수의 미분'},
   ]},
-  {id:'CE4',t:'20~24강 · Bode·Nyquist·안정도',s:[
-    {id:'CE20',n:'20강 Bode plots - shape (How can we relate to root locus?)'},
-    {id:'CE21',n:'21강 Nyquist plots'},
-    {id:'CE22',n:'22강 stability analysis & stability margins'},
-    {id:'CE23',n:'23강 Dynamic compensations / 6단원 문제풀이 (1)'},
-    {id:'CE24',n:'24강 6단원 문제풀이(2)'},
+  {id:'MA4',t:'29~42강 · 미분의 응용',s:[
+    {id:'MA29',n:'29강 제4장 미분의 응용. 4.1 선형근사와 미분'},
+    {id:'MA30',n:'30강 4.2 뉴턴방법(Newtons Method)'},
+    {id:'MA31',n:'31강 4.3 평균값 정리'},
+    {id:'MA32',n:'32강 4.3 평균값 정리 문제풀이 ①'},
+    {id:'MA33',n:'33강 4.3 평균값 정리 문제풀이 ②'},
+    {id:'MA34',n:'34강 4.4 곡선의 개형 ①'},
+    {id:'MA35',n:'35강 4.4 곡선의 개형 ②'},
+    {id:'MA36',n:'36강 4.4 곡선의 개형 ③ 문제풀이'},
+    {id:'MA37',n:'37강 4.5 최댓값과 최솟값 ①'},
+    {id:'MA38',n:'38강 4.5 최댓값과 최솟값 ②'},
+    {id:'MA39',n:'39강 4.5 최댓값과 최솟값 ③'},
+    {id:'MA40',n:'40강 4.6 변화율(The Rate of Change)'},
+    {id:'MA41',n:'41강 4.7 로피탈 정리(L.Hospitals Rule)'},
+    {id:'MA42',n:'42강 4.8 곡률(Curvature)'},
   ]},
-  {id:'CE5',t:'25~29강 · 상태공간',s:[
-    {id:'CE25',n:'25강 State space design - Introduction (선대 review)'},
-    {id:'CE26',n:'26강 Controllability & Observability'},
-    {id:'CE27',n:'27강 Canonical forms & its block diagram'},
-    {id:'CE28',n:'28강 State Feedback Control & LQR'},
-    {id:'CE29',n:'29강 7단원 문제풀이'},
+  {id:'MA5',t:'43~61강 · 적분',s:[
+    {id:'MA43',n:'43강 제5장 함수의 적분. 5.1 부정적분'},
+    {id:'MA44',n:'44강 5.2 정적분 ①'},
+    {id:'MA45',n:'45강 5.2 정적분 ②'},
+    {id:'MA46',n:'46강 5.2 정적분 ③'},
+    {id:'MA47',n:'47강 5.3 정적분의 성질 ①'},
+    {id:'MA48',n:'48강 5.3 정적분의 성질 ②'},
+    {id:'MA49',n:'49강 5.3 정적분의 성질 ③'},
+    {id:'MA50',n:'50강 5.3 정적분의 성질 ④'},
+    {id:'MA51',n:'51강 5.4 치환적분 ①'},
+    {id:'MA52',n:'52강 5.4 치환적분 ②'},
+    {id:'MA53',n:'53강 5.5 부분적분'},
+    {id:'MA54',n:'54강 5.6 삼각함수의 적분 ①'},
+    {id:'MA55',n:'55강 5.6 삼각함수의 적분 ②'},
+    {id:'MA56',n:'56강 5.7 유리함수의 적분'},
+    {id:'MA57',n:'57강 5.8 수치적분'},
+    {id:'MA58',n:'58강 5.9 이상적분 ①'},
+    {id:'MA59',n:'59강 5.9 이상적분 ②'},
+    {id:'MA60',n:'60강 5.9 이상적분 문제풀이 ①'},
+    {id:'MA61',n:'61강 5.9 이상적분 문제풀이 ②'},
+  ]},
+  {id:'MA6',t:'62~73강 · 적분의 응용',s:[
+    {id:'MA62',n:'62강 제6장 적분의 응용. 6.1 곡선사이의 넓이'},
+    {id:'MA63',n:'63강 6.1 곡선사이의 넓이 문제풀이'},
+    {id:'MA64',n:'64강 6.2 회전체의 부피: 원반방법'},
+    {id:'MA65',n:'65강 6.2 회전체의 부피: 원반방법 문제풀이'},
+    {id:'MA66',n:'66강 6.3 회전체의 부피: 주면각 방법 ①'},
+    {id:'MA67',n:'67강 6.3 회전체의 부피: 주면각 방법 ②'},
+    {id:'MA68',n:'68강 6.4 곡선의 길이'},
+    {id:'MA69',n:'69강 6.4 곡선의 길이 문제풀이'},
+    {id:'MA70',n:'70강 6.5 회전면의 면적 ①'},
+    {id:'MA71',n:'71강 6.5 회전면의 면적 ②'},
+    {id:'MA72',n:'72강 6.6 무게중심과 파푸스정리 ①'},
+    {id:'MA73',n:'73강 6.6 무게중심과 파푸스정리 ②'},
+  ]},
+  {id:'MA7',t:'74~82강 · 매개곡선·극좌표',s:[
+    {id:'MA74',n:'74강 제7장 매개방정식과 극좌표. 7.1 매개곡선과 미분 ①'},
+    {id:'MA75',n:'75강 7.1 매개곡선과 미분 ②'},
+    {id:'MA76',n:'76강 7.2 매개곡선과 적분: 넓이, 곡선의 길이'},
+    {id:'MA77',n:'77강 7.2 매개곡선과 적분: 회전면의 면적'},
+    {id:'MA78',n:'78강 7.3 극좌표와 극곡선: 극좌표'},
+    {id:'MA79',n:'79강 7.3 극좌표와 극곡선: 극곡선 ①'},
+    {id:'MA80',n:'80강 7.3 극좌표와 극곡선: 극곡선 ②'},
+    {id:'MA81',n:'81강 7.4 극좌표에서의 미분과 적분: 미분'},
+    {id:'MA82',n:'82강 7.4 극좌표에서의 미분과 적분: 적분'},
+  ]},
+  {id:'MA8',t:'83~110강 · 무한급수',s:[
+    {id:'MA83',n:'83강 제8장 무한급수. 8.1 수열'},
+    {id:'MA84',n:'84강 8.1 수열 문제풀이'},
+    {id:'MA85',n:'85강 8.2 무한급수와 일반판정법'},
+    {id:'MA86',n:'86강 8.2 무한급수와 일반판정법 문제풀이 ①'},
+    {id:'MA87',n:'87강 8.2 무한급수와 일반판정법 문제풀이 ②'},
+    {id:'MA88',n:'88강 8.3 양항급수: 적분 판정법'},
+    {id:'MA89',n:'89강 8.3 양항급수: 적분 판정법 문제풀이 ①'},
+    {id:'MA90',n:'90강 8.3 양항급수: 적분 판정법 문제풀이 ②'},
+    {id:'MA91',n:'91강 8.4 양항급수: 비교판정법과 극한 비교판정법 - 비교판정법'},
+    {id:'MA92',n:'92강 8.4 양항급수: 비교판정법과 극한 비교판정법 - 극한 비교판정법'},
+    {id:'MA93',n:'93강 8.5 교대급수: 교대급수 판정법'},
+    {id:'MA94',n:'94강 8.5 교대급수: 교대급수 판정법 문제풀이'},
+    {id:'MA95',n:'95강 8.6 비판정법과 n제곱근판정법'},
+    {id:'MA96',n:'96강 8.6 비판정법과 n제곱근판정법 문제풀이 ①'},
+    {id:'MA97',n:'97강 8.6 비판정법과 n제곱근판정법 문제풀이 ②'},
+    {id:'MA98',n:'98강 제8장 무한급수 Summary: 무한급수의 수렴/발산 판단 전략'},
+    {id:'MA99',n:'99강 제9장 멱급수와 함수의 급수전개. 9.1 멱급수'},
+    {id:'MA100',n:'100강 9.1 멱급수 문제풀이 ①'},
+    {id:'MA101',n:'101강 9.1 멱급수 문제풀이 ②'},
+    {id:'MA102',n:'102강 9.1 멱급수 문제풀이 ③'},
+    {id:'MA103',n:'103강 9.2 멱급수의 연산 ①'},
+    {id:'MA104',n:'104강 9.2 멱급수의 연산 ②'},
+    {id:'MA105',n:'105강 9.2 멱급수의 연산 ③'},
+    {id:'MA106',n:'106강 9.3 테일러 급수와 매클로린 급수 ①'},
+    {id:'MA107',n:'107강 9.3 테일러 급수와 매클로린 급수 ②'},
+    {id:'MA108',n:'108강 9.3 테일러 급수와 매클로린 급수 ③'},
+    {id:'MA109',n:'109강 9.3 테일러 급수와 매클로린 급수 ④'},
+    {id:'MA110',n:'110강 9.3 테일러 급수와 매클로린 급수 ⑤ ▶종강'},
   ]},
 ]},
 {id:'PM',name:'내일은물리량',color:'#f97316',info:'내일은 물리량 기초 개념 · 19강',chapters:[
@@ -232,13 +319,13 @@ function gc(s){const w=pl(s).getDay();if(s===SS)return 6;return w===0?0:6;}
 function bs(){
   const sc={};
   // PM, KM: 순서대로
-  let pm=[],km=[],py=[],la=[],ce=[];
+  let pm=[],km=[],py=[],la=[],ma=[];
   CUR.forEach(sj=>{
     if(sj.id==='PM')sj.chapters.forEach(ch=>ch.s.forEach(s=>pm.push({id:s.id,n:s.n,sid:'PM',sname:'내일은물리량',cht:ch.t,color:'#f97316'})));
     if(sj.id==='KM')sj.chapters.forEach(ch=>ch.s.forEach(s=>km.push({id:s.id,n:s.n,sid:'KM',sname:'물아일체',cht:ch.t,color:'#ec4899'})));
     if(sj.id==='PY')sj.chapters.forEach(ch=>ch.s.forEach(s=>py.push({id:s.id,n:s.n,sid:'PY',sname:'파이썬',cht:ch.t,color:'#10b981'})));
     if(sj.id==='LA')sj.chapters.forEach(ch=>ch.s.forEach(s=>la.push({id:s.id,n:s.n,sid:'LA',sname:'선형대수학',cht:ch.t,color:'#8b5cf6'})));
-    if(sj.id==='CE')sj.chapters.forEach(ch=>ch.s.forEach(s=>ce.push({id:s.id,n:s.n,sid:'CE',sname:'제어공학',cht:ch.t,color:'#6366f1'})));
+    if(sj.id==='MA')sj.chapters.forEach(ch=>ch.s.forEach(s=>ma.push({id:s.id,n:s.n,sid:'MA',sname:'미적분학',cht:ch.t,color:'#e11d48'})));
   });
   // PH: 개념+문풀 쌍
   const phCur=CUR.find(s=>s.id==='PH');
@@ -259,10 +346,10 @@ function bs(){
       if(next&&next.id.endsWith('p'))i+=2;else i++;
     }else{i++;}
   }
-  let d=0,pmi=0,kmi=0,phi=0,pyi=0,lai=0,cei=0;
+  let d=0,pmi=0,kmi=0,phi=0,pyi=0,lai=0,mai=0;
   const st=pl(SS);
   const phase1Done=()=>pmi>=pm.length&&kmi>=km.length;
-  while(!phase1Done()||phi<phPairs.length||pyi<py.length||lai<la.length||cei<ce.length){
+  while(!phase1Done()||phi<phPairs.length||pyi<py.length||lai<la.length||mai<ma.length){
     const dt=new Date(st);dt.setDate(st.getDate()+d);
     const dstr=ds(dt);const c=gc(dstr);
     if(c>0){
@@ -280,14 +367,14 @@ function bs(){
         while(day.length<c&&pyi<py.length){day.push(py[pyi++]);}
         while(day.length<c&&lai<la.length){day.push(la[lai++]);}
       } else {
-        // Phase2: PH쌍 2개(~4항목), CE 1강, PY 1강 = 6개
+        // Phase2: PH쌍 2개, MA 1강, PY 1강, LA 1강
         let phc=0;while(phc<2&&phi<phPairs.length){phPairs[phi].forEach(it=>day.push(it));phi++;phc++;}
-        let cec=0;while(cec<1&&cei<ce.length){day.push(ce[cei++]);cec++;}
+        let mac=0;while(mac<1&&mai<ma.length){day.push(ma[mai++]);mac++;}
         let pyc=0;while(pyc<1&&pyi<py.length){day.push(py[pyi++]);pyc++;}
         let lac=0;while(lac<1&&lai<la.length){day.push(la[lai++]);lac++;}
         // 남은 자리
         while(day.length<c&&phi<phPairs.length){phPairs[phi].forEach(it=>day.push(it));phi++;}
-        while(day.length<c&&cei<ce.length)day.push(ce[cei++]);
+        while(day.length<c&&mai<ma.length)day.push(ma[mai++]);
         while(day.length<c&&lai<la.length)day.push(la[lai++]);
         while(day.length<c&&pyi<py.length)day.push(py[pyi++]);
       }
@@ -301,7 +388,7 @@ const SC=bs();
 function ld(k){try{const v=localStorage.getItem(k);return v?JSON.parse(v):null;}catch{return null;}}
 function sv(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch{}}
 let STA={},SK={n:0,last:''},tab='today',off=0,cs=CUR[0].id,oc={},cm=0;
-function init(){const s=ld('plla1');const sk=ld('plla2');if(s)STA=s;if(sk)SK=sk;const now=new Date();cm=now.getFullYear()*12+now.getMonth();render();}
+function init(){const s=ld('plla1');const sk=ld('plla2');if(s)STA=s;if(sk)SK=sk;const now=new Date();cm=now.getFullYear()*12+now.getMonth();loadRoad();loadGoals();render();}
 function us(){const t=ts();const y=ds(new Date(pl(t).getTime()-86400000));if(SK.last===t)return;SK=SK.last===y?{n:SK.n+1,last:t}:{n:1,last:t};}
 function tg(id){STA[id]=!STA[id];us();sv('plla1',STA);sv('plla2',SK);render();}
 function gaAll(){const a=[];CUR.forEach(sj=>sj.chapters.forEach(ch=>ch.s.forEach(s=>a.push({id:s.id,n:s.n,sid:sj.id,sname:sj.name,cht:ch.t,color:sj.color}))));return a;}
@@ -310,8 +397,8 @@ function sp(sid){const a=gaAll().filter(i=>i.sid===sid);const d=a.filter(i=>STA[
 function vd(){const d=new Date();d.setDate(d.getDate()+off);return ds(d);}
 function render(){
   const o=ov();const v=vd();const ti=SC[v]||[];const cap=gc(v);const td=ti.filter(i=>STA[i.id]).length;
-  document.getElementById('app').innerHTML=`<div class="header"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><div style="font-size:14px;font-weight:900"><span style="color:#f97316">물리량</span><span style="color:#94a3b8;margin:0 3px">·</span><span style="color:#ec4899">물아일체</span><span style="color:#94a3b8;margin:0 3px">·</span><span style="color:#0ea5e9">물리학</span><span style="color:#94a3b8;margin:0 3px">·</span><span style="color:#10b981">파이썬</span><span style="color:#94a3b8;margin:0 3px">·</span><span style="color:#8b5cf6">선대</span><span style="color:#94a3b8;margin:0 3px">·</span><span style="color:#6366f1">제어</span></div><div style="font-size:11px;color:#64748b">${SK.n}일 연속</div></div><div style="display:flex;align-items:center;gap:10px"><div style="flex:1;height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden"><div style="height:100%;width:${o.p}%;background:linear-gradient(90deg,#f97316,#8b5cf6);border-radius:3px;transition:width .6s"></div></div><span style="font-size:12px;color:#3b82f6;font-weight:800;min-width:36px">${o.p}%</span><span style="font-size:11px;color:#94a3b8;min-width:50px;text-align:right">${o.d}/${o.t}</span></div></div><div class="tabs"><button class="tb ${tab==='today'?'on':''}" onclick="setTab('today')">📚 오늘</button><button class="tb ${tab==='toc'?'on':''}" onclick="setTab('toc')">📖 목차</button><button class="tb ${tab==='cal'?'on':''}" onclick="setTab('cal')">🗓 달력</button></div><div id="cnt"></div><div class="bb"><div class="bs"><div style="font-size:15px;font-weight:900;color:#10b981">${td}/${cap}</div><div style="font-size:9px;color:#94a3b8;margin-top:2px">오늘완료</div></div><div class="bs"><div style="font-size:15px;font-weight:900;color:#3b82f6">${o.p}%</div><div style="font-size:9px;color:#94a3b8;margin-top:2px">전체진행</div></div><div class="bs"><div style="font-size:15px;font-weight:900;color:#f59e0b">${SK.n}일</div><div style="font-size:9px;color:#94a3b8;margin-top:2px">연속학습</div></div><div class="bs"><div style="font-size:15px;font-weight:900;color:#94a3b8">${o.t-o.d}</div><div style="font-size:9px;color:#94a3b8;margin-top:2px">남은항목</div></div></div>`;
-  if(tab==='today')rT();else if(tab==='toc')rC();else rCal();
+  document.getElementById('app').innerHTML=`<div class="header"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><div style="font-size:14px;font-weight:900"><span style="color:#f97316">물리량</span><span style="color:#94a3b8;margin:0 3px">·</span><span style="color:#ec4899">물아일체</span><span style="color:#94a3b8;margin:0 3px">·</span><span style="color:#0ea5e9">물리학</span><span style="color:#94a3b8;margin:0 3px">·</span><span style="color:#e11d48">미적분</span><span style="color:#94a3b8;margin:0 3px">·</span><span style="color:#10b981">파이썬</span><span style="color:#94a3b8;margin:0 3px">·</span><span style="color:#8b5cf6">선대</span><span style="color:#94a3b8;margin:0 3px">·</span><span style="color:#6366f1">제어</span></div><div style="font-size:11px;color:#64748b">${SK.n}일 연속</div></div><div style="display:flex;align-items:center;gap:10px"><div style="flex:1;height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden"><div style="height:100%;width:${o.p}%;background:linear-gradient(90deg,#f97316,#8b5cf6);border-radius:3px;transition:width .6s"></div></div><span style="font-size:12px;color:#3b82f6;font-weight:800;min-width:36px">${o.p}%</span><span style="font-size:11px;color:#94a3b8;min-width:50px;text-align:right">${o.d}/${o.t}</span></div></div><div class="tabs"><button class="tb ${tab==='today'?'on':''}" onclick="setTab('today')">📚 오늘</button><button class="tb ${tab==='dash'?'on':''}" onclick="setTab('dash')">📊 대시보드</button><button class="tb ${tab==='toc'?'on':''}" onclick="setTab('toc')">📖 목차</button><button class="tb ${tab==='road'?'on':''}" onclick="setTab('road')">🗺 로드맵</button><button class="tb ${tab==='goals'?'on':''}" onclick="setTab('goals')">🎯 목표</button></div><div id="cnt"></div><div class="bb"><div class="bs"><div style="font-size:15px;font-weight:900;color:#10b981">${td}/${cap}</div><div style="font-size:9px;color:#94a3b8;margin-top:2px">오늘완료</div></div><div class="bs"><div style="font-size:15px;font-weight:900;color:#3b82f6">${o.p}%</div><div style="font-size:9px;color:#94a3b8;margin-top:2px">전체진행</div></div><div class="bs"><div style="font-size:15px;font-weight:900;color:#f59e0b">${SK.n}일</div><div style="font-size:9px;color:#94a3b8;margin-top:2px">연속학습</div></div><div class="bs"><div style="font-size:15px;font-weight:900;color:#94a3b8">${o.t-o.d}</div><div style="font-size:9px;color:#94a3b8;margin-top:2px">남은항목</div></div></div>`;
+  if(tab==='today')rT();else if(tab==='dash')rDash();else if(tab==='toc')rC();else if(tab==='cal')rCal();else if(tab==='road')rRoad();else rGoals();
 }
 function rCal(){
   const yr=Math.floor(cm/12);const mo=cm%12;
@@ -342,6 +429,123 @@ function rCal(){
 function goDay(dstr){const today=ts();const d=pl(dstr);const t=pl(today);off=Math.round((d-t)/86400000);setTab('today');}
 function pm(){cm--;render();}
 function nm(){cm++;render();}
+
+function rDash(){
+  const today=ts();
+  const now=new Date();
+  // 이번주 월~일
+  const dow=now.getDay();
+  const weekStart=new Date(now);weekStart.setDate(now.getDate()-(dow===0?6:dow-1));
+  const weekDays=[];
+  for(let i=0;i<7;i++){const d=new Date(weekStart);d.setDate(weekStart.getDate()+i);weekDays.push(ds(d));}
+  // 이번주 달성률
+  let wTotal=0,wDone=0;
+  weekDays.forEach(d=>{
+    const items=SC[d]||[];
+    wTotal+=items.length;
+    wDone+=items.filter(i=>STA[i.id]).length;
+  });
+  const wPct=wTotal>0?Math.round(wDone/wTotal*100):0;
+  // 이번달
+  const yr=now.getFullYear();const mo=now.getMonth();
+  const daysInMonth=new Date(yr,mo+1,0).getDate();
+  let mTotal=0,mDone=0;
+  for(let d=1;d<=daysInMonth;d++){
+    const dstr=`${yr}-${String(mo+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const items=SC[dstr]||[];
+    mTotal+=items.length;
+    mDone+=items.filter(i=>STA[i.id]).length;
+  }
+  const mPct=mTotal>0?Math.round(mDone/mTotal*100):0;
+  // 전체
+  const o=ov();
+  // 과목별
+  const subjects=CUR.map(sj=>{const p=sp(sj.id);return{name:sj.name,color:sj.color,p:p.p,d:p.d,t:p.t};});
+  // 로드맵 진행
+  const rdTotal=ROAD.reduce((a,p)=>a+p.items.length,0);
+  const rdDone=ROAD.reduce((a,p)=>a+p.items.filter(i=>i.status==='done').length,0);
+  const rdDoing=ROAD.reduce((a,p)=>a+p.items.filter(i=>i.status==='doing').length,0);
+  // 연속학습
+  const streak=SK.n;
+
+  let h=`<div style="padding:12px 14px 6px;font-size:15px;font-weight:900;color:#1e293b">📊 대시보드</div>`;
+
+  // 핵심 지표
+  h+=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:0 14px 10px">
+    <div style="background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:12px;text-align:center">
+      <div style="font-size:22px;font-weight:900;color:#f59e0b">${streak}일</div>
+      <div style="font-size:10px;color:#94a3b8;margin-top:2px">🔥 연속학습</div>
+    </div>
+    <div style="background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:12px;text-align:center">
+      <div style="font-size:22px;font-weight:900;color:#3b82f6">${o.p}%</div>
+      <div style="font-size:10px;color:#94a3b8;margin-top:2px">📚 전체진행률</div>
+    </div>
+    <div style="background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:12px;text-align:center">
+      <div style="font-size:22px;font-weight:900;color:#10b981">${wPct}%</div>
+      <div style="font-size:10px;color:#94a3b8;margin-top:2px">📅 이번주 달성률</div>
+      <div style="font-size:9px;color:#cbd5e1;margin-top:1px">${wDone}/${wTotal}</div>
+    </div>
+    <div style="background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:12px;text-align:center">
+      <div style="font-size:22px;font-weight:900;color:#8b5cf6">${mPct}%</div>
+      <div style="font-size:10px;color:#94a3b8;margin-top:2px">🗓 이번달 달성률</div>
+      <div style="font-size:9px;color:#cbd5e1;margin-top:1px">${mDone}/${mTotal}</div>
+    </div>
+  </div>`;
+
+  // 이번주 달력
+  h+=`<div style="background:#fff;border:1px solid #e2e8f0;border-radius:14px;margin:0 14px 10px;padding:12px">
+    <div style="font-size:12px;font-weight:700;color:#64748b;margin-bottom:8px">이번주</div>
+    <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px">`;
+  const DK2=['월','화','수','목','금','토','일'];
+  weekDays.forEach((d,i)=>{
+    const items=SC[d]||[];const done=items.filter(x=>STA[x.id]).length;const total=items.length;
+    const isT=d===today;const pct=total>0?Math.round(done/total*100):0;
+    const allDone=total>0&&done===total;
+    const isSun=i===6;const isSat=i===5;
+    h+=`<div onclick="goDay('${d}')" style="cursor:pointer;text-align:center">
+      <div style="font-size:9px;font-weight:700;color:${isSun?'#ef4444':isSat?'#3b82f6':'#94a3b8'};margin-bottom:3px">${DK2[i]}</div>
+      <div style="aspect-ratio:1;border-radius:8px;background:${allDone?'#dcfce7':isT?'#dbeafe':'#f8fafc'};border:1.5px solid ${isT?'#3b82f6':allDone?'#10b981':'#e2e8f0'};display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px">
+        <div style="font-size:11px;font-weight:700;color:${isT?'#1d4ed8':allDone?'#059669':'#334155'}">${parseInt(d.split('-')[2])}</div>
+        ${total>0?`<div style="width:70%;height:2px;background:#e2e8f0;border-radius:1px;overflow:hidden"><div style="height:100%;width:${pct}%;background:${allDone?'#10b981':'#3b82f6'};border-radius:1px"></div></div>`:''}
+      </div>
+    </div>`;
+  });
+  h+=`</div></div>`;
+
+  // 과목별 진행률
+  h+=`<div style="background:#fff;border:1px solid #e2e8f0;border-radius:14px;margin:0 14px 10px;padding:12px">
+    <div style="font-size:12px;font-weight:700;color:#64748b;margin-bottom:10px">과목별 진행률</div>`;
+  subjects.forEach(s=>{
+    h+=`<div style="margin-bottom:8px">
+      <div style="display:flex;justify-content:space-between;margin-bottom:3px">
+        <span style="font-size:11px;font-weight:700;color:${s.color}">${s.name}</span>
+        <span style="font-size:11px;color:#94a3b8">${s.d}/${s.t} · ${s.p}%</span>
+      </div>
+      <div style="height:5px;background:#e2e8f0;border-radius:3px;overflow:hidden">
+        <div style="height:100%;width:${s.p}%;background:${s.color};border-radius:3px;transition:width .4s"></div>
+      </div>
+    </div>`;
+  });
+  h+=`</div>`;
+
+  // 로드맵 요약
+  h+=`<div style="background:#fff;border:1px solid #e2e8f0;border-radius:14px;margin:0 14px 10px;padding:12px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+      <div style="font-size:12px;font-weight:700;color:#64748b">🗺 로드맵 진행</div>
+      <div style="font-size:11px;color:#94a3b8">${rdDone}/${rdTotal}</div>
+    </div>
+    <div style="height:5px;background:#e2e8f0;border-radius:3px;overflow:hidden;margin-bottom:10px">
+      <div style="height:100%;width:${Math.round(rdDone/rdTotal*100)}%;background:linear-gradient(90deg,#10b981,#3b82f6);border-radius:3px"></div>
+    </div>
+    <div style="display:flex;gap:6px">
+      <div style="flex:1;background:#dcfce7;border-radius:8px;padding:6px;text-align:center"><div style="font-size:14px;font-weight:900;color:#10b981">${rdDone}</div><div style="font-size:9px;color:#64748b">완료</div></div>
+      <div style="flex:1;background:#dbeafe;border-radius:8px;padding:6px;text-align:center"><div style="font-size:14px;font-weight:900;color:#3b82f6">${rdDoing}</div><div style="font-size:9px;color:#64748b">진행중</div></div>
+      <div style="flex:1;background:#f1f5f9;border-radius:8px;padding:6px;text-align:center"><div style="font-size:14px;font-weight:900;color:#94a3b8">${rdTotal-rdDone-rdDoing}</div><div style="font-size:9px;color:#64748b">예정</div></div>
+    </div>
+  </div>`;
+
+  document.getElementById('cnt').innerHTML=h;
+}
 function rT(){
   const v=vd();const ti=SC[v]||[];const cap=gc(v);const td=ti.filter(i=>STA[i.id]).length;
   const dow=pl(v).getDay();const isR=dow===0&&v!==SS;
@@ -365,6 +569,227 @@ function setTab(t){tab=t;render();}
 function setOff(o){off=o;render();}
 function setCS(id){cs=id;oc={};render();}
 function tC(id){oc[id]=!oc[id];render();}
+
+const ROAD=[
+  {phase:'1단계 · 수학/물리',color:'#0ea5e9',items:[
+    {n:'일반물리학',status:'doing'},
+    {n:'미적분학',status:'todo'},
+    {n:'선형대수학',status:'doing'},
+    {n:'공업수학',status:'todo'},
+    {n:'확률/통계',status:'todo'},
+  ]},
+  {phase:'2단계 · 기계',color:'#f97316',items:[
+    {n:'정역학',status:'todo'},
+    {n:'동역학',status:'todo'},
+    {n:'재료역학',status:'todo'},
+  ]},
+  {phase:'3단계 · 전기/전자',color:'#f59e0b',items:[
+    {n:'전자공학 기초',status:'todo'},
+    {n:'회로이론',status:'todo'},
+  ]},
+  {phase:'4단계 · 프로그래밍',color:'#10b981',items:[
+    {n:'파이썬',status:'doing'},
+    {n:'C언어',status:'todo'},
+    {n:'C++',status:'todo'},
+    {n:'자료구조/알고리즘',status:'todo'},
+  ]},
+  {phase:'5단계 · 하드웨어',color:'#ec4899',items:[
+    {n:'아두이노',status:'todo'},
+    {n:'라즈베리파이',status:'todo'},
+    {n:'임베디드 C',status:'todo'},
+  ]},
+  {phase:'6단계 · 도구',color:'#64748b',items:[
+    {n:'MATLAB/Simulink',status:'todo'},
+    {n:'Git/GitHub',status:'todo'},
+    {n:'CAD (SolidWorks 등)',status:'todo'},
+  ]},
+  {phase:'7단계 · 제어/신호',color:'#6366f1',items:[
+    {n:'제어공학',status:'doing'},
+    {n:'신호처리',status:'todo'},
+  ]},
+  {phase:'8단계 · 로봇',color:'#8b5cf6',items:[
+    {n:'ROS',status:'todo'},
+    {n:'컴퓨터비전 (OpenCV/YOLO)',status:'todo'},
+    {n:'SLAM',status:'todo'},
+    {n:'로봇 운동학/동역학',status:'todo'},
+    {n:'로봇공학 실전 (엥지유니버스)',status:'todo'},
+  ]},
+];
+
+const STATUS_LABEL={done:'✅ 완료',doing:'🔄 진행중',todo:'⬜ 예정'};
+const STATUS_COLOR={done:'#10b981',doing:'#3b82f6',todo:'#94a3b8'};
+
+let roadEditing=false;
+
+function rRoad(){
+  const total=ROAD.reduce((a,p)=>a+p.items.length,0);
+  const done=ROAD.reduce((a,p)=>a+p.items.filter(i=>i.status==='done').length,0);
+  const doing=ROAD.reduce((a,p)=>a+p.items.filter(i=>i.status==='doing').length,0);
+  let h=`<div style="padding:14px 14px 8px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+      <div style="font-size:15px;font-weight:900;color:#1e293b">🗺 로봇공학 로드맵</div>
+      <div style="font-size:11px;color:#64748b">${done}/${total} 완료</div>
+    </div>
+    <div style="height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden;margin-bottom:12px">
+      <div style="height:100%;width:${Math.round(done/total*100)}%;background:linear-gradient(90deg,#10b981,#3b82f6);border-radius:3px;transition:width .4s"></div>
+    </div>
+    <div style="display:flex;gap:8px;margin-bottom:4px">
+      <div style="flex:1;background:#dcfce7;border-radius:10px;padding:8px;text-align:center"><div style="font-size:16px;font-weight:900;color:#10b981">${done}</div><div style="font-size:9px;color:#64748b">완료</div></div>
+      <div style="flex:1;background:#dbeafe;border-radius:10px;padding:8px;text-align:center"><div style="font-size:16px;font-weight:900;color:#3b82f6">${doing}</div><div style="font-size:9px;color:#64748b">진행중</div></div>
+      <div style="flex:1;background:#f1f5f9;border-radius:10px;padding:8px;text-align:center"><div style="font-size:16px;font-weight:900;color:#94a3b8">${total-done-doing}</div><div style="font-size:9px;color:#64748b">예정</div></div>
+    </div>
+  </div>`;
+  ROAD.forEach((phase,pi)=>{
+    const pdone=phase.items.filter(i=>i.status==='done').length;
+    h+=`<div class="card" style="margin-bottom:8px">
+      <div style="padding:12px 14px 8px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #f1f5f9">
+        <div style="width:8px;height:8px;border-radius:50%;background:${phase.color};flex-shrink:0"></div>
+        <span style="font-size:13px;font-weight:800;color:${phase.color};flex:1">${phase.phase}</span>
+        <span style="font-size:11px;color:#94a3b8">${pdone}/${phase.items.length}</span>
+      </div>`;
+    phase.items.forEach((item,ii)=>{
+      const sc=STATUS_COLOR[item.status];
+      const sl=STATUS_LABEL[item.status];
+      h+=`<div style="display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid #f8fafc;cursor:pointer" onclick="cycleStatus(${pi},${ii})">
+        <div style="width:8px;height:8px;border-radius:50%;background:${sc};flex-shrink:0"></div>
+        <span style="font-size:13px;color:${item.status==='done'?'#94a3b8':'#334155'};flex:1;text-decoration:${item.status==='done'?'line-through':'none'}">${item.n}</span>
+        <span style="font-size:10px;color:${sc};font-weight:700">${sl}</span>
+      </div>`;
+    });
+    h+=`</div>`;
+  });
+  document.getElementById('cnt').innerHTML=h;
+}
+
+function cycleStatus(pi,ii){
+  const order=['todo','doing','done'];
+  const cur=ROAD[pi].items[ii].status;
+  ROAD[pi].items[ii].status=order[(order.indexOf(cur)+1)%order.length];
+  saveRoad();
+  rRoad();
+}
+function saveRoad(){
+  const data=ROAD.map(p=>p.items.map(i=>i.status));
+  sv('plla3',data);
+}
+function loadRoad(){
+  const data=ld('plla3');
+  if(data)ROAD.forEach((p,pi)=>p.items.forEach((item,ii)=>{if(data[pi]&&data[pi][ii])item.status=data[pi][ii];}));
+}
+
+// ── GOALS ──
+const GOALS_KEY='plla4';
+let GOALS={
+  annual:[
+    {id:'ag1',title:'로봇공학 커리큘럼 1단계 완료',desc:'일반물리·선형대수·파이썬·제어공학 완료',done:false},
+    {id:'ag2',title:'로봇공학 커리큘럼 2단계 완료',desc:'정역학·동역학·재료역학·회로이론 완료',done:false},
+    {id:'ag3',title:'로봇공학 커리큘럼 3단계 완료',desc:'C언어·C++·아두이노·임베디드 완료',done:false},
+    {id:'ag4',title:'로봇공학 실전 프로젝트 완료',desc:'엥지유니버스 1단계 + ROS 프로젝트',done:false},
+  ],
+  monthly:[],
+  weekly:[],
+};
+let gTab='annual',editMode=false,editTarget=null;
+
+function loadGoals(){
+  const d=ld(GOALS_KEY);
+  if(d)GOALS=d;
+}
+function saveGoals(){sv(GOALS_KEY,GOALS);}
+
+function rGoals(){
+  const now=new Date();
+  const yr=now.getFullYear();
+  const mo=now.getMonth()+1;
+  const wk=Math.ceil(now.getDate()/7);
+
+  const ag=GOALS.annual;
+  const mg=GOALS.monthly.filter(g=>g.year===yr&&g.month===mo);
+  const wg=GOALS.weekly.filter(g=>g.year===yr&&g.month===mo&&g.week===wk);
+
+  const agD=ag.filter(g=>g.done).length;
+  const mgD=mg.filter(g=>g.done).length;
+  const wgD=wg.filter(g=>g.done).length;
+
+  let h=`<div style="padding:12px 14px 8px">
+    <div style="font-size:15px;font-weight:900;color:#1e293b;margin-bottom:10px">🎯 목표 관리</div>
+    <div style="display:flex;gap:6px;margin-bottom:12px">
+      <div style="flex:1;background:${gTab==='annual'?'#dbeafe':'#f1f5f9'};border-radius:10px;padding:8px;text-align:center;cursor:pointer;border:1.5px solid ${gTab==='annual'?'#3b82f6':'transparent'}" onclick="setGTab('annual')">
+        <div style="font-size:13px;font-weight:800;color:${gTab==='annual'?'#1d4ed8':'#64748b'}">연간</div>
+        <div style="font-size:10px;color:#94a3b8">${agD}/${ag.length}</div>
+      </div>
+      <div style="flex:1;background:${gTab==='monthly'?'#d1fae5':'#f1f5f9'};border-radius:10px;padding:8px;text-align:center;cursor:pointer;border:1.5px solid ${gTab==='monthly'?'#10b981':'transparent'}" onclick="setGTab('monthly')">
+        <div style="font-size:13px;font-weight:800;color:${gTab==='monthly'?'#059669':'#64748b'}">${mo}월</div>
+        <div style="font-size:10px;color:#94a3b8">${mgD}/${mg.length}</div>
+      </div>
+      <div style="flex:1;background:${gTab==='weekly'?'#fef3c7':'#f1f5f9'};border-radius:10px;padding:8px;text-align:center;cursor:pointer;border:1.5px solid ${gTab==='weekly'?'#f59e0b':'transparent'}" onclick="setGTab('weekly')">
+        <div style="font-size:13px;font-weight:800;color:${gTab==='weekly'?'#b45309':'#64748b'}">W${wk}</div>
+        <div style="font-size:10px;color:#94a3b8">${wgD}/${wg.length}</div>
+      </div>
+    </div>
+  </div>`;
+
+  if(gTab==='annual'){
+    h+=renderGoalList(ag,'annual','#3b82f6',yr,mo,wk);
+  } else if(gTab==='monthly'){
+    h+=renderGoalList(mg,'monthly','#10b981',yr,mo,wk);
+  } else {
+    h+=renderGoalList(wg,'weekly','#f59e0b',yr,mo,wk);
+  }
+  document.getElementById('cnt').innerHTML=h;
+}
+
+function renderGoalList(list,type,color,yr,mo,wk){
+  const label={annual:'연간 목표',monthly:`${mo}월 목표`,weekly:`W${wk} 주간 목표`}[type];
+  let h=`<div style="padding:0 14px 8px;display:flex;align-items:center;justify-content:space-between">
+    <span style="font-size:12px;font-weight:700;color:${color}">${label}</span>
+    <button onclick="addGoal('${type}',${yr},${mo},${wk})" style="background:${color};color:#fff;border:none;border-radius:8px;padding:5px 10px;font-size:11px;font-weight:700;cursor:pointer">+ 추가</button>
+  </div>`;
+  if(!list.length){
+    h+=`<div style="text-align:center;padding:30px 20px;color:#94a3b8;font-size:13px">목표를 추가해보세요!</div>`;
+  } else {
+    list.forEach((g,i)=>{
+      const idx=GOALS[type==='annual'?'annual':type].findIndex(x=>x.id===g.id);
+      h+=`<div class="card" style="margin-bottom:8px">
+        <div style="padding:12px 14px;display:flex;align-items:flex-start;gap:10px">
+          <div onclick="toggleGoal('${type}',${idx})" style="width:22px;height:22px;border-radius:7px;border:2px solid ${g.done?'#10b981':'#cbd5e1'};background:${g.done?'#10b981':'transparent'};display:flex;align-items:center;justify-content:center;font-size:12px;color:#fff;font-weight:900;flex-shrink:0;cursor:pointer;margin-top:1px">${g.done?'✓':''}</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:13px;font-weight:700;color:${g.done?'#94a3b8':'#1e293b'};text-decoration:${g.done?'line-through':'none'};line-height:1.4">${g.title}</div>
+            ${g.desc?`<div style="font-size:11px;color:#94a3b8;margin-top:3px">${g.desc}</div>`:''}
+          </div>
+          <button onclick="delGoal('${type}',${idx})" style="background:none;border:none;color:#cbd5e1;font-size:16px;cursor:pointer;padding:0;flex-shrink:0">×</button>
+        </div>
+      </div>`;
+    });
+  }
+  return h;
+}
+
+function setGTab(t){gTab=t;rGoals();}
+
+function addGoal(type,yr,mo,wk){
+  const title=prompt('목표를 입력하세요:');
+  if(!title)return;
+  const desc=prompt('설명 (선택, 건너뛰려면 취소):') || '';
+  const id='g'+Date.now();
+  const goal={id,title,desc,done:false};
+  if(type==='annual')GOALS.annual.push(goal);
+  else if(type==='monthly')GOALS.monthly.push({...goal,year:yr,month:mo});
+  else GOALS.weekly.push({...goal,year:yr,month:mo,week:wk});
+  saveGoals();rGoals();
+}
+
+function toggleGoal(type,idx){
+  const arr=GOALS[type==='annual'?'annual':type];
+  if(arr[idx])arr[idx].done=!arr[idx].done;
+  saveGoals();rGoals();
+}
+
+function delGoal(type,idx){
+  const arr=GOALS[type==='annual'?'annual':type];
+  if(arr[idx])arr.splice(idx,1);
+  saveGoals();rGoals();
+}
 init();
 </script>
 </body>
