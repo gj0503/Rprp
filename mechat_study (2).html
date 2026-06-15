@@ -290,16 +290,15 @@ const CUR=[
 ]},
 ];
 
-const SS='2026-05-31';
+const SS='2026-06-15';
 const DK=['일','월','화','수','목','금','토'];
 function pl(s){const[y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d);}
 function ds(d){return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
 function ts(){return ds(new Date());}
 function fd(s){const d=pl(s);return `${d.getMonth()+1}/${d.getDate()} (${DK[d.getDay()]})`;}
 function gc(s){const w=pl(s).getDay();if(s===SS)return 6;return w===0?0:6;}
-function bs(){
+function bs(sta){
   const sc={};
-  // PM, KM: 순서대로
   let pm=[],km=[],py=[],la=[],ma=[];
   CUR.forEach(sj=>{
     if(sj.id==='PM')sj.chapters.forEach(ch=>ch.s.forEach(s=>pm.push({id:s.id,n:s.n,sid:'PM',sname:'내일은물리량',cht:ch.t,color:'#f97316'})));
@@ -308,46 +307,71 @@ function bs(){
     if(sj.id==='LA')sj.chapters.forEach(ch=>ch.s.forEach(s=>la.push({id:s.id,n:s.n,sid:'LA',sname:'선형대수학',cht:ch.t,color:'#8b5cf6'})));
     if(sj.id==='MA')sj.chapters.forEach(ch=>ch.s.forEach(s=>ma.push({id:s.id,n:s.n,sid:'MA',sname:'미적분학',cht:ch.t,color:'#e11d48'})));
   });
+
+  // 완료된 항목은 과거 날짜에 역순으로 배치
+  const allDone=[];
+  [pm,km,py,la,ma].forEach(arr=>arr.forEach(it=>{if(sta&&sta[it.id])allDone.push(it);}));
+  if(allDone.length>0){
+    const pastSt=new Date(pl(SS));pastSt.setDate(pastSt.getDate()-1);
+    let di=allDone.length-1;let pd=0;
+    while(di>=0){
+      const dt=new Date(pastSt);dt.setDate(pastSt.getDate()-pd);
+      const dstr=ds(dt);const w=dt.getDay();
+      if(w!==0){
+        const day=[];
+        while(day.length<6&&di>=0){day.unshift(allDone[di--]);}
+        sc[dstr]=day;
+      }
+      pd++;if(pd>200)break;
+    }
+  }
+
+  // 미완료 항목은 오늘부터 배치
+  const pmT=pm.filter(it=>!sta||!sta[it.id]);
+  const kmT=km.filter(it=>!sta||!sta[it.id]);
+  const pyT=py.filter(it=>!sta||!sta[it.id]);
+  const laT=la.filter(it=>!sta||!sta[it.id]);
+  const maT=ma.filter(it=>!sta||!sta[it.id]);
+
   let d=0,pmi=0,kmi=0,pyi=0,lai=0,mai=0;
   const st=pl(SS);
-  const phase1Done=()=>pmi>=pm.length&&kmi>=km.length;
-  while(!phase1Done()||pyi<py.length||lai<la.length||mai<ma.length){
+  const phase1Done=()=>pmi>=pmT.length&&kmi>=kmT.length;
+  while(!phase1Done()||pyi<pyT.length||lai<laT.length||mai<maT.length){
     const dt=new Date(st);dt.setDate(st.getDate()+d);
     const dstr=ds(dt);const c=gc(dstr);
     if(c>0){
       const day=[];
       if(!phase1Done()){
-        // Phase1: PM 2강, KM 2강, PY 1강, LA 1강 = 6개
-        let pmc=0;while(pmc<2&&pmi<pm.length){day.push(pm[pmi++]);pmc++;}
-        let kmc=0;while(kmc<2&&kmi<km.length){day.push(km[kmi++]);kmc++;}
-        while(day.length<4&&kmi<km.length){day.push(km[kmi++]);}
-        let pyc=0;while(pyc<1&&pyi<py.length){day.push(py[pyi++]);pyc++;}
-        let lac=0;while(lac<1&&lai<la.length){day.push(la[lai++]);lac++;}
-        while(day.length<c&&kmi<km.length){day.push(km[kmi++]);}
-        while(day.length<c&&pyi<py.length){day.push(py[pyi++]);}
-        while(day.length<c&&lai<la.length){day.push(la[lai++]);}
+        let pmc=0;while(pmc<2&&pmi<pmT.length){day.push(pmT[pmi++]);pmc++;}
+        let kmc=0;while(kmc<2&&kmi<kmT.length){day.push(kmT[kmi++]);kmc++;}
+        while(day.length<4&&kmi<kmT.length){day.push(kmT[kmi++]);}
+        let pyc=0;while(pyc<1&&pyi<pyT.length){day.push(pyT[pyi++]);pyc++;}
+        let lac=0;while(lac<1&&lai<laT.length){day.push(laT[lai++]);lac++;}
+        while(day.length<c&&kmi<kmT.length){day.push(kmT[kmi++]);}
+        while(day.length<c&&pyi<pyT.length){day.push(pyT[pyi++]);}
+        while(day.length<c&&lai<laT.length){day.push(laT[lai++]);}
       } else {
-        // Phase2: MA 2강, PY 2강, LA 2강
-        let mac=0;while(mac<2&&mai<ma.length){day.push(ma[mai++]);mac++;}
-        let pyc=0;while(pyc<2&&pyi<py.length){day.push(py[pyi++]);pyc++;}
-        let lac=0;while(lac<2&&lai<la.length){day.push(la[lai++]);lac++;}
-        while(day.length<c&&mai<ma.length)day.push(ma[mai++]);
-        while(day.length<c&&lai<la.length)day.push(la[lai++]);
-        while(day.length<c&&pyi<py.length)day.push(py[pyi++]);
+        let mac=0;while(mac<2&&mai<maT.length){day.push(maT[mai++]);mac++;}
+        let pyc=0;while(pyc<2&&pyi<pyT.length){day.push(pyT[pyi++]);pyc++;}
+        let lac=0;while(lac<2&&lai<laT.length){day.push(laT[lai++]);lac++;}
+        while(day.length<c&&mai<maT.length)day.push(maT[mai++]);
+        while(day.length<c&&lai<laT.length)day.push(laT[lai++]);
+        while(day.length<c&&pyi<pyT.length)day.push(pyT[pyi++]);
       }
       sc[dstr]=day;
     }else sc[dstr]=[];
-    d++;
+    d++;if(d>1000)break;
   }
   return sc;
 }
-const SC=bs();
+
 function ld(k){try{const v=localStorage.getItem(k);return v?JSON.parse(v):null;}catch{return null;}}
 function sv(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch{}}
 let STA={},SK={n:0,last:''},tab='today',off=0,cs=CUR[0].id,oc={},cm=0;
-function init(){const s=ld('plla1');const sk=ld('plla2');if(s)STA=s;if(sk)SK=sk;const now=new Date();cm=now.getFullYear()*12+now.getMonth();loadRoad();loadGoals();render();}
+let SC={};
+function init(){const s=ld('plla1');const sk=ld('plla2');if(s)STA=s;if(sk)SK=sk;const now=new Date();cm=now.getFullYear()*12+now.getMonth();loadRoad();loadGoals();SC=bs(STA);render();}
 function us(){const t=ts();const y=ds(new Date(pl(t).getTime()-86400000));if(SK.last===t)return;SK=SK.last===y?{n:SK.n+1,last:t}:{n:1,last:t};}
-function tg(id){STA[id]=!STA[id];us();sv('plla1',STA);sv('plla2',SK);render();}
+function tg(id){STA[id]=!STA[id];us();sv('plla1',STA);sv('plla2',SK);SC=bs(STA);render();}
 function gaAll(){const a=[];CUR.forEach(sj=>sj.chapters.forEach(ch=>ch.s.forEach(s=>a.push({id:s.id,n:s.n,sid:sj.id,sname:sj.name,cht:ch.t,color:sj.color}))));return a;}
 function ov(){const a=gaAll();const d=a.filter(i=>STA[i.id]).length;return{d,t:a.length,p:a.length?Math.round(d/a.length*100):0};}
 function sp(sid){const a=gaAll().filter(i=>i.sid===sid);const d=a.filter(i=>STA[i.id]).length;return{d,t:a.length,p:a.length?Math.round(d/a.length*100):0};}
