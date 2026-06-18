@@ -3,774 +3,867 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-<title>일반물리학·선형대수학·파이썬</title>
+<title>MECHATRONICS STUDY</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Noto Sans KR','Malgun Gothic',sans-serif;background:#f8fafc;color:#1e293b;min-height:100vh}
-.app{max-width:520px;margin:0 auto;padding-bottom:80px}
-.header{background:rgba(248,250,252,.96);backdrop-filter:blur(16px);position:sticky;top:0;z-index:100;border-bottom:1px solid #e2e8f0;padding:12px 16px 10px}
-.tabs{display:flex;background:#f8fafc;border-bottom:1px solid #e2e8f0;position:sticky;top:60px;z-index:99}
-.tb{flex:1;padding:10px 0;text-align:center;font-size:11px;font-weight:700;cursor:pointer;background:none;border:none;border-bottom:2px solid transparent;color:#94a3b8}
-.tb.on{color:#3b82f6;border-bottom-color:#3b82f6}
-.card{background:#fff;border:1px solid #e2e8f0;border-radius:14px;margin:0 14px 8px;overflow:hidden}
-.item{display:flex;align-items:center;gap:10px;padding:11px 14px;border-bottom:1px solid #f1f5f9;cursor:pointer}
+:root{
+  --bg:#f0f2f5;
+  --s1:#ffffff;
+  --s2:#f5f7fa;
+  --s3:#eaecf0;
+  --border:#d8dde6;
+  --border2:#c4cad6;
+  --text:#1a2035;
+  --text2:#5a6580;
+  --text3:#9aa0b0;
+  --accent:#0066ff;
+  --accent2:#0044cc;
+  --green:#00a86b;
+  --yellow:#e6a000;
+  --orange:#e05000;
+  --red:#d42020;
+  --purple:#6633cc;
+}
+body{font-family:'SF Mono','Fira Code','Consolas',monospace;background:var(--bg);color:var(--text);min-height:100vh;font-size:13px}
+.app{max-width:520px;margin:0 auto;padding-bottom:84px}
+
+/* HEADER */
+.header{
+  background:var(--s1);
+  border-bottom:1px solid var(--border);
+  position:sticky;top:0;z-index:100;
+  padding:12px 16px;
+}
+.hdr-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.hdr-title{font-size:10px;font-weight:700;letter-spacing:.15em;color:var(--accent);text-transform:uppercase}
+.hdr-streak{font-size:10px;color:var(--text2);letter-spacing:.06em}
+.hdr-streak span{color:var(--yellow);font-weight:700}
+.prog-wrap{position:relative;height:20px;background:var(--s3);border:1px solid var(--border);overflow:hidden}
+.prog-fill{height:100%;background:var(--accent);opacity:.15;transition:width .6s}
+.prog-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:0 10px}
+.prog-label{font-size:9px;letter-spacing:.1em;color:var(--text2);text-transform:uppercase}
+.prog-val{font-size:11px;font-weight:700;color:var(--accent);letter-spacing:.06em}
+.prog-cnt{font-size:9px;color:var(--text3)}
+
+/* TABS */
+.tabs{display:flex;background:var(--s1);border-bottom:1px solid var(--border);position:sticky;top:66px;z-index:99}
+.tb{flex:1;padding:10px 0;text-align:center;font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;background:none;border:none;border-bottom:2px solid transparent;color:var(--text3);transition:all .2s}
+.tb.on{color:var(--accent);border-bottom-color:var(--accent)}
+
+/* SECTION LABEL */
+.sec{padding:14px 16px 6px;font-size:9px;font-weight:700;letter-spacing:.15em;color:var(--text3);text-transform:uppercase;display:flex;align-items:center;gap:8px}
+.sec::after{content:'';flex:1;height:1px;background:var(--border)}
+
+/* CARD */
+.card{background:var(--s1);border:1px solid var(--border);margin:0 14px 8px;overflow:hidden}
+.item{display:flex;align-items:center;gap:12px;padding:12px 14px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .1s}
 .item:last-child{border-bottom:none}
-.chk{width:22px;height:22px;border-radius:7px;border:2px solid #cbd5e1;background:transparent;display:flex;align-items:center;justify-content:center;font-size:12px;color:#fff;font-weight:900;flex-shrink:0}
-.chk.on{border-color:#10b981;background:#10b981}
-.st{display:flex;overflow-x:auto;gap:6px;padding:10px 14px;border-bottom:1px solid #e2e8f0;scrollbar-width:none}
-.stb{padding:6px 12px;border-radius:10px;font-size:11px;font-weight:700;color:#64748b;background:transparent;border:1px solid #e2e8f0;cursor:pointer;white-space:nowrap;flex-shrink:0}
-.ch{padding:13px 14px;display:flex;align-items:center;gap:10px;cursor:pointer}
-.cc2{width:20px;height:20px;border-radius:6px;background:#f1f5f9;border:1.5px solid #cbd5e1;display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff;flex-shrink:0}
-.cc2.dn{background:#10b981;border-color:#10b981}
-.cc2.pt{background:rgba(16,185,129,.15);border-color:#10b981}
-.cb{height:3px;background:#e2e8f0;overflow:hidden}
-.si{display:flex;align-items:center;gap:9px;padding:10px 14px 10px 44px;border-top:1px solid #f1f5f9;cursor:pointer}
-.sc2{width:16px;height:16px;border-radius:4px;border:2px solid #cbd5e1;background:transparent;display:flex;align-items:center;justify-content:center;font-size:9px;color:#fff;font-weight:900;flex-shrink:0}
-.sc2.on{border-color:#10b981;background:#10b981}
-.bb{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:520px;background:rgba(248,250,252,.97);backdrop-filter:blur(16px);border-top:1px solid #e2e8f0;display:flex;z-index:200}
-.bs{flex:1;padding:9px 0 13px;text-align:center;border-right:1px solid #e2e8f0}
+.item:active{background:var(--s2)}
+.chk{width:18px;height:18px;border:1px solid var(--border2);background:transparent;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--green);font-weight:700;flex-shrink:0;transition:all .15s}
+.chk.on{border-color:var(--green);background:rgba(0,230,118,.1)}
+
+/* SUBJECT TABS */
+.st{display:flex;overflow-x:auto;gap:0;border-bottom:1px solid var(--border);scrollbar-width:none}
+.stb{padding:8px 14px;font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);background:transparent;border:none;border-right:1px solid var(--border);cursor:pointer;white-space:nowrap;flex-shrink:0;transition:all .15s}
+.stb:last-child{border-right:none}
+
+/* CHAPTER */
+.ch{padding:12px 14px;display:flex;align-items:center;gap:10px;cursor:pointer;background:var(--s2)}
+.cc2{width:16px;height:16px;border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--green);flex-shrink:0}
+.cb{height:1px;background:var(--border)}
+.si{display:flex;align-items:center;gap:10px;padding:10px 14px 10px 44px;border-top:1px solid var(--border);cursor:pointer;transition:background .1s}
+.si:active{background:var(--s2)}
+.sc2{width:12px;height:12px;border:1px solid var(--border2);background:transparent;display:flex;align-items:center;justify-content:center;font-size:8px;color:var(--green);font-weight:700;flex-shrink:0;transition:all .15s}
+.sc2.on{border-color:var(--green);background:rgba(0,230,118,.1)}
+
+/* BOTTOM BAR */
+.bb{
+  position:fixed;bottom:0;left:50%;transform:translateX(-50%);
+  width:100%;max-width:520px;
+  background:var(--s1);border-top:1px solid var(--border);
+  display:flex;z-index:200;
+}
+.bs{flex:1;padding:10px 0 14px;text-align:center;border-right:1px solid var(--border)}
 .bs:last-child{border-right:none}
-.nb{width:34px;height:34px;border-radius:10px;background:#fff;border:1px solid #e2e8f0;color:#1e293b;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.bs-num{font-size:15px;font-weight:700;letter-spacing:.04em;margin-bottom:2px}
+.bs-lbl{font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--text3)}
+
+/* NAV */
+.nb{width:32px;height:32px;background:var(--s2);border:1px solid var(--border);color:var(--text2);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.nb:active{background:var(--s3);color:var(--accent)}
+
+/* GRID STATS */
+.stat-row{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);margin:0 14px 8px;border:1px solid var(--border)}
+.stat-cell{background:var(--s1);padding:14px;text-align:center}
+.stat-num{font-size:22px;font-weight:700;letter-spacing:.02em;margin-bottom:4px}
+.stat-lbl{font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--text3)}
+
+/* BAR */
+.bar-wrap{height:2px;background:var(--border);overflow:hidden;margin-top:6px}
+.bar-fill{height:100%;transition:width .4s}
+
+/* CAL DAY */
+.cal-day{aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;gap:2px;border:1px solid transparent;transition:all .1s}
+.cal-day:active{opacity:.7}
+
+/* PHASE TAG */
+.ptag{display:inline-block;font-size:8px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:2px 6px;border:1px solid;margin-right:6px}
 </style>
 </head>
 <body>
-<div class="app" id="app"><div style="display:flex;align-items:center;justify-content:center;height:200px;color:#3b82f6;font-size:14px">불러오는 중...</div></div>
+<div class="app" id="app"><div style="display:flex;align-items:center;justify-content:center;height:200px;color:var(--accent);font-size:11px;letter-spacing:.1em">LOADING...</div></div>
 <script>
 const CUR=[
-{id:'MA',name:'미적분학',color:'#e11d48',info:'유니스터디 미적분학1 기본 · 111강',chapters:[
-  {id:'MA0',t:'OT',s:[{id:'MA00',n:'미적분학1 OT'}]},
+{id:'PM',name:'내일은물리량',short:'PHY-1',color:'#ff6d00',info:'기초 고등물리 · 20강',phase:1,done_until:13,
+chapters:[
+  {id:'PM1',t:'1~10강 · 운동·힘·에너지',s:[
+    {id:'PM01',n:'1강. 운동의 표현'},{id:'PM02',n:'2강. 힘과 여러가지 운동'},
+    {id:'PM03',n:'3강. 등가속도 운동'},{id:'PM04',n:'4강. 운동의 법칙'},
+    {id:'PM05',n:'5강. 여러가지 힘과 운동 방정식'},{id:'PM06',n:'6강. 운동량과 충격량 (1)'},
+    {id:'PM07',n:'7강. 운동량과 충격량 (2)'},{id:'PM08',n:'8강. 역학적 에너지 보존 (1)'},
+    {id:'PM09',n:'9강. 역학적 에너지 보존 (2)'},{id:'PM10',n:'10강. 역학적 에너지 보존 (3)'},
+  ]},
+  {id:'PM2',t:'11~19강 · 열·상대성·파동 (후순위)',s:[
+    {id:'PM11',n:'11강. 에너지와 열 (1)'},{id:'PM12',n:'12강. 에너지와 열 (2)'},
+    {id:'PM13',n:'13강. 특수 상대성 이론 (1)'},{id:'PM14',n:'14강. 특수 상대성 이론 (2)'},
+    {id:'PM15',n:'15강. 물질의 전자기적 특성 (1)'},{id:'PM16',n:'16강. 물질의 전자기적 특성 (2)'},
+    {id:'PM17',n:'17강. 파동의 성질 (1)'},{id:'PM18',n:'18강. 파동의 성질 (2)'},
+    {id:'PM19',n:'19강. 파동의 성질 (3)'},
+  ]},
+]},
+{id:'KM',name:'물아일체',short:'PHY-2',color:'#ff4081',info:'강민웅 물아일체 · 63강',phase:1,done_until:16,
+chapters:[
+  {id:'KM1',t:'1~21강 · 역학 (우선)',s:[
+    {id:'KM01',n:'1강. 여러 가지 운동 개념설명'},{id:'KM02',n:'2강. 여러 가지 운동 개념확인 & 도구정리'},
+    {id:'KM03',n:'3강. 여러 가지 운동 필수기출'},{id:'KM04',n:'4강. 등가속도 운동 개념설명'},
+    {id:'KM05',n:'5강. 등가속도 운동 개념확인 & 도구정리'},{id:'KM06',n:'6강. 등가속도 운동 필수기출'},
+    {id:'KM07',n:'7강. 운동의 법칙 개념설명'},{id:'KM08',n:'8강. 운동의 법칙 개념확인 & 도구정리'},
+    {id:'KM09',n:'9강. 운동의 법칙 도구정리 & 필수기출'},{id:'KM10',n:'10강. 운동의 법칙'},
+    {id:'KM11',n:'11강. 운동량과 충격량 개념설명'},{id:'KM12',n:'12강. 운동량과 충격량 도구정리 & 필수기출'},
+    {id:'KM13',n:'13강. 운동량과 충격량 기출연습'},{id:'KM14',n:'14강. 역학적 에너지(1) 개념설명'},
+    {id:'KM15',n:'15강. 역학적 에너지(1) 개념확인'},{id:'KM16',n:'16강. 역학적 에너지(1) 도구정리 & 필수기출'},
+    {id:'KM17',n:'17강. 역학적 에너지(1) 기출연습'},{id:'KM18',n:'18강. 역학적 에너지(2) 개념설명'},
+    {id:'KM19',n:'19강. 역학적 에너지(2) 도구정리'},{id:'KM20',n:'20강. 역학적 에너지(2) 필수기출'},
+    {id:'KM21',n:'21강. 역학적 에너지(2) 기출연습'},
+  ]},
+  {id:'KM2',t:'22~63강 · 열·전자기·파동 (후순위)',s:[
+    {id:'KM22',n:'22강. 열과 역학법칙 개념설명'},{id:'KM23',n:'23강. 열과 역학법칙 개념확인'},
+    {id:'KM24',n:'24강. 열과 역학법칙 도구정리 & 필수기출'},{id:'KM25',n:'25강. 열과 역학법칙 기출연습'},
+    {id:'KM26',n:'26강. 특수 상대성 이론 개념설명'},{id:'KM27',n:'27강. 특수 상대성 이론 도구정리'},
+    {id:'KM28',n:'28강. 특수 상대성 이론 필수기출'},{id:'KM29',n:'29강. 특수 상대성 이론 기출연습'},
+    {id:'KM30',n:'30강. 질량과 에너지 개념설명'},{id:'KM31',n:'31강. 질량과 에너지 필수기출'},
+    {id:'KM32',n:'32강. 원자 구조와 전기력 개념설명'},{id:'KM33',n:'33강. 원자 구조와 전기력 도구정리 & 필수기출'},
+    {id:'KM34',n:'34강. 원자 구조와 전기력 기출연습'},{id:'KM35',n:'35강. 물질의 스펙트럼과 에너지 준위 개념설명'},
+    {id:'KM36',n:'36강. 물질의 스펙트럼 필수기출'},{id:'KM37',n:'37강. 고체의 에너지띠와 반도체 개념설명'},
+    {id:'KM38',n:'38강. 고체의 에너지띠와 반도체 개념설명2'},{id:'KM39',n:'39강. 고체의 에너지띠와 반도체 도구정리'},
+    {id:'KM40',n:'40강. 고체의 에너지띠와 반도체 기출연습'},{id:'KM41',n:'41강. 전류의 자기 작용 개념설명'},
+    {id:'KM42',n:'42강. 전류의 자기작용 도구정리 & 필수기출'},{id:'KM43',n:'43강. 전류의 자기작용 기출연습'},
+    {id:'KM44',n:'44강. 물질의 자성 개념설명 & 필수기출'},{id:'KM45',n:'45강. 물질의 자성 기출연습'},
+    {id:'KM46',n:'46강. 전자기 유도 개념설명'},{id:'KM47',n:'47강. 전자기 유도 도구정리 & 필수기출'},
+    {id:'KM48',n:'48강. 전자기 유도 기출연습'},{id:'KM49',n:'49강. 파동의 성질 개념설명'},
+    {id:'KM50',n:'50강. 파동의 성질 도구정리 & 필수기출'},{id:'KM51',n:'51강. 파동의 성질 기출연습'},
+    {id:'KM52',n:'52강. 전반사와 광통신'},{id:'KM53',n:'53강. 전반사와 광통신 기출연습'},
+    {id:'KM54',n:'54강. 전자기파의 종류와 이용'},{id:'KM55',n:'55강. 파동의 간섭 개념설명'},
+    {id:'KM56',n:'56강. 파동의 간섭 도구정리 & 필수기출'},{id:'KM57',n:'57강. 파동의 간섭 기출연습'},
+    {id:'KM58',n:'58강. 빛의 이중성 개념설명'},{id:'KM59',n:'59강. 빛의 이중성 개념설명 & 필수기출'},
+    {id:'KM60',n:'60강. 빛의 이중성 기출연습'},{id:'KM61',n:'61강. 물질의 이중성 개념설명 & 도구정리'},
+    {id:'KM62',n:'62강. 물질의 이중성 필수기출 & 기출연습'},{id:'KM63',n:'63강. 종강'},
+  ]},
+]},
+{id:'MA',name:'미분적분학1',short:'CALC',color:'#00d4ff',info:'유니스터디 미분적분학1 · 111강',phase:2,done_until:0,
+chapters:[
+  {id:'MA0',t:'OT',s:[{id:'MA00',n:'OT'}]},
   {id:'MA1',t:'1~14강 · 함수',s:[
-    {id:'MA01',n:'1강 제1장 실수계&초등함수. 1.1 실수계 ①'},
-    {id:'MA02',n:'2강 1.1 실수계 ②'},
-    {id:'MA03',n:'3강 1.2 함수의 개념 및 종류 ①'},
-    {id:'MA04',n:'4강 1.2 함수의 개념 및 종류 ②'},
-    {id:'MA05',n:'5강 1.3 다항함수, 거듭제곱함수, 유리함수 및 대수함수'},
-    {id:'MA06',n:'6강 1.4 지수함수'},
-    {id:'MA07',n:'7강 1.5 로그함수'},
-    {id:'MA08',n:'8강 1.6 삼각함수 ①'},
-    {id:'MA09',n:'9강 1.6 삼각함수 ②'},
-    {id:'MA10',n:'10강 1.7 역삼각함수 ①-1'},
-    {id:'MA11',n:'11강 1.7 역삼각함수 ①-2'},
-    {id:'MA12',n:'12강 1.7 역삼각함수 ②'},
-    {id:'MA13',n:'13강 1.8 쌍곡선함수'},
-    {id:'MA14',n:'14강 1.9 역쌍곡선함수'},
+    {id:'MA01',n:'1강. 실수계 & 초등함수 ①'},{id:'MA02',n:'2강. 실수계 ②'},
+    {id:'MA03',n:'3강. 함수의 개념 및 종류 ①'},{id:'MA04',n:'4강. 함수의 개념 및 종류 ②'},
+    {id:'MA05',n:'5강. 다항함수, 유리함수'},{id:'MA06',n:'6강. 지수함수'},
+    {id:'MA07',n:'7강. 로그함수'},{id:'MA08',n:'8강. 삼각함수 ①'},
+    {id:'MA09',n:'9강. 삼각함수 ②'},{id:'MA10',n:'10강. 역삼각함수 ①-1'},
+    {id:'MA11',n:'11강. 역삼각함수 ①-2'},{id:'MA12',n:'12강. 역삼각함수 ②'},
+    {id:'MA13',n:'13강. 쌍곡선함수'},{id:'MA14',n:'14강. 역쌍곡선함수'},
   ]},
   {id:'MA2',t:'15~18강 · 극한·연속',s:[
-    {id:'MA15',n:'15강 제2장 함수의 극한과 연속. 2.1 함수의 극한 ①'},
-    {id:'MA16',n:'16강 2.1 함수의 극한 ②'},
-    {id:'MA17',n:'17강 2.2 함수의 연속 ①'},
-    {id:'MA18',n:'18강 2.2 함수의 연속 ②'},
+    {id:'MA15',n:'15강. 함수의 극한 ①'},{id:'MA16',n:'16강. 함수의 극한 ②'},
+    {id:'MA17',n:'17강. 함수의 연속 ①'},{id:'MA18',n:'18강. 함수의 연속 ②'},
   ]},
   {id:'MA3',t:'19~28강 · 미분',s:[
-    {id:'MA19',n:'19강 제3장 함수의 미분. 3.1 미분계수와 도함수'},
-    {id:'MA20',n:'20강 3.1 미분계수와 도함수 문제풀이'},
-    {id:'MA21',n:'21강 3.2 도함수의 성질'},
-    {id:'MA22',n:'22강 3.3 합성함수의 미분'},
-    {id:'MA23',n:'23강 3.4 음함수미분법과 역함수의 미분'},
-    {id:'MA24',n:'24강 3.5 다항함수, 거듭제곱함수, 유리함수 및 대수함수의 미분'},
-    {id:'MA25',n:'25강 3.6 삼각함수와 역삼각함수의 미분'},
-    {id:'MA26',n:'26강 3.7 지수·로그함수의 미분 및 로그미분법 ①'},
-    {id:'MA27',n:'27강 3.7 지수·로그함수의 미분 및 로그미분법 ②'},
-    {id:'MA28',n:'28강 3.8 쌍곡선함수와 역쌍곡선함수의 미분'},
+    {id:'MA19',n:'19강. 미분계수와 도함수'},{id:'MA20',n:'20강. 미분계수와 도함수 문제풀이'},
+    {id:'MA21',n:'21강. 도함수의 성질'},{id:'MA22',n:'22강. 합성함수의 미분'},
+    {id:'MA23',n:'23강. 음함수미분법과 역함수의 미분'},{id:'MA24',n:'24강. 다항함수, 유리함수 미분'},
+    {id:'MA25',n:'25강. 삼각함수와 역삼각함수의 미분'},{id:'MA26',n:'26강. 지수·로그함수의 미분 ①'},
+    {id:'MA27',n:'27강. 지수·로그함수의 미분 ②'},{id:'MA28',n:'28강. 쌍곡선함수의 미분'},
   ]},
   {id:'MA4',t:'29~42강 · 미분의 응용',s:[
-    {id:'MA29',n:'29강 제4장 미분의 응용. 4.1 선형근사와 미분'},
-    {id:'MA30',n:'30강 4.2 뉴턴방법(Newtons Method)'},
-    {id:'MA31',n:'31강 4.3 평균값 정리'},
-    {id:'MA32',n:'32강 4.3 평균값 정리 문제풀이 ①'},
-    {id:'MA33',n:'33강 4.3 평균값 정리 문제풀이 ②'},
-    {id:'MA34',n:'34강 4.4 곡선의 개형 ①'},
-    {id:'MA35',n:'35강 4.4 곡선의 개형 ②'},
-    {id:'MA36',n:'36강 4.4 곡선의 개형 ③ 문제풀이'},
-    {id:'MA37',n:'37강 4.5 최댓값과 최솟값 ①'},
-    {id:'MA38',n:'38강 4.5 최댓값과 최솟값 ②'},
-    {id:'MA39',n:'39강 4.5 최댓값과 최솟값 ③'},
-    {id:'MA40',n:'40강 4.6 변화율(The Rate of Change)'},
-    {id:'MA41',n:'41강 4.7 로피탈 정리(L.Hospitals Rule)'},
-    {id:'MA42',n:'42강 4.8 곡률(Curvature)'},
+    {id:'MA29',n:'29강. 선형근사와 미분'},{id:'MA30',n:'30강. 뉴턴방법'},
+    {id:'MA31',n:'31강. 평균값 정리'},{id:'MA32',n:'32강. 평균값 정리 문제풀이 ①'},
+    {id:'MA33',n:'33강. 평균값 정리 문제풀이 ②'},{id:'MA34',n:'34강. 곡선의 개형 ①'},
+    {id:'MA35',n:'35강. 곡선의 개형 ②'},{id:'MA36',n:'36강. 곡선의 개형 ③ 문제풀이'},
+    {id:'MA37',n:'37강. 최댓값과 최솟값 ①'},{id:'MA38',n:'38강. 최댓값과 최솟값 ②'},
+    {id:'MA39',n:'39강. 최댓값과 최솟값 ③'},{id:'MA40',n:'40강. 변화율'},
+    {id:'MA41',n:'41강. 로피탈 정리'},{id:'MA42',n:'42강. 곡률'},
   ]},
   {id:'MA5',t:'43~61강 · 적분',s:[
-    {id:'MA43',n:'43강 제5장 함수의 적분. 5.1 부정적분'},
-    {id:'MA44',n:'44강 5.2 정적분 ①'},
-    {id:'MA45',n:'45강 5.2 정적분 ②'},
-    {id:'MA46',n:'46강 5.2 정적분 ③'},
-    {id:'MA47',n:'47강 5.3 정적분의 성질 ①'},
-    {id:'MA48',n:'48강 5.3 정적분의 성질 ②'},
-    {id:'MA49',n:'49강 5.3 정적분의 성질 ③'},
-    {id:'MA50',n:'50강 5.3 정적분의 성질 ④'},
-    {id:'MA51',n:'51강 5.4 치환적분 ①'},
-    {id:'MA52',n:'52강 5.4 치환적분 ②'},
-    {id:'MA53',n:'53강 5.5 부분적분'},
-    {id:'MA54',n:'54강 5.6 삼각함수의 적분 ①'},
-    {id:'MA55',n:'55강 5.6 삼각함수의 적분 ②'},
-    {id:'MA56',n:'56강 5.7 유리함수의 적분'},
-    {id:'MA57',n:'57강 5.8 수치적분'},
-    {id:'MA58',n:'58강 5.9 이상적분 ①'},
-    {id:'MA59',n:'59강 5.9 이상적분 ②'},
-    {id:'MA60',n:'60강 5.9 이상적분 문제풀이 ①'},
-    {id:'MA61',n:'61강 5.9 이상적분 문제풀이 ②'},
+    {id:'MA43',n:'43강. 부정적분'},{id:'MA44',n:'44강. 정적분 ①'},
+    {id:'MA45',n:'45강. 정적분 ②'},{id:'MA46',n:'46강. 정적분 ③'},
+    {id:'MA47',n:'47강. 정적분의 성질 ①'},{id:'MA48',n:'48강. 정적분의 성질 ②'},
+    {id:'MA49',n:'49강. 정적분의 성질 ③'},{id:'MA50',n:'50강. 정적분의 성질 ④'},
+    {id:'MA51',n:'51강. 치환적분 ①'},{id:'MA52',n:'52강. 치환적분 ②'},
+    {id:'MA53',n:'53강. 부분적분'},{id:'MA54',n:'54강. 삼각함수의 적분 ①'},
+    {id:'MA55',n:'55강. 삼각함수의 적분 ②'},{id:'MA56',n:'56강. 유리함수의 적분'},
+    {id:'MA57',n:'57강. 수치적분'},{id:'MA58',n:'58강. 이상적분 ①'},
+    {id:'MA59',n:'59강. 이상적분 ②'},{id:'MA60',n:'60강. 이상적분 문제풀이 ①'},
+    {id:'MA61',n:'61강. 이상적분 문제풀이 ②'},
   ]},
-  {id:'MA6',t:'62~73강 · 적분의 응용',s:[
-    {id:'MA62',n:'62강 제6장 적분의 응용. 6.1 곡선사이의 넓이'},
-    {id:'MA63',n:'63강 6.1 곡선사이의 넓이 문제풀이'},
-    {id:'MA64',n:'64강 6.2 회전체의 부피: 원반방법'},
-    {id:'MA65',n:'65강 6.2 회전체의 부피: 원반방법 문제풀이'},
-    {id:'MA66',n:'66강 6.3 회전체의 부피: 주면각 방법 ①'},
-    {id:'MA67',n:'67강 6.3 회전체의 부피: 주면각 방법 ②'},
-    {id:'MA68',n:'68강 6.4 곡선의 길이'},
-    {id:'MA69',n:'69강 6.4 곡선의 길이 문제풀이'},
-    {id:'MA70',n:'70강 6.5 회전면의 면적 ①'},
-    {id:'MA71',n:'71강 6.5 회전면의 면적 ②'},
-    {id:'MA72',n:'72강 6.6 무게중심과 파푸스정리 ①'},
-    {id:'MA73',n:'73강 6.6 무게중심과 파푸스정리 ②'},
+  {id:'MA6',t:'62~82강 · 적분의 응용·매개곡선',s:[
+    {id:'MA62',n:'62강. 곡선사이의 넓이'},{id:'MA63',n:'63강. 곡선사이의 넓이 문제풀이'},
+    {id:'MA64',n:'64강. 회전체의 부피: 원반방법'},{id:'MA65',n:'65강. 회전체의 부피 문제풀이'},
+    {id:'MA66',n:'66강. 회전체의 부피: 주면각 방법 ①'},{id:'MA67',n:'67강. 회전체의 부피: 주면각 방법 ②'},
+    {id:'MA68',n:'68강. 곡선의 길이'},{id:'MA69',n:'69강. 곡선의 길이 문제풀이'},
+    {id:'MA70',n:'70강. 회전면의 면적 ①'},{id:'MA71',n:'71강. 회전면의 면적 ②'},
+    {id:'MA72',n:'72강. 무게중심과 파푸스정리 ①'},{id:'MA73',n:'73강. 무게중심과 파푸스정리 ②'},
+    {id:'MA74',n:'74강. 매개곡선과 미분 ①'},{id:'MA75',n:'75강. 매개곡선과 미분 ②'},
+    {id:'MA76',n:'76강. 매개곡선과 적분'},{id:'MA77',n:'77강. 매개곡선과 적분: 회전면'},
+    {id:'MA78',n:'78강. 극좌표'},{id:'MA79',n:'79강. 극곡선 ①'},
+    {id:'MA80',n:'80강. 극곡선 ②'},{id:'MA81',n:'81강. 극좌표 미분'},
+    {id:'MA82',n:'82강. 극좌표 적분'},
   ]},
-  {id:'MA7',t:'74~82강 · 매개곡선·극좌표',s:[
-    {id:'MA74',n:'74강 제7장 매개방정식과 극좌표. 7.1 매개곡선과 미분 ①'},
-    {id:'MA75',n:'75강 7.1 매개곡선과 미분 ②'},
-    {id:'MA76',n:'76강 7.2 매개곡선과 적분: 넓이, 곡선의 길이'},
-    {id:'MA77',n:'77강 7.2 매개곡선과 적분: 회전면의 면적'},
-    {id:'MA78',n:'78강 7.3 극좌표와 극곡선: 극좌표'},
-    {id:'MA79',n:'79강 7.3 극좌표와 극곡선: 극곡선 ①'},
-    {id:'MA80',n:'80강 7.3 극좌표와 극곡선: 극곡선 ②'},
-    {id:'MA81',n:'81강 7.4 극좌표에서의 미분과 적분: 미분'},
-    {id:'MA82',n:'82강 7.4 극좌표에서의 미분과 적분: 적분'},
-  ]},
-  {id:'MA8',t:'83~110강 · 무한급수',s:[
-    {id:'MA83',n:'83강 제8장 무한급수. 8.1 수열'},
-    {id:'MA84',n:'84강 8.1 수열 문제풀이'},
-    {id:'MA85',n:'85강 8.2 무한급수와 일반판정법'},
-    {id:'MA86',n:'86강 8.2 무한급수와 일반판정법 문제풀이 ①'},
-    {id:'MA87',n:'87강 8.2 무한급수와 일반판정법 문제풀이 ②'},
-    {id:'MA88',n:'88강 8.3 양항급수: 적분 판정법'},
-    {id:'MA89',n:'89강 8.3 양항급수: 적분 판정법 문제풀이 ①'},
-    {id:'MA90',n:'90강 8.3 양항급수: 적분 판정법 문제풀이 ②'},
-    {id:'MA91',n:'91강 8.4 양항급수: 비교판정법과 극한 비교판정법 - 비교판정법'},
-    {id:'MA92',n:'92강 8.4 양항급수: 비교판정법과 극한 비교판정법 - 극한 비교판정법'},
-    {id:'MA93',n:'93강 8.5 교대급수: 교대급수 판정법'},
-    {id:'MA94',n:'94강 8.5 교대급수: 교대급수 판정법 문제풀이'},
-    {id:'MA95',n:'95강 8.6 비판정법과 n제곱근판정법'},
-    {id:'MA96',n:'96강 8.6 비판정법과 n제곱근판정법 문제풀이 ①'},
-    {id:'MA97',n:'97강 8.6 비판정법과 n제곱근판정법 문제풀이 ②'},
-    {id:'MA98',n:'98강 제8장 무한급수 Summary: 무한급수의 수렴/발산 판단 전략'},
-    {id:'MA99',n:'99강 제9장 멱급수와 함수의 급수전개. 9.1 멱급수'},
-    {id:'MA100',n:'100강 9.1 멱급수 문제풀이 ①'},
-    {id:'MA101',n:'101강 9.1 멱급수 문제풀이 ②'},
-    {id:'MA102',n:'102강 9.1 멱급수 문제풀이 ③'},
-    {id:'MA103',n:'103강 9.2 멱급수의 연산 ①'},
-    {id:'MA104',n:'104강 9.2 멱급수의 연산 ②'},
-    {id:'MA105',n:'105강 9.2 멱급수의 연산 ③'},
-    {id:'MA106',n:'106강 9.3 테일러 급수와 매클로린 급수 ①'},
-    {id:'MA107',n:'107강 9.3 테일러 급수와 매클로린 급수 ②'},
-    {id:'MA108',n:'108강 9.3 테일러 급수와 매클로린 급수 ③'},
-    {id:'MA109',n:'109강 9.3 테일러 급수와 매클로린 급수 ④'},
-    {id:'MA110',n:'110강 9.3 테일러 급수와 매클로린 급수 ⑤ ▶종강'},
+  {id:'MA7',t:'83~111강 · 무한급수',s:[
+    {id:'MA83',n:'83강. 수열'},{id:'MA84',n:'84강. 수열 문제풀이'},
+    {id:'MA85',n:'85강. 무한급수와 일반판정법'},{id:'MA86',n:'86강. 무한급수 문제풀이 ①'},
+    {id:'MA87',n:'87강. 무한급수 문제풀이 ②'},{id:'MA88',n:'88강. 적분 판정법'},
+    {id:'MA89',n:'89강. 적분 판정법 문제풀이 ①'},{id:'MA90',n:'90강. 적분 판정법 문제풀이 ②'},
+    {id:'MA91',n:'91강. 비교판정법'},{id:'MA92',n:'92강. 극한 비교판정법'},
+    {id:'MA93',n:'93강. 교대급수 판정법'},{id:'MA94',n:'94강. 교대급수 판정법 문제풀이'},
+    {id:'MA95',n:'95강. 비판정법과 n제곱근판정법'},{id:'MA96',n:'96강. 비판정법 문제풀이 ①'},
+    {id:'MA97',n:'97강. 비판정법 문제풀이 ②'},{id:'MA98',n:'98강. 무한급수 Summary'},
+    {id:'MA99',n:'99강. 멱급수'},{id:'MA100',n:'100강. 멱급수 문제풀이 ①'},
+    {id:'MA101',n:'101강. 멱급수 문제풀이 ②'},{id:'MA102',n:'102강. 멱급수 문제풀이 ③'},
+    {id:'MA103',n:'103강. 멱급수의 연산 ①'},{id:'MA104',n:'104강. 멱급수의 연산 ②'},
+    {id:'MA105',n:'105강. 멱급수의 연산 ③'},{id:'MA106',n:'106강. 테일러 급수 ①'},
+    {id:'MA107',n:'107강. 테일러 급수 ②'},{id:'MA108',n:'108강. 테일러 급수 ③'},
+    {id:'MA109',n:'109강. 테일러 급수 ④'},{id:'MA110',n:'110강. 테일러 급수 ⑤'},
+    {id:'MA111',n:'111강. 종강'},
   ]},
 ]},
-{id:'PM',name:'내일은물리량',color:'#f97316',info:'내일은 물리량 기초 개념 · 19강',chapters:[
-  {id:'PM0',t:'OT',s:[{id:'PM00',n:'OT'}]},
-  {id:'PM1',t:'1~10강 · 운동·힘·에너지',s:[
-    {id:'PM01',n:'1강. 01. 운동의 표현'},
-    {id:'PM02',n:'2강. 02. 힘과 여러가지 운동'},
-    {id:'PM03',n:'3강. 03. 등가속도 운동'},
-    {id:'PM04',n:'4강. 04. 운동의 법칙'},
-    {id:'PM05',n:'5강. 05. 여러가지 힘과 운동 방정식'},
-    {id:'PM06',n:'6강. 06. 운동량과 충격량 (1)'},
-    {id:'PM07',n:'7강. 06. 운동량과 충격량 (2)'},
-    {id:'PM08',n:'8강. 07. 역학적 에너지 보존 (1)'},
-    {id:'PM09',n:'9강. 07. 역학적 에너지 보존 (2)'},
-    {id:'PM10',n:'10강. 07. 역학적 에너지 보존 (3)'},
+{id:'LA',name:'선형대수학',short:'LINALG',color:'#7c4dff',info:'유니스터디 선형대수학 · 66강',phase:2,done_until:11,
+chapters:[
+  {id:'LA1',t:'1~6강 · 행렬과 연립방정식',s:[
+    {id:'LA01',n:'1강. 연립일차방정식과 행렬'},{id:'LA02',n:'2강. 연립일차방정식의 풀이'},
+    {id:'LA03',n:'3강. 행렬과 행렬연산'},{id:'LA04',n:'4강. 행렬의 연산 - 곱셈'},
+    {id:'LA05',n:'5강. 정방행렬의 대각합, 대각행렬'},{id:'LA06',n:'6강. 예제풀이'},
   ]},
-  {id:'PM2',t:'11~19강 · 열·상대성·파동',s:[
-    {id:'PM11',n:'11강. 08. 에너지와 열 (1)'},
-    {id:'PM12',n:'12강. 08. 에너지와 열 (2)'},
-    {id:'PM13',n:'13강. 09. 특수 상대성 이론 (1)'},
-    {id:'PM14',n:'14강. 09. 특수 상대성 이론 (2)'},
-    {id:'PM15',n:'15강. 10. 물질의 전자기적 특성 (1)'},
-    {id:'PM16',n:'16강. 10. 물질의 전자기적 특성 (2)'},
-    {id:'PM17',n:'17강. 11. 파동의 성질 (1)'},
-    {id:'PM18',n:'18강. 11. 파동의 성질 (2)'},
-    {id:'PM19',n:'19강. 11. 파동의 성질 (3)'},
+  {id:'LA2',t:'7~14강 · 역행렬·가우스',s:[
+    {id:'LA07',n:'7강. 역행렬과 그 성질'},{id:'LA08',n:'8강. 가우스 소거법, 기본 행 연산'},
+    {id:'LA09',n:'9강. 가우스 소거법 문제풀이'},{id:'LA10',n:'10강. 역행렬과 연립일차방정식 (1)'},
+    {id:'LA11',n:'11강. 역행렬과 연립일차방정식 (2)'},{id:'LA12',n:'12강. 블록행렬'},
+    {id:'LA13',n:'13강. 예제 5.2'},{id:'LA14',n:'14강. LU분해'},
   ]},
-]},
-{id:'KM',name:'물아일체',color:'#ec4899',info:'강민웅 물아일체 개념완성 · 62강',chapters:[
-  {id:'KM0',t:'OT',s:[{id:'KM00',n:'OT'}]},
-  {id:'KM1',t:'1~6강 · 여러가지 운동',s:[
-    {id:'KM01',n:'1강. [여러 가지 운동] 개념 설명 p.16~17'},
-    {id:'KM02',n:'2강. [여러 가지 운동] 개념 설명 & 개념 확인 & 도구정리 p.17~20'},
-    {id:'KM03',n:'3강. [여러 가지 운동] 필수 기출 & 기출 연습 p.22~25'},
-    {id:'KM04',n:'4강. [등가속도 운동 분석] 개념 설명 p.26~27'},
-    {id:'KM05',n:'5강. [등가속도 운동 분석] 개념 설명 & 개념 확인 & 도구 정리 p.28~31'},
-    {id:'KM06',n:'6강. [등가속도 운동 분석] 필수 기출 & 기출 연습 p.32~35'},
+  {id:'LA3',t:'15~20강 · 행렬식',s:[
+    {id:'LA15',n:'15강. 행렬식'},{id:'LA16',n:'16강. 행렬식의 성질'},
+    {id:'LA17',n:'17강. 블록행렬과 행렬식'},{id:'LA18',n:'18강. 수반행렬'},
+    {id:'LA19',n:'19강. 크래머공식'},{id:'LA20',n:'20강. 예제풀이'},
   ]},
-  {id:'KM2',t:'7~13강 · 운동의 법칙·운동량',s:[
-    {id:'KM07',n:'7강. [운동의 법칙] 개념 설명 p.36~40'},
-    {id:'KM08',n:'8강. [운동의 법칙] 개념확인 & 도구정리 p.41~43'},
-    {id:'KM09',n:'9강. [운동의 법칙] 도구정리 & 필수기출 p.44~47'},
-    {id:'KM10',n:'10강. [운동의 법칙] p.48~51'},
-    {id:'KM11',n:'11강. [운동량과 충격량] 개념설명 & 개념확인 p.52~56'},
-    {id:'KM12',n:'12강. [운동량과 충격량] 도구정리 & 필수기출 p.57~61'},
-    {id:'KM13',n:'13강. [운동량과 충격량] 기출연습 p.62~65'},
+  {id:'LA4',t:'21~35강 · 벡터공간·선형변환',s:[
+    {id:'LA21',n:'21강. 벡터공간'},{id:'LA22',n:'22강. 부분공간'},
+    {id:'LA23',n:'23강. 문제풀이'},{id:'LA24',n:'24강. 기저와 차원'},
+    {id:'LA25',n:'25강. 기저와 차원 2'},{id:'LA26',n:'26강. 표준 기저, 좌표벡터'},
+    {id:'LA27',n:'27강. 예제풀이'},{id:'LA28',n:'28강. 행공간과 열공간 (1)'},
+    {id:'LA29',n:'29강. 행공간과 열공간 (2)'},{id:'LA30',n:'30강. 가역행렬과 계수'},
+    {id:'LA31',n:'31강. 선형변환'},{id:'LA32',n:'32강. 선형사상의 기본성질'},
+    {id:'LA33',n:'33강. 선형사상 주요관련 정리'},{id:'LA34',n:'34강. 선형사상과 행렬'},
+    {id:'LA35',n:'35강. 벡터공간에서 선형사상의 행렬표현'},
   ]},
-  {id:'KM3',t:'14~21강 · 역학적 에너지',s:[
-    {id:'KM14',n:'14강. [역학적 에너지(1)] 개념설명 p.66~67'},
-    {id:'KM15',n:'15강. [역학적 에너지(1)] 개념설명 & 개념확인 p.66~72'},
-    {id:'KM16',n:'16강. [역학적 에너지(1)] 도구정리 & 필수기출 p.73~77'},
-    {id:'KM17',n:'17강. [역학적 에너지(1)] 기출연습 p.78~81'},
-    {id:'KM18',n:'18강. [역학적 에너지(2)] 개념설명 & 개념확인 p.82~86'},
-    {id:'KM19',n:'19강. [역학적 에너지(2)] 도구정리 p.87~90'},
-    {id:'KM20',n:'20강. [역학적 에너지(2)] 도구정리 & 필수기출 p.90~93'},
-    {id:'KM21',n:'21강. [역학적 에너지(2)] 기출연습 p.94~97'},
+  {id:'LA5',t:'36~52강 · 직교화·고윳값',s:[
+    {id:'LA36',n:'36강. 예제풀이'},{id:'LA37',n:'37강. 직교변환의 행렬'},
+    {id:'LA38',n:'38강. 예제풀이'},{id:'LA39',n:'39강. 사영변환'},
+    {id:'LA40',n:'40강. 예제풀이'},{id:'LA41',n:'41강. 기저의 변환과 행렬의 닮음'},
+    {id:'LA42',n:'42강. 행렬의 닮음'},{id:'LA43',n:'43강. 내적공간과 직교화'},
+    {id:'LA44',n:'44강. 기본적인 내적공간의 몇가지 예'},{id:'LA45',n:'45강. 직교여공간'},
+    {id:'LA46',n:'46강. 노름 공간 & 수반사상'},{id:'LA47',n:'47강. 예제풀이 (p.130)'},
+    {id:'LA48',n:'48강. 예제풀이 (p.131)'},{id:'LA49',n:'49강. 그람-슈미트 직교화과정 (1)'},
+    {id:'LA50',n:'50강. 그람-슈미트 직교화과정 (2)'},{id:'LA51',n:'51강. 예제풀이'},
+    {id:'LA52',n:'52강. 최소제곱문제'},
   ]},
-  {id:'KM4',t:'22~29강 · 열과 역학',s:[
-    {id:'KM22',n:'22강. [열과 역학법칙] 개념설명 p.98~100'},
-    {id:'KM23',n:'23강. [열과 역학법칙] 개념설명 & 개념확인 p.101~104'},
-    {id:'KM24',n:'24강. [열과 역학법칙] 도구정리 & 필수기출 p.105~109'},
-    {id:'KM25',n:'25강. [열과 역학법칙] 기출연습 p.110~113'},
-    {id:'KM26',n:'26강. [특수 상대성 이론] 개념설명 p.114~117'},
-    {id:'KM27',n:'27강. [특수 상대성 이론] 개념설명 & 도구정리 p.118~121'},
-    {id:'KM28',n:'28강. [특수 상대성 이론] 필수기출 p.122~123'},
-    {id:'KM29',n:'29강. [특수 상대성 이론] 기출연습 p.124~127'},
-  ]},
-  {id:'KM5',t:'30~40강 · 질량에너지·원자',s:[
-    {id:'KM30',n:'30강. [질량과 에너지] 개념설명 p.128~133'},
-    {id:'KM31',n:'31강. [질량과 에너지] 필수기출 & 기출연습 p.134~137'},
-    {id:'KM32',n:'32강. [원자 구조와 전기력] 개념설명 & 도구정리 p.140~145'},
-    {id:'KM33',n:'33강. [원자 구조와 전기력] 도구정리 & 필수기출 p.146~149'},
-    {id:'KM34',n:'34강. [원자 구조와 전기력] 기술연습 p.150~153'},
-    {id:'KM35',n:'35강. [물질의 스펙트럼과 에너지 준위] 개념설명 p.154~156'},
-    {id:'KM36',n:'36강. [물질의 스펙트럼과 에너지 준위] 필수기출 & 기출연습 p.158~161'},
-    {id:'KM37',n:'37강. [고체의 에너지띠와 반도체] 개념설명 p.162~164'},
-    {id:'KM38',n:'38강. [고체의 에너지띠와 반도체] 개념설명 p.165~167'},
-    {id:'KM39',n:'39강. [고체의 에너지띠와 반도체] 도구정리 & 필수기출 p.169~173'},
-    {id:'KM40',n:'40강. [고체의 에너지띠와 반도체] 기출연습 p.174~177'},
-  ]},
-  {id:'KM6',t:'41~54강 · 전류·파동·빛',s:[
-    {id:'KM41',n:'41강. [전류의 자기 작용] 개념설명 & 도구정리 p.178~183'},
-    {id:'KM42',n:'42강. [전류의 자기작용] 도구정리 & 필수기출 p.184~187'},
-    {id:'KM43',n:'43강. [전류의 자기작용] 기출연습 p.188~192'},
-    {id:'KM44',n:'44강. [물질의 자성] 개념설명 & 필수기출 p.194~198'},
-    {id:'KM45',n:'45강. [물질의 자성] 기출연습 p.200~201'},
-    {id:'KM46',n:'46강. [전자기 유도] 개념설명 p.202~206'},
-    {id:'KM47',n:'47강. [전자기 유도] 도구 정리 & 필수 기출 p.208~211'},
-    {id:'KM48',n:'48강. [전자기 유도] 기출 연습 p.212~217'},
-    {id:'KM49',n:'49강. [파동의 성질] 개념설명 p.220~223'},
-    {id:'KM50',n:'50강. [파동의 성질] 개념설명 & 도구정리 & 필수기출 p.222~229'},
-    {id:'KM51',n:'51강. [파동의 성질] 기출연습 p.230~233'},
-    {id:'KM52',n:'52강. [전반사와 광통신] 개념설명 & 도구정리 & 필수기출 p.234~239'},
-    {id:'KM53',n:'53강. [전반사와 광통신] 기출연습 p.240~241'},
-    {id:'KM54',n:'54강. [전자기파의 종류와 이용] 개념설명 & 필수기출 & 기출연습 p.242~247'},
-  ]},
-  {id:'KM7',t:'55~62강 · 빛의 이중성',s:[
-    {id:'KM55',n:'55강. [파동의 간섭] 개념설명 p.248~252'},
-    {id:'KM56',n:'56강. [파동의 간섭] 도구정리 & 필수기출 p.255~259'},
-    {id:'KM57',n:'57강. [파동의 간섭] 기출연습 p.260~263'},
-    {id:'KM58',n:'58강. [빛의 이중성] 개념설명 p.264~266'},
-    {id:'KM59',n:'59강. [빛의 이중성] 개념설명 & 필수기출 p.266~271'},
-    {id:'KM60',n:'60강. [빛의 이중성] 기출연습 p.272~273'},
-    {id:'KM61',n:'61강. [물질의 이중성] 개념설명 & 도구정리 p.274~279'},
-    {id:'KM62',n:'62강. [물질의 이중성] 필수기출 & 기출연습 p.280~283'},
+  {id:'LA6',t:'53~66강 · 대각화·이차형식',s:[
+    {id:'LA53',n:'53강. 고윳값과 대각화'},{id:'LA54',n:'54강. 고윳값과 고유벡터의 기본성질'},
+    {id:'LA55',n:'55강. 예제풀이 (1)'},{id:'LA56',n:'56강. 예제풀이 (2)'},
+    {id:'LA57',n:'57강. 예제풀이 (3)'},{id:'LA58',n:'58강. 예제풀이 (4)'},
+    {id:'LA59',n:'59강. 예제풀이 (5)'},{id:'LA60',n:'60강. 대칭행렬과 직교대각화'},
+    {id:'LA61',n:'61강. 예제풀이'},{id:'LA62',n:'62강. 케일리 해밀턴 정리'},
+    {id:'LA63',n:'63강. 행렬지수'},{id:'LA64',n:'64강. 이차형식'},
+    {id:'LA65',n:'65강. 이차곡면, 촐레스키 분해'},{id:'LA66',n:'66강. 종강'},
   ]},
 ]},
-{id:'PY',name:'파이썬',color:'#10b981',info:'유니스터디 파이썬 기본+심화 · 34강',chapters:[
-  {id:'PY1',t:'기본편 1~7강',s:[{id:'PY01',n:'1강 [설치] Python이란, 프로그램 설치하기'},{id:'PY02',n:'2강 [변수와 자료형] 변수란, print 함수'},{id:'PY03',n:'3강 [변수와 자료형] 문자열'},{id:'PY04',n:'4강 [변수와 자료형] 리스트, 실습과제 풀이'},{id:'PY05',n:'5강 [연산자] 산술연산자, 논리관련연산자'},{id:'PY06',n:'6강 [내장 함수] 내장함수, 실습과제 풀이'},{id:'PY07',n:'7강 [파일입출력] 파일 열고 닫기, 읽고 쓰기, 경로 지정, 실습과제풀이'}]},
-  {id:'PY2',t:'기본편 8~14강',s:[{id:'PY08',n:'8강 [조건문] 논리의 참/거짓, if문, if-else문'},{id:'PY09',n:'9강 [조건문] 중첩if문, if-elif-else문'},{id:'PY10',n:'10강 [조건문] 실습과제풀이'},{id:'PY11',n:'11강 [반복문] for문'},{id:'PY12',n:'12강 [반복문] while문, break, continue'},{id:'PY13',n:'13강 [반복문] 실습과제풀이'},{id:'PY14',n:'14강 [연습문제풀이] 기본, 심화 연습문제'}]},
-  {id:'PY3',t:'심화편 1~10강',s:[{id:'PY15',n:'1강 [디버깅] 디버깅 기초, try문'},{id:'PY16',n:'2강 [디버깅] breakpoint(), 연습문제'},{id:'PY17',n:'3강 [자료형 확장] 튜플, 딕셔너리'},{id:'PY18',n:'4강 [자료형 확장] 딕셔너리(2)'},{id:'PY19',n:'5강 [자료형 확장] 연습문제, 그 외 자료형태'},{id:'PY20',n:'6강 [자주 쓰이는 함수와 표현식] 내장함수 확장'},{id:'PY21',n:'7강 [자주 쓰이는 함수와 표현식] 자주 쓰이는 표현식, 연습문제'},{id:'PY22',n:'8강 [제어문 확장] if문 / 반복문 확장'},{id:'PY23',n:'9강 [제어문 확장] 시간복잡도, 연습문제'},{id:'PY24',n:'10강 [함수] 함수의 기본 문법, 함수 설계응용'}]},
-  {id:'PY4',t:'심화편 11~20강',s:[{id:'PY25',n:'11강 [함수] 함수의 객체화'},{id:'PY26',n:'12강 [함수] 연습문제'},{id:'PY27',n:'13강 [클래스] 클래스의 기본 문법'},{id:'PY28',n:'14강 [클래스] 클래스 설계'},{id:'PY29',n:'15강 [클래스] 연습문제'},{id:'PY30',n:'16강 [import] 기본 문법'},{id:'PY31',n:'17강 [import] 표준/서드파티 라이브러리'},{id:'PY32',n:'18강 [import] 서드파티 라이브러리, 연습문제'},{id:'PY33',n:'19강 [심화기능] bit 연산자, lazy evaluation'},{id:'PY34',n:'20강 [심화기능] contextmanager, 연습문제'}]},
+{id:'HD',name:'할리데이 일반물리1',short:'PHY-U',color:'#00b0ff',info:'대학 일반물리 · 43강',phase:2,done_until:10,
+chapters:[
+  {id:'HD1',t:'OT~10강 · 완료',s:[
+    {id:'HD01',n:'OT'},{id:'HD02',n:'1강. Ch3. 물리량의 표현'},
+    {id:'HD03',n:'2강. Ch3. 벡터와 좌표계'},{id:'HD04',n:'3강. Ch2. 1차원 운동학 물리량'},
+    {id:'HD05',n:'4강. Ch2. 1차원 운동의 종류'},{id:'HD06',n:'5강. Ch4. 2차원 운동과 좌표계'},
+    {id:'HD07',n:'6강. Ch4. 포물선 운동'},{id:'HD08',n:'7강. Ch4. 원운동과 상대운동'},
+    {id:'HD09',n:'8강. Ch5. 힘과 운동법칙'},{id:'HD10',n:'9강. Ch5. 여러가지 힘과 운동법칙 활용①'},
+  ]},
+  {id:'HD2',t:'11~27강 · 역학',s:[
+    {id:'HD11',n:'10강. Ch5. 여러가지 힘과 운동법칙 활용②'},{id:'HD12',n:'11강. Ch6. 마찰력과 운동법칙'},
+    {id:'HD13',n:'12강. Ch6. 저항력과 원운동 분석'},{id:'HD14',n:'13강. Ch7. 일과 에너지'},
+    {id:'HD15',n:'14강. Ch7. 일과 일률'},{id:'HD16',n:'15강. Ch8. 고립계와 역학적 에너지'},
+    {id:'HD17',n:'16강. Ch8. 역학적 에너지 보존'},{id:'HD18',n:'17강. Ch9. 질량 중심과 선운동량'},
+    {id:'HD19',n:'18강. Ch9. 충돌과 분열'},{id:'HD20',n:'19강. Ch10. 강체와 의전운동'},
+    {id:'HD21',n:'20강. Ch10. 강체와 회전관성'},{id:'HD22',n:'21강. Ch11. 강체 운동법칙'},
+    {id:'HD23',n:'22강. Ch11. 굴림운동'},{id:'HD24',n:'23강. Ch11. 각운동량과 토크'},
+    {id:'HD25',n:'24강. Ch12. 정적평형'},{id:'HD26',n:'25강. Ch12. 탄성과 변형률'},
+    {id:'HD27',n:'26강. Ch13. 중력과 에너지'},{id:'HD28',n:'27강. Ch13. 케플러 법칙'},
+  ]},
+  {id:'HD3',t:'28~42강 · 유체·파동·열 (후순위)',s:[
+    {id:'HD29',n:'28강. Ch14. 유체 정역학'},{id:'HD30',n:'29강. Ch14. 유체 동역학'},
+    {id:'HD31',n:'30강. Ch15. 단진동과 용수철 진자'},{id:'HD32',n:'31강. Ch15. 단조화 진동'},
+    {id:'HD33',n:'32강. Ch15. 단진자와 물리진자'},{id:'HD34',n:'33강. Ch16. 파동'},
+    {id:'HD35',n:'34강. Ch16. 파동의 중첩'},{id:'HD36',n:'35강. Ch16. 정상파'},
+    {id:'HD37',n:'36강. Ch17. 음파의 표현과 세기'},{id:'HD38',n:'37강. Ch17. 음파의 성질'},
+    {id:'HD39',n:'38강. Ch18. 온도와 열현상'},{id:'HD40',n:'39강. Ch19. 기체분자 운동'},
+    {id:'HD41',n:'40강. Ch18,19. 열역학 1법칙'},{id:'HD42',n:'41강. Ch18. 열전달'},
+    {id:'HD43',n:'42강. Ch20. 열역학 2법칙 ▶종강'},
+  ]},
 ]},
-{id:'LA',name:'선형대수학',color:'#8b5cf6',info:'유니스터디 선형대수학 · 65강',chapters:[
-  {id:'LA0',t:'OT',s:[{id:'LA00',n:'O.T'}]},
-  {id:'LA1',t:'1~6강 · 행렬과 연립방정식',s:[{id:'LA01',n:'1강 연립일차방정식과 행렬'},{id:'LA02',n:'2강 연립일차방정식의 풀이'},{id:'LA03',n:'3강 행렬과 행렬연산'},{id:'LA04',n:'4강 행렬의 연산 - 곱셈'},{id:'LA05',n:'5강 정방행렬의 대각합, 행렬의 거듭제곱, 대각행렬, 특수행렬'},{id:'LA06',n:'6강 예제풀이'}]},
-  {id:'LA2',t:'7~14강 · 역행렬·가우스',s:[{id:'LA07',n:'7강 역행렬과 그 성질'},{id:'LA08',n:'8강 가우스 소거법, 기본 행 연산, 행 동치, 기본 행렬'},{id:'LA09',n:'9강 가우스 소거법 문제풀이'},{id:'LA10',n:'10강 역행렬과 연립일차방정식 (1)'},{id:'LA11',n:'11강 역행렬과 연립일차방정식 (2)'},{id:'LA12',n:'12강 블록행렬'},{id:'LA13',n:'13강 예제 5.2'},{id:'LA14',n:'14강 LU분해와 연립일차방정식 문제풀이'}]},
-  {id:'LA3',t:'15~20강 · 행렬식',s:[{id:'LA15',n:'15강 행렬식'},{id:'LA16',n:'16강 행렬식의 성질'},{id:'LA17',n:'17강 블록행렬과 행렬식, 예제풀이'},{id:'LA18',n:'18강 수반행렬'},{id:'LA19',n:'19강 예제풀이, 크래머공식'},{id:'LA20',n:'20강 예제풀이'}]},
-  {id:'LA4',t:'21~27강 · 벡터공간',s:[{id:'LA21',n:'21강 벡터공간'},{id:'LA22',n:'22강 부분공간(Subspace)'},{id:'LA23',n:'23강 문제풀이 (p.68)'},{id:'LA24',n:'24강 기저와 차원'},{id:'LA25',n:'25강 기저와 차원'},{id:'LA26',n:'26강 표준 기저, 기저와 차원의 성질, 좌표, 좌표벡터, 좌표행렬'},{id:'LA27',n:'27강 예제풀이'}]},
-  {id:'LA5',t:'28~35강 · 행공간·선형변환',s:[{id:'LA28',n:'28강 행공간과 열공간 (1)'},{id:'LA29',n:'29강 행공간과 열공간 (2)'},{id:'LA30',n:'30강 가역행렬과 계수(Rank)와의 관계'},{id:'LA31',n:'31강 선형변환'},{id:'LA32',n:'32강 선형사상의 기본성질'},{id:'LA33',n:'33강 선형사상 주요관련 정리'},{id:'LA34',n:'34강 선형사상과 행렬'},{id:'LA35',n:'35강 벡터공간에서 선형사상의 행렬표현'}]},
-  {id:'LA6',t:'36~45강 · 직교화',s:[{id:'LA36',n:'36강 예제풀이'},{id:'LA37',n:'37강 직교변환의 행렬'},{id:'LA38',n:'38강 예제풀이'},{id:'LA39',n:'39강 사영변환'},{id:'LA40',n:'40강 예제풀이'},{id:'LA41',n:'41강 기저의 변환과 행렬의 닮음'},{id:'LA42',n:'42강 행렬의 닮음'},{id:'LA43',n:'43강 내적공간과 직교화'},{id:'LA44',n:'44강 기본적인 내적공간의 몇가지 예'},{id:'LA45',n:'45강 예제풀이&직교여공간'}]},
-  {id:'LA7',t:'46~54강 · 고윳값',s:[{id:'LA46',n:'46강 노름 공간(Normed space)&수반사상'},{id:'LA47',n:'47강 예제풀이 (p.130)'},{id:'LA48',n:'48강 예제풀이 (p.131)'},{id:'LA49',n:'49강 직교성과 그람-슈미트 직교화과정 (1)'},{id:'LA50',n:'50강 그람-슈미트 직교화과정 (2)'},{id:'LA51',n:'51강 예제풀이'},{id:'LA52',n:'52강 최소제곱문제'},{id:'LA53',n:'53강 고윳값과 대각화'},{id:'LA54',n:'54강 고윳값과 고유벡터의 기본성질'}]},
-  {id:'LA8',t:'55~65강 · 대각화·이차형식',s:[{id:'LA55',n:'55강 예제 문제풀이 (1)'},{id:'LA56',n:'56강 예제 문제풀이 (2)'},{id:'LA57',n:'57강 예제 문제풀이 (1)'},{id:'LA58',n:'58강 예제 문제풀이 (2)'},{id:'LA59',n:'59강 예제 문제풀이 (3)'},{id:'LA60',n:'60강 대칭행렬과 직교대각화'},{id:'LA61',n:'61강 예제 문제풀이'},{id:'LA62',n:'62강 정방행렬의 거듭제곱, 차분 방정식, 케일리 해밀턴 정리'},{id:'LA63',n:'63강 행렬지수'},{id:'LA64',n:'64강 이차형식'},{id:'LA65',n:'65강 이차곡면, 양의정부호와 촐레스키 분해'}]},
+{id:'CI',name:'회로이론',short:'CIRCUIT',color:'#00e5ff',info:'유니스터디 회로이론 핵심 · 42강',phase:3,done_until:0,
+chapters:[
+  {id:'CI1',t:'1~10강 · 기초회로',s:[
+    {id:'CI01',n:'1강. 기초 전기이론'},{id:'CI02',n:'2강. 전압, 전류, 저항'},
+    {id:'CI03',n:'3강. 옴의 법칙'},{id:'CI04',n:'4강. 키르히호프 법칙 ①'},
+    {id:'CI05',n:'5강. 키르히호프 법칙 ②'},{id:'CI06',n:'6강. 전력과 에너지'},
+    {id:'CI07',n:'7강. 직렬·병렬 회로'},{id:'CI08',n:'8강. 테브난·노턴 등가회로 ①'},
+    {id:'CI09',n:'9강. 테브난·노턴 등가회로 ②'},{id:'CI10',n:'10강. 중첩의 원리'},
+  ]},
+  {id:'CI2',t:'11~20강 · 교류회로',s:[
+    {id:'CI11',n:'11강. 커패시터'},{id:'CI12',n:'12강. 인덕터'},
+    {id:'CI13',n:'13강. RC 회로 과도응답'},{id:'CI14',n:'14강. RL 회로 과도응답'},
+    {id:'CI15',n:'15강. RLC 회로'},{id:'CI16',n:'16강. 정현파와 페이저 ①'},
+    {id:'CI17',n:'17강. 정현파와 페이저 ②'},{id:'CI18',n:'18강. 임피던스'},
+    {id:'CI19',n:'19강. 교류 전력'},{id:'CI20',n:'20강. 공진회로'},
+  ]},
+  {id:'CI3',t:'21~30강 · 회로해석',s:[
+    {id:'CI21',n:'21강. 마디 해석법'},{id:'CI22',n:'22강. 망로 해석법'},
+    {id:'CI23',n:'23강. 라플라스 변환 ①'},{id:'CI24',n:'24강. 라플라스 변환 ②'},
+    {id:'CI25',n:'25강. 라플라스 역변환'},{id:'CI26',n:'26강. 전달함수'},
+    {id:'CI27',n:'27강. 주파수 응답'},{id:'CI28',n:'28강. 보드선도 ①'},
+    {id:'CI29',n:'29강. 보드선도 ②'},{id:'CI30',n:'30강. 필터 회로'},
+  ]},
+  {id:'CI4',t:'31~42강 · 심화',s:[
+    {id:'CI31',n:'31강. 2포트 회로망 ①'},{id:'CI32',n:'32강. 2포트 회로망 ②'},
+    {id:'CI33',n:'33강. 푸리에 급수 ①'},{id:'CI34',n:'34강. 푸리에 급수 ②'},
+    {id:'CI35',n:'35강. 푸리에 변환'},{id:'CI36',n:'36강. 상태방정식 ①'},
+    {id:'CI37',n:'37강. 상태방정식 ②'},{id:'CI38',n:'38강. 3상 회로 ①'},
+    {id:'CI39',n:'39강. 3상 회로 ②'},{id:'CI40',n:'40강. 변압기'},
+    {id:'CI41',n:'41강. 종합 문제풀이 ①'},{id:'CI42',n:'42강. 종합 문제풀이 ② ▶종강'},
+  ]},
+]},
+{id:'ST',name:'정역학',short:'STATICS',color:'#00e676',info:'정역학 전공 치트키 · 20강',phase:3,done_until:0,
+chapters:[
+  {id:'ST1',t:'1~10강 · 정역학 기초',s:[
+    {id:'ST01',n:'1강. 힘의 개념과 벡터'},{id:'ST02',n:'2강. 힘의 합성과 분해'},
+    {id:'ST03',n:'3강. 모멘트'},{id:'ST04',n:'4강. 우력과 등가계'},
+    {id:'ST05',n:'5강. 자유물체도'},{id:'ST06',n:'6강. 평형조건 ①'},
+    {id:'ST07',n:'7강. 평형조건 ②'},{id:'ST08',n:'8강. 트러스 해석 ①'},
+    {id:'ST09',n:'9강. 트러스 해석 ②'},{id:'ST10',n:'10강. 프레임과 기계'},
+  ]},
+  {id:'ST2',t:'11~20강 · 심화',s:[
+    {id:'ST11',n:'11강. 분포하중'},{id:'ST12',n:'12강. 마찰 ①'},
+    {id:'ST13',n:'13강. 마찰 ②'},{id:'ST14',n:'14강. 도심과 무게중심 ①'},
+    {id:'ST15',n:'15강. 도심과 무게중심 ②'},{id:'ST16',n:'16강. 관성모멘트 ①'},
+    {id:'ST17',n:'17강. 관성모멘트 ②'},{id:'ST18',n:'18강. 가상일의 원리'},
+    {id:'ST19',n:'19강. 종합 문제풀이 ①'},{id:'ST20',n:'20강. 종합 문제풀이 ② ▶종강'},
+  ]},
+]},
+{id:'DY',name:'동역학',short:'DYNAMICS',color:'#ffd600',info:'공학도를 위한 쉬운 동역학 · 46강',phase:4,done_until:0,
+chapters:[
+  {id:'DY1',t:'1~15강 · 질점 동역학',s:[
+    {id:'DY01',n:'1강. 동역학 개요와 질점의 운동학'},{id:'DY02',n:'2강. 직선운동'},
+    {id:'DY03',n:'3강. 곡선운동 - 직각좌표'},{id:'DY04',n:'4강. 곡선운동 - 법선·접선좌표'},
+    {id:'DY05',n:'5강. 곡선운동 - 극좌표'},{id:'DY06',n:'6강. 뉴턴의 제2법칙 ①'},
+    {id:'DY07',n:'7강. 뉴턴의 제2법칙 ②'},{id:'DY08',n:'8강. 일과 에너지 ①'},
+    {id:'DY09',n:'9강. 일과 에너지 ②'},{id:'DY10',n:'10강. 충격량과 운동량 ①'},
+    {id:'DY11',n:'11강. 충격량과 운동량 ②'},{id:'DY12',n:'12강. 충돌 ①'},
+    {id:'DY13',n:'13강. 충돌 ②'},{id:'DY14',n:'14강. 질점계 운동'},
+    {id:'DY15',n:'15강. 질점계 에너지와 운동량'},
+  ]},
+  {id:'DY2',t:'16~30강 · 강체 동역학',s:[
+    {id:'DY16',n:'16강. 강체의 평면운동학 - 평행이동'},{id:'DY17',n:'17강. 강체의 평면운동학 - 회전'},
+    {id:'DY18',n:'18강. 강체의 평면운동학 - 일반평면운동'},{id:'DY19',n:'19강. 순간중심'},
+    {id:'DY20',n:'20강. 가속도 해석'},{id:'DY21',n:'21강. 강체의 운동방정식 ①'},
+    {id:'DY22',n:'22강. 강체의 운동방정식 ②'},{id:'DY23',n:'23강. 강체의 운동방정식 ③'},
+    {id:'DY24',n:'24강. 강체의 일과 에너지 ①'},{id:'DY25',n:'25강. 강체의 일과 에너지 ②'},
+    {id:'DY26',n:'26강. 강체의 충격량과 운동량 ①'},{id:'DY27',n:'27강. 강체의 충격량과 운동량 ②'},
+    {id:'DY28',n:'28강. 편심충돌'},{id:'DY29',n:'29강. 자이로스코프'},
+    {id:'DY30',n:'30강. 3차원 운동학 개요'},
+  ]},
+  {id:'DY3',t:'31~46강 · 진동·심화',s:[
+    {id:'DY31',n:'31강. 자유진동 ①'},{id:'DY32',n:'32강. 자유진동 ②'},
+    {id:'DY33',n:'33강. 감쇠진동 ①'},{id:'DY34',n:'34강. 감쇠진동 ②'},
+    {id:'DY35',n:'35강. 강제진동 ①'},{id:'DY36',n:'36강. 강제진동 ②'},
+    {id:'DY37',n:'37강. 강제진동 ③'},{id:'DY38',n:'38강. 다자유도 진동 ①'},
+    {id:'DY39',n:'39강. 다자유도 진동 ②'},{id:'DY40',n:'40강. 라그랑지 방정식 ①'},
+    {id:'DY41',n:'41강. 라그랑지 방정식 ②'},{id:'DY42',n:'42강. 라그랑지 방정식 ③'},
+    {id:'DY43',n:'43강. 종합 문제풀이 ①'},{id:'DY44',n:'44강. 종합 문제풀이 ②'},
+    {id:'DY45',n:'45강. 종합 문제풀이 ③'},{id:'DY46',n:'46강. 종강'},
+  ]},
+]},
+{id:'EM',name:'공학수학',short:'ENG-MATH',color:'#ea80fc',info:'유니스터디 공학수학 핵심 · 73강',phase:5,done_until:0,
+chapters:[
+  {id:'EM1',t:'1~20강 · 상미분방정식',s:[
+    {id:'EM01',n:'1강. OT & 미분방정식 기초'},{id:'EM02',n:'2강. 변수분리법'},
+    {id:'EM03',n:'3강. 완전미분방정식'},{id:'EM04',n:'4강. 1계 선형 미분방정식'},
+    {id:'EM05',n:'5강. 베르누이 방정식'},{id:'EM06',n:'6강. 2계 동차 미분방정식 ①'},
+    {id:'EM07',n:'7강. 2계 동차 미분방정식 ②'},{id:'EM08',n:'8강. 특성방정식'},
+    {id:'EM09',n:'9강. 2계 비동차 미분방정식 - 미정계수법 ①'},{id:'EM10',n:'10강. 미정계수법 ②'},
+    {id:'EM11',n:'11강. 매개변수 변환법'},{id:'EM12',n:'12강. 코시-오일러 방정식'},
+    {id:'EM13',n:'13강. 연립 미분방정식 ①'},{id:'EM14',n:'14강. 연립 미분방정식 ②'},
+    {id:'EM15',n:'15강. 급수해법 ①'},{id:'EM16',n:'16강. 급수해법 ②'},
+    {id:'EM17',n:'17강. 베셀 함수'},{id:'EM18',n:'18강. 레전드르 방정식'},
+    {id:'EM19',n:'19강. 문제풀이 ①'},{id:'EM20',n:'20강. 문제풀이 ②'},
+  ]},
+  {id:'EM2',t:'21~55강 · 라플라스·푸리에·복소해석',s:[
+    {id:'EM21',n:'21강. 라플라스 변환 정의'},{id:'EM22',n:'22강. 라플라스 변환표'},
+    {id:'EM23',n:'23강. 제1이동정리'},{id:'EM24',n:'24강. 제2이동정리'},
+    {id:'EM25',n:'25강. 도함수와 적분의 라플라스 변환'},{id:'EM26',n:'26강. 역라플라스 변환 ①'},
+    {id:'EM27',n:'27강. 역라플라스 변환 ②'},{id:'EM28',n:'28강. 부분분수 분해'},
+    {id:'EM29',n:'29강. 초기값 문제 풀이'},{id:'EM30',n:'30강. 단위계단함수'},
+    {id:'EM31',n:'31강. 임펄스함수'},{id:'EM32',n:'32강. 합성곱(콘볼루션)'},
+    {id:'EM33',n:'33강. 연립 미분방정식에 적용 ①'},{id:'EM34',n:'34강. 연립 미분방정식에 적용 ②'},
+    {id:'EM35',n:'35강. 문제풀이 ①'},{id:'EM36',n:'36강. 문제풀이 ②'},
+    {id:'EM37',n:'37강. 푸리에 급수 ①'},{id:'EM38',n:'38강. 푸리에 급수 ②'},
+    {id:'EM39',n:'39강. 푸리에 급수 ③'},{id:'EM40',n:'40강. 푸리에 사인/코사인 급수'},
+    {id:'EM41',n:'41강. 푸리에 변환 ①'},{id:'EM42',n:'42강. 푸리에 변환 ②'},
+    {id:'EM43',n:'43강. 푸리에 변환 ③'},{id:'EM44',n:'44강. 문제풀이 ①'},
+    {id:'EM45',n:'45강. 문제풀이 ②'},{id:'EM46',n:'46강. 복소수와 복소함수'},
+    {id:'EM47',n:'47강. 해석함수'},{id:'EM48',n:'48강. 코시-리만 방정식'},
+    {id:'EM49',n:'49강. 복소적분'},{id:'EM50',n:'50강. 코시 적분 공식'},
+    {id:'EM51',n:'51강. 테일러 급수'},{id:'EM52',n:'52강. 로랑 급수'},
+    {id:'EM53',n:'53강. 유수 정리 ①'},{id:'EM54',n:'54강. 유수 정리 ②'},
+    {id:'EM55',n:'55강. 문제풀이'},
+  ]},
+  {id:'EM3',t:'56~73강 · 편미분방정식·벡터해석',s:[
+    {id:'EM56',n:'56강. 편미분방정식 개요'},{id:'EM57',n:'57강. 열방정식 ①'},
+    {id:'EM58',n:'58강. 열방정식 ②'},{id:'EM59',n:'59강. 파동방정식 ①'},
+    {id:'EM60',n:'60강. 파동방정식 ②'},{id:'EM61',n:'61강. 라플라스 방정식 ①'},
+    {id:'EM62',n:'62강. 라플라스 방정식 ②'},{id:'EM63',n:'63강. 경계값 문제'},
+    {id:'EM64',n:'64강. 문제풀이 ①'},{id:'EM65',n:'65강. 문제풀이 ②'},
+    {id:'EM66',n:'66강. 벡터 미분 - 기울기'},{id:'EM67',n:'67강. 발산과 회전'},
+    {id:'EM68',n:'68강. 선적분'},{id:'EM69',n:'69강. 그린 정리'},
+    {id:'EM70',n:'70강. 면적분'},{id:'EM71',n:'71강. 발산 정리'},
+    {id:'EM72',n:'72강. 스토크스 정리'},{id:'EM73',n:'73강. 종강'},
+  ]},
 ]},
 ];
 
-const SS='2026-06-15';
+const PHASES=[
+  {n:'P1',label:'고등물리',color:'#ff6d00',ids:['PM','KM']},
+  {n:'P2',label:'수학+대학물리',color:'#00d4ff',ids:['MA','LA','HD']},
+  {n:'P3',label:'회로+정역학',color:'#00e5ff',ids:['CI','ST']},
+  {n:'P4',label:'동역학',color:'#ffd600',ids:['DY']},
+  {n:'P5',label:'공학수학',color:'#ea80fc',ids:['EM']},
+];
+
+const SS='2026-06-18';
 const DK=['일','월','화','수','목','금','토'];
 function pl(s){const[y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d);}
 function ds(d){return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
 function ts(){return ds(new Date());}
 function fd(s){const d=pl(s);return `${d.getMonth()+1}/${d.getDate()} (${DK[d.getDay()]})`;}
-function gc(s){const w=pl(s).getDay();if(s===SS)return 6;return w===0?0:6;}
+function gc(s){return pl(s).getDay()===0?0:7;}
+
+function initDone(){
+  const done={};
+  CUR.forEach(sj=>{let c=0;sj.chapters.forEach(ch=>ch.s.forEach(s=>{if(c<sj.done_until){done[s.id]=true;c++;}}));});
+  return done;
+}
+function getAllItems(sid){
+  const sj=CUR.find(s=>s.id===sid);const arr=[];
+  sj.chapters.forEach(ch=>ch.s.forEach(s=>arr.push({id:s.id,n:s.n,sid:sj.id,sname:sj.name,short:sj.short,cht:ch.t,color:sj.color})));
+  return arr;
+}
 function bs(sta){
   const sc={};
-  let pm=[],km=[],py=[],la=[],ma=[];
-  CUR.forEach(sj=>{
-    if(sj.id==='PM')sj.chapters.forEach(ch=>ch.s.forEach(s=>pm.push({id:s.id,n:s.n,sid:'PM',sname:'내일은물리량',cht:ch.t,color:'#f97316'})));
-    if(sj.id==='KM')sj.chapters.forEach(ch=>ch.s.forEach(s=>km.push({id:s.id,n:s.n,sid:'KM',sname:'물아일체',cht:ch.t,color:'#ec4899'})));
-    if(sj.id==='PY')sj.chapters.forEach(ch=>ch.s.forEach(s=>py.push({id:s.id,n:s.n,sid:'PY',sname:'파이썬',cht:ch.t,color:'#10b981'})));
-    if(sj.id==='LA')sj.chapters.forEach(ch=>ch.s.forEach(s=>la.push({id:s.id,n:s.n,sid:'LA',sname:'선형대수학',cht:ch.t,color:'#8b5cf6'})));
-    if(sj.id==='MA')sj.chapters.forEach(ch=>ch.s.forEach(s=>ma.push({id:s.id,n:s.n,sid:'MA',sname:'미적분학',cht:ch.t,color:'#e11d48'})));
-  });
-
-  // 완료된 항목은 과거 날짜에 역순으로 배치
+  const get=(sid)=>getAllItems(sid).filter(i=>!sta||!sta[i.id]);
+  let pm=get('PM'),km=get('KM'),ma=get('MA'),la=get('LA'),hd=get('HD');
+  let ci=get('CI'),st=get('ST'),dy=get('DY'),em=get('EM');
   const allDone=[];
-  [pm,km,py,la,ma].forEach(arr=>arr.forEach(it=>{if(sta&&sta[it.id])allDone.push(it);}));
+  CUR.forEach(sj=>getAllItems(sj.id).forEach(it=>{if(sta&&sta[it.id])allDone.push(it);}));
   if(allDone.length>0){
     const pastSt=new Date(pl(SS));pastSt.setDate(pastSt.getDate()-1);
     let di=allDone.length-1;let pd=0;
     while(di>=0){
       const dt=new Date(pastSt);dt.setDate(pastSt.getDate()-pd);
-      const dstr=ds(dt);const w=dt.getDay();
-      if(w!==0){
-        const day=[];
-        while(day.length<6&&di>=0){day.unshift(allDone[di--]);}
-        sc[dstr]=day;
-      }
+      const dstr=ds(dt);
+      if(dt.getDay()!==0){const day=[];while(day.length<7&&di>=0){day.unshift(allDone[di--]);}sc[dstr]=day;}
       pd++;if(pd>200)break;
     }
   }
-
-  // 미완료 항목은 오늘부터 배치
-  const pmT=pm.filter(it=>!sta||!sta[it.id]);
-  const kmT=km.filter(it=>!sta||!sta[it.id]);
-  const pyT=py.filter(it=>!sta||!sta[it.id]);
-  const laT=la.filter(it=>!sta||!sta[it.id]);
-  const maT=ma.filter(it=>!sta||!sta[it.id]);
-
-  let d=0,pmi=0,kmi=0,pyi=0,lai=0,mai=0;
-  const st=pl(SS);
-  const phase1Done=()=>pmi>=pmT.length&&kmi>=kmT.length;
-  while(!phase1Done()||pyi<pyT.length||lai<laT.length||mai<maT.length){
-    const dt=new Date(st);dt.setDate(st.getDate()+d);
-    const dstr=ds(dt);const c=gc(dstr);
-    if(c>0){
+  let pmi=0,kmi=0,mai=0,lai=0,hdi=0,cii=0,sti=0,dyi=0,emi=0,d=0;
+  const p1=()=>pmi>=pm.length&&kmi>=km.length;
+  const p2=()=>p1()&&mai>=ma.length&&lai>=la.length&&hdi>=hd.length;
+  const p3=()=>p2()&&cii>=ci.length&&sti>=st.length;
+  const p4=()=>p3()&&dyi>=dy.length;
+  const done=()=>p4()&&emi>=em.length;
+  while(!done()){
+    const dt=new Date(pl(SS));dt.setDate(pl(SS).getDate()+d);
+    const dstr=ds(dt);const cap=gc(dstr);
+    if(cap>0){
       const day=[];
-      if(!phase1Done()){
-        let pmc=0;while(pmc<2&&pmi<pmT.length){day.push(pmT[pmi++]);pmc++;}
-        let kmc=0;while(kmc<2&&kmi<kmT.length){day.push(kmT[kmi++]);kmc++;}
-        while(day.length<4&&kmi<kmT.length){day.push(kmT[kmi++]);}
-        let pyc=0;while(pyc<1&&pyi<pyT.length){day.push(pyT[pyi++]);pyc++;}
-        let lac=0;while(lac<1&&lai<laT.length){day.push(laT[lai++]);lac++;}
-        while(day.length<c&&kmi<kmT.length){day.push(kmT[kmi++]);}
-        while(day.length<c&&pyi<pyT.length){day.push(pyT[pyi++]);}
-        while(day.length<c&&lai<laT.length){day.push(laT[lai++]);}
+      if(!p1()){
+        while(day.length<3&&pmi<pm.length)day.push(pm[pmi++]);
+        while(day.length<5&&kmi<km.length)day.push(km[kmi++]);
+        while(day.length<cap&&mai<ma.length)day.push(ma[mai++]);
+        while(day.length<cap&&kmi<km.length)day.push(km[kmi++]);
+      } else if(!p2()){
+        let mc=0,lc=0,hc=0;
+        while(mc<3&&mai<ma.length){day.push(ma[mai++]);mc++;}
+        while(lc<2&&lai<la.length){day.push(la[lai++]);lc++;}
+        while(hc<2&&hdi<hd.length){day.push(hd[hdi++]);hc++;}
+        while(day.length<cap&&mai<ma.length)day.push(ma[mai++]);
+        while(day.length<cap&&lai<la.length)day.push(la[lai++]);
+        while(day.length<cap&&hdi<hd.length)day.push(hd[hdi++]);
+      } else if(!p3()){
+        let cc=0,sc=0;
+        while(cc<4&&cii<ci.length){day.push(ci[cii++]);cc++;}
+        while(sc<3&&sti<st.length){day.push(st[sti++]);sc++;}
+        while(day.length<cap&&cii<ci.length)day.push(ci[cii++]);
+        while(day.length<cap&&sti<st.length)day.push(st[sti++]);
+      } else if(!p4()){
+        while(day.length<cap&&dyi<dy.length)day.push(dy[dyi++]);
       } else {
-        let mac=0;while(mac<2&&mai<maT.length){day.push(maT[mai++]);mac++;}
-        let pyc=0;while(pyc<2&&pyi<pyT.length){day.push(pyT[pyi++]);pyc++;}
-        let lac=0;while(lac<2&&lai<laT.length){day.push(laT[lai++]);lac++;}
-        while(day.length<c&&mai<maT.length)day.push(maT[mai++]);
-        while(day.length<c&&lai<laT.length)day.push(laT[lai++]);
-        while(day.length<c&&pyi<pyT.length)day.push(pyT[pyi++]);
+        while(day.length<cap&&emi<em.length)day.push(em[emi++]);
       }
       sc[dstr]=day;
-    }else sc[dstr]=[];
-    d++;if(d>1000)break;
+    } else sc[dstr]=[];
+    d++;if(d>600)break;
   }
   return sc;
 }
 
 function ld(k){try{const v=localStorage.getItem(k);return v?JSON.parse(v):null;}catch{return null;}}
 function sv(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch{}}
-let STA={},SK={n:0,last:''},tab='today',off=0,cs=CUR[0].id,oc={},cm=0;
-let SC={};
-function init(){const s=ld('plla1');const sk=ld('plla2');if(s)STA=s;if(sk)SK=sk;const now=new Date();cm=now.getFullYear()*12+now.getMonth();loadRoad();loadGoals();SC=bs(STA);render();}
-function us(){const t=ts();const y=ds(new Date(pl(t).getTime()-86400000));if(SK.last===t)return;SK=SK.last===y?{n:SK.n+1,last:t}:{n:1,last:t};}
-function tg(id){STA[id]=!STA[id];us();sv('plla1',STA);sv('plla2',SK);SC=bs(STA);render();}
-function gaAll(){const a=[];CUR.forEach(sj=>sj.chapters.forEach(ch=>ch.s.forEach(s=>a.push({id:s.id,n:s.n,sid:sj.id,sname:sj.name,cht:ch.t,color:sj.color}))));return a;}
+let STA={},SK={n:0,last:''},tab='today',off=0,cs=CUR[0].id,oc={},cm=0,SC={};
+
+function init(){
+  const s=ld('mech1');const sk=ld('mech2');
+  STA=s||initDone();if(sk)SK=sk;
+  const now=new Date();cm=now.getFullYear()*12+now.getMonth();
+  SC=bs(STA);render();
+}
+function us(){
+  const t=ts();const y=ds(new Date(pl(t).getTime()-86400000));
+  if(SK.last===t)return;
+  SK=SK.last===y?{n:SK.n+1,last:t}:{n:1,last:t};
+}
+function tg(id){STA[id]=!STA[id];us();sv('mech1',STA);sv('mech2',SK);SC=bs(STA);render();}
+function gaAll(){const a=[];CUR.forEach(sj=>getAllItems(sj.id).forEach(it=>a.push(it)));return a;}
 function ov(){const a=gaAll();const d=a.filter(i=>STA[i.id]).length;return{d,t:a.length,p:a.length?Math.round(d/a.length*100):0};}
-function sp(sid){const a=gaAll().filter(i=>i.sid===sid);const d=a.filter(i=>STA[i.id]).length;return{d,t:a.length,p:a.length?Math.round(d/a.length*100):0};}
+function sp(sid){const a=getAllItems(sid);const d=a.filter(i=>STA[i.id]).length;return{d,t:a.length,p:a.length?Math.round(d/a.length*100):0};}
 function vd(){const d=new Date();d.setDate(d.getDate()+off);return ds(d);}
+
 function render(){
   const o=ov();const v=vd();const ti=SC[v]||[];const cap=gc(v);const td=ti.filter(i=>STA[i.id]).length;
-  document.getElementById('app').innerHTML=`<div class="header"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><div style="font-size:14px;font-weight:900"><span style="color:#f97316">물리량</span><span style="color:#94a3b8;margin:0 3px">·</span><span style="color:#ec4899">물아일체</span><span style="color:#94a3b8;margin:0 3px">·</span><span style="color:#e11d48">미적분</span><span style="color:#94a3b8;margin:0 3px">·</span><span style="color:#10b981">파이썬</span><span style="color:#94a3b8;margin:0 3px">·</span><span style="color:#8b5cf6">선대</span></div><div style="font-size:11px;color:#64748b">${SK.n}일 연속</div></div><div style="display:flex;align-items:center;gap:10px"><div style="flex:1;height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden"><div style="height:100%;width:${o.p}%;background:linear-gradient(90deg,#f97316,#8b5cf6);border-radius:3px;transition:width .6s"></div></div><span style="font-size:12px;color:#3b82f6;font-weight:800;min-width:36px">${o.p}%</span><span style="font-size:11px;color:#94a3b8;min-width:50px;text-align:right">${o.d}/${o.t}</span></div></div><div class="tabs"><button class="tb ${tab==='today'?'on':''}" onclick="setTab('today')">📚 오늘</button><button class="tb ${tab==='dash'?'on':''}" onclick="setTab('dash')">📊 대시보드</button><button class="tb ${tab==='toc'?'on':''}" onclick="setTab('toc')">📖 목차</button><button class="tb ${tab==='road'?'on':''}" onclick="setTab('road')">🗺 로드맵</button><button class="tb ${tab==='goals'?'on':''}" onclick="setTab('goals')">🎯 목표</button></div><div id="cnt"></div><div class="bb"><div class="bs"><div style="font-size:15px;font-weight:900;color:#10b981">${td}/${cap}</div><div style="font-size:9px;color:#94a3b8;margin-top:2px">오늘완료</div></div><div class="bs"><div style="font-size:15px;font-weight:900;color:#3b82f6">${o.p}%</div><div style="font-size:9px;color:#94a3b8;margin-top:2px">전체진행</div></div><div class="bs"><div style="font-size:15px;font-weight:900;color:#f59e0b">${SK.n}일</div><div style="font-size:9px;color:#94a3b8;margin-top:2px">연속학습</div></div><div class="bs"><div style="font-size:15px;font-weight:900;color:#94a3b8">${o.t-o.d}</div><div style="font-size:9px;color:#94a3b8;margin-top:2px">남은항목</div></div></div>`;
-  if(tab==='today')rT();else if(tab==='dash')rDash();else if(tab==='toc')rC();else if(tab==='cal')rCal();else if(tab==='road')rRoad();else rGoals();
+  document.getElementById('app').innerHTML=`
+  <div class="header">
+    <div class="hdr-top">
+      <div class="hdr-title">MECHATRONICS / STUDY</div>
+      <div class="hdr-streak">STREAK <span>${SK.n}D</span></div>
+    </div>
+    <div class="prog-wrap">
+      <div class="prog-fill" style="width:${o.p}%"></div>
+      <div class="prog-overlay">
+        <span class="prog-label">OVERALL PROGRESS</span>
+        <div style="display:flex;align-items:center;gap:10px">
+          <span class="prog-cnt">${o.d}/${o.t}</span>
+          <span class="prog-val">${o.p}%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="tabs">
+    <button class="tb ${tab==='today'?'on':''}" onclick="setTab('today')">TODAY</button>
+    <button class="tb ${tab==='cal'?'on':''}" onclick="setTab('cal')">CALENDAR</button>
+    <button class="tb ${tab==='dash'?'on':''}" onclick="setTab('dash')">STATS</button>
+    <button class="tb ${tab==='toc'?'on':''}" onclick="setTab('toc')">INDEX</button>
+  </div>
+  <div id="cnt"></div>
+  <div class="bb">
+    <div class="bs"><div class="bs-num" style="color:var(--green)">${td}/${cap}</div><div class="bs-lbl">TODAY</div></div>
+    <div class="bs"><div class="bs-num" style="color:var(--accent)">${o.p}%</div><div class="bs-lbl">TOTAL</div></div>
+    <div class="bs"><div class="bs-num" style="color:var(--yellow)">${SK.n}D</div><div class="bs-lbl">STREAK</div></div>
+    <div class="bs"><div class="bs-num" style="color:var(--text2)">${o.t-o.d}</div><div class="bs-lbl">LEFT</div></div>
+  </div>`;
+  if(tab==='today')rT();
+  else if(tab==='cal')rCal();
+  else if(tab==='dash')rDash();
+  else rC();
 }
+
+function rT(){
+  const v=vd();const ti=SC[v]||[];const cap=gc(v);const td=ti.filter(i=>STA[i.id]).length;
+  const isR=pl(v).getDay()===0;
+  const pct=cap>0?Math.round(td/cap*100):0;
+  const g={};ti.forEach(it=>{if(!g[it.sid])g[it.sid]={sname:it.sname,short:it.short,color:it.color,items:[]};g[it.sid].items.push(it);});
+  let h=`
+  <div style="display:flex;align-items:center;gap:10px;padding:14px 16px 10px">
+    <button class="nb" onclick="setOff(${off-1})">‹</button>
+    <div style="flex:1;text-align:center">
+      <div style="font-size:16px;font-weight:700;color:var(--text);letter-spacing:.04em">${fd(v)}</div>
+      <div style="font-size:9px;color:var(--text3);margin-top:3px;letter-spacing:.1em;text-transform:uppercase">${isR?'REST DAY':'TARGET · 7 LECTURES'}</div>
+      ${off!==0?`<div style="font-size:9px;color:var(--accent);cursor:pointer;margin-top:4px;letter-spacing:.08em" onclick="setOff(0)">← BACK TO TODAY</div>`:''}
+    </div>
+    <button class="nb" onclick="setOff(${off+1})">›</button>
+  </div>
+  <div style="margin:0 14px 10px;background:var(--s1);border:1px solid var(--border)">
+    <div style="padding:12px 14px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border)">
+      <span style="font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--text3)">DAILY PROGRESS</span>
+      <span style="font-size:22px;font-weight:700;color:${pct===100?'var(--green)':'var(--accent)'};letter-spacing:.04em">${pct}%</span>
+    </div>
+    <div style="height:3px;background:var(--s3)">
+      <div style="height:100%;width:${pct}%;background:${pct===100?'var(--green)':'var(--accent)'};transition:width .4s"></div>
+    </div>
+    <div style="padding:8px 14px;font-size:9px;color:var(--text3);letter-spacing:.08em">${td} / ${cap} LECTURES COMPLETE</div>
+  </div>`;
+  if(isR){
+    h+=`<div style="text-align:center;padding:60px 20px">
+      <div style="font-size:9px;letter-spacing:.2em;color:var(--text3);text-transform:uppercase">REST DAY</div>
+      <div style="font-size:11px;color:var(--text3);margin-top:12px;letter-spacing:.06em">SYSTEM IDLE</div>
+    </div>`;
+  } else if(!ti.length){
+    h+=`<div style="text-align:center;padding:60px 20px;font-size:9px;letter-spacing:.1em;color:var(--text3);text-transform:uppercase">NO DATA</div>`;
+  } else {
+    Object.entries(g).forEach(([sid,gv])=>{
+      const dc=gv.items.filter(i=>STA[i.id]).length;
+      h+=`<div class="sec">${gv.short} <span style="color:var(--text3)">${dc}/${gv.items.length}</span></div>
+      <div class="card">`;
+      gv.items.forEach(it=>{
+        const dn=!!STA[it.id];
+        h+=`<div class="item" onclick="tg('${it.id}')">
+          <div class="chk ${dn?'on':''}">${dn?'✓':''}</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:9px;color:var(--text3);margin-bottom:3px;letter-spacing:.06em;text-transform:uppercase">${it.cht}</div>
+            <div style="font-size:12px;color:${dn?'var(--text3)':'var(--text)'};text-decoration:${dn?'line-through':'none'};line-height:1.5">${it.n}</div>
+          </div>
+          ${dn?`<div style="font-size:9px;color:var(--green);letter-spacing:.06em">DONE</div>`:''}
+        </div>`;
+      });
+      h+=`</div>`;
+    });
+  }
+  document.getElementById('cnt').innerHTML=h;
+}
+
 function rCal(){
   const yr=Math.floor(cm/12);const mo=cm%12;
-  const first=new Date(yr,mo,1);const last=new Date(yr,mo+1,0);
-  const today=ts();
-  let h=`<div style="padding:14px 14px 8px;display:flex;align-items:center;justify-content:space-between"><button class="nb" onclick="pm()">‹</button><div style="font-size:16px;font-weight:900;color:#1e293b">${yr}년 ${mo+1}월</div><button class="nb" onclick="nm()">›</button></div><div style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;padding:0 14px;margin-bottom:4px">`;
-  ['일','월','화','수','목','금','토'].forEach((d,i)=>{h+=`<div style="text-align:center;font-size:11px;font-weight:700;color:${i===0?'#ef4444':i===6?'#3b82f6':'#94a3b8'};padding:4px 0">${d}</div>`;});
-  h+=`</div><div style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;padding:0 14px">`;
-  const startDay=first.getDay();
-  for(let i=0;i<startDay;i++)h+=`<div></div>`;
+  const last=new Date(yr,mo+1,0);const today=ts();
+  let mTotal=0,mDone=0;
   for(let d=1;d<=last.getDate();d++){
     const dstr=`${yr}-${String(mo+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-    const items=SC[dstr]||[];const done=items.filter(i=>STA[i.id]).length;const total=items.length;
-    const cap2=gc(dstr);const isT=dstr===today;
-    const isSun=(new Date(yr,mo,d)).getDay()===0;const isSat=(new Date(yr,mo,d)).getDay()===6;
-    const allDone=total>0&&done===total;const someD=total>0&&done>0&&done<total;
-    let bg=allDone?'#dcfce7':someD?'#fef9c3':isT?'#dbeafe':'#fff';
-    let border=isT?'2px solid #3b82f6':'1.5px solid #e2e8f0';
-    let tc=isSun?'#ef4444':isSat?'#3b82f6':'#1e293b';
-    h+=`<div onclick="goDay('${dstr}')" style="aspect-ratio:1;border-radius:10px;background:${bg};border:${border};display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;gap:2px"><div style="font-size:13px;font-weight:700;color:${tc}">${d}</div>`;
-    if(cap2===0){h+=`<div style="font-size:9px;color:#cbd5e1">휴식</div>`;}
-    else if(total>0){h+=`<div style="width:70%;height:3px;background:#e2e8f0;border-radius:2px;overflow:hidden"><div style="height:100%;width:${Math.round(done/total*100)}%;background:${allDone?'#10b981':'#3b82f6'};border-radius:2px"></div></div><div style="font-size:9px;color:#94a3b8">${done}/${total}</div>`;}
+    const items=SC[dstr]||[];mTotal+=items.length;mDone+=items.filter(i=>STA[i.id]).length;
+  }
+  const mPct=mTotal>0?Math.round(mDone/mTotal*100):0;
+
+  let h=`
+  <div style="display:flex;align-items:center;gap:10px;padding:14px 16px 10px">
+    <button class="nb" onclick="pm()">‹</button>
+    <div style="flex:1;text-align:center">
+      <div style="font-size:14px;font-weight:700;letter-spacing:.08em;color:var(--text)">${yr}.${String(mo+1).padStart(2,'0')}</div>
+      <div style="font-size:9px;color:var(--text3);letter-spacing:.1em;text-transform:uppercase;margin-top:2px">${mDone}/${mTotal} LECTURES · ${mPct}%</div>
+    </div>
+    <button class="nb" onclick="nm()">›</button>
+  </div>
+  <div style="margin:0 14px 10px;background:var(--s1);border:1px solid var(--border)">
+    <div style="height:2px;background:var(--s3)"><div style="height:100%;width:${mPct}%;background:var(--accent);transition:width .4s"></div></div>
+    <div style="display:flex;justify-content:space-between;padding:8px 14px">
+      <span style="font-size:9px;color:var(--text3);letter-spacing:.1em;text-transform:uppercase">MONTHLY PROGRESS</span>
+      <span style="font-size:9px;color:var(--accent);font-weight:700;letter-spacing:.06em">${mPct}%</span>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:1px;background:var(--border);margin:0 14px 1px;border:1px solid var(--border)">`;
+  ['SUN','MON','TUE','WED','THU','FRI','SAT'].forEach((d,i)=>{
+    h+=`<div style="background:var(--s2);padding:6px 0;text-align:center;font-size:8px;font-weight:700;letter-spacing:.08em;color:${i===0?'var(--red)':i===6?'var(--accent)':'var(--text3)'}">${d}</div>`;
+  });
+  h+=`</div><div style="display:grid;grid-template-columns:repeat(7,1fr);gap:1px;background:var(--border);margin:0 14px 10px;border:1px solid var(--border)">`;
+  const startDay=new Date(yr,mo,1).getDay();
+  for(let i=0;i<startDay;i++)h+=`<div style="background:var(--bg);aspect-ratio:1"></div>`;
+  for(let d=1;d<=last.getDate();d++){
+    const dstr=`${yr}-${String(mo+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const items=SC[dstr]||[];
+    const done=items.filter(i=>STA[i.id]).length;
+    const total=items.length;
+    const cap=gc(dstr);
+    const isT=dstr===today;
+    const dow=(new Date(yr,mo,d)).getDay();
+    const pct=total>0?Math.round(done/total*100):0;
+    const allDone=total>0&&done===total;
+    const someD=total>0&&done>0&&!allDone;
+    let bg='var(--s1)';
+    if(cap===0)bg='var(--bg)';
+    else if(allDone)bg='rgba(0,230,118,.12)';
+    else if(someD)bg=`rgba(0,212,255,${Math.max(.05,pct/100*.15)})`;
+    const tc=dow===0?'var(--red)':dow===6?'var(--accent)':'var(--text)';
+    const border=isT?'1px solid var(--accent)':'none';
+    h+=`<div onclick="goDay('${dstr}')" style="background:${bg};aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;gap:2px;border:${border};position:relative">
+      ${isT?`<div style="position:absolute;top:2px;right:3px;width:4px;height:4px;border-radius:50%;background:var(--accent)"></div>`:''}
+      <div style="font-size:11px;font-weight:700;color:${isT?'var(--accent)':tc}">${d}</div>`;
+    if(cap===0){
+      h+=`<div style="font-size:7px;color:var(--text3);letter-spacing:.04em">OFF</div>`;
+    } else if(total>0){
+      h+=`<div style="font-size:9px;font-weight:700;color:${allDone?'var(--green)':someD?'var(--accent)':'var(--text3)'}">${pct}%</div>
+      <div style="width:70%;height:1px;background:var(--border)">
+        <div style="height:100%;width:${pct}%;background:${allDone?'var(--green)':'var(--accent)'}"></div>
+      </div>`;
+    }
     h+=`</div>`;
   }
   h+=`</div>`;
+
+  // 요일별 달성률
+  const dayT=Array(7).fill(0);const dayD=Array(7).fill(0);
+  for(let d=1;d<=last.getDate();d++){
+    const dstr=`${yr}-${String(mo+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const dow=(new Date(yr,mo,d)).getDay();
+    const items=SC[dstr]||[];
+    dayT[dow]+=items.length;dayD[dow]+=items.filter(i=>STA[i.id]).length;
+  }
+  const maxP=Math.max(...dayT.map((t,i)=>t>0?Math.round(dayD[i]/t*100):0),1);
+  const DK2=['SUN','MON','TUE','WED','THU','FRI','SAT'];
+  h+=`<div style="background:var(--s1);border:1px solid var(--border);margin:0 14px 8px;padding:14px">
+    <div style="font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-bottom:12px">WEEKDAY COMPLETION RATE</div>
+    <div style="display:flex;gap:2px;align-items:flex-end;height:48px">`;
+  dayT.forEach((tot,i)=>{
+    const p=tot>0?Math.round(dayD[i]/tot*100):0;
+    const hh=tot>0?Math.max(2,Math.round(p/maxP*40)):2;
+    const col=i===0?'var(--red)':i===6?'var(--accent)':'var(--green)';
+    h+=`<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px">
+      <div style="font-size:8px;font-weight:700;color:${tot>0?col:'var(--text3)'};letter-spacing:.04em">${tot>0?p+'%':'-'}</div>
+      <div style="width:100%;background:${tot>0?col:'var(--border)'};height:${hh}px"></div>
+      <div style="font-size:7px;color:${i===0?'var(--red)':i===6?'var(--accent)':'var(--text3)'};letter-spacing:.06em">${DK2[i].slice(0,3)}</div>
+    </div>`;
+  });
+  h+=`</div></div>`;
   document.getElementById('cnt').innerHTML=h;
 }
-function goDay(dstr){const today=ts();const d=pl(dstr);const t=pl(today);off=Math.round((d-t)/86400000);setTab('today');}
+function goDay(dstr){const t=pl(ts());const d=pl(dstr);off=Math.round((d-t)/86400000);setTab('today');}
 function pm(){cm--;render();}
 function nm(){cm++;render();}
 
 function rDash(){
-  const today=ts();
-  const now=new Date();
-  // 이번주 월~일
-  const dow=now.getDay();
-  const weekStart=new Date(now);weekStart.setDate(now.getDate()-(dow===0?6:dow-1));
-  const weekDays=[];
-  for(let i=0;i<7;i++){const d=new Date(weekStart);d.setDate(weekStart.getDate()+i);weekDays.push(ds(d));}
-  // 이번주 달성률
-  let wTotal=0,wDone=0;
-  weekDays.forEach(d=>{
-    const items=SC[d]||[];
-    wTotal+=items.length;
-    wDone+=items.filter(i=>STA[i.id]).length;
-  });
-  const wPct=wTotal>0?Math.round(wDone/wTotal*100):0;
-  // 이번달
-  const yr=now.getFullYear();const mo=now.getMonth();
-  const daysInMonth=new Date(yr,mo+1,0).getDate();
-  let mTotal=0,mDone=0;
-  for(let d=1;d<=daysInMonth;d++){
-    const dstr=`${yr}-${String(mo+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-    const items=SC[dstr]||[];
-    mTotal+=items.length;
-    mDone+=items.filter(i=>STA[i.id]).length;
-  }
-  const mPct=mTotal>0?Math.round(mDone/mTotal*100):0;
-  // 전체
   const o=ov();
-  // 과목별
-  const subjects=CUR.map(sj=>{const p=sp(sj.id);return{name:sj.name,color:sj.color,p:p.p,d:p.d,t:p.t};});
-  // 로드맵 진행
-  const rdTotal=ROAD.reduce((a,p)=>a+p.items.length,0);
-  const rdDone=ROAD.reduce((a,p)=>a+p.items.filter(i=>i.status==='done').length,0);
-  const rdDoing=ROAD.reduce((a,p)=>a+p.items.filter(i=>i.status==='doing').length,0);
-  // 연속학습
-  const streak=SK.n;
-
-  let h=`<div style="padding:12px 14px 6px;font-size:15px;font-weight:900;color:#1e293b">📊 대시보드</div>`;
-
-  // 핵심 지표
-  h+=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:0 14px 10px">
-    <div style="background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:12px;text-align:center">
-      <div style="font-size:22px;font-weight:900;color:#f59e0b">${streak}일</div>
-      <div style="font-size:10px;color:#94a3b8;margin-top:2px">🔥 연속학습</div>
+  let h=`<div class="sec">SYSTEM STATUS</div>
+  <div style="background:var(--s1);border:1px solid var(--border);margin:0 14px 8px;padding:14px">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:10px">
+      <div>
+        <div style="font-size:9px;letter-spacing:.12em;color:var(--text3);text-transform:uppercase;margin-bottom:4px">TOTAL COMPLETION</div>
+        <div style="font-size:9px;color:var(--text2)">${o.d} done · ${o.t-o.d} remaining · ${o.t} total</div>
+      </div>
+      <div style="font-size:36px;font-weight:700;color:var(--accent);letter-spacing:.02em">${o.p}%</div>
     </div>
-    <div style="background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:12px;text-align:center">
-      <div style="font-size:22px;font-weight:900;color:#3b82f6">${o.p}%</div>
-      <div style="font-size:10px;color:#94a3b8;margin-top:2px">📚 전체진행률</div>
-    </div>
-    <div style="background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:12px;text-align:center">
-      <div style="font-size:22px;font-weight:900;color:#10b981">${wPct}%</div>
-      <div style="font-size:10px;color:#94a3b8;margin-top:2px">📅 이번주 달성률</div>
-      <div style="font-size:9px;color:#cbd5e1;margin-top:1px">${wDone}/${wTotal}</div>
-    </div>
-    <div style="background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:12px;text-align:center">
-      <div style="font-size:22px;font-weight:900;color:#8b5cf6">${mPct}%</div>
-      <div style="font-size:10px;color:#94a3b8;margin-top:2px">🗓 이번달 달성률</div>
-      <div style="font-size:9px;color:#cbd5e1;margin-top:1px">${mDone}/${mTotal}</div>
+    <div style="height:2px;background:var(--s3)">
+      <div style="height:100%;width:${o.p}%;background:var(--accent);transition:width .4s"></div>
     </div>
   </div>`;
 
-  // 이번주 달력
-  h+=`<div style="background:#fff;border:1px solid #e2e8f0;border-radius:14px;margin:0 14px 10px;padding:12px">
-    <div style="font-size:12px;font-weight:700;color:#64748b;margin-bottom:8px">이번주</div>
-    <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px">`;
-  const DK2=['월','화','수','목','금','토','일'];
-  weekDays.forEach((d,i)=>{
-    const items=SC[d]||[];const done=items.filter(x=>STA[x.id]).length;const total=items.length;
-    const isT=d===today;const pct=total>0?Math.round(done/total*100):0;
-    const allDone=total>0&&done===total;
-    const isSun=i===6;const isSat=i===5;
-    h+=`<div onclick="goDay('${d}')" style="cursor:pointer;text-align:center">
-      <div style="font-size:9px;font-weight:700;color:${isSun?'#ef4444':isSat?'#3b82f6':'#94a3b8'};margin-bottom:3px">${DK2[i]}</div>
-      <div style="aspect-ratio:1;border-radius:8px;background:${allDone?'#dcfce7':isT?'#dbeafe':'#f8fafc'};border:1.5px solid ${isT?'#3b82f6':allDone?'#10b981':'#e2e8f0'};display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px">
-        <div style="font-size:11px;font-weight:700;color:${isT?'#1d4ed8':allDone?'#059669':'#334155'}">${parseInt(d.split('-')[2])}</div>
-        ${total>0?`<div style="width:70%;height:2px;background:#e2e8f0;border-radius:1px;overflow:hidden"><div style="height:100%;width:${pct}%;background:${allDone?'#10b981':'#3b82f6'};border-radius:1px"></div></div>`:''}
+  h+=`<div class="sec">PHASE BREAKDOWN</div>
+  <div style="background:var(--s1);border:1px solid var(--border);margin:0 14px 8px">`;
+  PHASES.forEach((ph,i)=>{
+    const items=ph.ids.flatMap(id=>getAllItems(id));
+    const done=items.filter(i=>STA[i.id]).length;
+    const pct=items.length?Math.round(done/items.length*100):0;
+    const isDone=done===items.length;
+    const isLast=i===PHASES.length-1;
+    h+=`<div style="padding:12px 14px;${!isLast?'border-bottom:1px solid var(--border)':''}">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <div style="display:flex;align-items:center;gap:10px">
+          <span style="font-size:8px;font-weight:700;letter-spacing:.1em;color:${ph.color};border:1px solid ${ph.color};padding:2px 6px">${ph.n}</span>
+          <span style="font-size:12px;color:var(--text);font-weight:700">${ph.label}</span>
+        </div>
+        <span style="font-size:11px;color:${isDone?'var(--green)':'var(--text2)'};font-weight:700;letter-spacing:.04em">${isDone?'COMPLETE':pct+'%'}</span>
       </div>
-    </div>`;
-  });
-  h+=`</div></div>`;
-
-  // 과목별 진행률
-  h+=`<div style="background:#fff;border:1px solid #e2e8f0;border-radius:14px;margin:0 14px 10px;padding:12px">
-    <div style="font-size:12px;font-weight:700;color:#64748b;margin-bottom:10px">과목별 진행률</div>`;
-  subjects.forEach(s=>{
-    h+=`<div style="margin-bottom:8px">
-      <div style="display:flex;justify-content:space-between;margin-bottom:3px">
-        <span style="font-size:11px;font-weight:700;color:${s.color}">${s.name}</span>
-        <span style="font-size:11px;color:#94a3b8">${s.d}/${s.t} · ${s.p}%</span>
+      <div style="height:1px;background:var(--s3)">
+        <div style="height:100%;width:${pct}%;background:${isDone?'var(--green)':ph.color};transition:width .4s"></div>
       </div>
-      <div style="height:5px;background:#e2e8f0;border-radius:3px;overflow:hidden">
-        <div style="height:100%;width:${s.p}%;background:${s.color};border-radius:3px;transition:width .4s"></div>
-      </div>
+      <div style="font-size:9px;color:var(--text3);margin-top:6px;letter-spacing:.04em">${done} / ${items.length} lectures</div>
     </div>`;
   });
   h+=`</div>`;
 
-  // 로드맵 요약
-  h+=`<div style="background:#fff;border:1px solid #e2e8f0;border-radius:14px;margin:0 14px 10px;padding:12px">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
-      <div style="font-size:12px;font-weight:700;color:#64748b">🗺 로드맵 진행</div>
-      <div style="font-size:11px;color:#94a3b8">${rdDone}/${rdTotal}</div>
-    </div>
-    <div style="height:5px;background:#e2e8f0;border-radius:3px;overflow:hidden;margin-bottom:10px">
-      <div style="height:100%;width:${Math.round(rdDone/rdTotal*100)}%;background:linear-gradient(90deg,#10b981,#3b82f6);border-radius:3px"></div>
-    </div>
-    <div style="display:flex;gap:6px">
-      <div style="flex:1;background:#dcfce7;border-radius:8px;padding:6px;text-align:center"><div style="font-size:14px;font-weight:900;color:#10b981">${rdDone}</div><div style="font-size:9px;color:#64748b">완료</div></div>
-      <div style="flex:1;background:#dbeafe;border-radius:8px;padding:6px;text-align:center"><div style="font-size:14px;font-weight:900;color:#3b82f6">${rdDoing}</div><div style="font-size:9px;color:#64748b">진행중</div></div>
-      <div style="flex:1;background:#f1f5f9;border-radius:8px;padding:6px;text-align:center"><div style="font-size:14px;font-weight:900;color:#94a3b8">${rdTotal-rdDone-rdDoing}</div><div style="font-size:9px;color:#64748b">예정</div></div>
-    </div>
-  </div>`;
+  h+=`<div class="sec">MODULE STATUS</div>
+  <div style="background:var(--s1);border:1px solid var(--border);margin:0 14px 8px">`;
+  CUR.forEach((sj,i)=>{
+    const p=sp(sj.id);const isLast=i===CUR.length-1;
+    h+=`<div style="padding:10px 14px;${!isLast?'border-bottom:1px solid var(--border)':''}">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+        <div style="display:flex;align-items:center;gap:8px">
+          <div style="width:2px;height:14px;background:${sj.color}"></div>
+          <span style="font-size:9px;font-weight:700;letter-spacing:.1em;color:${sj.color}">${sj.short}</span>
+          <span style="font-size:11px;color:var(--text)">${sj.name}</span>
+        </div>
+        <span style="font-size:10px;color:var(--text2);letter-spacing:.04em">${p.d}/${p.t}</span>
+      </div>
+      <div style="height:1px;background:var(--s3)">
+        <div style="height:100%;width:${p.p}%;background:${sj.color};transition:width .4s"></div>
+      </div>
+    </div>`;
+  });
+  h+=`</div>`;
+  document.getElementById('cnt').innerHTML=h;
+}
 
-  document.getElementById('cnt').innerHTML=h;
-}
-function rT(){
-  const v=vd();const ti=SC[v]||[];const cap=gc(v);const td=ti.filter(i=>STA[i.id]).length;
-  const dow=pl(v).getDay();const isR=dow===0&&v!==SS;
-  const ml=isR?'😴 일요일 · 완전 휴식':'💻 6항목';
-  const g={};ti.forEach(it=>{if(!g[it.sid])g[it.sid]={sname:it.sname,color:it.color,items:[]};g[it.sid].items.push(it);});
-  let h=`<div style="display:flex;align-items:center;justify-content:center;gap:12px;padding:12px 16px 8px"><button class="nb" onclick="setOff(${off-1})">‹</button><div style="text-align:center;flex:1"><div style="font-size:16px;font-weight:900;color:#3b82f6">${fd(v)}</div><div style="font-size:11px;color:#64748b;margin-top:2px">${ml}</div>${off!==0?`<div style="font-size:11px;color:#3b82f6;cursor:pointer;margin-top:2px" onclick="setOff(0)">오늘로 이동</div>`:''}</div><button class="nb" onclick="setOff(${off+1})">›</button></div><div style="margin:0 14px 12px;background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:14px"><div style="display:flex;justify-content:space-between;margin-bottom:8px"><span style="font-size:11px;color:#64748b;font-weight:600">오늘 진행률 · ${td}/${cap}개 완료</span><span style="font-size:20px;font-weight:900;color:#10b981">${cap>0?Math.round(td/cap*100):0}%</span></div><div style="height:8px;background:#e2e8f0;border-radius:4px;overflow:hidden"><div style="height:100%;width:${cap>0?td/cap*100:0}%;background:linear-gradient(90deg,#10b981,#3b82f6);border-radius:4px;transition:width .4s"></div></div></div>`;
-  if(isR){h+=`<div style="text-align:center;padding:40px 20px;color:#94a3b8;font-size:13px">😴 일요일은 완전 휴식</div>`;}
-  else if(!ti.length){h+=`<div style="text-align:center;padding:40px 20px;color:#94a3b8">배정 항목 없음</div>`;}
-  else{Object.entries(g).forEach(([sid,gv])=>{const dc=gv.items.filter(i=>STA[i.id]).length;h+=`<div><div style="padding:10px 14px 4px;display:flex;align-items:center;gap:8px"><div style="width:8px;height:8px;border-radius:50%;background:${gv.color}"></div><span style="font-size:12px;font-weight:700;color:${gv.color}">${gv.sname}</span><span style="font-size:11px;color:#94a3b8">${dc}/${gv.items.length}</span></div><div class="card">`;gv.items.forEach(it=>{const dn=!!STA[it.id];h+=`<div class="item" style="${dn?'background:rgba(16,185,129,0.04)':''}" onclick="tg('${it.id}')"><div class="chk ${dn?'on':''}">${dn?'✓':''}</div><div style="flex:1;min-width:0"><div style="font-size:10px;color:#94a3b8;margin-bottom:2px">${it.cht}</div><div style="font-size:12px;color:${dn?'#94a3b8':'#334155'};line-height:1.4;text-decoration:${dn?'line-through':'none'}">${it.n}</div></div></div>`;});h+=`</div></div>`;});}
-  document.getElementById('cnt').innerHTML=h;
-}
 function rC(){
   const sj=CUR.find(s=>s.id===cs);const pg=sp(cs);
   let h=`<div class="st">`;
-  CUR.forEach(s=>{const p=sp(s.id);const ac=cs===s.id;h+=`<button class="stb" style="${ac?`background:${s.color}22;border-color:${s.color}88;color:${s.color}`:''}" onclick="setCS('${s.id}')">${s.name} <span style="opacity:.7;font-size:10px">${p.p}%</span></button>`;});
-  h+=`</div><div style="padding:14px 14px 8px"><div style="display:flex;align-items:center;justify-content:space-between"><div><span style="font-size:16px;font-weight:900;color:${sj.color}">${sj.name}</span><div style="font-size:11px;color:#64748b;margin-top:3px">${sj.info}</div></div><div style="text-align:right"><div style="font-size:24px;font-weight:900;color:${sj.color}">${pg.p}%</div><div style="font-size:11px;color:#64748b">${pg.d}/${pg.t}</div></div></div><div style="height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden;margin-top:10px"><div style="height:100%;width:${pg.p}%;background:${sj.color};border-radius:3px;transition:width .4s"></div></div></div>`;
-  sj.chapters.forEach(ch=>{const op=!!oc[ch.id];const cd=ch.s.filter(s=>STA[s.id]).length;const ad=cd===ch.s.length&&ch.s.length>0;const pt=cd>0&&!ad;h+=`<div class="card"><div class="ch" onclick="tC('${ch.id}')"><div class="cc2 ${ad?'dn':pt?'pt':''}">${ad?'✓':''}</div><span style="font-size:13px;font-weight:700;color:${ad?'#94a3b8':'#1e293b'};flex:1;text-decoration:${ad?'line-through':'none'}">${ch.t}</span><span style="font-size:11px;color:#94a3b8;margin-right:6px">${cd}/${ch.s.length}</span><span style="font-size:11px;color:#94a3b8;display:inline-block;transition:transform .2s;transform:${op?'rotate(180deg)':'none'}">▼</span></div><div class="cb"><div style="height:100%;width:${ch.s.length?cd/ch.s.length*100:0}%;background:${sj.color};transition:width .3s"></div></div>`;if(op){ch.s.forEach(s=>{const dn=!!STA[s.id];h+=`<div class="si" onclick="tg('${s.id}')"><div class="sc2 ${dn?'on':''}">${dn?'✓':''}</div><span style="font-size:12px;color:${dn?'#94a3b8':'#475569'};text-decoration:${dn?'line-through':'none'};flex:1;line-height:1.4">${s.n}</span></div>`;});}h+=`</div>`;});
-  document.getElementById('cnt').innerHTML=h;
-}
-function setTab(t){tab=t;render();}
-function setOff(o){off=o;render();}
-function setCS(id){cs=id;oc={};render();}
-function tC(id){oc[id]=!oc[id];render();}
-
-const ROAD=[
-  {phase:'1단계 · 수학/물리',color:'#0ea5e9',items:[
-    {n:'일반물리학',status:'doing'},
-    {n:'미적분학',status:'todo'},
-    {n:'선형대수학',status:'doing'},
-    {n:'공업수학',status:'todo'},
-    {n:'확률/통계',status:'todo'},
-  ]},
-  {phase:'2단계 · 기계',color:'#f97316',items:[
-    {n:'정역학',status:'todo'},
-    {n:'동역학',status:'todo'},
-    {n:'재료역학',status:'todo'},
-  ]},
-  {phase:'3단계 · 전기/전자',color:'#f59e0b',items:[
-    {n:'전자공학 기초',status:'todo'},
-    {n:'회로이론',status:'todo'},
-  ]},
-  {phase:'4단계 · 프로그래밍',color:'#10b981',items:[
-    {n:'파이썬',status:'doing'},
-    {n:'C언어',status:'todo'},
-    {n:'C++',status:'todo'},
-    {n:'자료구조/알고리즘',status:'todo'},
-  ]},
-  {phase:'5단계 · 하드웨어',color:'#ec4899',items:[
-    {n:'아두이노',status:'todo'},
-    {n:'라즈베리파이',status:'todo'},
-    {n:'임베디드 C',status:'todo'},
-  ]},
-  {phase:'6단계 · 도구',color:'#64748b',items:[
-    {n:'MATLAB/Simulink',status:'todo'},
-    {n:'Git/GitHub',status:'todo'},
-    {n:'CAD (SolidWorks 등)',status:'todo'},
-  ]},
-  {phase:'7단계 · 제어/신호',color:'#6366f1',items:[
-    {n:'제어공학',status:'doing'},
-    {n:'신호처리',status:'todo'},
-  ]},
-  {phase:'8단계 · 로봇',color:'#8b5cf6',items:[
-    {n:'ROS',status:'todo'},
-    {n:'컴퓨터비전 (OpenCV/YOLO)',status:'todo'},
-    {n:'SLAM',status:'todo'},
-    {n:'로봇 운동학/동역학',status:'todo'},
-    {n:'로봇공학 실전 (엥지유니버스)',status:'todo'},
-  ]},
-];
-
-const STATUS_LABEL={done:'✅ 완료',doing:'🔄 진행중',todo:'⬜ 예정'};
-const STATUS_COLOR={done:'#10b981',doing:'#3b82f6',todo:'#94a3b8'};
-
-let roadEditing=false;
-
-function rRoad(){
-  const total=ROAD.reduce((a,p)=>a+p.items.length,0);
-  const done=ROAD.reduce((a,p)=>a+p.items.filter(i=>i.status==='done').length,0);
-  const doing=ROAD.reduce((a,p)=>a+p.items.filter(i=>i.status==='doing').length,0);
-  let h=`<div style="padding:14px 14px 8px">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
-      <div style="font-size:15px;font-weight:900;color:#1e293b">🗺 로봇공학 로드맵</div>
-      <div style="font-size:11px;color:#64748b">${done}/${total} 완료</div>
+  CUR.forEach(s=>{
+    const p=sp(s.id);const ac=cs===s.id;
+    h+=`<button class="stb" style="${ac?`color:${s.color};border-bottom:2px solid ${s.color};background:${s.color}11`:''}" onclick="setCS('${s.id}')">${s.short} <span style="opacity:.5;font-size:8px">${p.p}%</span></button>`;
+  });
+  h+=`</div>
+  <div style="padding:14px 16px 10px;border-bottom:1px solid var(--border)">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end">
+      <div>
+        <div style="font-size:8px;letter-spacing:.14em;color:${sj.color};text-transform:uppercase;margin-bottom:4px">PHASE ${sj.phase} · ${sj.short}</div>
+        <div style="font-size:16px;font-weight:700;color:var(--text)">${sj.name}</div>
+        <div style="font-size:10px;color:var(--text3);margin-top:3px;letter-spacing:.04em">${sj.info}</div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:32px;font-weight:700;color:${sj.color};letter-spacing:.02em">${pg.p}%</div>
+        <div style="font-size:9px;color:var(--text3);letter-spacing:.06em">${pg.d}/${pg.t}</div>
+      </div>
     </div>
-    <div style="height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden;margin-bottom:12px">
-      <div style="height:100%;width:${Math.round(done/total*100)}%;background:linear-gradient(90deg,#10b981,#3b82f6);border-radius:3px;transition:width .4s"></div>
-    </div>
-    <div style="display:flex;gap:8px;margin-bottom:4px">
-      <div style="flex:1;background:#dcfce7;border-radius:10px;padding:8px;text-align:center"><div style="font-size:16px;font-weight:900;color:#10b981">${done}</div><div style="font-size:9px;color:#64748b">완료</div></div>
-      <div style="flex:1;background:#dbeafe;border-radius:10px;padding:8px;text-align:center"><div style="font-size:16px;font-weight:900;color:#3b82f6">${doing}</div><div style="font-size:9px;color:#64748b">진행중</div></div>
-      <div style="flex:1;background:#f1f5f9;border-radius:10px;padding:8px;text-align:center"><div style="font-size:16px;font-weight:900;color:#94a3b8">${total-done-doing}</div><div style="font-size:9px;color:#64748b">예정</div></div>
+    <div style="height:1px;background:var(--s3);margin-top:10px">
+      <div style="height:100%;width:${pg.p}%;background:${sj.color};transition:width .4s"></div>
     </div>
   </div>`;
-  ROAD.forEach((phase,pi)=>{
-    const pdone=phase.items.filter(i=>i.status==='done').length;
-    h+=`<div class="card" style="margin-bottom:8px">
-      <div style="padding:12px 14px 8px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #f1f5f9">
-        <div style="width:8px;height:8px;border-radius:50%;background:${phase.color};flex-shrink:0"></div>
-        <span style="font-size:13px;font-weight:800;color:${phase.color};flex:1">${phase.phase}</span>
-        <span style="font-size:11px;color:#94a3b8">${pdone}/${phase.items.length}</span>
-      </div>`;
-    phase.items.forEach((item,ii)=>{
-      const sc=STATUS_COLOR[item.status];
-      const sl=STATUS_LABEL[item.status];
-      h+=`<div style="display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid #f8fafc;cursor:pointer" onclick="cycleStatus(${pi},${ii})">
-        <div style="width:8px;height:8px;border-radius:50%;background:${sc};flex-shrink:0"></div>
-        <span style="font-size:13px;color:${item.status==='done'?'#94a3b8':'#334155'};flex:1;text-decoration:${item.status==='done'?'line-through':'none'}">${item.n}</span>
-        <span style="font-size:10px;color:${sc};font-weight:700">${sl}</span>
-      </div>`;
-    });
+  sj.chapters.forEach(ch=>{
+    const op=!!oc[ch.id];const cd=ch.s.filter(s=>STA[s.id]).length;
+    const ad=cd===ch.s.length&&ch.s.length>0;const pt=cd>0&&!ad;
+    h+=`<div class="card">
+      <div class="ch" onclick="tC('${ch.id}')">
+        <div class="cc2">${ad?'✓':pt?'·':''}</div>
+        <span style="font-size:11px;font-weight:700;color:${ad?'var(--text3)':'var(--text)'};flex:1;text-decoration:${ad?'line-through':'none'}">${ch.t}</span>
+        <span style="font-size:9px;color:var(--text3);margin-right:8px;letter-spacing:.06em">${cd}/${ch.s.length}</span>
+        <span style="font-size:9px;color:var(--text3);transition:transform .2s;display:inline-block;transform:${op?'rotate(180deg)':'none'}">${op?'▲':'▼'}</span>
+      </div>
+      <div class="cb"><div style="height:100%;width:${ch.s.length?cd/ch.s.length*100:0}%;background:${sj.color};transition:width .3s"></div></div>`;
+    if(op){
+      ch.s.forEach(s=>{
+        const dn=!!STA[s.id];
+        h+=`<div class="si" onclick="tg('${s.id}')">
+          <div class="sc2 ${dn?'on':''}">${dn?'✓':''}</div>
+          <span style="font-size:11px;color:${dn?'var(--text3)':'var(--text)'};text-decoration:${dn?'line-through':'none'};flex:1;line-height:1.5">${s.n}</span>
+          ${dn?`<span style="font-size:8px;color:var(--green);letter-spacing:.06em">✓</span>`:''}
+        </div>`;
+      });
+    }
     h+=`</div>`;
   });
   document.getElementById('cnt').innerHTML=h;
 }
 
-function cycleStatus(pi,ii){
-  const order=['todo','doing','done'];
-  const cur=ROAD[pi].items[ii].status;
-  ROAD[pi].items[ii].status=order[(order.indexOf(cur)+1)%order.length];
-  saveRoad();
-  rRoad();
-}
-function saveRoad(){
-  const data=ROAD.map(p=>p.items.map(i=>i.status));
-  sv('plla3',data);
-}
-function loadRoad(){
-  const data=ld('plla3');
-  if(data)ROAD.forEach((p,pi)=>p.items.forEach((item,ii)=>{if(data[pi]&&data[pi][ii])item.status=data[pi][ii];}));
-}
-
-// ── GOALS ──
-const GOALS_KEY='plla4';
-let GOALS={
-  annual:[
-    {id:'ag1',title:'로봇공학 커리큘럼 1단계 완료',desc:'일반물리·선형대수·파이썬·제어공학 완료',done:false},
-    {id:'ag2',title:'로봇공학 커리큘럼 2단계 완료',desc:'정역학·동역학·재료역학·회로이론 완료',done:false},
-    {id:'ag3',title:'로봇공학 커리큘럼 3단계 완료',desc:'C언어·C++·아두이노·임베디드 완료',done:false},
-    {id:'ag4',title:'로봇공학 실전 프로젝트 완료',desc:'엥지유니버스 1단계 + ROS 프로젝트',done:false},
-  ],
-  monthly:[],
-  weekly:[],
-};
-let gTab='annual',editMode=false,editTarget=null;
-
-function loadGoals(){
-  const d=ld(GOALS_KEY);
-  if(d)GOALS=d;
-}
-function saveGoals(){sv(GOALS_KEY,GOALS);}
-
-function rGoals(){
-  const now=new Date();
-  const yr=now.getFullYear();
-  const mo=now.getMonth()+1;
-  const wk=Math.ceil(now.getDate()/7);
-
-  const ag=GOALS.annual;
-  const mg=GOALS.monthly.filter(g=>g.year===yr&&g.month===mo);
-  const wg=GOALS.weekly.filter(g=>g.year===yr&&g.month===mo&&g.week===wk);
-
-  const agD=ag.filter(g=>g.done).length;
-  const mgD=mg.filter(g=>g.done).length;
-  const wgD=wg.filter(g=>g.done).length;
-
-  let h=`<div style="padding:12px 14px 8px">
-    <div style="font-size:15px;font-weight:900;color:#1e293b;margin-bottom:10px">🎯 목표 관리</div>
-    <div style="display:flex;gap:6px;margin-bottom:12px">
-      <div style="flex:1;background:${gTab==='annual'?'#dbeafe':'#f1f5f9'};border-radius:10px;padding:8px;text-align:center;cursor:pointer;border:1.5px solid ${gTab==='annual'?'#3b82f6':'transparent'}" onclick="setGTab('annual')">
-        <div style="font-size:13px;font-weight:800;color:${gTab==='annual'?'#1d4ed8':'#64748b'}">연간</div>
-        <div style="font-size:10px;color:#94a3b8">${agD}/${ag.length}</div>
-      </div>
-      <div style="flex:1;background:${gTab==='monthly'?'#d1fae5':'#f1f5f9'};border-radius:10px;padding:8px;text-align:center;cursor:pointer;border:1.5px solid ${gTab==='monthly'?'#10b981':'transparent'}" onclick="setGTab('monthly')">
-        <div style="font-size:13px;font-weight:800;color:${gTab==='monthly'?'#059669':'#64748b'}">${mo}월</div>
-        <div style="font-size:10px;color:#94a3b8">${mgD}/${mg.length}</div>
-      </div>
-      <div style="flex:1;background:${gTab==='weekly'?'#fef3c7':'#f1f5f9'};border-radius:10px;padding:8px;text-align:center;cursor:pointer;border:1.5px solid ${gTab==='weekly'?'#f59e0b':'transparent'}" onclick="setGTab('weekly')">
-        <div style="font-size:13px;font-weight:800;color:${gTab==='weekly'?'#b45309':'#64748b'}">W${wk}</div>
-        <div style="font-size:10px;color:#94a3b8">${wgD}/${wg.length}</div>
-      </div>
-    </div>
-  </div>`;
-
-  if(gTab==='annual'){
-    h+=renderGoalList(ag,'annual','#3b82f6',yr,mo,wk);
-  } else if(gTab==='monthly'){
-    h+=renderGoalList(mg,'monthly','#10b981',yr,mo,wk);
-  } else {
-    h+=renderGoalList(wg,'weekly','#f59e0b',yr,mo,wk);
-  }
-  document.getElementById('cnt').innerHTML=h;
-}
-
-function renderGoalList(list,type,color,yr,mo,wk){
-  const label={annual:'연간 목표',monthly:`${mo}월 목표`,weekly:`W${wk} 주간 목표`}[type];
-  let h=`<div style="padding:0 14px 8px;display:flex;align-items:center;justify-content:space-between">
-    <span style="font-size:12px;font-weight:700;color:${color}">${label}</span>
-    <button onclick="addGoal('${type}',${yr},${mo},${wk})" style="background:${color};color:#fff;border:none;border-radius:8px;padding:5px 10px;font-size:11px;font-weight:700;cursor:pointer">+ 추가</button>
-  </div>`;
-  if(!list.length){
-    h+=`<div style="text-align:center;padding:30px 20px;color:#94a3b8;font-size:13px">목표를 추가해보세요!</div>`;
-  } else {
-    list.forEach((g,i)=>{
-      const idx=GOALS[type==='annual'?'annual':type].findIndex(x=>x.id===g.id);
-      h+=`<div class="card" style="margin-bottom:8px">
-        <div style="padding:12px 14px;display:flex;align-items:flex-start;gap:10px">
-          <div onclick="toggleGoal('${type}',${idx})" style="width:22px;height:22px;border-radius:7px;border:2px solid ${g.done?'#10b981':'#cbd5e1'};background:${g.done?'#10b981':'transparent'};display:flex;align-items:center;justify-content:center;font-size:12px;color:#fff;font-weight:900;flex-shrink:0;cursor:pointer;margin-top:1px">${g.done?'✓':''}</div>
-          <div style="flex:1;min-width:0">
-            <div style="font-size:13px;font-weight:700;color:${g.done?'#94a3b8':'#1e293b'};text-decoration:${g.done?'line-through':'none'};line-height:1.4">${g.title}</div>
-            ${g.desc?`<div style="font-size:11px;color:#94a3b8;margin-top:3px">${g.desc}</div>`:''}
-          </div>
-          <button onclick="delGoal('${type}',${idx})" style="background:none;border:none;color:#cbd5e1;font-size:16px;cursor:pointer;padding:0;flex-shrink:0">×</button>
-        </div>
-      </div>`;
-    });
-  }
-  return h;
-}
-
-function setGTab(t){gTab=t;rGoals();}
-
-function addGoal(type,yr,mo,wk){
-  const title=prompt('목표를 입력하세요:');
-  if(!title)return;
-  const desc=prompt('설명 (선택, 건너뛰려면 취소):') || '';
-  const id='g'+Date.now();
-  const goal={id,title,desc,done:false};
-  if(type==='annual')GOALS.annual.push(goal);
-  else if(type==='monthly')GOALS.monthly.push({...goal,year:yr,month:mo});
-  else GOALS.weekly.push({...goal,year:yr,month:mo,week:wk});
-  saveGoals();rGoals();
-}
-
-function toggleGoal(type,idx){
-  const arr=GOALS[type==='annual'?'annual':type];
-  if(arr[idx])arr[idx].done=!arr[idx].done;
-  saveGoals();rGoals();
-}
-
-function delGoal(type,idx){
-  const arr=GOALS[type==='annual'?'annual':type];
-  if(arr[idx])arr.splice(idx,1);
-  saveGoals();rGoals();
-}
+function setTab(t){tab=t;render();}
+function setOff(o){off=o;render();}
+function setCS(id){cs=id;oc={};render();}
+function tC(id){oc[id]=!oc[id];render();}
 init();
 </script>
 </body>
