@@ -170,6 +170,47 @@ chapters:[
     {id:'KM62',n:'62강. 물질의 이중성 필수기출 & 기출연습'},{id:'KM63',n:'63강. 종강'},
   ]},
 ]},
+{id:'BM',name:'기초 미적분학',short:'CALC-0',color:'#ff9800',info:'대학 미적분 기초 All-in-One · 47강',phase:2,done_until:0,
+chapters:[
+  {id:'BM1',t:'OT~8강 · 기초개념·부등식',s:[
+    {id:'BM00',n:'OT. 기초 미분적분학 O.T'},
+    {id:'BM01',n:'1강. 1.1 실수계①'},{id:'BM02',n:'2강. 1.1 실수계② : 상계와 하계'},
+    {id:'BM03',n:'3강. 1.2 식의 기초① : 지수 법칙'},{id:'BM04',n:'4강. 1.2 식의 기초② : 식의 전개, 인수분해'},
+    {id:'BM05',n:'5강. 1.3 방정식① : 일차방정식, 이차방정식'},{id:'BM06',n:'6강. 1.3 방정식② : 고차방정식, 연립방정식'},
+    {id:'BM07',n:'7강. 1.4 부등식'},{id:'BM08',n:'8강. 1.4 부등식 문제풀이'},
+  ]},
+  {id:'BM2',t:'9~12강 · 수열과 급수',s:[
+    {id:'BM09',n:'9강. 2.1 수열① : 수열과 수열의 합'},{id:'BM10',n:'10강. 2.1 수열② : 등차수열, 등비수열'},
+    {id:'BM11',n:'11강. 2.2 수열의 극한'},{id:'BM12',n:'12강. 2.3 급수'},
+  ]},
+  {id:'BM3',t:'13~22강 · 초등함수',s:[
+    {id:'BM13',n:'13강. 3.1 함수의 개념 및 종류①'},{id:'BM14',n:'14강. 3.1 함수의 개념 및 종류②'},
+    {id:'BM15',n:'15강. 3.1 함수의 개념 및 종류③'},{id:'BM16',n:'16강. 3.2 다항함수, 유리함수 및 대수함수'},
+    {id:'BM17',n:'17강. 3.3 지수함수'},{id:'BM18',n:'18강. 3.4 로그함수'},
+    {id:'BM19',n:'19강. 3.5 삼각함수①'},{id:'BM20',n:'20강. 3.5 삼각함수②'},
+    {id:'BM21',n:'21강. 3.6 역삼각함수'},{id:'BM22',n:'22강. 3.6 역삼각함수 문제풀이'},
+  ]},
+  {id:'BM4',t:'23~28강 · 극한·연속',s:[
+    {id:'BM23',n:'23강. 4.1 함수의 극한①'},{id:'BM24',n:'24강. 4.1 함수의 극한② : 문제풀이'},
+    {id:'BM25',n:'25강. 4.1 함수의 극한③ : 삼각함수와 지수로그 함수의 극한'},
+    {id:'BM26',n:'26강. 4.2 함수의 연속①'},{id:'BM27',n:'27강. 4.2 함수의 연속② : 문제풀이'},
+    {id:'BM28',n:'28강. 4.2 함수의 연속③ : 최대·최솟값 정리 및 중간값 정리'},
+  ]},
+  {id:'BM5',t:'29~40강 · 미분',s:[
+    {id:'BM29',n:'29강. 5.1 미분계수와 도함수'},{id:'BM30',n:'30강. 5.2 도함수의 성질'},
+    {id:'BM31',n:'31강. 5.3 연쇄법칙(합성함수의 미분)'},{id:'BM32',n:'32강. 5.4 음함수미분법①'},
+    {id:'BM33',n:'33강. 5.4 역함수의 미분②'},{id:'BM34',n:'34강. 5.5 다항함수, 유리함수 및 대수함수의 미분'},
+    {id:'BM35',n:'35강. 5.6 삼각함수의 미분①'},{id:'BM36',n:'36강. 5.6 역삼각함수의 미분②'},
+    {id:'BM37',n:'37강. 5.7 지수·로그함수의 미분①'},{id:'BM38',n:'38강. 5.7 로그미분법②'},
+    {id:'BM39',n:'39강. 5.8 평균값 정리와 함수의 증가·감소①'},{id:'BM40',n:'40강. 5.8 함수의 증가·감소②'},
+  ]},
+  {id:'BM6',t:'41~47강 · 적분',s:[
+    {id:'BM41',n:'41강. 6.1 부정적분'},{id:'BM42',n:'42강. 6.2 정적분① : 정적분의 개념 및 정의'},
+    {id:'BM43',n:'43강. 6.2 정적분② : 정적분의 성질①'},{id:'BM44',n:'44강. 6.2 정적분③ : 정적분의 성질②'},
+    {id:'BM45',n:'45강. 6.3 치환적분① : 치환적분의 개념 및 정의'},{id:'BM46',n:'46강. 6.3 치환적분② : 삼각치환'},
+    {id:'BM47',n:'47강. 6.4 부분적분 ▶종강'},
+  ]},
+]},
 {id:'MA',name:'미분적분학1',short:'CALC',color:'#00d4ff',info:'유니스터디 미분적분학1 · 111강',phase:2,done_until:0,
 chapters:[
   {id:'MA0',t:'OT',s:[{id:'MA00',n:'OT'}]},
@@ -491,7 +532,7 @@ function bs(sta){
     if(!ch)return[];
     return ch.s.filter(i=>!sta||!sta[i.id]).map(s=>({id:s.id,n:s.n,sid:sj.id,sname:sj.name,short:sj.short,cht:ch.t,color:sj.color}));
   };
-  let pm=getChapter('PM','PM1'),km=getChapter('KM','KM1'),ma=get('MA'),la=get('LA'),hd=getChapter('HD','HD2');
+  let pm=getChapter('PM','PM1'),km=getChapter('KM','KM1'),bm=get('BM'),ma=get('MA'),la=get('LA'),hd=getChapter('HD','HD2');
   let ci=get('CI'),st=get('ST'),dy=get('DY'),em=get('EM');
   // 후순위: 열·파동 파트 (공학수학 끝난 후)
   let pm2=getChapter('PM','PM2'),km2=getChapter('KM','KM2'),hd3=getChapter('HD','HD3');
@@ -508,9 +549,9 @@ function bs(sta){
       pd++;if(pd>200)break;
     }
   }
-  let pmi=0,kmi=0,mai=0,lai=0,hdi=0,cii=0,sti=0,dyi=0,emi=0,d=0;
+  let pmi=0,kmi=0,bmi=0,mai=0,lai=0,hdi=0,cii=0,sti=0,dyi=0,emi=0,d=0;
   const p1=()=>pmi>=pm.length&&kmi>=km.length;
-  const p2=()=>p1()&&mai>=ma.length&&lai>=la.length&&hdi>=hd.length;
+  const p2=()=>p1()&&bmi>=bm.length&&mai>=ma.length&&lai>=la.length&&hdi>=hd.length;
   const p3=()=>p2()&&cii>=ci.length&&sti>=st.length;
   const p4=()=>p3()&&dyi>=dy.length;
   const p5=()=>p4()&&emi>=em.length;
@@ -521,18 +562,23 @@ function bs(sta){
     if(cap>0){
       const day=[];
       if(!p1()){
-        // MA 먼저 3강, 그 다음 PM/KM
+        // MA 앞에 BM 먼저, 그 다음 KM
         let mc=0;
-        while(mc<3&&mai<ma.length){day.push(ma[mai++]);mc++;}
+        while(mc<3&&bmi<bm.length){day.push(bm[bmi++]);mc++;}
         while(day.length<5&&pmi<pm.length)day.push(pm[pmi++]);
         while(day.length<6&&kmi<km.length)day.push(km[kmi++]);
-        while(day.length<cap&&mai<ma.length)day.push(ma[mai++]);
+        while(day.length<cap&&bmi<bm.length)day.push(bm[bmi++]);
         while(day.length<cap&&kmi<km.length)day.push(km[kmi++]);
       } else if(!p2()){
-        let mc=0,lc=0,hc=0;
-        while(mc<3&&mai<ma.length){day.push(ma[mai++]);mc++;}
-        while(lc<2&&lai<la.length){day.push(la[lai++]);lc++;}
-        while(hc<2&&hdi<hd.length){day.push(hd[hdi++]);hc++;}
+        // BM 완료 후 MA, LA, HD 병행
+        let bc=0,mc=0,lc=0,hc=0;
+        while(bc<3&&bmi<bm.length){day.push(bm[bmi++]);bc++;}
+        if(bmi>=bm.length){
+          while(mc<3&&mai<ma.length){day.push(ma[mai++]);mc++;}
+          while(lc<2&&lai<la.length){day.push(la[lai++]);lc++;}
+          while(hc<2&&hdi<hd.length){day.push(hd[hdi++]);hc++;}
+        }
+        while(day.length<cap&&bmi<bm.length)day.push(bm[bmi++]);
         while(day.length<cap&&mai<ma.length)day.push(ma[mai++]);
         while(day.length<cap&&lai<la.length)day.push(la[lai++]);
         while(day.length<cap&&hdi<hd.length)day.push(hd[hdi++]);
