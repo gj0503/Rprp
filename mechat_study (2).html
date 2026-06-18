@@ -55,8 +55,8 @@ body{font-family:'SF Mono','Fira Code','Consolas',monospace;background:var(--bg)
 .sec::after{content:'';flex:1;height:1px;background:var(--border)}
 
 /* CARD */
-.card{background:var(--s1);border:1px solid var(--border);margin:0 14px 8px;overflow:hidden}
-.item{display:flex;align-items:center;gap:12px;padding:12px 14px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .1s}
+.card{background:var(--s1);border:1px solid var(--border);margin:0 14px 8px;}
+.item{display:flex;align-items:center;gap:12px;padding:12px 14px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .1s;user-select:none;-webkit-user-select:none;pointer-events:all;position:relative;z-index:1}
 .item:last-child{border-bottom:none}
 .item:active{background:var(--s2)}
 .chk{width:18px;height:18px;border:1px solid var(--border2);background:transparent;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--green);font-weight:700;flex-shrink:0;transition:all .15s}
@@ -484,8 +484,18 @@ function getAllItems(sid){
 function bs(sta){
   const sc={};
   const get=(sid)=>getAllItems(sid).filter(i=>!sta||!sta[i.id]);
-  let pm=get('PM'),km=get('KM'),ma=get('MA'),la=get('LA'),hd=get('HD');
+  // PM: 역학파트만(PM1, 10강), KM: 역학파트만(KM1, 21강), HD: 역학파트만(HD2)
+  const getChapter=(sid,chid)=>{
+    const sj=CUR.find(s=>s.id===sid);
+    const ch=sj.chapters.find(c=>c.id===chid);
+    if(!ch)return[];
+    return ch.s.filter(i=>!sta||!sta[i.id]).map(s=>({id:s.id,n:s.n,sid:sj.id,sname:sj.name,short:sj.short,cht:ch.t,color:sj.color}));
+  };
+  let pm=getChapter('PM','PM1'),km=getChapter('KM','KM1'),ma=get('MA'),la=get('LA'),hd=getChapter('HD','HD2');
   let ci=get('CI'),st=get('ST'),dy=get('DY'),em=get('EM');
+  // 후순위: 열·파동 파트 (공학수학 끝난 후)
+  let pm2=getChapter('PM','PM2'),km2=getChapter('KM','KM2'),hd3=getChapter('HD','HD3');
+  let pm2i=0,km2i=0,hd3i=0;
   const allDone=[];
   CUR.forEach(sj=>getAllItems(sj.id).forEach(it=>{if(sta&&sta[it.id])allDone.push(it);}));
   if(allDone.length>0){
@@ -503,7 +513,8 @@ function bs(sta){
   const p2=()=>p1()&&mai>=ma.length&&lai>=la.length&&hdi>=hd.length;
   const p3=()=>p2()&&cii>=ci.length&&sti>=st.length;
   const p4=()=>p3()&&dyi>=dy.length;
-  const done=()=>p4()&&emi>=em.length;
+  const p5=()=>p4()&&emi>=em.length;
+  const done=()=>p5()&&pm2i>=pm2.length&&km2i>=km2.length&&hd3i>=hd3.length;
   while(!done()){
     const dt=new Date(pl(SS));dt.setDate(pl(SS).getDate()+d);
     const dstr=ds(dt);const cap=gc(dstr);
@@ -530,8 +541,15 @@ function bs(sta){
         while(day.length<cap&&sti<st.length)day.push(st[sti++]);
       } else if(!p4()){
         while(day.length<cap&&dyi<dy.length)day.push(dy[dyi++]);
-      } else {
+      } else if(!p5()){
         while(day.length<cap&&emi<em.length)day.push(em[emi++]);
+      } else {
+        // 후순위: 열·파동 (PM2, KM2, HD3) 병행
+        let x=0;
+        while(x<3&&pm2i<pm2.length){day.push(pm2[pm2i++]);x++;}
+        while(x<5&&km2i<km2.length){day.push(km2[km2i++]);x++;}
+        while(day.length<cap&&hd3i<hd3.length)day.push(hd3[hd3i++]);
+        while(day.length<cap&&km2i<km2.length)day.push(km2[km2i++]);
       }
       sc[dstr]=day;
     } else sc[dstr]=[];
@@ -555,7 +573,7 @@ function us(){
   if(SK.last===t)return;
   SK=SK.last===y?{n:SK.n+1,last:t}:{n:1,last:t};
 }
-function tg(id){STA[id]=!STA[id];us();sv('mech1',STA);sv('mech2',SK);SC=bs(STA);render();}
+function tg(id){STA[id]=!STA[id];us();sv('mech1',STA);sv('mech2',SK);render();}
 function gaAll(){const a=[];CUR.forEach(sj=>getAllItems(sj.id).forEach(it=>a.push(it)));return a;}
 function ov(){const a=gaAll();const d=a.filter(i=>STA[i.id]).length;return{d,t:a.length,p:a.length?Math.round(d/a.length*100):0};}
 function sp(sid){const a=getAllItems(sid);const d=a.filter(i=>STA[i.id]).length;return{d,t:a.length,p:a.length?Math.round(d/a.length*100):0};}
