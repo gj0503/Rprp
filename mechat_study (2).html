@@ -521,8 +521,11 @@ function bs(sta){
     if(cap>0){
       const day=[];
       if(!p1()){
-        while(day.length<3&&pmi<pm.length)day.push(pm[pmi++]);
-        while(day.length<5&&kmi<km.length)day.push(km[kmi++]);
+        // MA 먼저 3강, 그 다음 PM/KM
+        let mc=0;
+        while(mc<3&&mai<ma.length){day.push(ma[mai++]);mc++;}
+        while(day.length<5&&pmi<pm.length)day.push(pm[pmi++]);
+        while(day.length<6&&kmi<km.length)day.push(km[kmi++]);
         while(day.length<cap&&mai<ma.length)day.push(ma[mai++]);
         while(day.length<cap&&kmi<km.length)day.push(km[kmi++]);
       } else if(!p2()){
