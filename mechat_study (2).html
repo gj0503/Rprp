@@ -114,7 +114,7 @@ body{font-family:'SF Mono','Fira Code','Consolas',monospace;background:var(--bg)
 <div class="app" id="app"><div style="display:flex;align-items:center;justify-content:center;height:200px;color:var(--accent);font-size:11px;letter-spacing:.1em">LOADING...</div></div>
 <script>
 const CUR=[
-{id:'PM',name:'내일은물리량',short:'PHY-1',color:'#ff6d00',info:'기초 고등물리 · 20강',phase:1,done_until:13,
+{id:'PM',name:'내일은물리량',short:'물리1',color:'#ff6d00',info:'기초 고등물리 · 20강',phase:1,done_until:13,
 chapters:[
   {id:'PM1',t:'1~10강 · 운동·힘·에너지',s:[
     {id:'PM01',n:'1강. 운동의 표현'},{id:'PM02',n:'2강. 힘과 여러가지 운동'},
@@ -131,7 +131,7 @@ chapters:[
     {id:'PM19',n:'19강. 파동의 성질 (3)'},
   ]},
 ]},
-{id:'KM',name:'물아일체',short:'PHY-2',color:'#ff4081',info:'강민웅 물아일체 · 63강',phase:1,done_until:16,
+{id:'KM',name:'물아일체',short:'물리2',color:'#ff4081',info:'강민웅 물아일체 · 63강',phase:1,done_until:16,
 chapters:[
   {id:'KM1',t:'1~21강 · 역학 (우선)',s:[
     {id:'KM01',n:'1강. 여러 가지 운동 개념설명'},{id:'KM02',n:'2강. 여러 가지 운동 개념확인 & 도구정리'},
@@ -170,7 +170,7 @@ chapters:[
     {id:'KM62',n:'62강. 물질의 이중성 필수기출 & 기출연습'},{id:'KM63',n:'63강. 종강'},
   ]},
 ]},
-{id:'BM',name:'기초 미적분학',short:'CALC-0',color:'#ff9800',info:'대학 미적분 기초 All-in-One · 47강',phase:2,done_until:0,
+{id:'BM',name:'기초 미적분학',short:'기초미적',color:'#ff9800',info:'대학 미적분 기초 All-in-One · 48강',phase:2,done_until:7,
 chapters:[
   {id:'BM1',t:'OT~8강 · 기초개념·부등식',s:[
     {id:'BM00',n:'OT. 기초 미분적분학 O.T'},
@@ -211,7 +211,7 @@ chapters:[
     {id:'BM47',n:'47강. 6.4 부분적분 ▶종강'},
   ]},
 ]},
-{id:'MA',name:'미분적분학1',short:'CALC',color:'#00d4ff',info:'유니스터디 미분적분학1 · 111강',phase:2,done_until:0,
+{id:'MA',name:'미분적분학1',short:'미적분',color:'#00d4ff',info:'유니스터디 미분적분학1 · 111강',phase:2,done_until:0,
 chapters:[
   {id:'MA0',t:'OT',s:[{id:'MA00',n:'OT'}]},
   {id:'MA1',t:'1~14강 · 함수',s:[
@@ -286,7 +286,7 @@ chapters:[
     {id:'MA111',n:'111강. 종강'},
   ]},
 ]},
-{id:'LA',name:'선형대수학',short:'LINALG',color:'#7c4dff',info:'유니스터디 선형대수학 · 66강',phase:2,done_until:11,
+{id:'LA',name:'선형대수학',short:'선형대수',color:'#7c4dff',info:'유니스터디 선형대수학 · 66강',phase:2,done_until:11,
 chapters:[
   {id:'LA1',t:'1~6강 · 행렬과 연립방정식',s:[
     {id:'LA01',n:'1강. 연립일차방정식과 행렬'},{id:'LA02',n:'2강. 연립일차방정식의 풀이'},
@@ -335,7 +335,7 @@ chapters:[
     {id:'LA65',n:'65강. 이차곡면, 촐레스키 분해'},{id:'LA66',n:'66강. 종강'},
   ]},
 ]},
-{id:'HD',name:'할리데이 일반물리1',short:'PHY-U',color:'#00b0ff',info:'대학 일반물리 · 43강',phase:2,done_until:10,
+{id:'HD',name:'할리데이 일반물리1',short:'일반물리',color:'#00b0ff',info:'대학 일반물리 · 43강',phase:2,done_until:10,
 chapters:[
   {id:'HD1',t:'OT~10강 · 완료',s:[
     {id:'HD01',n:'OT'},{id:'HD02',n:'1강. Ch3. 물리량의 표현'},
@@ -366,7 +366,7 @@ chapters:[
     {id:'HD43',n:'42강. Ch20. 열역학 2법칙 ▶종강'},
   ]},
 ]},
-{id:'CI',name:'회로이론',short:'CIRCUIT',color:'#00e5ff',info:'유니스터디 회로이론 핵심 · 42강',phase:3,done_until:0,
+{id:'CI',name:'회로이론',short:'회로이론',color:'#00e5ff',info:'유니스터디 회로이론 핵심 · 42강',phase:3,done_until:0,
 chapters:[
   {id:'CI1',t:'1~10강 · 기초회로',s:[
     {id:'CI01',n:'1강. 기초 전기이론'},{id:'CI02',n:'2강. 전압, 전류, 저항'},
@@ -398,7 +398,7 @@ chapters:[
     {id:'CI41',n:'41강. 종합 문제풀이 ①'},{id:'CI42',n:'42강. 종합 문제풀이 ② ▶종강'},
   ]},
 ]},
-{id:'ST',name:'정역학',short:'STATICS',color:'#00e676',info:'정역학 전공 치트키 · 20강',phase:3,done_until:0,
+{id:'ST',name:'정역학',short:'정역학',color:'#00e676',info:'정역학 전공 치트키 · 20강',phase:3,done_until:0,
 chapters:[
   {id:'ST1',t:'1~10강 · 정역학 기초',s:[
     {id:'ST01',n:'1강. 힘의 개념과 벡터'},{id:'ST02',n:'2강. 힘의 합성과 분해'},
@@ -415,7 +415,7 @@ chapters:[
     {id:'ST19',n:'19강. 종합 문제풀이 ①'},{id:'ST20',n:'20강. 종합 문제풀이 ② ▶종강'},
   ]},
 ]},
-{id:'DY',name:'동역학',short:'DYNAMICS',color:'#ffd600',info:'공학도를 위한 쉬운 동역학 · 46강',phase:4,done_until:0,
+{id:'DY',name:'동역학',short:'동역학',color:'#ffd600',info:'공학도를 위한 쉬운 동역학 · 46강',phase:4,done_until:0,
 chapters:[
   {id:'DY1',t:'1~15강 · 질점 동역학',s:[
     {id:'DY01',n:'1강. 동역학 개요와 질점의 운동학'},{id:'DY02',n:'2강. 직선운동'},
@@ -448,7 +448,7 @@ chapters:[
     {id:'DY45',n:'45강. 종합 문제풀이 ③'},{id:'DY46',n:'46강. 종강'},
   ]},
 ]},
-{id:'EM',name:'공학수학',short:'ENG-MATH',color:'#ea80fc',info:'유니스터디 공학수학 핵심 · 73강',phase:5,done_until:0,
+{id:'EM',name:'공학수학',short:'공학수학',color:'#ea80fc',info:'유니스터디 공학수학 핵심 · 73강',phase:5,done_until:0,
 chapters:[
   {id:'EM1',t:'1~20강 · 상미분방정식',s:[
     {id:'EM01',n:'1강. OT & 미분방정식 기초'},{id:'EM02',n:'2강. 변수분리법'},
@@ -648,14 +648,14 @@ function render(){
     </div>
   </div>
   <div class="tabs">
-    <button class="tb ${tab==='today'?'on':''}" onclick="setTab('today')">TODAY</button>
-    <button class="tb ${tab==='cal'?'on':''}" onclick="setTab('cal')">CALENDAR</button>
-    <button class="tb ${tab==='dash'?'on':''}" onclick="setTab('dash')">STATS</button>
-    <button class="tb ${tab==='toc'?'on':''}" onclick="setTab('toc')">INDEX</button>
+    <button class="tb ${tab==='today'?'on':''}" onclick="setTab('today')">오늘</button>
+    <button class="tb ${tab==='cal'?'on':''}" onclick="setTab('cal')">캘린더</button>
+    <button class="tb ${tab==='dash'?'on':''}" onclick="setTab('dash')">현황</button>
+    <button class="tb ${tab==='toc'?'on':''}" onclick="setTab('toc')">목차</button>
   </div>
   <div id="cnt"></div>
   <div class="bb">
-    <div class="bs"><div class="bs-num" style="color:var(--green)">${td}/${cap}</div><div class="bs-lbl">TODAY</div></div>
+    <div class="bs"><div class="bs-num" style="color:var(--green)">${td}/${cap}</div><div class="bs-lbl">오늘</div></div>
     <div class="bs"><div class="bs-num" style="color:var(--accent)">${o.p}%</div><div class="bs-lbl">TOTAL</div></div>
     <div class="bs"><div class="bs-num" style="color:var(--yellow)">${SK.n}D</div><div class="bs-lbl">STREAK</div></div>
     <div class="bs"><div class="bs-num" style="color:var(--text2)">${o.t-o.d}</div><div class="bs-lbl">LEFT</div></div>
