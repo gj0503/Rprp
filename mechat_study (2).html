@@ -170,7 +170,7 @@ chapters:[
     {id:'KM62',n:'62강. 물질의 이중성 필수기출 & 기출연습'},{id:'KM63',n:'63강. 종강'},
   ]},
 ]},
-{id:'BM',name:'기초 미적분학',short:'기초미적',color:'#ff9800',info:'대학 미적분 기초 All-in-One · 48강',phase:2,done_until:7,
+{id:'BM',name:'기초 미적분학',short:'기초미적',color:'#ff9800',info:'대학 미적분 기초 All-in-One · 48강',phase:1,done_until:7,
 chapters:[
   {id:'BM1',t:'OT~8강 · 기초개념·부등식',s:[
     {id:'BM00',n:'OT. 기초 미분적분학 O.T'},
@@ -366,7 +366,7 @@ chapters:[
     {id:'HD43',n:'42강. Ch20. 열역학 2법칙 ▶종강'},
   ]},
 ]},
-{id:'CI',name:'회로이론',short:'회로이론',color:'#00e5ff',info:'유니스터디 회로이론 핵심 · 42강',phase:3,done_until:0,
+{id:'CI',name:'회로이론',short:'회로이론',color:'#00e5ff',info:'유니스터디 회로이론 핵심 · 42강',phase:4,done_until:0,
 chapters:[
   {id:'CI1',t:'1~10강 · 기초회로',s:[
     {id:'CI01',n:'1강. 기초 전기이론'},{id:'CI02',n:'2강. 전압, 전류, 저항'},
@@ -415,7 +415,7 @@ chapters:[
     {id:'ST19',n:'19강. 종합 문제풀이 ①'},{id:'ST20',n:'20강. 종합 문제풀이 ② ▶종강'},
   ]},
 ]},
-{id:'DY',name:'동역학',short:'동역학',color:'#ffd600',info:'공학도를 위한 쉬운 동역학 · 46강',phase:4,done_until:0,
+{id:'DY',name:'동역학',short:'동역학',color:'#ffd600',info:'공학도를 위한 쉬운 동역학 · 46강',phase:3,done_until:0,
 chapters:[
   {id:'DY1',t:'1~15강 · 질점 동역학',s:[
     {id:'DY01',n:'1강. 동역학 개요와 질점의 운동학'},{id:'DY02',n:'2강. 직선운동'},
@@ -448,7 +448,7 @@ chapters:[
     {id:'DY45',n:'45강. 종합 문제풀이 ③'},{id:'DY46',n:'46강. 종강'},
   ]},
 ]},
-{id:'EM',name:'공학수학',short:'공학수학',color:'#ea80fc',info:'유니스터디 공학수학 핵심 · 73강',phase:5,done_until:0,
+{id:'EM',name:'공학수학',short:'공학수학',color:'#ea80fc',info:'유니스터디 공학수학 핵심 · 73강',phase:2,done_until:0,
 chapters:[
   {id:'EM1',t:'1~20강 · 상미분방정식',s:[
     {id:'EM01',n:'1강. OT & 미분방정식 기초'},{id:'EM02',n:'2강. 변수분리법'},
@@ -497,11 +497,10 @@ chapters:[
 ];
 
 const PHASES=[
-  {n:'P1',label:'고등물리',color:'#ff6d00',ids:['PM','KM']},
-  {n:'P2',label:'수학+대학물리',color:'#00d4ff',ids:['MA','LA','HD']},
-  {n:'P3',label:'회로+정역학',color:'#00e5ff',ids:['CI','ST']},
-  {n:'P4',label:'동역학',color:'#ffd600',ids:['DY']},
-  {n:'P5',label:'공학수학',color:'#ea80fc',ids:['EM']},
+  {n:'P1',label:'고등물리+기초미적',color:'#ff6d00',ids:['PM','KM','BM']},
+  {n:'P2',label:'수학+대학물리',color:'#00d4ff',ids:['MA','LA','HD','EM']},
+  {n:'P3',label:'정역학+동역학',color:'#00e676',ids:['ST','DY']},
+  {n:'P4',label:'회로이론',color:'#00e5ff',ids:['CI']},
 ];
 
 const SS='2026-06-18';
@@ -562,26 +561,31 @@ function bs(sta){
     if(cap>0){
       const day=[];
       if(!p1()){
-        // MA 앞에 BM 먼저, 그 다음 KM
-        let mc=0;
-        while(mc<3&&bmi<bm.length){day.push(bm[bmi++]);mc++;}
-        while(day.length<5&&pmi<pm.length)day.push(pm[pmi++]);
-        while(day.length<6&&kmi<km.length)day.push(km[kmi++]);
+        // 4과목 전환: 기초미적2 + KM2 + LA2 + HD1
+        let bc=0,kc=0,lc=0,hc=0;
+        while(bc<2&&bmi<bm.length){day.push(bm[bmi++]);bc++;}
+        while(kc<2&&kmi<km.length){day.push(km[kmi++]);kc++;}
+        while(lc<2&&lai<la.length){day.push(la[lai++]);lc++;}
+        while(hc<1&&hdi<hd.length){day.push(hd[hdi++]);hc++;}
+        // 남은 슬롯 채우기
         while(day.length<cap&&bmi<bm.length)day.push(bm[bmi++]);
         while(day.length<cap&&kmi<km.length)day.push(km[kmi++]);
+        while(day.length<cap&&lai<la.length)day.push(la[lai++]);
+        while(day.length<cap&&hdi<hd.length)day.push(hd[hdi++]);
+        while(day.length<cap&&mai<ma.length)day.push(ma[mai++]);
       } else if(!p2()){
-        // BM 완료 후 MA, LA, HD 병행
+        // 4과목 전환: 기초미적2 + 미적분1 + 선형대수2 + 할리데이2
         let bc=0,mc=0,lc=0,hc=0;
-        while(bc<3&&bmi<bm.length){day.push(bm[bmi++]);bc++;}
-        if(bmi>=bm.length){
-          while(mc<3&&mai<ma.length){day.push(ma[mai++]);mc++;}
-          while(lc<2&&lai<la.length){day.push(la[lai++]);lc++;}
-          while(hc<2&&hdi<hd.length){day.push(hd[hdi++]);hc++;}
-        }
+        while(bc<2&&bmi<bm.length){day.push(bm[bmi++]);bc++;}
+        while(mc<1&&mai<ma.length){day.push(ma[mai++]);mc++;}
+        while(lc<2&&lai<la.length){day.push(la[lai++]);lc++;}
+        while(hc<2&&hdi<hd.length){day.push(hd[hdi++]);hc++;}
+        // 남은 슬롯 채우기
         while(day.length<cap&&bmi<bm.length)day.push(bm[bmi++]);
         while(day.length<cap&&mai<ma.length)day.push(ma[mai++]);
         while(day.length<cap&&lai<la.length)day.push(la[lai++]);
         while(day.length<cap&&hdi<hd.length)day.push(hd[hdi++]);
+        while(day.length<cap&&emi<em.length)day.push(em[emi++]);
       } else if(!p3()){
         let cc=0,sc=0;
         while(cc<4&&cii<ci.length){day.push(ci[cii++]);cc++;}
