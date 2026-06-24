@@ -509,7 +509,7 @@ function pl(s){const[y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d);}
 function ds(d){return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
 function ts(){return ds(new Date());}
 function fd(s){const d=pl(s);return `${d.getMonth()+1}/${d.getDate()} (${DK[d.getDay()]})`;}
-function gc(s){return pl(s).getDay()===0?0:7;}
+function gc(s){const dow=pl(s).getDay();return(dow===0||dow===3)?0:6;}
 
 function initDone(){
   const done={};
@@ -544,7 +544,7 @@ function bs(sta){
     while(di>=0){
       const dt=new Date(pastSt);dt.setDate(pastSt.getDate()-pd);
       const dstr=ds(dt);
-      if(dt.getDay()!==0){const day=[];while(day.length<7&&di>=0){day.unshift(allDone[di--]);}sc[dstr]=day;}
+      if(dt.getDay()!==0&&dt.getDay()!==3){const day=[];while(day.length<6&&di>=0){day.unshift(allDone[di--]);}sc[dstr]=day;}
       pd++;if(pd>200)break;
     }
   }
@@ -672,7 +672,7 @@ function render(){
 
 function rT(){
   const v=vd();const ti=SC[v]||[];const cap=gc(v);const td=ti.filter(i=>STA[i.id]).length;
-  const isR=pl(v).getDay()===0;
+  const isR=pl(v).getDay()===0||pl(v).getDay()===3;
   const pct=cap>0?Math.round(td/cap*100):0;
   const g={};ti.forEach(it=>{if(!g[it.sid])g[it.sid]={sname:it.sname,short:it.short,color:it.color,items:[]};g[it.sid].items.push(it);});
   let h=`
@@ -680,7 +680,7 @@ function rT(){
     <button class="nb" onclick="setOff(${off-1})">‹</button>
     <div style="flex:1;text-align:center">
       <div style="font-size:16px;font-weight:700;color:var(--text);letter-spacing:.04em">${fd(v)}</div>
-      <div style="font-size:9px;color:var(--text3);margin-top:3px;letter-spacing:.1em;text-transform:uppercase">${isR?'REST DAY':'TARGET · 7 LECTURES'}</div>
+      <div style="font-size:9px;color:var(--text3);margin-top:3px;letter-spacing:.1em;text-transform:uppercase">${isR?'REST DAY':'TARGET · 6 LECTURES'}</div>
       ${off!==0?`<div style="font-size:9px;color:var(--accent);cursor:pointer;margin-top:4px;letter-spacing:.08em" onclick="setOff(0)">← BACK TO TODAY</div>`:''}
     </div>
     <button class="nb" onclick="setOff(${off+1})">›</button>
