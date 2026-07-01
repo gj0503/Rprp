@@ -665,11 +665,14 @@ function bs(sta){
     }
   }
   let bki=0,bni=0,smi=0,bmi=0,mai=0,lai=0,hdi=0,cii=0,sti=0,dyi=0,emi=0,d=0;
-  const p1=()=>bki>=bk.length&&bni>=bn.length&&smi>=sm.length&&bmi>=bm.length;
-  const p2=()=>p1()&&bmi>=bm.length&&mai>=ma.length&&lai>=la.length&&hdi>=hd.length;
-  const p3=()=>p2()&&cii>=ci.length&&sti>=st.length;
-  const p4=()=>p3()&&dyi>=dy.length;
-  const p5=()=>p4()&&emi>=em.length;
+  const p1SM=()=>smi>=sm.length; // SM 완료 여부
+  const p1BK=()=>bki>=bk.length; // BK 완료 여부
+  const p1Full=()=>bki>=bk.length&&bni>=bn.length&&smi>=sm.length&&bmi>=bm.length; // Phase 1 전체 완료
+  const p1=()=>p1Full(); // 기존 이름 유지
+  const p2=()=>bmi>=bm.length&&mai>=ma.length&&lai>=la.length&&hdi>=hd.length; // Phase 2 완료 (BM 포함)
+  const p3=()=>cii>=ci.length&&sti>=st.length; // Phase 3 완료
+  const p4=()=>dyi>=dy.length; // Phase 4 완료
+  const p5=()=>emi>=em.length; // Phase 5 완료
   const done=()=>p5()&&hd3i>=hd3.length;
   while(!done()){
     const dt=new Date(pl(TODAY));dt.setDate(pl(TODAY).getDate()+d);
@@ -677,18 +680,29 @@ function bs(sta){
     if(cap>0){
       const day=[];
       if(!p1()){
-        // 4과목 전환: 수학1시발점2 + 기초미적1 + 배기범기초1 + 배기범필수1 + 선형대수1
-        let sc2=0,bc=0,bkc=0,bnc=0,lc=0;
-        while(sc2<2&&smi<sm.length){day.push(sm[smi++]);sc2++;}
-        while(bc<1&&bmi<bm.length){day.push(bm[bmi++]);bc++;}
-        while(bkc<1&&bki<bk.length){day.push(bk[bki++]);bkc++;}
-        while(bnc<1&&bni<bn.length){day.push(bn[bni++]);bnc++;}
-        while(lc<1&&lai<la.length){day.push(la[lai++]);lc++;}
-        while(day.length<cap&&smi<sm.length)day.push(sm[smi++]);
-        while(day.length<cap&&bmi<bm.length)day.push(bm[bmi++]);
-        while(day.length<cap&&bki<bk.length)day.push(bk[bki++]);
-        while(day.length<cap&&bni<bn.length)day.push(bn[bni++]);
-        while(day.length<cap&&lai<la.length)day.push(la[lai++]);
+        // Phase 1: SM→BM(수학) 과 BK→BN(물리 기초→심화) 순차진행, 분산배분
+        if(!p1SM()){
+          // 1단계: SM 진행 → SM 2강 + BK 2강
+          let smc=0,bkc=0;
+          while(smc<2&&smi<sm.length){day.push(sm[smi++]);smc++;}
+          while(bkc<2&&bki<bk.length){day.push(bk[bki++]);bkc++;}
+          while(day.length<cap&&smi<sm.length)day.push(sm[smi++]);
+          while(day.length<cap&&bki<bk.length)day.push(bk[bki++]);
+        } else if(!p1BK()){
+          // 2단계: SM 완료, BK 진행 → BM 2강 + BK 2강
+          let bmc=0,bkc=0;
+          while(bmc<2&&bmi<bm.length){day.push(bm[bmi++]);bmc++;}
+          while(bkc<2&&bki<bk.length){day.push(bk[bki++]);bkc++;}
+          while(day.length<cap&&bmi<bm.length)day.push(bm[bmi++]);
+          while(day.length<cap&&bki<bk.length)day.push(bk[bki++]);
+        } else {
+          // 3단계: SM, BK 완료, BN 진행 → BM 2강 + BN 2강
+          let bmc=0,bnc=0;
+          while(bmc<2&&bmi<bm.length){day.push(bm[bmi++]);bmc++;}
+          while(bnc<2&&bni<bn.length){day.push(bn[bni++]);bnc++;}
+          while(day.length<cap&&bmi<bm.length)day.push(bm[bmi++]);
+          while(day.length<cap&&bni<bn.length)day.push(bn[bni++]);
+        }
       } else if(!p2()){
         // 4과목 전환: 기초미적2 + 미적분1 + 선형대수2 + 할리데이2
         let bc=0,mc=0,lc=0,hc=0;
