@@ -742,19 +742,15 @@ function sv(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch{}}
 let STA={},SK={n:0,last:''},tab='today',off=0,cs=CUR[0].id,oc={},cm=0,SC={};
 
 function init(){
+  // localStorage 강제 초기화 (2024-07-01 이전 캐시 무시)
+  localStorage.removeItem('mech3');
+  localStorage.removeItem('mech4');
+  
   const s=ld('mech1');const sk=ld('mech2');
   STA=s||initDone();if(sk)SK=sk;
   const now=new Date();cm=now.getFullYear()*12+now.getMonth();
-  // 스케줄은 하루에 한 번만 새로 계산한다. 체크박스를 누를 때마다 다시 계산하면
-  // 방금 완료한 항목이 "어제까지 실적"으로 밀려나면서 내일 항목이 오늘로 당겨오는
-  // 문제가 생기기 때문에, 같은 날 안에서는 저장된 스케줄을 그대로 쓴다.
-  const savedSC=ld('mech3');const genDay=ld('mech4');
-  if(savedSC&&genDay===ts()){
-    SC=savedSC;
-  } else {
-    SC=bs(STA);
-    sv('mech3',SC);sv('mech4',ts());
-  }
+  // 스케줄은 매번 새로 계산한다 (BK 완료 전까지는 BN이 절대 안 나오도록)
+  SC=bs(STA);
   render();
 }
 function us(){
