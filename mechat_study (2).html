@@ -108,6 +108,10 @@ body{font-family:'SF Mono','Fira Code','Consolas',monospace;background:var(--bg)
 
 /* PHASE TAG */
 .ptag{display:inline-block;font-size:8px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:2px 6px;border:1px solid;margin-right:6px}
+
+/* CATCHUP BANNER */
+.catchup{margin:0 14px 8px;background:#fff4e5;border:1px solid #e6a000;padding:10px 12px;font-size:10px;color:#8a5a00;line-height:1.5;letter-spacing:.02em}
+.catchup b{color:var(--orange)}
 </style>
 </head>
 <body>
@@ -612,7 +616,6 @@ const PHASES=[
   {n:'P4',label:'회로이론',color:'#00e5ff',ids:['CI']},
 ];
 
-const SS='2026-06-18';
 const DK=['일','월','화','수','목','금','토'];
 function pl(s){const[y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d);}
 function ds(d){return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
@@ -645,16 +648,20 @@ function bs(sta){
   // 후순위: 열·파동 파트 (공학수학 끝난 후)
   let hd3=getChapter('HD','HD3');
   let hd3i=0;
+  // ANCHOR: 항상 "오늘" 기준으로 재계산한다. 과거에 밀린 날짜에 계속 항목을
+  // 묶어두지 않고, 완료된 항목은 어제까지의 실적으로 채워넣고 남은 항목은
+  // 오늘부터 다시 배분한다 -> 밀린 게 누적되어 보이지 않고, 완료일만 자연히 뒤로 밀린다.
+  const TODAY=ts();
   const allDone=[];
   CUR.forEach(sj=>getAllItems(sj.id).forEach(it=>{if(sta&&sta[it.id])allDone.push(it);}));
   if(allDone.length>0){
-    const pastSt=new Date(pl(SS));pastSt.setDate(pastSt.getDate()-1);
+    const pastSt=new Date(pl(TODAY));pastSt.setDate(pastSt.getDate()-1);
     let di=allDone.length-1;let pd=0;
     while(di>=0){
       const dt=new Date(pastSt);dt.setDate(pastSt.getDate()-pd);
       const dstr=ds(dt);
       if(dt.getDay()!==0&&dt.getDay()!==3){const day=[];while(day.length<6&&di>=0){day.unshift(allDone[di--]);}sc[dstr]=day;}
-      pd++;if(pd>200)break;
+      pd++;if(pd>2000)break;
     }
   }
   let bki=0,bni=0,smi=0,bmi=0,mai=0,lai=0,hdi=0,cii=0,sti=0,dyi=0,emi=0,d=0;
@@ -665,14 +672,14 @@ function bs(sta){
   const p5=()=>p4()&&emi>=em.length;
   const done=()=>p5()&&hd3i>=hd3.length;
   while(!done()){
-    const dt=new Date(pl(SS));dt.setDate(pl(SS).getDate()+d);
+    const dt=new Date(pl(TODAY));dt.setDate(pl(TODAY).getDate()+d);
     const dstr=ds(dt);const cap=gc(dstr);
     if(cap>0){
       const day=[];
       if(!p1()){
         // 4과목 전환: 수학1시발점2 + 기초미적1 + 배기범기초1 + 배기범필수1 + 선형대수1
-        let sc=0,bc=0,bkc=0,bnc=0,lc=0;
-        while(sc<2&&smi<sm.length){day.push(sm[smi++]);sc++;}
+        let sc2=0,bc=0,bkc=0,bnc=0,lc=0;
+        while(sc2<2&&smi<sm.length){day.push(sm[smi++]);sc2++;}
         while(bc<1&&bmi<bm.length){day.push(bm[bmi++]);bc++;}
         while(bkc<1&&bki<bk.length){day.push(bk[bki++]);bkc++;}
         while(bnc<1&&bni<bn.length){day.push(bn[bni++]);bnc++;}
@@ -696,9 +703,9 @@ function bs(sta){
         while(day.length<cap&&hdi<hd.length)day.push(hd[hdi++]);
         while(day.length<cap&&emi<em.length)day.push(em[emi++]);
       } else if(!p3()){
-        let cc=0,sc=0;
+        let cc=0,sc2=0;
         while(cc<4&&cii<ci.length){day.push(ci[cii++]);cc++;}
-        while(sc<3&&sti<st.length){day.push(st[sti++]);sc++;}
+        while(sc2<3&&sti<st.length){day.push(st[sti++]);sc2++;}
         while(day.length<cap&&cii<ci.length)day.push(ci[cii++]);
         while(day.length<cap&&sti<st.length)day.push(st[sti++]);
       } else if(!p4()){
@@ -724,7 +731,17 @@ function init(){
   const s=ld('mech1');const sk=ld('mech2');
   STA=s||initDone();if(sk)SK=sk;
   const now=new Date();cm=now.getFullYear()*12+now.getMonth();
-  SC=bs(STA);render();
+  // 스케줄은 하루에 한 번만 새로 계산한다. 체크박스를 누를 때마다 다시 계산하면
+  // 방금 완료한 항목이 "어제까지 실적"으로 밀려나면서 내일 항목이 오늘로 당겨오는
+  // 문제가 생기기 때문에, 같은 날 안에서는 저장된 스케줄을 그대로 쓴다.
+  const savedSC=ld('mech3');const genDay=ld('mech4');
+  if(savedSC&&genDay===ts()){
+    SC=savedSC;
+  } else {
+    SC=bs(STA);
+    sv('mech3',SC);sv('mech4',ts());
+  }
+  render();
 }
 function us(){
   const t=ts();const y=ds(new Date(pl(t).getTime()-86400000));
