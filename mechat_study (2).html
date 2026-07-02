@@ -118,7 +118,7 @@ body{font-family:'SF Mono','Fira Code','Consolas',monospace;background:var(--bg)
 <div class="app" id="app"><div style="display:flex;align-items:center;justify-content:center;height:200px;color:var(--accent);font-size:11px;letter-spacing:.1em">LOADING...</div></div>
 <script>
 const CUR=[
-{id:'BK',name:'배기범 기초입문',short:'물리기초',color:'#e91e63',info:'First 기초입문 물리학 · 31강',phase:1,done_until:0,
+{id:'BK',name:'배기범 기초입문',short:'물리기초',color:'#e91e63',info:'First 기초입문 물리학 · 31강',phase:1,done_until:13,
 chapters:[
   {id:'BK1',t:'OT~9강 · 여러가지운동·힘',s:[
     {id:'BK00',n:'OT'},{id:'BK01',n:'1강. [01강] 01. 여러 가지 운동 (1) - 물리량의 구분'},
@@ -235,7 +235,7 @@ chapters:[
     {id:'BN63',n:'63강. 종강 ▶'},
   ]},
 ]},
-{id:'SM',name:'수학1 시발점',short:'수학1',color:'#ff5722',info:'현우진 시발점 수학1 · 69강',phase:1,done_until:3,
+{id:'SM',name:'수학1 시발점',short:'수학1',color:'#ff5722',info:'현우진 시발점 수학1 · 69강',phase:1,done_until:9,
 chapters:[
   {id:'SM1',t:'OT~10강 · 지수·로그',s:[
     {id:'SM00',n:'OT'},{id:'SM01',n:'2강. Road Map'},
@@ -742,15 +742,18 @@ function sv(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch{}}
 let STA={},SK={n:0,last:''},tab='today',off=0,cs=CUR[0].id,oc={},cm=0,SC={};
 
 function init(){
-  // localStorage 강제 초기화 (2024-07-01 이전 캐시 무시)
-  localStorage.removeItem('mech3');
-  localStorage.removeItem('mech4');
-  
   const s=ld('mech1');const sk=ld('mech2');
   STA=s||initDone();if(sk)SK=sk;
   const now=new Date();cm=now.getFullYear()*12+now.getMonth();
-  // 스케줄은 매번 새로 계산한다 (BK 완료 전까지는 BN이 절대 안 나오도록)
-  SC=bs(STA);
+  
+  // 한 번 생성된 스케줄은 영구 고정. 다시 계산하지 않음.
+  const savedSC=ld('mech_schedule');
+  if(savedSC){
+    SC=savedSC; // 저장된 스케줄 로드
+  } else {
+    SC=bs(STA); // 처음 한 번만 계산
+    sv('mech_schedule',SC); // 저장 (영구)
+  }
   render();
 }
 function us(){
