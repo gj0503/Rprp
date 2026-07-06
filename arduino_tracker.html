@@ -3,13 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>아두이노 학습 트래커</title>
+<title>강의 트래커</title>
 <style>
   *{box-sizing:border-box;margin:0;padding:0;}
   body{font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:#f4f5f7;color:#222;padding:20px;}
   .wrap{max-width:720px;margin:0 auto;}
   h1{font-size:20px;margin-bottom:4px;}
-  .sub{color:#777;font-size:13px;margin-bottom:18px;}
+  .sub{color:#777;font-size:13px;margin-bottom:14px;}
+
+  .tabs{display:flex;gap:8px;margin-bottom:18px;}
+  .tab{flex:1;text-align:center;padding:10px;border-radius:10px;background:#fff;font-size:14px;font-weight:600;color:#888;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.06);border:2px solid transparent;}
+  .tab.active{color:#1a73e8;border-color:#1a73e8;background:#eaf2ff;}
+
   .stats{display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap;}
   .card{background:#fff;border-radius:10px;padding:12px 16px;flex:1;min-width:100px;box-shadow:0 1px 3px rgba(0,0,0,.06);}
   .card .num{font-size:20px;font-weight:700;color:#1a73e8;}
@@ -31,11 +36,13 @@
 </head>
 <body>
 <div class="wrap">
-  <h1>아두이노 강의 트래커</h1>
-  <div class="sub">유니스터디 · 아두이노 28차시</div>
+  <h1>강의 트래커</h1>
+  <div class="sub">유니스터디</div>
+
+  <div class="tabs" id="tabs"></div>
 
   <div class="stats">
-    <div class="card"><div class="num" id="statDone">0/28</div><div class="lbl">완료 강의</div></div>
+    <div class="card"><div class="num" id="statDone">0/0</div><div class="lbl">완료 강의</div></div>
     <div class="card"><div class="num" id="statPct">0%</div><div class="lbl">진행률</div></div>
     <div class="card"><div class="num" id="statTime">0h 0m</div><div class="lbl">남은 시간</div></div>
   </div>
@@ -49,56 +56,126 @@
     <tbody id="tbody"></tbody>
   </table>
 
-  <button class="resetBtn" onclick="resetAll()">전체 초기화</button>
+  <button class="resetBtn" onclick="resetAll()">현재 과목 초기화</button>
   <footer>진행 상황은 이 브라우저에 자동 저장됩니다 (localStorage)</footer>
 </div>
 
 <script>
-const LECTURES = [
-  ["아두이노란",41],
-  ["아두이노 IDE 설치 / 컴퓨터에 연결하기",47],
-  ["아두이노 기본부품 (저항/점퍼선/브레드보드)",31],
-  ["시리얼 통신",38],
-  ["LED 제어하기",41],
-  ["RGB LED, 버튼",39],
-  ["조도센서, 온도센서",38],
-  ["LCD",37],
-  ["능동부저 / 수동부저",37],
-  ["서보모터 / 초음파센서",46],
-  ["플렉스센서 / 압력센서",43],
-  ["인체감지센서 / 충격센서",41],
-  ["수위수분센서 / 토양수분센서",42],
-  ["빗물감지센서 / 터치센서",44],
-  ["가변저항 / 사운드센서",47],
-  ["시리얼 통신 심화",42],
-  ["1자리 세그먼트",40],
-  ["4자리 7세그먼트",39],
-  ["도트매트릭스",40],
-  ["온습도센서, 가스센서",41],
-  ["부저피아노",44],
-  ["자동차 후방 감지기",40],
-  ["룰렛, 하트 LED",40],
-  ["스마트화분 (오렌지보드, 엠블록)",35],
-  ["틴커캐드 서킷 1",40],
-  ["틴커캐드 서킷 2",29],
-  ["틴커캐드 서킷 3",43],
-  ["아두이노 해커톤",32]
-];
+const COURSES = {
+  arduino: {
+    label: "아두이노",
+    key: "arduino_tracker_v1",
+    lectures: [
+      ["아두이노란",41],
+      ["아두이노 IDE 설치 / 컴퓨터에 연결하기",47],
+      ["아두이노 기본부품 (저항/점퍼선/브레드보드)",31],
+      ["시리얼 통신",38],
+      ["LED 제어하기",41],
+      ["RGB LED, 버튼",39],
+      ["조도센서, 온도센서",38],
+      ["LCD",37],
+      ["능동부저 / 수동부저",37],
+      ["서보모터 / 초음파센서",46],
+      ["플렉스센서 / 압력센서",43],
+      ["인체감지센서 / 충격센서",41],
+      ["수위수분센서 / 토양수분센서",42],
+      ["빗물감지센서 / 터치센서",44],
+      ["가변저항 / 사운드센서",47],
+      ["시리얼 통신 심화",42],
+      ["1자리 세그먼트",40],
+      ["4자리 7세그먼트",39],
+      ["도트매트릭스",40],
+      ["온습도센서, 가스센서",41],
+      ["부저피아노",44],
+      ["자동차 후방 감지기",40],
+      ["룰렛, 하트 LED",40],
+      ["스마트화분 (오렌지보드, 엠블록)",35],
+      ["틴커캐드 서킷 1",40],
+      ["틴커캐드 서킷 2",29],
+      ["틴커캐드 서킷 3",43],
+      ["아두이노 해커톤",32]
+    ]
+  },
+  clang: {
+    label: "C언어",
+    key: "clang_tracker_v1",
+    lectures: [
+      ["[도입] C언어란 - visual studio 설치",42],
+      ["[변수] 자료형 - 변수선언과 초기화",39],
+      ["[변수] 서식지정자",42],
+      ["[변수] 자료형 종류 - 저장범위",42],
+      ["[설치,변수] 실습문제 풀이",42],
+      ["[함수] 사용이유, 선언, 호출, return",41],
+      ["[함수] scanf(), 정적변수, 지역변수, 전역변수",43],
+      ["[함수] 실습 문제풀이",42],
+      ["[연산자] 대입 연산자, 산술 연산자",45],
+      ["[연산자] 논리 연산자, 비교연산자",45],
+      ["[연산자] 조건 연산자, 비트 연산자",43],
+      ["[연산자] 연산자 실습",43],
+      ["[조건문] if, if ~ else",41],
+      ["[조건문] if ~ else if ~ else",43],
+      ["[조건문] switch문",41],
+      ["[조건문] 조건문 실습",41],
+      ["[조건문] for문",41],
+      ["[조건문] 이중 for문",44],
+      ["[조건문] while문",39],
+      ["[조건문] do-while문, break, continue",42],
+      ["반복문 실습 문제 풀이",43],
+      ["배열",39],
+      ["for문 사용, sizeof, 2차원 배열",42],
+      ["배열복사, 문자열 배열",44],
+      ["배열 실습 문제풀이",45],
+      ["포인터 개념",40],
+      ["포인터 사용이유",43],
+      ["배열 포인터",41],
+      ["포인터 실습문제 풀이",45],
+      ["포인터 배열, 문자열 함수 (1)",40],
+      ["문자열 함수 (2), 문자열 함수 구현 (1)",40],
+      ["문자열 함수 구현 (2), 실습문제",39],
+      ["2차원 배열 포인터",40],
+      ["포인터의 포인터",40],
+      ["함수 포인터, 동적할당",42],
+      ["구조체",41],
+      ["구조체포인터, 기호상수",42],
+      ["연결리스트",45],
+      ["실습문제풀이",40],
+      ["파일입출력 (1)",42],
+      ["파일입출력 (2)",44],
+      ["통합실습문제풀이",41]
+    ]
+  }
+};
 
-const KEY = "arduino_tracker_v1";
+const ACTIVE_KEY = "tracker_active_course";
+let current = localStorage.getItem(ACTIVE_KEY) || "arduino";
+if(!COURSES[current]) current = "arduino";
 
-function load(){
-  try{ return JSON.parse(localStorage.getItem(KEY)) || {}; }catch(e){ return {}; }
+function load(key){
+  try{ return JSON.parse(localStorage.getItem(key)) || {}; }catch(e){ return {}; }
 }
-function save(state){ localStorage.setItem(KEY, JSON.stringify(state)); }
+function save(key, state){ localStorage.setItem(key, JSON.stringify(state)); }
+
+function renderTabs(){
+  const tabsEl = document.getElementById('tabs');
+  tabsEl.innerHTML = '';
+  Object.keys(COURSES).forEach(id=>{
+    const btn = document.createElement('div');
+    btn.className = 'tab' + (id===current ? ' active' : '');
+    btn.textContent = COURSES[id].label;
+    btn.onclick = ()=>{ current = id; localStorage.setItem(ACTIVE_KEY, id); render(); };
+    tabsEl.appendChild(btn);
+  });
+}
 
 function render(){
-  const state = load();
+  renderTabs();
+  const course = COURSES[current];
+  const state = load(course.key);
   const tbody = document.getElementById('tbody');
   tbody.innerHTML = '';
   let doneCount = 0, remainMin = 0;
 
-  LECTURES.forEach((lec,i)=>{
+  course.lectures.forEach((lec,i)=>{
     const [name,min] = lec;
     const isDone = !!state[i];
     if(isDone) doneCount++; else remainMin += min;
@@ -114,8 +191,9 @@ function render(){
     tbody.appendChild(tr);
   });
 
-  const pct = Math.round(doneCount/LECTURES.length*100);
-  document.getElementById('statDone').textContent = `${doneCount}/${LECTURES.length}`;
+  const total = course.lectures.length;
+  const pct = total ? Math.round(doneCount/total*100) : 0;
+  document.getElementById('statDone').textContent = `${doneCount}/${total}`;
   document.getElementById('statPct').textContent = `${pct}%`;
   document.getElementById('statTime').textContent = `${Math.floor(remainMin/60)}h ${remainMin%60}m`;
   document.getElementById('bar').style.width = pct + '%';
@@ -123,17 +201,18 @@ function render(){
   document.querySelectorAll('.ch').forEach(cb=>{
     cb.addEventListener('change', e=>{
       const idx = e.target.dataset.i;
-      const st = load();
+      const st = load(course.key);
       st[idx] = e.target.checked;
-      save(st);
+      save(course.key, st);
       render();
     });
   });
 }
 
 function resetAll(){
-  if(confirm('전체 진행 상황을 초기화할까요?')){
-    localStorage.removeItem(KEY);
+  const course = COURSES[current];
+  if(confirm(`"${course.label}" 진행 상황을 초기화할까요?`)){
+    localStorage.removeItem(course.key);
     render();
   }
 }
