@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>아두이노 학습 트래커</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:#f4f5f7;color:#222;padding:20px;}
+  .wrap{max-width:720px;margin:0 auto;}
+  h1{font-size:20px;margin-bottom:4px;}
+  .sub{color:#777;font-size:13px;margin-bottom:18px;}
+  .stats{display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap;}
+  .card{background:#fff;border-radius:10px;padding:12px 16px;flex:1;min-width:100px;box-shadow:0 1px 3px rgba(0,0,0,.06);}
+  .card .num{font-size:20px;font-weight:700;color:#1a73e8;}
+  .card .lbl{font-size:12px;color:#888;margin-top:2px;}
+  .barOuter{background:#e3e6ea;border-radius:8px;height:10px;overflow:hidden;margin-bottom:20px;}
+  .barInner{background:linear-gradient(90deg,#1a73e8,#4fa3ff);height:100%;width:0%;transition:width .3s;}
+  table{width:100%;border-collapse:collapse;background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.06);}
+  thead th{background:#2b2f36;color:#fff;font-size:12px;padding:10px 8px;text-align:left;}
+  tbody td{padding:9px 8px;font-size:13px;border-bottom:1px solid #eee;}
+  tbody tr.done{background:#f0f7ff;}
+  tbody tr.done .name{text-decoration:line-through;color:#999;}
+  .ch{width:20px;height:20px;cursor:pointer;accent-color:#1a73e8;}
+  .idx{color:#999;width:28px;text-align:center;}
+  .time{color:#888;text-align:right;width:50px;}
+  .name{font-weight:500;}
+  .resetBtn{margin-top:16px;font-size:12px;color:#aaa;background:none;border:none;cursor:pointer;text-decoration:underline;}
+  footer{margin-top:10px;font-size:11px;color:#bbb;text-align:center;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>아두이노 강의 트래커</h1>
+  <div class="sub">유니스터디 · 아두이노 28차시</div>
+
+  <div class="stats">
+    <div class="card"><div class="num" id="statDone">0/28</div><div class="lbl">완료 강의</div></div>
+    <div class="card"><div class="num" id="statPct">0%</div><div class="lbl">진행률</div></div>
+    <div class="card"><div class="num" id="statTime">0h 0m</div><div class="lbl">남은 시간</div></div>
+  </div>
+
+  <div class="barOuter"><div class="barInner" id="bar"></div></div>
+
+  <table>
+    <thead>
+      <tr><th>차시</th><th>강의명</th><th style="text-align:right">시간</th><th style="text-align:center">완료</th></tr>
+    </thead>
+    <tbody id="tbody"></tbody>
+  </table>
+
+  <button class="resetBtn" onclick="resetAll()">전체 초기화</button>
+  <footer>진행 상황은 이 브라우저에 자동 저장됩니다 (localStorage)</footer>
+</div>
+
+<script>
+const LECTURES = [
+  ["아두이노란",41],
+  ["아두이노 IDE 설치 / 컴퓨터에 연결하기",47],
+  ["아두이노 기본부품 (저항/점퍼선/브레드보드)",31],
+  ["시리얼 통신",38],
+  ["LED 제어하기",41],
+  ["RGB LED, 버튼",39],
+  ["조도센서, 온도센서",38],
+  ["LCD",37],
+  ["능동부저 / 수동부저",37],
+  ["서보모터 / 초음파센서",46],
+  ["플렉스센서 / 압력센서",43],
+  ["인체감지센서 / 충격센서",41],
+  ["수위수분센서 / 토양수분센서",42],
+  ["빗물감지센서 / 터치센서",44],
+  ["가변저항 / 사운드센서",47],
+  ["시리얼 통신 심화",42],
+  ["1자리 세그먼트",40],
+  ["4자리 7세그먼트",39],
+  ["도트매트릭스",40],
+  ["온습도센서, 가스센서",41],
+  ["부저피아노",44],
+  ["자동차 후방 감지기",40],
+  ["룰렛, 하트 LED",40],
+  ["스마트화분 (오렌지보드, 엠블록)",35],
+  ["틴커캐드 서킷 1",40],
+  ["틴커캐드 서킷 2",29],
+  ["틴커캐드 서킷 3",43],
+  ["아두이노 해커톤",32]
+];
+
+const KEY = "arduino_tracker_v1";
+
+function load(){
+  try{ return JSON.parse(localStorage.getItem(KEY)) || {}; }catch(e){ return {}; }
+}
+function save(state){ localStorage.setItem(KEY, JSON.stringify(state)); }
+
+function render(){
+  const state = load();
+  const tbody = document.getElementById('tbody');
+  tbody.innerHTML = '';
+  let doneCount = 0, remainMin = 0;
+
+  LECTURES.forEach((lec,i)=>{
+    const [name,min] = lec;
+    const isDone = !!state[i];
+    if(isDone) doneCount++; else remainMin += min;
+
+    const tr = document.createElement('tr');
+    tr.className = isDone ? 'done' : '';
+    tr.innerHTML = `
+      <td class="idx">${i+1}</td>
+      <td class="name">${name}</td>
+      <td class="time">${min}분</td>
+      <td style="text-align:center"><input type="checkbox" class="ch" data-i="${i}" ${isDone?'checked':''}></td>
+    `;
+    tbody.appendChild(tr);
+  });
+
+  const pct = Math.round(doneCount/LECTURES.length*100);
+  document.getElementById('statDone').textContent = `${doneCount}/${LECTURES.length}`;
+  document.getElementById('statPct').textContent = `${pct}%`;
+  document.getElementById('statTime').textContent = `${Math.floor(remainMin/60)}h ${remainMin%60}m`;
+  document.getElementById('bar').style.width = pct + '%';
+
+  document.querySelectorAll('.ch').forEach(cb=>{
+    cb.addEventListener('change', e=>{
+      const idx = e.target.dataset.i;
+      const st = load();
+      st[idx] = e.target.checked;
+      save(st);
+      render();
+    });
+  });
+}
+
+function resetAll(){
+  if(confirm('전체 진행 상황을 초기화할까요?')){
+    localStorage.removeItem(KEY);
+    render();
+  }
+}
+
+render();
+</script>
+</body>
+</html>
