@@ -803,12 +803,13 @@ function bs(sta){
     const dstr=ds(dt);const cap=gc(dstr);
     if(cap>0){
       const day=[];
-      // 프로젝트 트랙: 하루 최대 2칸 우선 배정 (C언어 → 아두이노 → 로봇 프로젝트 순)
+      // 프로젝트 트랙 우선: C언어 → 아두이노 → 로봇 프로젝트가 다 끝날 때까지 하루 6칸 전부 배정
       let projCount=0;
-      while(projCount<2&&pci<pc.length){day.push(pc[pci++]);projCount++;}
-      while(projCount<2&&ari<ar.length){day.push(ar[ari++]);projCount++;}
-      while(projCount<2&&rbi<rb.length){day.push(rb[rbi++]);projCount++;}
-      // 이론 트랙: 나머지 칸 채우기
+      while(projCount<cap&&pci<pc.length){day.push(pc[pci++]);projCount++;}
+      while(projCount<cap&&ari<ar.length){day.push(ar[ari++]);projCount++;}
+      while(projCount<cap&&rbi<rb.length){day.push(rb[rbi++]);projCount++;}
+      // 프로젝트 트랙이 하루를 다 채웠으면(projCount>=cap) 이론은 절대 끼어들지 않음
+      if(projCount<cap){
       if(!p1()){
         // Phase 1: SM→BM(수학) 과 BK→BN(물리 기초→심화) 순차진행, 분산배분
         if(!p1SM()){
@@ -860,6 +861,7 @@ function bs(sta){
         // 후순위: 열·파동 (PM2, KM2, HD3) 병행
         while(day.length<cap&&hd3i<hd3.length)day.push(hd3[hd3i++]);
       }
+      } // projCount<cap 블록 닫기
       sc[dstr]=day;
     } else sc[dstr]=[];
     d++;if(d>600)break;
@@ -871,18 +873,22 @@ function ld(k){try{const v=localStorage.getItem(k);return v?JSON.parse(v):null;}
 function sv(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch{}}
 let STA={},SK={n:0,last:''},tab='today',off=0,cs=CUR[0].id,oc={},cm=0,SC={};
 
+function schemaSig(){return CUR.map(s=>s.id+':'+getAllItems(s.id).length).join('|');} // 과목 구성이 바뀌면 값이 달라짐
 function init(){
   const s=ld('mech1');const sk=ld('mech2');
   STA=s||initDone();if(sk)SK=sk;
   const now=new Date();cm=now.getFullYear()*12+now.getMonth();
   
-  // 한 번 생성된 스케줄은 영구 고정. 다시 계산하지 않음.
+  // 스케줄은 한 번 생성되면 고정하되, 과목 구성(CUR)이 바뀌면 자동으로 재계산한다.
   const savedSC=ld('mech_schedule');
-  if(savedSC){
-    SC=savedSC; // 저장된 스케줄 로드
+  const savedSig=ld('mech_schema');
+  const curSig=schemaSig();
+  if(savedSC&&savedSig===curSig){
+    SC=savedSC; // 과목 구성 그대로면 저장된 스케줄 사용
   } else {
-    SC=bs(STA); // 처음 한 번만 계산
-    sv('mech_schedule',SC); // 저장 (영구)
+    SC=bs(STA); // 과목 구성이 바뀌었거나 처음이면 새로 계산
+    sv('mech_schedule',SC);
+    sv('mech_schema',curSig);
   }
   render();
 }
