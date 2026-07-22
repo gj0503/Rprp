@@ -803,12 +803,12 @@ function bs(sta){
     const dstr=ds(dt);const cap=gc(dstr);
     if(cap>0){
       const day=[];
-      // 프로젝트 트랙 우선: C언어 → 아두이노 → 로봇 프로젝트가 다 끝날 때까지 하루 6칸 전부 배정
+      // 프로젝트 트랙: 하루 최대 2칸만 배정 (C언어 → 아두이노 → 로봇 프로젝트 순), 나머지는 이론
       let projCount=0;
-      while(projCount<cap&&pci<pc.length){day.push(pc[pci++]);projCount++;}
-      while(projCount<cap&&ari<ar.length){day.push(ar[ari++]);projCount++;}
-      while(projCount<cap&&rbi<rb.length){day.push(rb[rbi++]);projCount++;}
-      // 프로젝트 트랙이 하루를 다 채웠으면(projCount>=cap) 이론은 절대 끼어들지 않음
+      while(projCount<2&&pci<pc.length){day.push(pc[pci++]);projCount++;}
+      while(projCount<2&&ari<ar.length){day.push(ar[ari++]);projCount++;}
+      while(projCount<2&&rbi<rb.length){day.push(rb[rbi++]);projCount++;}
+      // 프로젝트가 하루를 다 채웠으면(드물게 cap이 작을 때) 이론은 끼어들지 않음
       if(projCount<cap){
       if(!p1()){
         // Phase 1: SM→BM(수학) 과 BK→BN(물리 기초→심화) 순차진행, 분산배분
@@ -873,7 +873,8 @@ function ld(k){try{const v=localStorage.getItem(k);return v?JSON.parse(v):null;}
 function sv(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch{}}
 let STA={},SK={n:0,last:''},tab='today',off=0,cs=CUR[0].id,oc={},cm=0,SC={};
 
-function schemaSig(){return CUR.map(s=>s.id+':'+getAllItems(s.id).length).join('|');} // 과목 구성이 바뀌면 값이 달라짐
+const SCHEDULE_ALGO_VERSION='v3'; // 배분 로직을 바꿀 때마다 이 값을 올리면 캐시가 자동 무효화됨
+function schemaSig(){return SCHEDULE_ALGO_VERSION+'|'+CUR.map(s=>s.id+':'+getAllItems(s.id).length).join('|');}
 function init(){
   const s=ld('mech1');const sk=ld('mech2');
   STA=s||initDone();if(sk)SK=sk;
