@@ -11,8 +11,8 @@
   h1{font-size:20px;margin-bottom:4px;}
   .sub{color:#777;font-size:13px;margin-bottom:14px;}
 
-  .tabs{display:flex;gap:8px;margin-bottom:18px;}
-  .tab{flex:1;text-align:center;padding:10px;border-radius:10px;background:#fff;font-size:14px;font-weight:600;color:#888;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.06);border:2px solid transparent;}
+  .tabs{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap;}
+  .tab{flex:1;min-width:120px;text-align:center;padding:10px;border-radius:10px;background:#fff;font-size:14px;font-weight:600;color:#888;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.06);border:2px solid transparent;}
   .tab.active{color:#1a73e8;border-color:#1a73e8;background:#eaf2ff;}
 
   .stats{display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap;}
@@ -28,10 +28,11 @@
   tbody tr.done .name{text-decoration:line-through;color:#999;}
   .ch{width:20px;height:20px;cursor:pointer;accent-color:#1a73e8;}
   .idx{color:#999;width:28px;text-align:center;}
-  .time{color:#888;text-align:right;width:50px;}
+  .time{color:#888;text-align:right;width:60px;}
   .name{font-weight:500;}
   .resetBtn{margin-top:16px;font-size:12px;color:#aaa;background:none;border:none;cursor:pointer;text-decoration:underline;}
   footer{margin-top:10px;font-size:11px;color:#bbb;text-align:center;}
+  .est{color:#e0824a;font-size:11px;margin-left:4px;}
 </style>
 </head>
 <body>
@@ -57,7 +58,7 @@
   </table>
 
   <button class="resetBtn" onclick="resetAll()">현재 과목 초기화</button>
-  <footer>진행 상황은 이 브라우저에 자동 저장됩니다 (localStorage)</footer>
+  <footer>진행 상황은 이 브라우저에 자동 저장됩니다 (localStorage) · 주황색 * 표시는 시간이 캡처되지 않아 추정한 값입니다</footer>
 </div>
 
 <script>
@@ -142,6 +143,48 @@ const COURSES = {
       ["파일입출력 (1)",42],
       ["파일입출력 (2)",44],
       ["통합실습문제풀이",41]
+    ]
+  },
+  circuit_basic: {
+    label: "회로이론 (기본반)",
+    key: "circuit_basic_tracker_v1",
+    lectures: [
+      ["오리엔테이션 OT",10],
+      ["1장 전기이론① (전기회로, 전류, 전압, 저항)",36],
+      ["1장 전기이론② (옴의 법칙, 키르히호프의 법칙, 저항의 접속, 전력, 휘스톤 브리지, 배율기와 분류기)",62],
+      ["2장 정현파 교류① (직류와 교류, 각도법과 호도법, 주기, 삼각함수, 순싯값과 위상, 평균값, 실횻값, 파고율, 파형률)",61],
+      ["2장 정현파 교류② (정현파 교류의 다양한 표현법, 순싯값, 극형식법, 복소수법)",26],
+      ["3장 RLC 교류회로① (수동소자, R만의 회로, L만의 회로, C만의 회로)",28],
+      ["3장 RLC 교류회로② (R-L-C 직렬회로, R-L-C 병렬회로, R-L-C 공진회로)",54],
+      ["4장 교류전력 (전력, 유효전력, 무효전력, 피상전력, 최대전력의 전송, 복소전력, 전력의 측정)",38],
+      ["5장 인덕턴스 및 벡터궤적 (자기 인덕턴스, 상호 인덕턴스, 인덕턴스의 접속, 이상 변압기, 벡터궤적)",39],
+      ["6장 회로망 (전원, 중첩의 정리, 테브난의 정리, 밀만의 정리)",44],
+      ["7장 대칭 n상 교류 (평형 3상 교류, Y결선, Δ결선, 3상 평형 전력, V결선, 부하의 Y-Δ변환, 2전력계법)",47],
+      ["8장 대칭 좌표법 (벡터 연산자, 불평형 3상 회로의 해석, 교류발전기 기본식) *",40],
+      ["9장 비정현파 (비정현파, 푸리에 급수, 파형의 대칭성, 비정현파의 계산, 비정현파 임피던스 및 고조파 특성)",53],
+      ["10장 단자망 (2단자망, 구동점 임피던스, 영점과 극점, 정저항회로와 역회로, 4단자망, ZY파라미터, 영상파라미터, 분포정수회로)",78],
+      ["11장 라플라스 변환 (기본함수의 라플라스 변환, 시간추이, 복소추이, 실미분 정리, 실적분 정리, 초깃값 정리, 최종값 정리)",64],
+      ["12장 과도현상 (직류 회로의 과도현상, R-L 직렬, R-C 직렬, R-L-C 직렬)",60],
+      ["13장 전달함수 (전기회로의 전달함수, 전달함수의 종류)",35]
+    ]
+  },
+  circuit_problem: {
+    label: "회로이론 (문제풀이)",
+    key: "circuit_problem_tracker_v1",
+    lectures: [
+      ["1장 전기이론 (p.16~20) *",20],
+      ["2장 정현파 교류 (p.37~40)",22],
+      ["3장 RLC 교류회로 (p.61~64)",45],
+      ["4장 교류전력 (p.74~77)",42],
+      ["5장 인덕턴스 및 벡터궤적 (p.85~86)",6],
+      ["6장 회로망 (p.101~106)",37],
+      ["7장 대칭 n상 교류 (p.120~129) *",40],
+      ["8장 대칭 좌표법 (p.137~140)",18],
+      ["9장 비정현파 교류 (p.150~154)",44],
+      ["10장 단자망 (p.174~178)",40],
+      ["11장 라플라스 변환 (p.192~197)",42],
+      ["12장 과도현상 (p.211~215)",21],
+      ["13장 전달함수 (p.222~224) *",35]
     ]
   }
 };
