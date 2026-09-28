@@ -2,14 +2,560 @@
 <style>body{font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo",sans-serif;background:#f5f6f8;color:#18191b;margin:0}.w{max-width:850px;margin:auto;padding:22px 14px 70px}.card{background:white;border:1px solid #e4e7eb;border-radius:17px;padding:16px;margin:12px 0}h1{font-size:26px}.sub,small{color:#70757d}.bar{height:10px;background:#eee;border-radius:9px;overflow:hidden}.bar i{display:block;height:100%;background:#222;width:0}.tabs{display:flex;gap:7px;position:sticky;top:0;background:#f5f6f8;padding:9px 0;overflow:auto}.tabs button{border:1px solid #ddd;background:white;border-radius:99px;padding:9px 13px;font-weight:bold;white-space:nowrap}.tabs .on{background:#222;color:white}.week{display:none}.week.on{display:block}.task{display:flex;gap:10px;padding:9px 0;border-top:1px solid #f0f0f0}.task:first-of-type{border:0}.task input{width:21px;height:21px;accent-color:#222}.task:has(input:checked) label{text-decoration:line-through;color:#999}.date{font-weight:800}.rest{color:#777;text-align:center;padding:10px}.road{line-height:1.7}</style></head><body><div class="w">
 <h1>🤖 3월까지 로봇 공부 대시보드</h1><p class="sub">2026.09.20 시작 · 과목은 선별하되, 선택한 과목 내부의 선수사슬은 보존</p>
 <div class="card"><b>진행률 <span id="pct">0%</span></b><div class="bar"><i id="bar"></i></div><small>체크는 이 브라우저에 자동 저장됩니다.</small></div>
-<div class="card road"><b>📌 새 원칙</b><br>
-① 필요한 과목 자체는 선별한다.<br>
-② 선택한 과목 안에서는 앞 강의를 임의로 점프하지 않는다.<br>
-③ 생략은 선수관계가 없거나 후순위임이 명확할 때만 한다.<br>③-1 이미 받은 목차가 있는 과목은 ‘다음 강의’라고 쓰지 않고 실제 강의명을 적는다.<br>
-④ 이미 아는 내용은 빠르게 복습하되, 모르는 부분이 나오면 그 지점부터 정상 학습한다.<br>
-⑤ Physical AI는 현재 일시정지. 선형대수 진도를 실제로 진행한 뒤 선수지식 확보 여부를 확인하고 재개 시점을 정한다.</div>
-<div class="tabs"><button class="on" data-x="w1">완료 기록</button><button data-x="w2">9/25–10/1</button><button data-x="road">큰 로드맵</button></div>
-<section id="w1" class="week on"><h2>완료 · 9/20~9/24</h2><div class="card road"><b>🎉 조기 완료</b><br>선형대수 1~4강 · Python 실전 2~4강 · C 연산자 실습/if-if~else · 대수 15~16강 및 관련 복습/예제 완료. Physical AI는 계속 일시정지.</div></section><section id="w2" class="week"><h2>9/25~10/1 · 속도 상향 주간</h2><div class="card road"><b>운영</b><br>하루 4~5개. 여러 과목을 섞되 각 과목 내부 순서는 유지. Physical AI는 아직 재개하지 않음.</div><div class="card"><div class="date">9/25 금</div><div class="task"><input id="n1" type="checkbox"><label>선형대수 5강 · Trace, 행렬 거듭제곱, 대각/특수행렬</label></div><div class="task"><input id="n2" type="checkbox"><label>선형대수 6강 · 예제</label></div><div class="task"><input id="n3" type="checkbox"><label>Python 실전 5강 · 자료형 연습문제</label></div><div class="task"><input id="n4" type="checkbox"><label>C · if~elseif~else</label></div><div class="task"><input id="n5" type="checkbox"><label>대수 18강 · 지수방정식/부등식</label></div></div><div class="card"><div class="date">9/26 토</div><div class="task"><input id="n6" type="checkbox"><label>선형대수 7강 · 역행렬과 그 성질</label></div><div class="task"><input id="n7" type="checkbox"><label>선형대수 8강 · Gaussian elimination / 기본행연산</label></div><div class="task"><input id="n8" type="checkbox"><label>Python 실전 6강 · 내장함수 확장</label></div><div class="task"><input id="n9" type="checkbox"><label>C · switch문</label></div><div class="task"><input id="n10" type="checkbox"><label>대수 19강 · 로그방정식/부등식</label></div></div><div class="card"><div class="date">9/27 일</div><div class="rest">🌙 휴식</div></div><div class="card"><div class="date">9/28 월</div><div class="task"><input id="n11" type="checkbox"><label>선형대수 9강 · Gaussian elimination 예제</label></div><div class="task"><input id="n12" type="checkbox"><label>선형대수 10강 · 역행렬과 연립방정식</label></div><div class="task"><input id="n13" type="checkbox"><label>Python 실전 7강 · 표현식, 연습문제</label></div><div class="task"><input id="n14" type="checkbox"><label>C · 조건문 실습</label></div><div class="task"><input id="n15" type="checkbox"><label>대수 21강 · 역함수 관계 ①</label></div></div><div class="card"><div class="date">9/29 화</div><div class="task"><input id="n16" type="checkbox"><label>선형대수 11강 · 역행렬/연립방정식 후속</label></div><div class="task"><input id="n17" type="checkbox"><label>선형대수 12강 · 블록행렬</label></div><div class="task"><input id="n18" type="checkbox"><label>Python 실전 8강 · 제어문 확장</label></div><div class="task"><input id="n19" type="checkbox"><label>C · for문</label></div><div class="task"><input id="n20" type="checkbox"><label>대수 22강 · 역함수 관계 ②</label></div></div><div class="card"><div class="date">9/30 수 · BUFFER</div><div class="rest">밀린 항목만 보충 · 안 밀렸으면 휴식 · 새 진도 추가 금지</div></div><div class="card"><div class="date">10/1 목</div><div class="task"><input id="n21" type="checkbox"><label>선형대수 13강 · 블록행렬 예제</label></div><div class="task"><input id="n22" type="checkbox"><label>선형대수 14강 · LU decomposition</label></div><div class="task"><input id="n23" type="checkbox"><label>Python 실전 9강 · 제어문 시간복잡도</label></div><div class="task"><input id="n24" type="checkbox"><label>C · 이중 for문</label></div><div class="task"><input id="n25" type="checkbox"><label>대수 23강 · 그래프 해석 ①</label></div></div><div class="card road"><b>🔒 Physical AI 재개 조건</b><br>날짜로 강제 재개하지 않음. 행렬 연산·행렬곱·역행렬이 실제로 이해됐는지 확인한 뒤 재개 여부를 결정.</div></section><section id="road" class="week"><h2>큰 로드맵</h2><div class="card road"><b>9월 말~10월 중순</b> 선형대수 1강부터 순서대로 + Python/C/대수 유지. Physical AI는 동차변환에서 일시정지하고 선수지식 확보 후 재개<br><br><b>10월 중순~11월</b> ROS2 → TF → URDF → Odometry → Sensor → Mapping → Localization → Nav2 → 포트폴리오 1<br><br><b>12월</b> 선형대수 핵심 + 확률 + C++ + SLAM Bible<br><br><b>2027년 1월</b> 최적화/Factor Graph/Graph SLAM/Sensor Fusion + 제어 → 포트폴리오 2<br><br><b>2월</b> GitHub/README/영상/CV/지원 · 여유 있을 때 Isaac Sim/RL<br><br><b>3월</b> 지원/면접/컨택 + 부족한 부분 보완<br><br><b>선수지식 운영 원칙</b> · 선형대수처럼 내부 연결성이 강한 과목은 1강부터 순서를 보존한다. Physical AI 재개 날짜는 미리 고정하지 않는다. 실제 진도를 보고 동차변환에 필요한 기반이 확보됐는지 확인한 뒤 재개한다.</div></section>
+<div class="card road"><b>📌 학습 원칙</b><br>
+① <b>과목은 선별, 진도는 순서대로</b> — 로봇에 필요한 과목만 공부하되, 선택한 과목은 선수관계를 지키며 순서대로 진행.<br>
+② <b>계획은 구체적으로</b> — 이미 목차가 있는 강의는 ‘다음 강의’ 대신 실제 강의명을 적고, 아는 내용은 빠르게 복습하되 모르는 지점부터 정상 학습.<br>
+③ <b>Physical AI는 잠시 정지</b> — 선형대수를 먼저 진행하고, 선수지식이 실제로 갖춰졌는지 확인한 뒤 재개 시점을 결정.
+</div><div class="card road"><b>🌿 휴식 원칙</b><br>
+휴식은 <b>토·일 저녁 6시 이후</b>에 잡는다.<br>
+평일에는 일반적으로 별도 휴식 일정을 넣지 않고, <b>공휴일(빨간날)</b>일 때만 휴식 일정을 추가한다.<br>
+휴식은 평범한 일상보다 <b>새로운 전시·기술·공간·액티비티</b>처럼 평소와 다른 경험을 우선한다.<br>
+독서는 휴식과 별개로 9/28부터 <b>『정의란 무엇인가』</b>를 하루 10~20분 읽는다.
+</div>
+
+
+<div class="tabs"><button class="on" data-x="w1">완료 기록</button><button data-x="w2">9/28–10/4</button><button data-x="reading">📚 독서 기록</button><button data-x="money">💰 돈 기록</button><button data-x="road">큰 로드맵</button></div>
+
+
+<section id="w1" class="week on">
+<h2>✅ 완료 기록</h2>
+
+<div class="card road">
+<b>과목별 완료 단원</b><br>
+지금까지 실제로 끝낸 범위를 누적해서 기록.
+</div>
+
+<div class="card">
+<div class="date">📐 선형대수</div>
+• 1강 · 연립방정식과 행렬<br>
+• 2강 · 연립방정식 풀이<br>
+• 3강 · 행렬과 행렬연산<br>
+• 4강 · 행렬 곱셈<br>
+• 5강 · Trace · 행렬 거듭제곱 · 대각/특수행렬<br>
+• 1~4강 관련 복습 및 행렬곱 계산
+</div>
+
+<div class="card">
+<div class="date">🐍 Python 기초편 · 완강</div>
+• 1강 · Python 설치<br>
+• 2강 · 변수란, print<br>
+• 3강 · 문자열<br>
+• 4강 · 리스트, 실습<br>
+• 5강 · 산술/논리연산자<br>
+• 6강 · 내장함수, 실습<br>
+• 7강 · 파일입출력<br>
+• 8강 · 조건문 · if<br>
+• 9강 · 조건문 · 중첩 if<br>
+• 10강 · 조건문 · 실습<br>
+• 11강 · 반복문 · for<br>
+• 12강 · 반복문 · while<br>
+• 13강 · 반복문 · 실습<br>
+• 14강 · 연습문제 · 완강
+</div>
+
+<div class="card">
+<div class="date">🐍 Python 실전편</div>
+• 1강 · 디버깅 · try문<br>
+• 2강 · 디버깅 · breakpoint(), 연습문제<br>
+• 3강 · 자료형 · 튜플·딕셔너리<br>
+• 4강 · 자료형 · 딕셔너리②<br>
+• 5강 · 자료형 · 연습문제
+</div>
+
+<div class="card">
+<div class="date">💻 C언어</div>
+<b>도입·변수</b><br>
+• C언어란 · VS 설치<br>
+• 자료형 · 선언/초기화<br>
+• 서식지정자<br>
+• 자료형 종류 · 저장범위<br>
+• 실습문제풀이<br><br>
+
+<b>함수</b><br>
+• 함수 사용 이유 · 선언 · 호출 · return<br>
+• scanf · 정적/지역/전역변수<br>
+• 함수 실습문제풀이<br><br>
+
+<b>연산자</b><br>
+• 대입 · 산술연산자<br>
+• 논리 · 비교연산자<br>
+• 조건 · 비트연산자<br>
+• 연산자 실습<br><br>
+
+<b>조건문</b><br>
+• if, if~else
+</div>
+
+<div class="card">
+<div class="date">➗ 대수 · 지수·로그함수</div>
+<b>초반 구간 ~ 14강까지 완료</b><br>
+• RoadMAP<br>
+• 거듭제곱근 ①②<br>
+• 지수 확장 ①②<br>
+• 로그의 뜻과 성질 ①②<br>
+• 상용로그<br>
+• STEP 1~4<br>
+• 지수함수 ①②<br>
+• 로그함수 ①②<br><br>
+
+<b>추가 완료</b><br>
+• 15강 · 지수함수와 로그함수의 최대와 최소 ①<br>
+• 16강 · 지수함수와 로그함수의 최대와 최소 ②<br>
+• 18강 · 지수방정식/부등식 (17 STEP 제외)<br>
+• 19강 · 로그방정식/부등식 (20 STEP 제외)<br>
+<small>STEP 강의는 현재 계획에서 제외하고 진행.</small>
+</div>
+
+<div class="card">
+<div class="date">⏸️ Physical AI</div>
+동차변환에서 일시정지 중.<br>
+완료 범위를 억지로 늘리지 않고, 선형대수 선수지식 확보 후 재개 시점 결정.
+</div>
+</section>
+
+
+<section id="w2" class="week">
+<div class="card road"><b>⏸ Physical AI 일시정지</b><br>
+동차변환에서 막혀 있으므로 지금은 2D 변환·회전행렬·동차변환 복습 과제를 넣지 않습니다.
+선형대수를 순서대로 진행한 뒤 재개 시점을 다시 판단합니다.</div>
+
+<h2>이번 주 · 9/27~10/4</h2>
+
+<div class="card">
+<div class="date">9/27 일 · 완료</div>
+<div class="task"><input id="sun927_p5" type="checkbox" checked><label>✅ Python 실전 5강 · 자료형 연습문제</label></div>
+<div class="task"><input id="sun927_alg18" type="checkbox" checked><label>✅ 대수 18강 · 지수방정식/부등식 (17 STEP 제외)</label></div>
+<div class="task"><input id="sun927_la14review" type="checkbox" checked><label>✅ 선형대수 1~4강 복습 · 행렬곱 계산 2~3개</label></div>
+<div class="task"><input id="sun927_la5" type="checkbox" checked><label>✅ 선형대수 5강 · Trace·행렬 거듭제곱·대각/특수행렬</label></div>
+<div class="task"><input id="sun927_alg19" type="checkbox" checked><label>✅ 대수 19강 · 로그방정식/부등식 (20 STEP 제외)</label></div>
+<div class="task"><input id="sun927_rest" type="checkbox"><label>🌿 휴식 · 18:00 이후 공부 종료</label></div>
+</div>
+
+<div class="card">
+<div class="date">9/28 월</div>
+<div class="task"><input id="read2" type="checkbox"><label>📚 독서 · 『정의란 무엇인가』 10~20분</label></div>
+<div class="task"><input id="exercise1" type="checkbox"><label>🏃 30분 러닝</label></div>
+<div class="task"><input id="m1" type="checkbox"><label>Python 실전 6강 · 내장함수 확장</label></div>
+<div class="task"><input id="m2" type="checkbox"><label>C · if~elseif~else</label></div>
+</div>
+
+<div class="card">
+<div class="date">9/29 화</div>
+<div class="task"><input id="read3" type="checkbox"><label>📚 독서 · 『정의란 무엇인가』 10~20분</label></div>
+<div class="task"><input id="exercise2" type="checkbox"><label>🏃 30분 러닝</label></div>
+<div class="task"><input id="t1" type="checkbox"><label>선형대수 6강 · 예제</label></div>
+<div class="task"><input id="t2" type="checkbox"><label>선형대수 5~6강 핵심 예제 복습</label></div>
+</div>
+
+<div class="card">
+<div class="date">9/30 수 · BUFFER</div>
+<div class="task"><input id="read4" type="checkbox"><label>📚 독서 · 『정의란 무엇인가』 15~20분</label></div>
+<div class="task"><input id="exercise3" type="checkbox"><label>🏃 30분 러닝</label></div>
+<div class="rest">보충 · 안 밀렸으면 휴식</div>
+</div>
+
+<div class="card">
+<div class="date">10/1 목</div>
+<div class="task"><input id="read5" type="checkbox"><label>📚 독서 · 『정의란 무엇인가』 10~20분</label></div>
+<div class="task"><input id="exercise4" type="checkbox"><label>🏃 30분 러닝</label></div>
+<div class="task"><input id="th1" type="checkbox"><label>대수 21강 · 역함수 관계 ①</label></div>
+<div class="task"><input id="th2" type="checkbox"><label>Python 실전 7강 · 표현식, 연습문제</label></div>
+</div>
+
+<div class="card">
+<div class="date">10/2 금</div>
+<div class="task"><input id="read6" type="checkbox"><label>📚 독서 · 『정의란 무엇인가』 10~20분</label></div>
+<div class="task"><input id="exercise5" type="checkbox"><label>🏃 30분 러닝</label></div>
+<div class="task"><input id="f1" type="checkbox"><label>선형대수 7강 · 역행렬과 그 성질</label></div>
+<div class="task"><input id="f2" type="checkbox"><label>C · switch문</label></div>
+</div>
+
+<div class="card">
+<div class="date">10/3 토</div>
+<div class="task"><input id="weekendrest2" type="checkbox"><label>🌿 휴식 · 18:00 이후 · 전시·박람회·새로운 공간·실제 액티비티 중 하나</label></div>
+<div class="task"><input id="read7" type="checkbox"><label>📚 독서 · 『정의란 무엇인가』 20분</label></div>
+<div class="task"><input id="exercise6" type="checkbox"><label>🏃 30분 러닝</label></div>
+<div class="task"><input id="sat1" type="checkbox"><label>대수 22강 · 역함수 관계 ②</label></div>
+<div class="task"><input id="sat2" type="checkbox"><label>Python 실전 8강 · 제어문 확장</label></div>
+<div class="task"><input id="sat3" type="checkbox"><label>선형대수 8강 · Gaussian elimination / 기본행연산</label></div>
+</div>
+
+<div class="card">
+<div class="date">10/4 일 · REST</div>
+<div class="task"><input id="weekendrest3" type="checkbox"><label>🌿 휴식 · 18:00 이후 · 완전 휴식 · 다음 주 준비는 15분 이내</label></div>
+<div class="task"><input id="read8" type="checkbox"><label>📚 독서 · 『정의란 무엇인가』 15~20분 · 읽고 싶을 때만</label></div>
+<div class="task"><input id="exercise7" type="checkbox"><label>🏃 30분 러닝</label></div>
+<div class="rest">🌙 완전 휴식</div>
+</div>
+</section>
+
+
+<section id="reading" class="week">
+<h2>📚 독서 기록</h2>
+
+<div class="card road">
+<b>현재 읽는 책</b><br>
+『정의란 무엇인가』<br><br>
+<b>사용법</b><br>
+읽기 전에 <b>지난 기록의 ‘다음 시작 페이지’와 ‘이전까지 내용’</b>을 먼저 확인하고,
+읽은 뒤 오늘 기록을 남긴다. 길게 쓰지 말고 3~5줄이면 충분하다.
+</div>
+
+<div class="card">
+<div class="date">📍 현재 독서 위치</div>
+<label><b>다음에 읽을 시작 페이지</b></label>
+<input id="readingNextPage" type="text" placeholder="예: 37쪽"
+style="width:100%;box-sizing:border-box;margin:6px 0 12px;padding:10px;border:1px solid #ccc;border-radius:10px;font:inherit">
+
+<label><b>이전까지 어떤 내용이었나?</b></label>
+<textarea id="readingPrevSummary" placeholder="예: 공리주의 관점과 행복 극대화 논리를 읽음. 개인의 권리와 충돌할 수 있다는 문제가 나옴."
+style="width:100%;min-height:110px;box-sizing:border-box;margin-top:6px;padding:10px;border:1px solid #ccc;border-radius:10px;font:inherit"></textarea>
+</div>
+
+<div class="card">
+<div class="date">✍️ 오늘 독서 기록 추가</div>
+
+<label><b>날짜</b></label>
+<input id="readingDate" type="date"
+style="width:100%;box-sizing:border-box;margin:6px 0 12px;padding:10px;border:1px solid #ccc;border-radius:10px;font:inherit">
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+<div>
+<label><b>시작 페이지</b></label>
+<input id="readingStartPage" type="text" placeholder="예: 21"
+style="width:100%;box-sizing:border-box;margin-top:6px;padding:10px;border:1px solid #ccc;border-radius:10px;font:inherit">
+</div>
+<div>
+<label><b>끝 페이지</b></label>
+<input id="readingEndPage" type="text" placeholder="예: 36"
+style="width:100%;box-sizing:border-box;margin-top:6px;padding:10px;border:1px solid #ccc;border-radius:10px;font:inherit">
+</div>
+</div>
+
+<label style="display:block;margin-top:12px"><b>오늘 읽은 내용 요약</b></label>
+<textarea id="readingTodaySummary" placeholder="핵심 내용 3~5줄"
+style="width:100%;min-height:120px;box-sizing:border-box;margin-top:6px;padding:10px;border:1px solid #ccc;border-radius:10px;font:inherit"></textarea>
+
+<label style="display:block;margin-top:12px"><b>기억하고 싶은 생각 / 문장</b></label>
+<textarea id="readingThought" placeholder="인상 깊었던 주장, 내 생각, 이해 안 된 부분 등"
+style="width:100%;min-height:90px;box-sizing:border-box;margin-top:6px;padding:10px;border:1px solid #ccc;border-radius:10px;font:inherit"></textarea>
+
+<button id="addReadingLog" type="button"
+style="margin-top:12px;width:100%;padding:12px;border:0;border-radius:10px;font-weight:800;cursor:pointer">
+독서 기록 저장
+</button>
+</div>
+
+<div class="card">
+<div class="date">🗂️ 누적 독서 기록</div>
+<div id="readingLogs"><div class="rest">아직 기록이 없습니다.</div></div>
+</div>
+</section>
+
+<section id="money" class="week">
+<h2>💰 모인 돈 · 전세자금 목표</h2>
+
+<div class="card road">
+<b>현재 목표</b><br>
+현재 모은 돈: <b>2,480만원</b><br>
+1차 목표: <b>4,000만원</b><br>
+남은 금액: <b>1,520만원</b><br>
+달성률: <b>62%</b>
+<div class="bar" style="margin-top:10px"><i style="width:62%"></i></div>
+</div>
+
+<div class="card">
+<div class="date">🏠 전세 계획</div>
+전세 목표 금액: <b>2억원</b><br>
+내 자금 목표: <b>4,000만원</b><br>
+예상 대출: <b>1억 6,000만원</b><br>
+<small>대출 금리·한도·보증 조건은 실제 신청 시점에 다시 확인.</small>
+</div>
+
+<div class="card">
+<div class="date">📒 저축 기록</div>
+<textarea id="savingsLog" placeholder="예) 2026.10 월급 후 +120만원 → 총 2,600만원"
+style="width:100%;min-height:140px;box-sizing:border-box;padding:10px;border:1px solid #ccc;border-radius:10px;font:inherit"></textarea>
+<div style="margin-top:8px"><small>월급 받을 때마다 한 줄씩 추가. 같은 브라우저에서는 자동 저장됨.</small></div>
+</div>
+</section>
+<div class="card road">
+<b>🦿 대학원 방향</b><br>
+최종 타깃은 <b>휴머노이드 연구실</b>.<br>
+다만 준비 과정은 휴머노이드만 좁게 파는 것이 아니라,
+<b>ROS2 · SLAM · 상태추정 · 센서융합 · 제어 · 로봇학습</b> 중 휴머노이드에 연결되는 기반을 넓게 쌓는다.
+</div>
+<section id="road" class="week">
+<h2>🗺️ 2026.09 → 2027.03 큰 로드맵</h2>
+
+<div class="card road">
+<b>🎯 최종 목표</b><br>
+기초과목을 무작정 완강하는 것이 아니라,
+<b>로봇 SW를 직접 구현하고 설명할 수 있는 수준 → ROS2/Nav2·SLAM 프로젝트 → 휴머노이드로 확장 가능한 포트폴리오 → 휴머노이드 연구실 대학원/인턴 지원</b>
+으로 연결한다.
+</div>
+
+<div class="card">
+<div class="date">9월 말~10월 · 🧱 수학·프로그래밍 기반</div>
+<b>메인 목표</b><br>
+로봇 강의를 이해하기 위한 수학·프로그래밍 기반을 순서대로 만든다.<br><br>
+<b>공부 내용</b><br>
+• 선형대수: 1강부터 순차 진행 → 행렬, 행렬곱, 역행렬, Gaussian elimination, LU, 벡터공간 등<br>
+• Python: 실전편 현재 진도부터 순차 진행<br>
+• C: 연산자 실습 이후 → 조건문 → 반복문 → 배열 → 포인터 순차 진행<br>
+• 대수: STEP/STEP UP은 제외하고 현재 진도 이후 순차 진행<br><br>
+<b>체크포인트</b><br>
+Physical AI는 억지로 재개하지 않는다. 좌표변환·동차변환을 이해할 기반이 실제로 생겼는지 먼저 확인한다.
+</div>
+
+<div class="card">
+<div class="date">10~11월 · 🤖 ROS2 실전 진입</div>
+<b>메인 목표</b><br>
+ROS2 구조를 이해하고 로봇 시뮬레이션을 직접 실행·관찰할 수 있는 상태까지 간다.<br><br>
+<b>공부 내용</b><br>
+• Linux / Ubuntu 기본<br>
+• ROS2 Package / Node / Launch<br>
+• Topic / Service / Action<br>
+• Executor / Callback<br>
+• RViz / RQt / rosbag<br>
+• TF / 좌표계<br>
+• Odometry<br>
+• 센서 데이터 확인 및 시각화<br><br>
+<b>체크포인트</b><br>
+필요한 수학·프로그래밍은 중단하지 않고 병행한다. ROS2에서 로봇·토픽·센서·좌표계를 직접 확인할 수 있어야 다음 단계로 이동.
+</div>
+
+<div class="card">
+<div class="date">11~12월 · 🗺️ 자율주행·Nav2</div>
+<b>메인 목표</b><br>
+모바일 로봇의 Mapping → Localization → Navigation 흐름을 하나로 연결한다.<br><br>
+<b>공부 내용</b><br>
+• Cartographer<br>
+• AMCL<br>
+• RGB-D SLAM<br>
+• Nav2 Costmap<br>
+• Planner / Controller / Smoother<br>
+• Behavior Tree<br>
+• Navigate To Pose / Through Poses / Follow Waypoints<br>
+• Keepout Filter / Speed Filter<br>
+• 파라미터 튜닝<br><br>
+<b>결과물</b><br>
+<b>포트폴리오 ① AMR 자율주행</b><br>
+창고 시뮬레이션을 그대로 끝내지 않고 경로·설정·파라미터를 수정하고, 문제 발생 → 원인 → 해결 과정을 기록한다.
+</div>
+
+<div class="card">
+<div class="date">12~1월 · 📐 SLAM 기반 강화</div>
+<b>메인 목표</b><br>
+SLAM을 단순 실행하는 수준에서, 핵심 수학과 알고리즘을 설명할 수 있는 수준으로 올린다.<br><br>
+<b>공부 내용</b><br>
+• 3D Rotation / Translation<br>
+• Homogeneous Coordinates<br>
+• Lie Group / Lie Algebra<br>
+• Eigen / Sophus<br>
+• Camera / LiDAR / IMU<br>
+• Feature Tracking<br>
+• Epipolar Geometry<br>
+• Triangulation<br>
+• PnP / RANSAC<br>
+• Bundle Adjustment<br>
+• Point Cloud / PCL / ICP<br>
+• C++는 SLAM 실습에 필요한 수준까지 병행<br><br>
+<b>체크포인트</b><br>
+공식 암기보다 “왜 이 단계가 필요한가”를 설명할 수 있는지 확인한다.
+</div>
+
+<div class="card">
+<div class="date">1월 · 🧭 SLAM 심화·센서융합</div>
+<b>메인 목표</b><br>
+최적화·그래프 기반 SLAM과 센서융합까지 확장한다.<br><br>
+<b>공부 내용</b><br>
+• Nonlinear Optimization<br>
+• Factor Graph<br>
+• Graph SLAM<br>
+• Sensor Fusion<br>
+• Classical SLAM<br>
+• 필요한 확률통계·상태추정·제어는 선수관계를 지키며 병행<br><br>
+<b>결과물</b><br>
+<b>포트폴리오 ② SLAM/센서 기반 프로젝트</b><br>
+실행 결과만 남기지 않고 수정 내용, 실패 로그, 디버깅 과정, 비교 결과를 함께 정리한다.
+</div>
+
+<div class="card">
+<div class="date">1월 말~2월 초 · 🦿 휴머노이드 방향으로 연결</div>
+<b>메인 목표</b><br>
+지금까지 쌓은 ROS2·SLAM·상태추정·수학 기반을 휴머노이드 연구 주제로 연결한다.<br><br>
+<b>공부 내용</b><br>
+• Isaac Sim 기반 휴머노이드 시뮬레이션<br>
+• 강화학습 기반 locomotion 입문<br>
+• 보행 로봇의 State Estimation / Sensor Fusion 개념 연결<br>
+• Whole-body control / manipulation / learning-based control이 어떤 문제를 다루는지 파악<br>
+• Physical AI는 선수지식 확보 여부를 확인한 뒤 재개<br><br>
+<b>체크포인트</b><br>
+휴머노이드 강의만 많이 듣는 것이 목표가 아니다.
+<b>기존 ROS2·SLAM·상태추정 경험을 휴머노이드 연구에 어떻게 연결할지 설명할 수 있어야 한다.</b>
+</div>
+<div class="card">
+<div class="date">2월 · 📁 포트폴리오 완성</div>
+<b>메인 목표</b><br>
+배운 내용을 “남이 확인할 수 있는 결과물”로 바꾼다.<br><br>
+<b>정리 항목</b><br>
+• GitHub 저장소 정리<br>
+• README<br>
+• 프로젝트 구조도<br>
+• 실행 방법<br>
+• 핵심 코드 설명<br>
+• 시행착오 / 디버깅 기록<br>
+• 결과 이미지 / 영상<br>
+• 프로젝트별 배운 점<br>
+• CV / 연구 관심 분야 / 지원용 소개 자료<br><br>
+<b>결과물</b><br>
+최소 대표 프로젝트 2개를 지원서에 바로 연결할 수 있는 상태로 완성.
+</div>
+
+<div class="card">
+<div class="date">2~3월 · 🎓 휴머노이드 랩 대학원·인턴 지원</div>
+<b>최종 목표</b><br>
+3월을 “공부 시작”이 아니라 <b>휴머노이드 연구실 지원·면접 단계</b>로 만든다.<br><br>
+
+<b>지원 방향</b><br>
+• 1순위: Humanoid / Legged Robot / Whole-body Control / Robot Learning 연구실<br>
+• 2순위: Humanoid에 직접 연결되는 State Estimation / Sensor Fusion / Navigation / Manipulation 연구실<br>
+• 단순히 연구실 이름에 ‘휴머노이드’가 있는지보다, 실제 연구 주제와 최근 프로젝트를 확인<br><br>
+
+<b>지원 준비</b><br>
+• 관심 휴머노이드 연구실 5~8곳 후보 정리<br>
+• 각 연구실 최근 논문·프로젝트 2~3개씩 확인<br>
+• “왜 이 랩인가”를 내 프로젝트와 연결해서 3~5문장으로 정리<br>
+• ROS2/Nav2 프로젝트를 휴머노이드의 자율이동·센서처리와 연결<br>
+• SLAM/상태추정 프로젝트를 휴머노이드의 위치·자세 추정과 연결<br>
+• Isaac Sim / RL 결과가 있으면 휴머노이드 관심 증거로 추가<br>
+• CV / GitHub / 포트폴리오 / 컨택 메일 완성<br>
+• 대학원·연구인턴 지원 및 면접 대비<br><br>
+
+<b>면접에서 설명할 수 있어야 할 것</b><br>
+① 왜 휴머노이드 연구를 하고 싶은가?<br>
+② 현재까지 어떤 기반을 쌓았는가?<br>
+③ ROS2·SLAM 경험이 휴머노이드에 어떻게 연결되는가?<br>
+④ 앞으로 보행·상태추정·제어·로봇학습 중 어떤 문제를 더 깊게 해보고 싶은가?<br>
+⑤ 비전공 출발을 어떤 프로젝트 결과로 보완했는가?
+</div>
+<div class="card road">
+<b>🚦 우선순위 규칙</b><br>
+<b>기초 → 로봇 실습 → 결과물 → 지원</b> 순서를 유지한다.<br>
+시간이 부족하면 모든 과목을 억지로 완강하지 않는다.
+정역학·재료역학·CAD·컴퓨터구조·OS·네트워크 심화 등 후순위 과목은 뒤로 미루고,
+ROS2/Nav2·SLAM·상태추정·휴머노이드 포트폴리오 시간을 확보한다.<br>
+단, 이미 선택해 공부하기 시작한 핵심 과목 안에서는 필요한 선수사슬을 임의로 건너뛰지 않는다.<br>
+지원 방향이 휴머노이드이므로 1~2월에는 새 분야를 무작정 늘리기보다 <b>보행·상태추정·제어·로봇학습 중 휴머노이드 랩과 직접 연결되는 축</b>을 우선한다.
+</div>
+</section>
 </div><script>
-const K="robotdash-from-0925-v1",cs=[...document.querySelectorAll("input")],s=JSON.parse(localStorage.getItem(K)||"{}");cs.forEach(c=>{c.checked=!!s[c.id];c.onchange=()=>{s[c.id]=c.checked;localStorage.setItem(K,JSON.stringify(s));up()}});function up(){let d=cs.filter(x=>x.checked).length,p=Math.round(d/cs.length*100)||0;document.getElementById("pct").textContent=d+"/"+cs.length+" · "+p+"%";document.getElementById("bar").style.width=p+"%"}document.querySelectorAll(".tabs button").forEach(b=>b.onclick=()=>{document.querySelectorAll(".tabs button,.week").forEach(x=>x.classList.remove("on"));b.classList.add("on");document.getElementById(b.dataset.x).classList.add("on")});up();
+const K="robotdash-0927-adjusted-v1",cs=[...document.querySelectorAll("input")],s=JSON.parse(localStorage.getItem(K)||"{}");cs.forEach(c=>{c.checked=!!s[c.id];c.onchange=()=>{s[c.id]=c.checked;localStorage.setItem(K,JSON.stringify(s));up()}});function up(){let d=cs.filter(x=>x.checked).length,p=Math.round(d/cs.length*100)||0;document.getElementById("pct").textContent=d+"/"+cs.length+" · "+p+"%";document.getElementById("bar").style.width=p+"%"}document.querySelectorAll(".tabs button").forEach(b=>b.onclick=()=>{document.querySelectorAll(".tabs button,.week").forEach(x=>x.classList.remove("on"));b.classList.add("on");document.getElementById(b.dataset.x).classList.add("on")});up();
+
+
+
+
+// ===== Reading journal =====
+const RKEY = "reading-journal-definition-v1";
+const RSTATE = "reading-state-definition-v1";
+
+function loadReadingState(){
+  const s = JSON.parse(localStorage.getItem(RSTATE) || "{}");
+  const np = document.getElementById("readingNextPage");
+  const ps = document.getElementById("readingPrevSummary");
+  if(np) np.value = s.nextPage || "";
+  if(ps) ps.value = s.prevSummary || "";
+}
+function saveReadingState(){
+  const np = document.getElementById("readingNextPage");
+  const ps = document.getElementById("readingPrevSummary");
+  localStorage.setItem(RSTATE, JSON.stringify({
+    nextPage: np ? np.value : "",
+    prevSummary: ps ? ps.value : ""
+  }));
+}
+function getReadingLogs(){
+  return JSON.parse(localStorage.getItem(RKEY) || "[]");
+}
+function saveReadingLogs(logs){
+  localStorage.setItem(RKEY, JSON.stringify(logs));
+}
+function renderReadingLogs(){
+  const wrap = document.getElementById("readingLogs");
+  if(!wrap) return;
+  const logs = getReadingLogs();
+  if(!logs.length){
+    wrap.innerHTML = '<div class="rest">아직 기록이 없습니다.</div>';
+    return;
+  }
+  wrap.innerHTML = logs.slice().reverse().map((x, revIdx) => {
+    const realIdx = logs.length - 1 - revIdx;
+    return `<div style="padding:12px 0;border-bottom:1px solid #ddd;line-height:1.7">
+      <b>${x.date || "날짜 없음"} · ${x.start || "?"}쪽 → ${x.end || "?"}쪽</b><br>
+      <b>오늘 내용</b><br>${(x.summary || "").replace(/\n/g,"<br>")}<br>
+      ${x.thought ? `<br><b>생각/메모</b><br>${x.thought.replace(/\n/g,"<br>")}<br>` : ""}
+      <button type="button" onclick="deleteReadingLog(${realIdx})"
+      style="margin-top:8px;padding:6px 10px;border:1px solid #ccc;border-radius:8px;background:transparent;cursor:pointer">삭제</button>
+    </div>`;
+  }).join("");
+}
+window.deleteReadingLog = function(idx){
+  if(!confirm("이 독서 기록을 삭제할까요?")) return;
+  const logs = getReadingLogs();
+  logs.splice(idx,1);
+  saveReadingLogs(logs);
+  renderReadingLogs();
+};
+
+const nextPageInput = document.getElementById("readingNextPage");
+const prevSummaryInput = document.getElementById("readingPrevSummary");
+if(nextPageInput) nextPageInput.addEventListener("input", saveReadingState);
+if(prevSummaryInput) prevSummaryInput.addEventListener("input", saveReadingState);
+
+const addReadingLogBtn = document.getElementById("addReadingLog");
+if(addReadingLogBtn){
+  addReadingLogBtn.addEventListener("click", () => {
+    const date = document.getElementById("readingDate").value;
+    const start = document.getElementById("readingStartPage").value.trim();
+    const end = document.getElementById("readingEndPage").value.trim();
+    const summary = document.getElementById("readingTodaySummary").value.trim();
+    const thought = document.getElementById("readingThought").value.trim();
+
+    if(!date || !summary){
+      alert("날짜와 오늘 읽은 내용 요약은 꼭 적어줘.");
+      return;
+    }
+
+    const logs = getReadingLogs();
+    logs.push({date, start, end, summary, thought});
+    saveReadingLogs(logs);
+
+    // Automatically prepare the next session state.
+    const np = document.getElementById("readingNextPage");
+    const ps = document.getElementById("readingPrevSummary");
+    if(end && np) np.value = end + "쪽 다음";
+    if(ps) ps.value = summary;
+    saveReadingState();
+
+    document.getElementById("readingStartPage").value = "";
+    document.getElementById("readingEndPage").value = "";
+    document.getElementById("readingTodaySummary").value = "";
+    document.getElementById("readingThought").value = "";
+    renderReadingLogs();
+  });
+}
+
+loadReadingState();
+renderReadingLogs();
+
+
+const savingsLog = document.getElementById("savingsLog");
+if (savingsLog) {
+  savingsLog.value = localStorage.getItem("savingsLog-v2") || "";
+  savingsLog.addEventListener("input", () => {
+    localStorage.setItem("savingsLog-v2", savingsLog.value);
+  });
+}
+
 </script></body></html>
