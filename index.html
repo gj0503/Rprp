@@ -1,11 +1,12 @@
 <!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>로봇 공부 대시보드</title>
 <style>body{font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo",sans-serif;background:#f5f6f8;color:#18191b;margin:0}.w{max-width:850px;margin:auto;padding:22px 14px 70px}.card{background:white;border:1px solid #e4e7eb;border-radius:17px;padding:16px;margin:12px 0}h1{font-size:26px}.sub,small{color:#70757d}.bar{height:10px;background:#eee;border-radius:9px;overflow:hidden}.bar i{display:block;height:100%;background:#222;width:0}.tabs{display:flex;gap:7px;position:sticky;top:0;background:#f5f6f8;padding:9px 0;overflow:auto}.tabs button{border:1px solid #ddd;background:white;border-radius:99px;padding:9px 13px;font-weight:bold;white-space:nowrap}.tabs .on{background:#222;color:white}.week{display:none}.week.on{display:block}.task{display:flex;gap:10px;padding:9px 0;border-top:1px solid #f0f0f0}.task:first-of-type{border:0}.task input{width:21px;height:21px;accent-color:#222}.task:has(input:checked) label{text-decoration:line-through;color:#999}.date{font-weight:800}.rest{color:#777;text-align:center;padding:10px}.road{line-height:1.7}</style></head><body><div class="w">
-<h1>🤖 3월까지 로봇 공부 대시보드</h1><p class="sub">2026.09.20 시작 · 과목은 선별하되, 선택한 과목 내부의 선수사슬은 보존</p>
+<h1>🤖 3월까지 로봇 공부 대시보드</h1><p class="sub">2026.09.20 시작 · 2027.02.28 1회전 마감 · 선수사슬은 보존</p>
 <div class="card"><b>진행률 <span id="pct">0%</span></b><div class="bar"><i id="bar"></i></div><small>체크는 이 브라우저에 자동 저장됩니다.</small></div>
 <div class="card road"><b>📌 학습 원칙</b><br>
-① <b>과목은 선별, 진도는 순서대로</b> — 로봇에 필요한 과목만 공부하되, 선택한 과목은 선수관계를 지키며 순서대로 진행.<br>
-② <b>계획은 구체적으로</b> — 이미 목차가 있는 강의는 ‘다음 강의’ 대신 실제 강의명을 적고, 아는 내용은 빠르게 복습하되 모르는 지점부터 정상 학습.<br>
-③ <b>Physical AI는 잠시 정지</b> — 선형대수를 먼저 진행하고, 선수지식이 실제로 갖춰졌는지 확인한 뒤 재개 시점을 결정.
+① <b>필수 영역은 모두 공부, 선수사슬은 순서대로</b> — 우선순위는 과목 삭제가 아니라 시작 시점·깊이·주간 비중을 조절하는 기준으로 사용.<br>
+② <b>2/28 마감은 유지, 주간 계획은 유동적으로</b> — 평일은 최소 고정량을 지키고 주말·공휴일에는 가능한 만큼 가속. 매주 실제 완료 진도를 기준으로 다음 주 계획을 다시 계산.<br>
+③ <b>계획은 구체적으로</b> — 이미 목차가 있는 강의는 ‘다음 강의’ 대신 실제 강의명을 적고, 같은 내용이 반복되는 강의는 중복도를 따져 압축.<br>
+④ <b>Physical AI는 잠시 정지</b> — 선형대수와 좌표변환 선수지식이 실제로 갖춰진 뒤 재개 시점을 결정.
 </div><div class="card road"><b>🌿 휴식 원칙</b><br>
 휴식은 <b>토·일 저녁 6시 이후</b>에 잡는다.<br>
 평일에는 일반적으로 별도 휴식 일정을 넣지 않고, <b>공휴일(빨간날)</b>일 때만 휴식 일정을 추가한다.<br>
@@ -14,7 +15,7 @@
 </div>
 
 
-<div class="tabs"><button class="on" data-x="w1">완료 기록</button><button data-x="w2">9/28–10/4</button><button data-x="reading">📚 독서 기록</button><button data-x="money">💰 돈 기록</button><button data-x="road">큰 로드맵</button></div>
+<div class="tabs"><button class="on" data-x="w1">완료 기록</button><button data-x="w2">9/29–10/4</button><button data-x="reading">📚 독서 기록</button><button data-x="money">💰 돈 기록</button><button data-x="road">큰 로드맵</button></div>
 
 
 <section id="w1" class="week on">
@@ -116,76 +117,84 @@
 
 <section id="w2" class="week">
 <div class="card road"><b>⏸ Physical AI 일시정지</b><br>
-동차변환에서 막혀 있으므로 지금은 2D 변환·회전행렬·동차변환 복습 과제를 넣지 않습니다.
-선형대수를 순서대로 진행한 뒤 재개 시점을 다시 판단합니다.</div>
+동차변환에서 막혀 있으므로 지금은 억지로 재개하지 않습니다.
+선형대수와 좌표변환 선수지식을 순서대로 쌓은 뒤 실제 이해도를 보고 재개합니다.</div>
 
-<h2>이번 주 · 9/27~10/4</h2>
-
-<div class="card">
-<div class="date">9/27 일 · 완료</div>
-<div class="task"><input id="sun927_p5" type="checkbox" checked><label>✅ Python 실전 5강 · 자료형 연습문제</label></div>
-<div class="task"><input id="sun927_alg18" type="checkbox" checked><label>✅ 대수 18강 · 지수방정식/부등식 (17 STEP 제외)</label></div>
-<div class="task"><input id="sun927_la14review" type="checkbox" checked><label>✅ 선형대수 1~4강 복습 · 행렬곱 계산 2~3개</label></div>
-<div class="task"><input id="sun927_la5" type="checkbox" checked><label>✅ 선형대수 5강 · Trace·행렬 거듭제곱·대각/특수행렬</label></div>
-<div class="task"><input id="sun927_alg19" type="checkbox" checked><label>✅ 대수 19강 · 로그방정식/부등식 (20 STEP 제외)</label></div>
-<div class="task"><input id="sun927_rest" type="checkbox"><label>🌿 휴식 · 18:00 이후 공부 종료</label></div>
-</div>
-
-<div class="card">
-<div class="date">9/28 월</div>
-<div class="task"><input id="read2" type="checkbox"><label>📚 독서 · 『정의란 무엇인가』 10~20분</label></div>
-<div class="task"><input id="exercise1" type="checkbox"><label>🏃 30분 러닝</label></div>
-<div class="task"><input id="m1" type="checkbox"><label>Python 실전 6강 · 내장함수 확장</label></div>
-<div class="task"><input id="m2" type="checkbox"><label>C · if~elseif~else</label></div>
-</div>
+<h2>이번 주 · 9/29~10/4</h2>
 
 <div class="card">
 <div class="date">9/29 화</div>
-<div class="task"><input id="read3" type="checkbox"><label>📚 독서 · 『정의란 무엇인가』 10~20분</label></div>
-<div class="task"><input id="exercise2" type="checkbox"><label>🏃 30분 러닝</label></div>
-<div class="task"><input id="t1" type="checkbox"><label>선형대수 6강 · 예제</label></div>
-<div class="task"><input id="t2" type="checkbox"><label>선형대수 5~6강 핵심 예제 복습</label></div>
+<div class="task"><input id="read_0929" type="checkbox"><label>📚 독서 · 『정의란 무엇인가』 10~20분</label></div>
+<div class="task"><input id="run_0929" type="checkbox"><label>🏃 30분 러닝</label></div>
+<div class="task"><input id="0929_la6" type="checkbox"><label>선형대수 6강 · 예제풀이</label></div>
+<div class="task"><input id="0929_py6" type="checkbox"><label>Python 실전 6강 · 확장 내장함수</label></div>
+<div class="task"><input id="0929_c14" type="checkbox"><label>C 14강 · if ~ else if ~ else</label></div>
+<div class="task"><input id="0929_alg21" type="checkbox"><label>대수 21강 · 역함수 관계 ①</label></div>
 </div>
 
 <div class="card">
-<div class="date">9/30 수 · BUFFER</div>
-<div class="task"><input id="read4" type="checkbox"><label>📚 독서 · 『정의란 무엇인가』 15~20분</label></div>
-<div class="task"><input id="exercise3" type="checkbox"><label>🏃 30분 러닝</label></div>
-<div class="rest">보충 · 안 밀렸으면 휴식</div>
+<div class="date">9/30 수</div>
+<div class="task"><input id="read_0930" type="checkbox"><label>📚 독서 · 『정의란 무엇인가』 10~20분</label></div>
+<div class="task"><input id="run_0930" type="checkbox"><label>🏃 30분 러닝</label></div>
+<div class="task"><input id="0930_la7" type="checkbox"><label>선형대수 7강 · 역행렬과 그 성질</label></div>
+<div class="task"><input id="0930_cal1" type="checkbox"><label>대학 미적분 기초 1강 · 제1장 기초개념 1.1 실수계①</label></div>
+<div class="task"><input id="0930_phy1" type="checkbox"><label>고등물리 1강 · 교재 소개 + 2강 · 여러 가지 운동 (1) 속력과 속도 시작</label></div>
+<div class="task"><input id="0930_ard1" type="checkbox"><label>아두이노 1강 · 아두이노란</label></div>
 </div>
 
 <div class="card">
 <div class="date">10/1 목</div>
-<div class="task"><input id="read5" type="checkbox"><label>📚 독서 · 『정의란 무엇인가』 10~20분</label></div>
-<div class="task"><input id="exercise4" type="checkbox"><label>🏃 30분 러닝</label></div>
-<div class="task"><input id="th1" type="checkbox"><label>대수 21강 · 역함수 관계 ①</label></div>
-<div class="task"><input id="th2" type="checkbox"><label>Python 실전 7강 · 표현식, 연습문제</label></div>
+<div class="task"><input id="read_1001" type="checkbox"><label>📚 독서 · 『정의란 무엇인가』 10~20분</label></div>
+<div class="task"><input id="run_1001" type="checkbox"><label>🏃 30분 러닝</label></div>
+<div class="task"><input id="1001_la8" type="checkbox"><label>선형대수 8강 · Gaussian elimination · 기본행연산 · 행등가 · 기본행렬</label></div>
+<div class="task"><input id="1001_py7" type="checkbox"><label>Python 실전 7강 · 표현식 · 연습문제</label></div>
+<div class="task"><input id="1001_c15" type="checkbox"><label>C 15강 · switch문</label></div>
+<div class="task"><input id="1001_alg22" type="checkbox"><label>대수 22강 · 역함수 관계 ②</label></div>
 </div>
 
 <div class="card">
 <div class="date">10/2 금</div>
-<div class="task"><input id="read6" type="checkbox"><label>📚 독서 · 『정의란 무엇인가』 10~20분</label></div>
-<div class="task"><input id="exercise5" type="checkbox"><label>🏃 30분 러닝</label></div>
-<div class="task"><input id="f1" type="checkbox"><label>선형대수 7강 · 역행렬과 그 성질</label></div>
-<div class="task"><input id="f2" type="checkbox"><label>C · switch문</label></div>
+<div class="task"><input id="read_1002" type="checkbox"><label>📚 독서 · 『정의란 무엇인가』 10~20분</label></div>
+<div class="task"><input id="run_1002" type="checkbox"><label>🏃 30분 러닝</label></div>
+<div class="task"><input id="1002_cal2" type="checkbox"><label>대학 미적분 기초 2강 · 1.1 실수계② : 상계와 하계</label></div>
+<div class="task"><input id="1002_phy_next" type="checkbox"><label>고등물리 · 전날 이어서 다음 강의</label></div>
+<div class="task"><input id="1002_ard2" type="checkbox"><label>아두이노 2강 · IDE 설치 / 컴퓨터에 연결하기</label></div>
+<div class="task"><input id="1002_c16" type="checkbox"><label>C 16강 · 조건문 실습</label></div>
 </div>
 
 <div class="card">
-<div class="date">10/3 토</div>
-<div class="task"><input id="weekendrest2" type="checkbox"><label>🌿 휴식 · 18:00 이후 · 전시·박람회·새로운 공간·실제 액티비티 중 하나</label></div>
-<div class="task"><input id="read7" type="checkbox"><label>📚 독서 · 『정의란 무엇인가』 20분</label></div>
-<div class="task"><input id="exercise6" type="checkbox"><label>🏃 30분 러닝</label></div>
-<div class="task"><input id="sat1" type="checkbox"><label>대수 22강 · 역함수 관계 ②</label></div>
-<div class="task"><input id="sat2" type="checkbox"><label>Python 실전 8강 · 제어문 확장</label></div>
-<div class="task"><input id="sat3" type="checkbox"><label>선형대수 8강 · Gaussian elimination / 기본행연산</label></div>
+<div class="date">10/3 토 · 가속</div>
+<div class="task"><input id="read_1003" type="checkbox"><label>📚 독서 · 『정의란 무엇인가』 20분</label></div>
+<div class="task"><input id="run_1003" type="checkbox"><label>🏃 30분 러닝</label></div>
+<div class="task"><input id="1003_la9" type="checkbox"><label>선형대수 9강 · Gaussian elimination 예제</label></div>
+<div class="task"><input id="1003_cal3" type="checkbox"><label>대학 미적분 기초 3강 · 1.2 식의 기초① : 지수 법칙</label></div>
+<div class="task"><input id="1003_phy2" type="checkbox"><label>고등물리 · 2강분 진행</label></div>
+<div class="task"><input id="1003_ard34" type="checkbox"><label>아두이노 3~4강 · 기본부품 / 시리얼 통신</label></div>
+<div class="task"><input id="1003_py8" type="checkbox"><label>Python 실전 8강 · 제어문 확장</label></div>
+<div class="task"><input id="1003_alg23" type="checkbox"><label>➕ 추가 · 대수 23강 · 그래프 해석 ①</label></div>
+<div class="task"><input id="1003_c17" type="checkbox"><label>➕ 추가 · C 17강 · for문</label></div>
+<div class="task"><input id="rest_1003" type="checkbox"><label>🌿 18:00 이후 휴식</label></div>
 </div>
 
 <div class="card">
-<div class="date">10/4 일 · REST</div>
-<div class="task"><input id="weekendrest3" type="checkbox"><label>🌿 휴식 · 18:00 이후 · 완전 휴식 · 다음 주 준비는 15분 이내</label></div>
-<div class="task"><input id="read8" type="checkbox"><label>📚 독서 · 『정의란 무엇인가』 15~20분 · 읽고 싶을 때만</label></div>
-<div class="task"><input id="exercise7" type="checkbox"><label>🏃 30분 러닝</label></div>
-<div class="rest">🌙 완전 휴식</div>
+<div class="date">10/4 일 · 가속 + 18시 이후 휴식</div>
+<div class="task"><input id="read_1004" type="checkbox"><label>📚 독서 · 『정의란 무엇인가』 15~20분</label></div>
+<div class="task"><input id="run_1004" type="checkbox"><label>🏃 30분 러닝</label></div>
+<div class="task"><input id="1004_la10" type="checkbox"><label>선형대수 10강 · 역행렬 / 연립방정식</label></div>
+<div class="task"><input id="1004_cal4" type="checkbox"><label>대학 미적분 기초 4강 · 식의 전개 · 인수분해 · 유리식과 무리식</label></div>
+<div class="task"><input id="1004_phy2" type="checkbox"><label>고등물리 · 2강분 진행</label></div>
+<div class="task"><input id="1004_ard5" type="checkbox"><label>아두이노 5강 · LED 제어하기</label></div>
+<div class="task"><input id="1004_alg23" type="checkbox"><label>대수 23강 · 토요일에 못 했으면 진행</label></div>
+<div class="task"><input id="1004_py9" type="checkbox"><label>➕ 추가 · Python 실전 9강 · 시간 복잡도</label></div>
+<div class="task"><input id="1004_c17" type="checkbox"><label>➕ 추가 · C 17강 · 토요일에 못 했으면 진행</label></div>
+<div class="task"><input id="rest_1004" type="checkbox"><label>🌿 18:00 이후 공부 종료</label></div>
+</div>
+
+<div class="card road">
+<b>🎯 10/4 최소 목표선</b><br>
+선형대수 <b>10강</b> · Python 실전 <b>8강</b> · C <b>16강</b> · 대수 <b>22강</b><br>
+대학 미적분 기초 <b>4강</b> · 고등물리 <b>약 5강 전후</b> · 아두이노 <b>5강</b><br><br>
+주말에 최소선을 넘기면 멈추지 않고 더 진행하고, 실제 완료량을 기준으로 다음 주 계획을 앞으로 당깁니다.
 </div>
 </section>
 
@@ -286,7 +295,7 @@ style="width:100%;min-height:140px;box-sizing:border-box;padding:10px;border:1px
 <b>ROS2 · SLAM · 상태추정 · 센서융합 · 제어 · 로봇학습</b> 중 휴머노이드에 연결되는 기반을 넓게 쌓는다.
 </div>
 <section id="road" class="week">
-<h2>🗺️ 2026.09 → 2027.03 큰 로드맵</h2>
+<h2>🗺️ 2026.09 → 2027.02 학습 · 3월 지원 큰 로드맵</h2>
 
 <div class="card road">
 <b>🎯 최종 목표</b><br>
@@ -443,15 +452,13 @@ SLAM을 단순 실행하는 수준에서, 핵심 수학과 알고리즘을 설�
 <div class="card road">
 <b>🚦 우선순위 규칙</b><br>
 <b>기초 → 로봇 실습 → 결과물 → 지원</b> 순서를 유지한다.<br>
-시간이 부족하면 모든 과목을 억지로 완강하지 않는다.
-정역학·재료역학·CAD·컴퓨터구조·OS·네트워크 심화 등 후순위 과목은 뒤로 미루고,
-ROS2/Nav2·SLAM·상태추정·휴머노이드 포트폴리오 시간을 확보한다.<br>
-단, 이미 선택해 공부하기 시작한 핵심 과목 안에서는 필요한 선수사슬을 임의로 건너뛰지 않는다.<br>
-지원 방향이 휴머노이드이므로 1~2월에는 새 분야를 무작정 늘리기보다 <b>보행·상태추정·제어·로봇학습 중 휴머노이드 랩과 직접 연결되는 축</b>을 우선한다.
+필수로 정한 영역은 삭제하지 않는다. 우선순위는 <b>시작 시점·학습 깊이·주간 비중</b>을 조절하는 데 사용한다.<br>
+같은 내용을 여러 강의에서 반복하는 경우에는 중복도를 따져 압축하되, 선택한 과목 내부의 필요한 선수사슬은 임의로 건너뛰지 않는다.<br>
+<b>2027.02.28까지 1회전</b>을 큰 마감선으로 두고, 평일 최소량 + 주말·공휴일 가속 + 매주 실제 진도 재계산 방식으로 운영한다.
 </div>
 </section>
 </div><script>
-const K="robotdash-0927-adjusted-v1",cs=[...document.querySelectorAll("input")],s=JSON.parse(localStorage.getItem(K)||"{}");cs.forEach(c=>{c.checked=!!s[c.id];c.onchange=()=>{s[c.id]=c.checked;localStorage.setItem(K,JSON.stringify(s));up()}});function up(){let d=cs.filter(x=>x.checked).length,p=Math.round(d/cs.length*100)||0;document.getElementById("pct").textContent=d+"/"+cs.length+" · "+p+"%";document.getElementById("bar").style.width=p+"%"}document.querySelectorAll(".tabs button").forEach(b=>b.onclick=()=>{document.querySelectorAll(".tabs button,.week").forEach(x=>x.classList.remove("on"));b.classList.add("on");document.getElementById(b.dataset.x).classList.add("on")});up();
+const K="robotdash-0929-original-style-v1",cs=[...document.querySelectorAll("input")],s=JSON.parse(localStorage.getItem(K)||"{}");cs.forEach(c=>{c.checked=!!s[c.id];c.onchange=()=>{s[c.id]=c.checked;localStorage.setItem(K,JSON.stringify(s));up()}});function up(){let d=cs.filter(x=>x.checked).length,p=Math.round(d/cs.length*100)||0;document.getElementById("pct").textContent=d+"/"+cs.length+" · "+p+"%";document.getElementById("bar").style.width=p+"%"}document.querySelectorAll(".tabs button").forEach(b=>b.onclick=()=>{document.querySelectorAll(".tabs button,.week").forEach(x=>x.classList.remove("on"));b.classList.add("on");document.getElementById(b.dataset.x).classList.add("on")});up();
 
 
 
