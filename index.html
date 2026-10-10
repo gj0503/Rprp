@@ -4,13 +4,13 @@
 <div class="card"><b>진행률 <span id="pct">0%</span></b><div class="bar"><i id="bar"></i></div><small>체크는 이 브라우저에 자동 저장됩니다.</small></div>
 <div class="card road"><b>📌 학습 원칙</b><br>
 ① <b>필수 영역은 모두 공부, 선수사슬은 순서대로</b> — 우선순위는 과목 삭제가 아니라 시작 시점·깊이·주간 비중을 조절하는 기준으로 사용.<br>
-② <b>2/28 마감은 유지, 주간 계획은 유동적으로</b> — 월·화·목·금은 최소 고정량을 지키고 토요일·공휴일에는 가능한 만큼 가속. 수요일·일요일은 휴식. 매주 실제 완료 진도를 기준으로 다음 주 계획을 다시 계산.<br>
+② <b>2/28 마감은 유지, 주간 계획은 유동적으로</b> — 월·화·목·금은 최소 고정량을 지키고 토요일·공휴일에는 가능한 만큼 가속. 수요일은 휴식. 일요일은 기본적으로 휴식하되, 이번 주 10/11은 요청에 따라 공부일로 운영. 매주 실제 완료 진도를 기준으로 다음 주 계획을 다시 계산.<br>
 ③ <b>계획은 구체적으로</b> — 이미 목차가 있는 강의는 ‘다음 강의’ 대신 실제 강의명을 적고, 같은 내용이 반복되는 강의는 중복도를 따져 압축.<br>
 ④ <b>Physical AI는 잠시 정지</b> — 선형대수와 좌표변환 선수지식이 실제로 갖춰진 뒤 재개 시점을 결정.
 </div><div class="card road"><b>🌿 휴식 원칙</b><br>
-<b>매주 수요일·일요일은 하루 전체 휴식</b>으로 고정한다.<br>
-수요일·일요일에는 강의·문제풀이·코딩을 배치하지 않는다.<br>
-나머지 평일은 최소 고정량을 진행하고, <b>토요일·공휴일은 가속일</b>로 활용한다.<br>
+<b>수요일은 하루 전체 휴식</b>으로 유지한다.<br>
+일요일은 기본 휴식일이지만 <b>10/11은 요청에 따라 공부 4개를 배치</b>한다. 앞으로도 매주 일요일에 공부할지는 별도로 결정한다.<br>
+월·화·목·금은 최소 고정량을 진행하고, <b>토요일·공휴일은 가속일</b>로 활용한다.<br>
 독서는 공부와 별개로 가볍게 할 수 있지만 의무 체크 항목으로 넣지 않는다.
 </div>
 
@@ -175,9 +175,14 @@
 <small>이 4개만 먼저 체크해. 더 할 수 있으면 다음 3~4개를 다시 당겨오면 돼.</small>
 </div>
 
+<h2>10/11 일요일 · 새 공부 4개</h2>
 <div class="card">
-<div class="date">10/11 일 · 🌿 휴식</div>
-<div class="rest"><b>하루 전체 휴식</b><br>강의 · 문제풀이 · 코딩 없음</div>
+<div class="date">10/11 일 · 이번 주 휴식 대신 공부</div>
+<div class="task"><input id="1011_new_py11" type="checkbox" data-study="1"><label>Python 실전 11강 · 함수 객체화</label></div>
+<div class="task"><input id="1011_new_alg26" type="checkbox" data-study="1"><label>고등대수 26강 · 일반각 (25강 STEP 제외)</label></div>
+<div class="task"><input id="1011_new_cal5" type="checkbox" data-study="1"><label>대학 미적분 기초 5강 · 일차·이차방정식</label></div>
+<div class="task"><input id="1011_new_phy6" type="checkbox" data-study="1"><label>고등물리 6강 · 여러 가지 운동 (6) - 수능 맛보기 04번</label></div>
+<small>토요일 새 공부 4개를 먼저 끝낸 뒤 이어서 진행. 일요일도 4개만 보여주고, 더 할 수 있으면 그때 다음 진도를 당겨오자.</small>
 </div>
 
 <h2>생활 · 공부와 별도</h2>
@@ -187,6 +192,7 @@
 <div class="task"><input id="life_read_1008" type="checkbox"><label>10/8 · 『정의란 무엇인가』 10~20분</label></div>
 <div class="task"><input id="life_read_1009" type="checkbox"><label>10/9 · 『정의란 무엇인가』 10~20분</label></div>
 <div class="task"><input id="life_read_1010" type="checkbox"><label>10/10 · 『정의란 무엇인가』 10~20분</label></div>
+<div class="task"><input id="life_read_1011" type="checkbox"><label>10/11 · 『정의란 무엇인가』 10~20분 (선택)</label></div>
 </div>
 
 <div class="card">
@@ -195,6 +201,7 @@
 <div class="task"><input id="life_run_1008" type="checkbox"><label>10/8 · 30분 러닝</label></div>
 <div class="task"><input id="life_run_1009" type="checkbox"><label>10/9 · 30분 러닝</label></div>
 <div class="task"><input id="life_run_1010" type="checkbox"><label>10/10 · 30분 러닝</label></div>
+<div class="task"><input id="life_run_1011" type="checkbox"><label>10/11 · 30분 러닝 (선택)</label></div>
 </div>
 </section>
 
@@ -491,7 +498,7 @@ SLAM을 단순 실행하는 수준에서, 핵심 수학과 알고리즘을 설�
 <b>기초 → 로봇 실습 → 결과물 → 지원</b> 순서를 유지한다.<br>
 필수로 정한 영역은 삭제하지 않는다. 우선순위는 <b>시작 시점·학습 깊이·주간 비중</b>을 조절하는 데 사용한다.<br>
 같은 내용을 여러 강의에서 반복하는 경우에는 중복도를 따져 압축하되, 선택한 과목 내부의 필요한 선수사슬은 임의로 건너뛰지 않는다.<br>고등물리는 이 원칙에 따라 <b>1~22강을 우선 필수</b>로 하고 나머지는 필요한 시점에 회수한다.<br>
-<b>2027.02.28까지 1회전</b>을 큰 마감선으로 두고, 월·화·목·금 최소량 + 토요일·공휴일 가속 + 수·일 휴식 + 매주 실제 진도 재계산 방식으로 운영한다.
+<b>2027.02.28까지 1회전</b>을 큰 마감선으로 두고, 월·화·목·금 최소량 + 토요일·공휴일 가속 + 수요일 휴식(10/11 일요일은 공부 예외) + 매주 실제 진도 재계산 방식으로 운영한다.
 </div>
 </section>
 </div><script>
