@@ -1,46 +1,33 @@
 <!DOCTYPE html>
-<html lang="ko"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><title>로봇 공부 대시보드</title>
+
+<html lang="ko"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><title>로봇 공부 대시보드 10/19~10/25</title>
 <style>body{font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo",sans-serif;background:#f5f6f8;color:#18191b;margin:0}.w{max-width:850px;margin:auto;padding:22px 14px 70px}.card{background:white;border:1px solid #e4e7eb;border-radius:17px;padding:16px;margin:12px 0}h1{font-size:26px}.sub,small{color:#70757d}.bar{height:10px;background:#eee;border-radius:9px;overflow:hidden}.bar i{display:block;height:100%;background:#222;width:0}.tabs{display:flex;gap:7px;position:sticky;top:0;background:#f5f6f8;padding:9px 0;overflow:auto}.tabs button{border:1px solid #ddd;background:white;border-radius:99px;padding:9px 13px;font-weight:bold;white-space:nowrap}.tabs .on{background:#222;color:white}.week{display:none}.week.on{display:block}.task{display:flex;gap:10px;padding:9px 0;border-top:1px solid #f0f0f0}.task:first-of-type{border:0}.task input{width:21px;height:21px;accent-color:#222}.task:has(input:checked) label{text-decoration:line-through;color:#999}.date{font-weight:800}.rest{color:#777;text-align:center;padding:10px}.road{line-height:1.7}.pbar{height:10px;border-radius:30px;background:#e8ebee;display:flex;overflow:hidden;margin:5px 0}.pcurrent{height:100%;background:#98a2ae}.ptarget{height:100%;background:#344154}.phead{display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap}.prow{padding:10px 0;border-bottom:1px solid #edf0f3}.prow:last-child{border:0}.level{font-size:12px;color:#606873}.legend{display:flex;gap:16px;margin:10px 0 4px;font-size:12px;color:#606873}.legend i{display:inline-block;width:12px;height:9px;margin-right:5px;border-radius:2px}.keynow{background:#98a2ae}.keygoal{background:#344154}h2{font-size:19px}.task label{flex:1}.task input{flex-shrink:0}
-.review-table{border-collapse:collapse;width:100%;font-size:13px;margin-top:12px}.review-table th,.review-table td{padding:9px 5px;border-bottom:1px solid #e6e8eb;text-align:left}.review-table th{color:#606873}.review-table td:first-child{font-weight:650}</style></head><body><div class="w">
-<h1>🤖 3월까지 로봇 공부 대시보드</h1><p class="sub">2026.09.20 시작 · 2027.02.28 1회전 마감 · 선수사슬은 보존</p>
-<div class="card"><b>진행률 <span id="pct">0%</span></b><div class="bar"><i id="bar"></i></div><small>체크는 이 브라우저에 자동 저장됩니다.</small></div>
-<div class="card" id="progress-graph"><h2 style="margin:0 0 6px">📊 과목별 학습 진도</h2>
-<small>10/12 확인된 완료 강의와 10/18 목표 · 진도율은 수강 비율이며 이해도 점수가 아님</small>
+.review-table{border-collapse:collapse;width:100%;font-size:13px;margin-top:12px}.review-table th,.review-table td{padding:9px 5px;border-bottom:1px solid #e6e8eb;text-align:left}.review-table th{color:#606873}.review-table td:first-child{font-weight:650}
+/* Week-first dashboard layout */
+.tabs{z-index:10}.week.on{display:block}.week h2{margin-top:12px}.w>.tabs{margin-top:14px}
+#progress-graph{margin-top:28px}
+</style></head><body><div class="w">
+<h1>🤖 3월까지 로봇 공부 대시보드</h1><p class="sub">2026.09.20 시작 · 2027.02.28 1회전 마감 · 선수사슬은 보존</p><div class="tabs"><button class="" data-x="w1">완료 기록</button><button class="on" data-x="w2">10/19–10/25</button><button class="" data-x="review">객관식 복습</button><button class="" data-x="money">💰 돈 기록</button><button class="" data-x="road">큰 로드맵</button></div><section class="week on" id="w2"><h2>이번 주 공부</h2><div class="card"><div class="date">10/19 월 · 3묶음</div><div class="task"><input data-study="1" id="w1019_la12" type="checkbox"/><label>선형대수 12강 · 블록 행렬</label></div><div class="task"><input data-study="1" id="w1019_c19_21" type="checkbox"/><label>C언어 유튜브 19~21강</label></div><div class="task"><input data-study="1" id="w1019_py1_3" type="checkbox"/><label>Python 유튜브 1~3강</label></div></div><div class="card"><div class="date">10/20 화 · 4묶음</div><div class="task"><input data-study="1" id="w1020_alg27" type="checkbox"/><label>고등대수 27강 · 호도법과 부채꼴</label></div><div class="task"><input data-study="1" id="w1020_cal6" type="checkbox"/><label>대학 미적분 기초 6강 · 고차방정식·연립방정식</label></div><div class="task"><input data-study="1" id="w1020_c22_24" type="checkbox"/><label>C언어 유튜브 22~24강</label></div><div class="task"><input data-study="1" id="w1020_py4_6" type="checkbox"/><label>Python 유튜브 4~6강</label></div></div><div class="card"><div class="date">10/21 수 · 휴식</div><div class="rest">강의와 복습 없음</div></div><div class="card"><div class="date">10/22 목 · 4묶음</div><div class="task"><input data-study="1" id="w1022_phy6" type="checkbox"/><label>고등물리 6강 · 여러 가지 운동 (6) - 수능 맛보기 04번</label></div><div class="task"><input data-study="1" id="w1022_ard7" type="checkbox"/><label>아두이노 7강 · 조도·온도 센서</label></div><div class="task"><input data-study="1" id="w1022_c25_27" type="checkbox"/><label>C언어 유튜브 25~27강</label></div><div class="task"><input data-study="1" id="w1022_py7_9" type="checkbox"/><label>Python 유튜브 7~9강</label></div><div class="task"><input data-study="0" id="w1022_phyrev" type="checkbox"/><label>복습 별도 · 고등물리 취약 개념 6문제 재시험</label></div></div><div class="card"><div class="date">10/23 금 · 4묶음</div><div class="task"><input data-study="1" id="w1023_la13" type="checkbox"/><label>선형대수 13강 · 예제풀이</label></div><div class="task"><input data-study="1" id="w1023_alg28" type="checkbox"/><label>고등대수 28강 · 삼각함수의 뜻 ①</label></div><div class="task"><input data-study="1" id="w1023_c28_30" type="checkbox"/><label>C언어 유튜브 28~30강</label></div><div class="task"><input data-study="1" id="w1023_py10_12" type="checkbox"/><label>Python 유튜브 10~12강</label></div></div><div class="card"><div class="date">10/24 토 · 기본 3묶음 + 선택 2묶음</div><div class="task"><input data-study="1" id="w1024_cal7" type="checkbox"/><label>대학 미적분 기초 7강 · 부등식</label></div><div class="task"><input data-study="1" id="w1024_phy7" type="checkbox"/><label>고등물리 7강 · 뉴턴 운동 법칙 (1) - 관성좌표계</label></div><div class="task"><input data-study="1" id="w1024_ard8" type="checkbox"/><label>아두이노 8강 · LCD</label></div><div class="task"><input data-study="1" id="w1024_c31_33" type="checkbox"/><label>추가 선택 · C언어 유튜브 31~33강</label></div><div class="task"><input data-study="1" id="w1024_py13_15" type="checkbox"/><label>추가 선택 · Python 유튜브 13~15강</label></div><small>기본 3개를 마친 후 컨디션이 좋으면 선택 항목 진행.</small></div><div class="card"><div class="date">10/25 일 · 문제풀이 복습 전용</div><div class="task"><input data-study="0" id="w1025_rev1" type="checkbox"/><label>이번 주 수학·물리 객관식 오답 복습</label></div><div class="task"><input data-study="0" id="w1025_rev2" type="checkbox"/><label>Python·C·아두이노 객관식 복습 및 취약 개념 기록</label></div><small>60~90분 권장, 새 강의 없음. 교재 PDF 기반으로 만든 기존 문제지만 사용.</small></div><div class="card road"><b>이번 주 목표</b><br/>선형대수 13강 · 대수 28강(STEP 제외) · 미적분 기초 7강 · 고등물리 7강 · 아두이노 8강.<br/>C언어 유튜브 기본 30강 / 선택 33강 · Python 유튜브 기본 12강 / 선택 15강.<br/><small>학습 진도와 실제 이해도는 다르게 표시해.</small></div><div class="card road"><b>10/19~10/25 주간 학습</b><br/>기존 진도: 선형대수 11강, 대수 26강, 대학미적기초 5강, 고등물리 5강, 아두이노 6강.<br/><b>C 유튜브 19강부터</b>, Python 새 유튜브 1강부터. C/Python은 3개 영상씩 묶어서 체크.<br/><small>영상 제목은 확인 전이므로 임의로 쓰지 않음. 수요일은 휴식, 일요일은 복습 전용.</small></div><div class="card" id="progress-graph"><h2 style="margin:0 0 6px">📊 과목별 학습 진도</h2>
+<small>10/19 시작 진도와 이번 주 목표 · 연한 막대는 완료, 진한 막대는 목표 추가분</small>
 <div class="legend"><span>그래프는 확인된 완료 강의만 표시 · 미확인 항목은 진행률에 미포함</span></div>
-<div class="prow"><div class="phead"><b>선형대수</b><small>11/65강 → 목표 13/65강</small></div><div class="pbar"><div class="pcurrent" style="width:16.923%"></div><div class="ptarget" style="width:0%"></div></div><div class="level">현재 수준: 행렬·연립방정식 기초 → 블록 행렬</div></div>
-<div class="prow"><div class="phead"><b>고등대수</b><span>26강까지 완료 · STEP 제외</span></div><div class="level">현재 수준: 일반각 시작 → 다음 27강 호도법</div></div>
-<div class="prow"><div class="phead"><b>대학 미적분 기초</b><span>5/47강 · 다음 6강</span></div><div class="pbar"><div class="pcurrent" style="width:10.638%"></div><div class="ptarget" style="width:0%"></div></div><div class="level">현재 수준: 방정식 학습 → 다음 6강 고차·연립방정식</div></div>
-<div class="prow"><div class="phead"><b>고등물리</b><small>5/22강 → 목표 8/22강</small></div><div class="pbar"><div class="pcurrent" style="width:22.727%"></div><div class="ptarget" style="width:0%"></div></div><div class="level">현재 수준: 속력·가속도 → 뉴턴 운동법칙</div></div>
-<div class="prow"><div class="phead"><b>Python · 혼자 공부하는 파이썬 개정판</b><small>새 재생목록 1강부터 시작 · 현재 완료 0강</small></div><div class="level">기존 기초 14강·실전 11강 수강 이력은 보존. 긴 통합 영상 대신 짧은 영상으로 나누어 학습. 전체 영상 수 확인 전까지 진도율 미표시.</div><div style="margin-top:7px"><a href="https://www.youtube.com/playlist?list=PLBXuLgInP-5n2fvfXHU9mHVuWBgAKpHNi" target="_blank" rel="noopener noreferrer">▶ Python 새 재생목록 열기</a></div></div>
-<div class="prow"><div class="phead"><b>C언어 · 유튜브 재생목록으로 변경</b><small>새 재생목록 1강부터 재시작 · 현재 0강</small></div><div class="level">기존 42강 과정 1~17강 수강 이력은 보존 · 새 재생목록은 1강부터 다시 시작(현재 완료 0강). 전체 영상 수를 확인하지 못해 퍼센트는 표시하지 않음</div><div style="margin-top:7px"><a href="https://www.youtube.com/playlist?list=PLmAWMAo-opQwHLj_h1SCVwaaDcjrwR2R3" target="_blank" rel="noopener noreferrer">▶ C언어 새 유튜브 재생목록 열기</a></div></div>
-<div class="prow"><div class="phead"><b>아두이노</b><span>6/28강 · 다음 7강</span></div><div class="pbar"><div class="pcurrent" style="width:21.429%"></div><div class="ptarget" style="width:0%"></div></div><div class="level">현재 수준: RGB LED·버튼 → 다음 7강 조도·온도 센서</div></div>
-<div class="level" style="margin-top:10px">📌 전체 상태: 로봇공학 선수기초를 쌓는 단계. Python은 짧은 영상 재생목록으로 다시 시작하고, 수학·역학·프로그래밍·하드웨어의 선수기초를 병행하는 단계.</div></div>
-<div class="card road"><b>📌 학습 원칙</b><br/>
-① <b>필수 영역은 모두 공부, 선수사슬은 순서대로</b> — 우선순위는 과목 삭제가 아니라 시작 시점·깊이·주간 비중을 조절하는 기준으로 사용.<br/>
-② <b>2/28 마감은 유지, 주간 계획은 유동적으로</b> — 월·화·목·금은 최소 고정량을 지키고 토요일·공휴일에는 가능한 만큼 가속. 수요일은 휴식. 일요일은 새 강의 없이 문제풀이와 오답 복습만 진행. 매주 실제 완료 진도를 기준으로 다음 주 계획을 다시 계산.<br/>
-③ <b>계획은 구체적으로</b> — 이미 목차가 있는 강의는 ‘다음 강의’ 대신 실제 강의명을 적고, 같은 내용이 반복되는 강의는 중복도를 따져 압축.<br/>
-④ <b>Physical AI는 잠시 정지</b> — 선형대수와 좌표변환 선수지식이 실제로 갖춰진 뒤 재개 시점을 결정.
-</div><div class="card road"><b>🌿 휴식 원칙</b><br/>
-<b>수요일은 하루 전체 휴식</b>으로 유지한다.<br/>
-일요일은 <b>문제풀이·누적 복습 전용</b>으로 운영하며 새 강의는 배치하지 않는다.<br/>
-월·화·목·금은 최소 고정량을 진행하고, <b>토요일·공휴일은 가속일</b>로 활용한다.<br/>
-독서·30분 러닝은 공부 할 일과 별도 카드에 표시한다.
-</div>
-<div class="tabs"><button class="on" data-x="w1">완료 기록</button><button data-x="w2">10/12–10/18</button><button data-x="review">객관식 복습</button><button data-x="reading">📚 독서 기록</button><button data-x="money">💰 돈 기록</button><button data-x="road">큰 로드맵</button></div>
-<section class="week on" id="w1">
-<div class="card road"><b>10/17 확인된 진도 업데이트</b><br/>선형대수 <b>11강</b> · 고등대수 <b>26강</b>(STEP 제외) · 대학 미적분 기초 <b>5강</b> · 고등물리 <b>5강</b> · C언어 <b>신규 재생목록 0강(1강부터 시작)</b> · 아두이노 <b>6강</b><br/>Python은 <b>새 유튜브 재생목록 0강(1강부터 시작)</b>.<br/><small>10/13 사진에서 확인된 3강 외의 이번 주 미체크 공부는 완료로 추정하지 않음.</small></div><h2>✅ 완료 기록</h2>
+<div class="prow"><div class="phead"><b>선형대수</b><small>11/65강 → 목표 13/65강</small></div><div class="pbar"><div class="pcurrent" style="width:16.923%"></div><div class="ptarget" style="width:3.077%"></div></div><div class="level">현재 수준: 블록 행렬·예제풀이로 진행</div></div>
+<div class="prow"><div class="phead"><b>고등대수</b><small>26강 → 목표 28강 · STEP 제외</small></div><div class="level">현재 수준: 일반각 → 호도법·삼각함수</div></div>
+<div class="prow"><div class="phead"><b>대학 미적분 기초</b><small>5/47강 → 목표 7/47강</small></div><div class="pbar"><div class="pcurrent" style="width:10.638%"></div><div class="ptarget" style="width:4.255%"></div></div><div class="level">현재 수준: 방정식에서 부등식으로 진행</div></div>
+<div class="prow"><div class="phead"><b>고등물리</b><small>5/22강 → 목표 7/22강</small></div><div class="pbar"><div class="pcurrent" style="width:22.727%"></div><div class="ptarget" style="width:9.091%"></div></div><div class="level">현재 수준: 여러 가지 운동에서 뉴턴법칙으로 진입</div></div>
+<div class="prow"><div class="phead"><b>Python · 새 유튜브</b><small>1강부터 → 기본 12강 / 선택 15강</small></div><div class="level">짧은 영상 재생목록으로 재시작. 전체 영상 수 미확인으로 퍼센트 생략.</div><div style="margin-top:7px"><a href="https://www.youtube.com/playlist?list=PLBXuLgInP-5n2fvfXHU9mHVuWBgAKpHNi" rel="noopener noreferrer" target="_blank">▶ Python 새 재생목록 열기</a></div></div>
+<div class="prow"><div class="phead"><b>C언어 · 새 유튜브</b><small>18강까지 진행 → 기본 30강 / 선택 33강</small></div><div class="level">19강부터 이어서 진행. 전체 영상 수 미확인으로 퍼센트 생략.</div><div style="margin-top:7px"><a href="https://www.youtube.com/playlist?list=PLmAWMAo-opQwHLj_h1SCVwaaDcjrwR2R3" rel="noopener noreferrer" target="_blank">▶ C언어 새 유튜브 재생목록 열기</a></div></div>
+<div class="prow"><div class="phead"><b>아두이노</b><small>6/28강 → 목표 8/28강</small></div><div class="pbar"><div class="pcurrent" style="width:21.429%"></div><div class="ptarget" style="width:7.143%"></div></div><div class="level">현재 수준: 센서와 LCD로 확장</div></div>
+<div class="level" style="margin-top:10px">📌 전체 상태: 로봇공학 선수기초를 쌓는 단계. Python은 짧은 영상 재생목록으로 다시 시작하고, 수학·역학·프로그래밍·하드웨어의 선수기초를 병행하는 단계.</div></div></section>
+<div class="card"><b>진행률 <span id="pct">0%</span></b><div class="bar"><i id="bar"></i></div><small>체크는 이 브라우저에 자동 저장됩니다.</small></div>
+<section class="week" id="w1">
+<div class="card road"><b>10/19 시작 진도</b><br/>선형대수 11강 · 대수 26강(STEP 제외) · 대학 미적분 기초 5강 · 고등물리 5강 · 아두이노 6강.<br/>C 새 유튜브 <b>18강까지</b> · Python 새 유튜브 1강부터. <small>직전 기록과 새로 알려준 C 진도 반영.</small></div><h2>✅ 완료 기록</h2>
 <div class="card road"><b>🐍 Python · 현재 사용하는 강의</b><br/>
 <b>새 학습 경로:</b> 혼자 공부하는 파이썬 개정판 유튜브 재생목록 (2026.10.17 전환)<br/>
 <b>현재 진도:</b> 새 재생목록 0강 완료 · 1강부터 시작<br/>
 <a href="https://www.youtube.com/playlist?list=PLBXuLgInP-5n2fvfXHU9mHVuWBgAKpHNi" rel="noopener noreferrer" target="_blank">▶ Python 새 재생목록 열기</a><br/>
 <small>기존 기초편 1~14강·실전편 1~11강, 그리고 앞서 통합 영상의 지역변수와 전역변수 직전까지 시청한 이력은 보존. 새 재생목록 개별 강의명과 전체 강의 수는 확인 전까지 추측하지 않음.</small>
 </div>
-<div class="card road"><b>💻 C언어 · 현재 사용하는 강의</b><br/>
-<b>새 학습 경로:</b> 유튜브 재생목록으로 변경 (2026.10.17)<br/>
-<a href="https://www.youtube.com/playlist?list=PLmAWMAo-opQwHLj_h1SCVwaaDcjrwR2R3" target="_blank" rel="noopener noreferrer">▶ C언어 새 유튜브 재생목록 열기</a><br/>
-<b>새 강의 진도:</b> 0강 완료 · 1강부터 시작<br/>
-<small>이전 42강 과정의 1~17강은 학습 이력으로 보존. 새 재생목록의 영상 제목·순서를 확인하지 못했으므로 임의로 작성하지 않음.</small>
-</div>
+<div class="card road"><b>💻 C언어 · 현재 강의</b><br/>유튜브 재생목록 <b>18강까지 진행 → 다음 19강</b><br/><a href="https://youtube.com/playlist?list=PLmAWMAo-opQwHLj_h1SCVwaaDcjrwR2R3" target="_blank">▶ C언어 재생목록</a><br/><small>기존 42강 과정에서 들은 1~17강 이력은 보존. 새 과정의 전체 길이와 강의명은 미확인.</small></div>
 <div class="card road">
 <b>과목별 완료 단원</b><br/>
 10/17 사진으로 확인된 새 완료 진도 반영. 강의 수강 여부와 이해도는 구분한다.
@@ -162,29 +149,6 @@
 완료 범위를 억지로 늘리지 않고, 선형대수 선수지식 확보 후 재개 시점 결정.
 </div>
 </section>
-<section class="week" id="w2">
-<div class="card road"><b>이번 주 실제 기록 · 10/12~10/18</b><br/><b>10/13 완료 확인:</b> 고등대수 26강 일반각 · 대학 미적분 기초 5강 일차·이차방정식 · 아두이노 6강 RGB LED와 버튼.<br/><b>그 외:</b> 복습 채팅에서 객관식 복습 진행. 다른 강의는 완료 여부 미확인으로 유지.<br/><small>이번 주에는 복습과 피로로 수강량이 적었음. 밀린 항목을 오늘 전부 몰아넣지 않음.</small></div>
-<div class="card"><div class="date">10/12 월 · 확인된 완료 없음</div><div class="rest">선형대수 12강 · C언어는 신규 재생목록 1강부터 다시 시작(기존 수강 이력 별도 보존)</div></div>
-<div class="card"><div class="date">10/13 화 · 완료 확인</div>
-<div class="task"><input data-study="1" id="w1012_al26" type="checkbox"/><label>고등대수 26강 · 일반각 (25강 STEP 제외)</label></div>
-<div class="task"><input data-study="1" id="w1012_calc5" type="checkbox"/><label>대학 미적분 기초 5강 · 일차·이차방정식</label></div>
-<div class="task"><input data-study="1" id="w1012_ard6" type="checkbox"/><label>아두이노 6강 · RGB LED와 버튼</label></div>
-<small>사진으로 확인됨. 기존 GitHub의 체크 저장 상태를 이어받음.</small></div>
-<div class="card"><div class="date">10/14 수 · 휴식</div><div class="rest">완전 휴식</div></div>
-<div class="card"><div class="date">10/15 목 · 미완료/미확인</div><div class="rest">고등물리 6강 · 수능 맛보기 04번 / 선형대수 13강 · 예제풀이 → 먼저 12강 학습 필요</div></div>
-<div class="card"><div class="date">10/16 금 · 완료 미확인</div><div class="rest">C언어 새 재생목록 1강부터 시작 / 대수 27강 · 호도법과 부채꼴 / 고등물리 7강 · 관성좌표계 (앞 강의 순서 준수)</div></div>
-<div class="card"><div class="date">10/17 토 · 오늘 남은 공부는 2개만</div>
-<div class="task"><input data-study="1" id="w1012_la12" type="checkbox"/><label>선형대수 12강 · 블록 행렬</label></div>
-<div class="task"><input data-study="1" id="w1012_c_playlist" type="checkbox"/><label>C언어 · 새 재생목록 1강부터 시작 (<a href="https://www.youtube.com/playlist?list=PLmAWMAo-opQwHLj_h1SCVwaaDcjrwR2R3" target="_blank" rel="noopener noreferrer">▶ C언어 새 유튜브 재생목록 열기</a>)</label></div>
-<div class="task"><input data-study="1" id="w1017_python_short_playlist_1" type="checkbox"/><label>추가 가능할 때만 · Python 새 재생목록 1강부터 시작</label></div>
-<small>선형대수 12강 + C 새 재생목록 1강만 먼저. 여유가 있을 때 Python 새 재생목록 1강 추가.</small></div>
-<div class="card"><div class="date">10/18 일 · 객관식 복습만 (60~90분)</div>
-<div class="task"><input data-study="1" id="w1012_rev_math" type="checkbox"/><label>기존에 만든 객관식 문제지 중 오답·헷갈린 문제 재확인</label></div>
-<div class="task"><input data-study="1" id="w1012_rev_wrong" type="checkbox"/><label>다음 복습 대상으로 남길 오답 개념 정리</label></div>
-<small>새 강의 없음 · 고등물리 취약 개념 6문제 재시험은 10/22 예정</small></div>
-<div class="card"><b>📚 독서 · 공부와 별도</b><br/>『정의란 무엇인가』 기록은 독서 기록 탭에서 관리</div>
-<div class="card"><b>🏃 운동 · 공부와 별도</b><br/>운동을 한다면 30분 러닝 · 강의 체크와 별개로 기록</div>
-</section>
 <section class="week" id="review">
 <h2>객관식 복습 현황</h2>
 <div class="card road"><b>10/15까지 공유된 복습 진행 범위</b><br/><small>복습시험을 진행한 범위이지, 모든 강의를 개별 시험으로 통과했음을 뜻하지는 않음.</small>
@@ -198,49 +162,7 @@
 <tr><td>C언어</td><td>1~17강</td><td>18강 이후 별도</td></tr>
 <tr><td>아두이노</td><td>1~6강</td><td>오답 누적 복습</td></tr>
 </tbody></table>
-</div><div class="card road"><b>복습 규칙</b><br/>강의별: 수학·물리 10문제 / Python·C·아두이노 20문제.<br/>관련 강의가 모인 단원: 종합 20문제.<br/>일요일: 기존 PDF 기반 객관식 문제지에서 누적·오답 복습 (60~90분).<br/><small>강의별 어느 문항을 풀었는지 기록이 없으므로 확인하지 않은 시험을 완료로 표시하지 않음.</small></div></section><section class="week" id="reading">
-<h2>📚 독서 기록</h2>
-<div class="card road">
-<b>현재 읽는 책</b><br/>
-『정의란 무엇인가』<br/><br/>
-<b>사용법</b><br/>
-읽기 전에 <b>지난 기록의 ‘다음 시작 페이지’와 ‘이전까지 내용’</b>을 먼저 확인하고,
-읽은 뒤 오늘 기록을 남긴다. 길게 쓰지 말고 3~5줄이면 충분하다.
-</div>
-<div class="card">
-<div class="date">📍 현재 독서 위치</div>
-<label><b>다음에 읽을 시작 페이지</b></label>
-<input id="readingNextPage" placeholder="예: 37쪽" style="width:100%;box-sizing:border-box;margin:6px 0 12px;padding:10px;border:1px solid #ccc;border-radius:10px;font:inherit" type="text"/>
-<label><b>이전까지 어떤 내용이었나?</b></label>
-<textarea id="readingPrevSummary" placeholder="예: 공리주의 관점과 행복 극대화 논리를 읽음. 개인의 권리와 충돌할 수 있다는 문제가 나옴." style="width:100%;min-height:110px;box-sizing:border-box;margin-top:6px;padding:10px;border:1px solid #ccc;border-radius:10px;font:inherit"></textarea>
-</div>
-<div class="card">
-<div class="date">✍️ 오늘 독서 기록 추가</div>
-<label><b>날짜</b></label>
-<input id="readingDate" style="width:100%;box-sizing:border-box;margin:6px 0 12px;padding:10px;border:1px solid #ccc;border-radius:10px;font:inherit" type="date"/>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-<div>
-<label><b>시작 페이지</b></label>
-<input id="readingStartPage" placeholder="예: 21" style="width:100%;box-sizing:border-box;margin-top:6px;padding:10px;border:1px solid #ccc;border-radius:10px;font:inherit" type="text"/>
-</div>
-<div>
-<label><b>끝 페이지</b></label>
-<input id="readingEndPage" placeholder="예: 36" style="width:100%;box-sizing:border-box;margin-top:6px;padding:10px;border:1px solid #ccc;border-radius:10px;font:inherit" type="text"/>
-</div>
-</div>
-<label style="display:block;margin-top:12px"><b>오늘 읽은 내용 요약</b></label>
-<textarea id="readingTodaySummary" placeholder="핵심 내용 3~5줄" style="width:100%;min-height:120px;box-sizing:border-box;margin-top:6px;padding:10px;border:1px solid #ccc;border-radius:10px;font:inherit"></textarea>
-<label style="display:block;margin-top:12px"><b>기억하고 싶은 생각 / 문장</b></label>
-<textarea id="readingThought" placeholder="인상 깊었던 주장, 내 생각, 이해 안 된 부분 등" style="width:100%;min-height:90px;box-sizing:border-box;margin-top:6px;padding:10px;border:1px solid #ccc;border-radius:10px;font:inherit"></textarea>
-<button id="addReadingLog" style="margin-top:12px;width:100%;padding:12px;border:0;border-radius:10px;font-weight:800;cursor:pointer" type="button">
-독서 기록 저장
-</button>
-</div>
-<div class="card">
-<div class="date">🗂️ 누적 독서 기록</div>
-<div id="readingLogs"><div class="rest">아직 기록이 없습니다.</div></div>
-</div>
-</section>
+</div><div class="card road"><b>복습 규칙</b><br/>강의별: 수학·물리 10문제 / Python·C·아두이노 20문제.<br/>관련 강의가 모인 단원: 종합 20문제.<br/>일요일: 기존 PDF 기반 객관식 문제지에서 누적·오답 복습 (60~90분).<br/><small>강의별 어느 문항을 풀었는지 기록이 없으므로 확인하지 않은 시험을 완료로 표시하지 않음.</small></div></section>
 <section class="week" id="money">
 <h2>💰 모인 돈 · 전세자금 목표</h2>
 <div class="card road">
@@ -264,12 +186,6 @@
 <div style="margin-top:8px"><small>월급 받을 때마다 한 줄씩 추가. 같은 브라우저에서는 자동 저장됨.</small></div>
 </div>
 </section>
-<div class="card road">
-<b>🦿 대학원 방향</b><br/>
-최종 타깃은 <b>휴머노이드 연구실</b>.<br/>
-다만 준비 과정은 휴머노이드만 좁게 파는 것이 아니라,
-<b>ROS2 · SLAM · 상태추정 · 센서융합 · 제어 · 로봇학습</b> 중 휴머노이드에 연결되는 기반을 넓게 쌓는다.
-</div>
 <section class="week" id="road">
 <h2>🗺️ 2026.09 → 2027.02 학습 · 3월 지원 큰 로드맵</h2>
 <div class="card road">
@@ -285,7 +201,7 @@
 <b>공부 내용</b><br/>
 • 선형대수: 1강부터 순차 진행 → 행렬, 행렬곱, 역행렬, Gaussian elimination, LU, 벡터공간 등<br/>
 • Python: 긴 통합 영상 대신 혼자 공부하는 파이썬 개정판 재생목록으로 전환. 1강부터 짧게 나누어 학습<br/>
-• C: 기존 42강 과정의 17강까지는 과거 학습 기록으로 보존. 새 유튜브 재생목록(<a href="https://www.youtube.com/playlist?list=PLmAWMAo-opQwHLj_h1SCVwaaDcjrwR2R3" target="_blank" rel="noopener noreferrer">▶ C언어 새 유튜브 재생목록 열기</a>)을 기준으로 진행. 새 재생목록 1강부터 진행<br/>
+• C: 기존 42강 과정의 17강까지는 과거 학습 기록으로 보존. 새 유튜브 재생목록(<a href="https://www.youtube.com/playlist?list=PLmAWMAo-opQwHLj_h1SCVwaaDcjrwR2R3" rel="noopener noreferrer" target="_blank">▶ C언어 새 유튜브 재생목록 열기</a>)을 기준으로 진행. 새 재생목록 1강부터 진행<br/>
 • 대수: STEP/STEP UP은 제외하고 현재 진도 이후 순차 진행<br/>
 • 고등물리: <b>1~22강 역학 파트만 현재 필수</b> → 여러 가지 운동 → 뉴턴 운동 법칙 → 운동량·충격량 → 역학적 에너지 보존. 강의만 넘기지 않고 계산 문제까지 진행.<br/><br/>
 <b>체크포인트</b><br/>
@@ -457,7 +373,22 @@ SLAM을 단순 실행하는 수준에서, 핵심 수학과 알고리즘을 설�
 같은 내용을 여러 강의에서 반복하는 경우에는 중복도를 따져 압축하되, 선택한 과목 내부의 필요한 선수사슬은 임의로 건너뛰지 않는다.<br/>고등물리는 이 원칙에 따라 <b>1~22강을 우선 필수</b>로 하고 나머지는 필요한 시점에 회수한다.<br/>
 <b>2027.02.28까지 1회전</b>을 큰 마감선으로 두고, 월·화·목·금 최소량 + 토요일·공휴일 가속 + 수요일 휴식(10/11 일요일은 공부 예외) + 매주 실제 진도 재계산 방식으로 운영한다.
 </div>
-</section>
+<div class="card road"><b>📌 학습 원칙</b><br/>
+① <b>필수 영역은 모두 공부, 선수사슬은 순서대로</b> — 우선순위는 과목 삭제가 아니라 시작 시점·깊이·주간 비중을 조절하는 기준으로 사용.<br/>
+② <b>2/28 마감은 유지, 주간 계획은 유동적으로</b> — 월·화·목·금은 최소 고정량을 지키고 토요일·공휴일에는 가능한 만큼 가속. 수요일은 휴식. 일요일은 새 강의 없이 문제풀이와 오답 복습만 진행. 매주 실제 완료 진도를 기준으로 다음 주 계획을 다시 계산.<br/>
+③ <b>계획은 구체적으로</b> — 이미 목차가 있는 강의는 ‘다음 강의’ 대신 실제 강의명을 적고, 같은 내용이 반복되는 강의는 중복도를 따져 압축.<br/>
+④ <b>Physical AI는 잠시 정지</b> — 선형대수와 좌표변환 선수지식이 실제로 갖춰진 뒤 재개 시점을 결정.
+</div><div class="card road"><b>🌿 휴식 원칙</b><br/>
+<b>수요일은 하루 전체 휴식</b>으로 유지한다.<br/>
+일요일은 <b>문제풀이·누적 복습 전용</b>으로 운영하며 새 강의는 배치하지 않는다.<br/>
+월·화·목·금은 최소 고정량을 진행하고, <b>토요일·공휴일은 가속일</b>로 활용한다.<br/>
+독서·30분 러닝은 공부 할 일과 별도 카드에 표시한다.
+</div><div class="card road">
+<b>🦿 대학원 방향</b><br/>
+최종 타깃은 <b>휴머노이드 연구실</b>.<br/>
+다만 준비 과정은 휴머노이드만 좁게 파는 것이 아니라,
+<b>ROS2 · SLAM · 상태추정 · 센서융합 · 제어 · 로봇학습</b> 중 휴머노이드에 연결되는 기반을 넓게 쌓는다.
+</div></section>
 </div><script>
 const K="robotdash-1005-1011-corrected-v1";
 const cs=[...document.querySelectorAll('input[type="checkbox"]')];
@@ -485,100 +416,6 @@ document.querySelectorAll(".tabs button").forEach(b=>b.onclick=()=>{
 up();
 
 
-
-
-// ===== Reading journal =====
-const RKEY = "reading-journal-definition-v1";
-const RSTATE = "reading-state-definition-v1";
-
-function loadReadingState(){
-  const s = JSON.parse(localStorage.getItem(RSTATE) || "{}");
-  const np = document.getElementById("readingNextPage");
-  const ps = document.getElementById("readingPrevSummary");
-  if(np) np.value = s.nextPage || "";
-  if(ps) ps.value = s.prevSummary || "";
-}
-function saveReadingState(){
-  const np = document.getElementById("readingNextPage");
-  const ps = document.getElementById("readingPrevSummary");
-  localStorage.setItem(RSTATE, JSON.stringify({
-    nextPage: np ? np.value : "",
-    prevSummary: ps ? ps.value : ""
-  }));
-}
-function getReadingLogs(){
-  return JSON.parse(localStorage.getItem(RKEY) || "[]");
-}
-function saveReadingLogs(logs){
-  localStorage.setItem(RKEY, JSON.stringify(logs));
-}
-function renderReadingLogs(){
-  const wrap = document.getElementById("readingLogs");
-  if(!wrap) return;
-  const logs = getReadingLogs();
-  if(!logs.length){
-    wrap.innerHTML = '<div class="rest">아직 기록이 없습니다.</div>';
-    return;
-  }
-  wrap.innerHTML = logs.slice().reverse().map((x, revIdx) => {
-    const realIdx = logs.length - 1 - revIdx;
-    return `<div style="padding:12px 0;border-bottom:1px solid #ddd;line-height:1.7">
-      <b>${x.date || "날짜 없음"} · ${x.start || "?"}쪽 → ${x.end || "?"}쪽</b><br>
-      <b>오늘 내용</b><br>${(x.summary || "").replace(/\n/g,"<br>")}<br>
-      ${x.thought ? `<br><b>생각/메모</b><br>${x.thought.replace(/\n/g,"<br>")}<br>` : ""}
-      <button type="button" onclick="deleteReadingLog(${realIdx})"
-      style="margin-top:8px;padding:6px 10px;border:1px solid #ccc;border-radius:8px;background:transparent;cursor:pointer">삭제</button>
-    </div>`;
-  }).join("");
-}
-window.deleteReadingLog = function(idx){
-  if(!confirm("이 독서 기록을 삭제할까요?")) return;
-  const logs = getReadingLogs();
-  logs.splice(idx,1);
-  saveReadingLogs(logs);
-  renderReadingLogs();
-};
-
-const nextPageInput = document.getElementById("readingNextPage");
-const prevSummaryInput = document.getElementById("readingPrevSummary");
-if(nextPageInput) nextPageInput.addEventListener("input", saveReadingState);
-if(prevSummaryInput) prevSummaryInput.addEventListener("input", saveReadingState);
-
-const addReadingLogBtn = document.getElementById("addReadingLog");
-if(addReadingLogBtn){
-  addReadingLogBtn.addEventListener("click", () => {
-    const date = document.getElementById("readingDate").value;
-    const start = document.getElementById("readingStartPage").value.trim();
-    const end = document.getElementById("readingEndPage").value.trim();
-    const summary = document.getElementById("readingTodaySummary").value.trim();
-    const thought = document.getElementById("readingThought").value.trim();
-
-    if(!date || !summary){
-      alert("날짜와 오늘 읽은 내용 요약은 꼭 적어줘.");
-      return;
-    }
-
-    const logs = getReadingLogs();
-    logs.push({date, start, end, summary, thought});
-    saveReadingLogs(logs);
-
-    // Automatically prepare the next session state.
-    const np = document.getElementById("readingNextPage");
-    const ps = document.getElementById("readingPrevSummary");
-    if(end && np) np.value = end + "쪽 다음";
-    if(ps) ps.value = summary;
-    saveReadingState();
-
-    document.getElementById("readingStartPage").value = "";
-    document.getElementById("readingEndPage").value = "";
-    document.getElementById("readingTodaySummary").value = "";
-    document.getElementById("readingThought").value = "";
-    renderReadingLogs();
-  });
-}
-
-loadReadingState();
-renderReadingLogs();
 
 
 const savingsLog = document.getElementById("savingsLog");
