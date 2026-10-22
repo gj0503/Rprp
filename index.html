@@ -6,8 +6,24 @@
 /* Week-first dashboard layout */
 .tabs{z-index:10}.week.on{display:block}.week h2{margin-top:12px}.w>.tabs{margin-top:14px}
 #progress-graph{margin-top:28px}
+
+/* 하루 루틴 탭 전용: 기존 레이아웃·저장 로직에는 영향 없음 */
+.rt-head{display:flex;flex-wrap:wrap;align-items:center;gap:10px;justify-content:space-between}
+.rt-input{border:1px solid #dce0e5;border-radius:9px;padding:7px;font:inherit;max-width:100%;background:#fff;color:#18191b}
+.rt-stack{display:grid;gap:10px}.rt-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:9px}
+.rt-tbl{width:100%;border-collapse:collapse;font-size:14px}.rt-tbl td,.rt-tbl th{border-bottom:1px solid #eceef1;padding:8px 5px;text-align:left;vertical-align:top}
+.rt-row{display:flex;align-items:center;gap:9px;padding:8px 0;border-bottom:1px solid #eee;flex-wrap:wrap}
+.rt-row input[type=checkbox]{width:20px;height:20px;accent-color:#222}.rt-row:has(input[type=checkbox]:checked) .rt-checklabel{text-decoration:line-through;color:#888}
+.rt-row label.rt-checklabel{flex:1;min-width:150px}
+.rt-small{font-size:13px;color:#67707b}.rt-btn{background:#222;color:#fff;border:0;border-radius:9px;padding:8px 12px;cursor:pointer;font:inherit}
+.rt-btn.light{background:#eff1f4;color:#222}.rt-number{width:86px;max-width:100%}.rt-studyitem{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.rt-chart{width:100%;height:180px;display:block;border:1px solid #eceef1;border-radius:10px}
+.rt-pill{display:inline-block;border-radius:15px;padding:3px 9px;background:#eef0f3;font-size:13px}
+.rt-danger{color:#b12d2d;font-weight:700}.rt-good{color:#176544;font-weight:700}
+.rt-progress{background:#e8ebef;height:10px;border-radius:10px;overflow:hidden}.rt-progress i{display:block;background:#222;height:100%;width:0}
+@media(max-width:480px){.rt-tbl{font-size:12px}.rt-studyitem{grid-template-columns:1fr}}
 </style></head><body><div class="w">
-<h1>🤖 3월까지 로봇 공부 대시보드</h1><p class="sub">2026.09.20 시작 · 2027.02.28 1회전 마감 · 선수사슬은 보존</p><div class="tabs"><button class="" data-x="w1">완료 기록</button><button class="on" data-x="w2">10/19–10/25</button><button class="" data-x="review">객관식 복습</button><button class="" data-x="money">💰 돈 기록</button><button class="" data-x="road">큰 로드맵</button></div><section class="week on" id="w2"><h2>이번 주 공부</h2><div class="card"><div class="date">10/19 월 · 강의별 체크</div><div class="task"><input data-study="1" id="w1019_la12" type="checkbox"/><label>선형대수 12강 · 블록 행렬</label></div><div class="task"><input data-study="1" id="w1019_c19" type="checkbox"/><label>C언어 유튜브 19강</label></div><div class="task"><input data-study="1" id="w1019_c20" type="checkbox"/><label>C언어 유튜브 20강</label></div><div class="task"><input data-study="1" id="w1019_c21" type="checkbox"/><label>C언어 유튜브 21강</label></div><div class="task"><input data-study="1" id="w1019_py1" type="checkbox"/><label>Python 유튜브 1강</label></div><div class="task"><input data-study="1" id="w1019_py2" type="checkbox"/><label>Python 유튜브 2강</label></div><div class="task"><input data-study="1" id="w1019_py3" type="checkbox"/><label>Python 유튜브 3강</label></div></div><div class="card"><div class="date">10/20 화 · 강의별 체크</div><div class="task"><input data-study="1" id="w1020_alg27" type="checkbox"/><label>고등대수 27강 · 호도법과 부채꼴</label></div><div class="task"><input data-study="1" id="w1020_cal6" type="checkbox"/><label>대학 미적분 기초 6강 · 고차방정식·연립방정식</label></div><div class="task"><input data-study="1" id="w1020_c22" type="checkbox"/><label>C언어 유튜브 22강</label></div><div class="task"><input data-study="1" id="w1020_c23" type="checkbox"/><label>C언어 유튜브 23강</label></div><div class="task"><input data-study="1" id="w1020_c24" type="checkbox"/><label>C언어 유튜브 24강</label></div><div class="task"><input data-study="1" id="w1020_py4" type="checkbox"/><label>Python 유튜브 4강</label></div><div class="task"><input data-study="1" id="w1020_py5" type="checkbox"/><label>Python 유튜브 5강</label></div><div class="task"><input data-study="1" id="w1020_py6" type="checkbox"/><label>Python 유튜브 6강</label></div></div><div class="card"><div class="date">10/21 수 · 휴식</div><div class="rest">강의와 복습 없음</div></div><div class="card"><div class="date">10/22 목 · 강의별 체크</div><div class="task"><input data-study="1" id="w1022_phy6" type="checkbox"/><label>고등물리 6강 · 여러 가지 운동 (6) - 수능 맛보기 04번</label></div><div class="task"><input data-study="1" id="w1022_ard7" type="checkbox"/><label>아두이노 7강 · 조도·온도 센서</label></div><div class="task"><input data-study="1" id="w1022_c25" type="checkbox"/><label>C언어 유튜브 25강</label></div><div class="task"><input data-study="1" id="w1022_c26" type="checkbox"/><label>C언어 유튜브 26강</label></div><div class="task"><input data-study="1" id="w1022_c27" type="checkbox"/><label>C언어 유튜브 27강</label></div><div class="task"><input data-study="1" id="w1022_py7" type="checkbox"/><label>Python 유튜브 7강</label></div><div class="task"><input data-study="1" id="w1022_py8" type="checkbox"/><label>Python 유튜브 8강</label></div><div class="task"><input data-study="1" id="w1022_py9" type="checkbox"/><label>Python 유튜브 9강</label></div><div class="task"><input data-study="0" id="w1022_phyrev" type="checkbox"/><label>복습 별도 · 고등물리 취약 개념 6문제 재시험</label></div></div><div class="card"><div class="date">10/23 금 · 강의별 체크</div><div class="task"><input data-study="1" id="w1023_la13" type="checkbox"/><label>선형대수 13강 · 예제풀이</label></div><div class="task"><input data-study="1" id="w1023_alg28" type="checkbox"/><label>고등대수 28강 · 삼각함수의 뜻 ①</label></div><div class="task"><input data-study="1" id="w1023_c28" type="checkbox"/><label>C언어 유튜브 28강</label></div><div class="task"><input data-study="1" id="w1023_c29" type="checkbox"/><label>C언어 유튜브 29강</label></div><div class="task"><input data-study="1" id="w1023_c30" type="checkbox"/><label>C언어 유튜브 30강</label></div><div class="task"><input data-study="1" id="w1023_py10" type="checkbox"/><label>Python 유튜브 10강</label></div><div class="task"><input data-study="1" id="w1023_py11" type="checkbox"/><label>Python 유튜브 11강</label></div><div class="task"><input data-study="1" id="w1023_py12" type="checkbox"/><label>Python 유튜브 12강</label></div></div><div class="card"><div class="date">10/24 토 · 기본 3강 + 선택 6강</div><div class="task"><input data-study="1" id="w1024_cal7" type="checkbox"/><label>대학 미적분 기초 7강 · 부등식</label></div><div class="task"><input data-study="1" id="w1024_phy7" type="checkbox"/><label>고등물리 7강 · 뉴턴 운동 법칙 (1) - 관성좌표계</label></div><div class="task"><input data-study="1" id="w1024_ard8" type="checkbox"/><label>아두이노 8강 · LCD</label></div><div class="task"><input data-study="1" id="w1024_c31" type="checkbox"/><label>C언어 유튜브 31강 · 추가 선택</label></div><div class="task"><input data-study="1" id="w1024_c32" type="checkbox"/><label>C언어 유튜브 32강 · 추가 선택</label></div><div class="task"><input data-study="1" id="w1024_c33" type="checkbox"/><label>C언어 유튜브 33강 · 추가 선택</label></div><div class="task"><input data-study="1" id="w1024_py13" type="checkbox"/><label>Python 유튜브 13강 · 추가 선택</label></div><div class="task"><input data-study="1" id="w1024_py14" type="checkbox"/><label>Python 유튜브 14강 · 추가 선택</label></div><div class="task"><input data-study="1" id="w1024_py15" type="checkbox"/><label>Python 유튜브 15강 · 추가 선택</label></div><small>기본 3개를 마친 후 컨디션이 좋으면 선택 항목 진행.</small></div><div class="card"><div class="date">10/25 일 · 문제풀이 복습 전용</div><div class="task"><input data-study="0" id="w1025_rev1" type="checkbox"/><label>이번 주 수학·물리 객관식 오답 복습</label></div><div class="task"><input data-study="0" id="w1025_rev2" type="checkbox"/><label>Python·C·아두이노 객관식 복습 및 취약 개념 기록</label></div><small>60~90분 권장, 새 강의 없음. 교재 PDF 기반으로 만든 기존 문제지만 사용.</small></div><div class="card road"><b>이번 주 목표</b><br/>선형대수 13강 · 대수 28강(STEP 제외) · 미적분 기초 7강 · 고등물리 7강 · 아두이노 8강.<br/>C언어 유튜브 기본 30강 / 선택 33강 · Python 유튜브 기본 12강 / 선택 15강.<br/><small>학습 진도와 실제 이해도는 다르게 표시해.</small></div><div class="card road"><b>10/19~10/25 주간 학습</b><br/>기존 진도: 선형대수 11강, 대수 26강, 대학미적기초 5강, 고등물리 5강, 아두이노 6강.<br/><b>C 유튜브 19강부터</b>, Python 새 유튜브 1강부터. C/Python은 영상 한 강마다 개별 체크.<br/><small>영상 제목은 확인 전이므로 임의로 쓰지 않음. 수요일은 휴식, 일요일은 복습 전용.</small></div><div class="card" id="progress-graph"><h2 style="margin:0 0 6px">📊 과목별 학습 진도</h2>
+<h1>🤖 3월까지 로봇 공부 대시보드</h1><p class="sub">2026.09.20 시작 · 2027.02.28 1회전 마감 · 선수사슬은 보존</p><div class="tabs"><button class="" data-x="w1">완료 기록</button><button class="on" data-x="w2">10/19–10/25</button><button class="" data-x="review">객관식 복습</button><button class="" data-x="money">💰 돈 기록</button><button class="" data-x="road">큰 로드맵</button><button data-x="routine">⏰ 하루 루틴</button></div><section class="week on" id="w2"><h2>이번 주 공부</h2><div class="card"><div class="date">10/19 월 · 강의별 체크</div><div class="task"><input data-study="1" id="w1019_la12" type="checkbox"/><label>선형대수 12강 · 블록 행렬</label></div><div class="task"><input data-study="1" id="w1019_c19" type="checkbox"/><label>C언어 유튜브 19강</label></div><div class="task"><input data-study="1" id="w1019_c20" type="checkbox"/><label>C언어 유튜브 20강</label></div><div class="task"><input data-study="1" id="w1019_c21" type="checkbox"/><label>C언어 유튜브 21강</label></div><div class="task"><input data-study="1" id="w1019_py1" type="checkbox"/><label>Python 유튜브 1강</label></div><div class="task"><input data-study="1" id="w1019_py2" type="checkbox"/><label>Python 유튜브 2강</label></div><div class="task"><input data-study="1" id="w1019_py3" type="checkbox"/><label>Python 유튜브 3강</label></div></div><div class="card"><div class="date">10/20 화 · 강의별 체크</div><div class="task"><input data-study="1" id="w1020_alg27" type="checkbox"/><label>고등대수 27강 · 호도법과 부채꼴</label></div><div class="task"><input data-study="1" id="w1020_cal6" type="checkbox"/><label>대학 미적분 기초 6강 · 고차방정식·연립방정식</label></div><div class="task"><input data-study="1" id="w1020_c22" type="checkbox"/><label>C언어 유튜브 22강</label></div><div class="task"><input data-study="1" id="w1020_c23" type="checkbox"/><label>C언어 유튜브 23강</label></div><div class="task"><input data-study="1" id="w1020_c24" type="checkbox"/><label>C언어 유튜브 24강</label></div><div class="task"><input data-study="1" id="w1020_py4" type="checkbox"/><label>Python 유튜브 4강</label></div><div class="task"><input data-study="1" id="w1020_py5" type="checkbox"/><label>Python 유튜브 5강</label></div><div class="task"><input data-study="1" id="w1020_py6" type="checkbox"/><label>Python 유튜브 6강</label></div></div><div class="card"><div class="date">10/21 수 · 휴식</div><div class="rest">강의와 복습 없음</div></div><div class="card"><div class="date">10/22 목 · 강의별 체크</div><div class="task"><input data-study="1" id="w1022_phy6" type="checkbox"/><label>고등물리 6강 · 여러 가지 운동 (6) - 수능 맛보기 04번</label></div><div class="task"><input data-study="1" id="w1022_ard7" type="checkbox"/><label>아두이노 7강 · 조도·온도 센서</label></div><div class="task"><input data-study="1" id="w1022_c25" type="checkbox"/><label>C언어 유튜브 25강</label></div><div class="task"><input data-study="1" id="w1022_c26" type="checkbox"/><label>C언어 유튜브 26강</label></div><div class="task"><input data-study="1" id="w1022_c27" type="checkbox"/><label>C언어 유튜브 27강</label></div><div class="task"><input data-study="1" id="w1022_py7" type="checkbox"/><label>Python 유튜브 7강</label></div><div class="task"><input data-study="1" id="w1022_py8" type="checkbox"/><label>Python 유튜브 8강</label></div><div class="task"><input data-study="1" id="w1022_py9" type="checkbox"/><label>Python 유튜브 9강</label></div><div class="task"><input data-study="0" id="w1022_phyrev" type="checkbox"/><label>복습 별도 · 고등물리 취약 개념 6문제 재시험</label></div></div><div class="card"><div class="date">10/23 금 · 강의별 체크</div><div class="task"><input data-study="1" id="w1023_la13" type="checkbox"/><label>선형대수 13강 · 예제풀이</label></div><div class="task"><input data-study="1" id="w1023_alg28" type="checkbox"/><label>고등대수 28강 · 삼각함수의 뜻 ①</label></div><div class="task"><input data-study="1" id="w1023_c28" type="checkbox"/><label>C언어 유튜브 28강</label></div><div class="task"><input data-study="1" id="w1023_c29" type="checkbox"/><label>C언어 유튜브 29강</label></div><div class="task"><input data-study="1" id="w1023_c30" type="checkbox"/><label>C언어 유튜브 30강</label></div><div class="task"><input data-study="1" id="w1023_py10" type="checkbox"/><label>Python 유튜브 10강</label></div><div class="task"><input data-study="1" id="w1023_py11" type="checkbox"/><label>Python 유튜브 11강</label></div><div class="task"><input data-study="1" id="w1023_py12" type="checkbox"/><label>Python 유튜브 12강</label></div></div><div class="card"><div class="date">10/24 토 · 기본 3강 + 선택 6강</div><div class="task"><input data-study="1" id="w1024_cal7" type="checkbox"/><label>대학 미적분 기초 7강 · 부등식</label></div><div class="task"><input data-study="1" id="w1024_phy7" type="checkbox"/><label>고등물리 7강 · 뉴턴 운동 법칙 (1) - 관성좌표계</label></div><div class="task"><input data-study="1" id="w1024_ard8" type="checkbox"/><label>아두이노 8강 · LCD</label></div><div class="task"><input data-study="1" id="w1024_c31" type="checkbox"/><label>C언어 유튜브 31강 · 추가 선택</label></div><div class="task"><input data-study="1" id="w1024_c32" type="checkbox"/><label>C언어 유튜브 32강 · 추가 선택</label></div><div class="task"><input data-study="1" id="w1024_c33" type="checkbox"/><label>C언어 유튜브 33강 · 추가 선택</label></div><div class="task"><input data-study="1" id="w1024_py13" type="checkbox"/><label>Python 유튜브 13강 · 추가 선택</label></div><div class="task"><input data-study="1" id="w1024_py14" type="checkbox"/><label>Python 유튜브 14강 · 추가 선택</label></div><div class="task"><input data-study="1" id="w1024_py15" type="checkbox"/><label>Python 유튜브 15강 · 추가 선택</label></div><small>기본 3개를 마친 후 컨디션이 좋으면 선택 항목 진행.</small></div><div class="card"><div class="date">10/25 일 · 문제풀이 복습 전용</div><div class="task"><input data-study="0" id="w1025_rev1" type="checkbox"/><label>이번 주 수학·물리 객관식 오답 복습</label></div><div class="task"><input data-study="0" id="w1025_rev2" type="checkbox"/><label>Python·C·아두이노 객관식 복습 및 취약 개념 기록</label></div><small>60~90분 권장, 새 강의 없음. 교재 PDF 기반으로 만든 기존 문제지만 사용.</small></div><div class="card road"><b>이번 주 목표</b><br/>선형대수 13강 · 대수 28강(STEP 제외) · 미적분 기초 7강 · 고등물리 7강 · 아두이노 8강.<br/>C언어 유튜브 기본 30강 / 선택 33강 · Python 유튜브 기본 12강 / 선택 15강.<br/><small>학습 진도와 실제 이해도는 다르게 표시해.</small></div><div class="card road"><b>10/19~10/25 주간 학습</b><br/>기존 진도: 선형대수 11강, 대수 26강, 대학미적기초 5강, 고등물리 5강, 아두이노 6강.<br/><b>C 유튜브 19강부터</b>, Python 새 유튜브 1강부터. C/Python은 영상 한 강마다 개별 체크.<br/><small>영상 제목은 확인 전이므로 임의로 쓰지 않음. 수요일은 휴식, 일요일은 복습 전용.</small></div><div class="card" id="progress-graph"><h2 style="margin:0 0 6px">📊 과목별 학습 진도</h2>
 <small>10/19 시작 진도와 이번 주 목표 · 연한 막대는 완료, 진한 막대는 목표 추가분</small>
 <div class="legend"><span>그래프는 확인된 완료 강의만 표시 · 미확인 항목은 진행률에 미포함</span></div>
 <div class="prow"><div class="phead"><b>선형대수</b><small>11/65강 → 목표 13/65강</small></div><div class="pbar"><div class="pcurrent" style="width:16.923%"></div><div class="ptarget" style="width:3.077%"></div></div><div class="level">현재 수준: 블록 행렬·예제풀이로 진행</div></div>
@@ -389,6 +405,7 @@ SLAM을 단순 실행하는 수준에서, 핵심 수학과 알고리즘을 설�
 다만 준비 과정은 휴머노이드만 좁게 파는 것이 아니라,
 <b>ROS2 · SLAM · 상태추정 · 센서융합 · 제어 · 로봇학습</b> 중 휴머노이드에 연결되는 기반을 넓게 쌓는다.
 </div></section>
+
 </div><script>
 const K="robotdash-1005-1011-corrected-v1";
 const cs=[...document.querySelectorAll('input[type="checkbox"]')];
@@ -432,4 +449,267 @@ if (savingsLog) {
   });
 }
 
+</script><div class="w"><section id="routine" class="week">
+<h2>⏰ 하루 루틴</h2>
+<div class="card">
+<div class="rt-head"><div><b>기록 날짜</b><br><small>날짜를 바꾸면 해당 날짜의 기록이 자동으로 나타나요.</small></div>
+<input class="rt-input" id="rt-date" type="date"/></div>
+<div class="rt-head" style="margin-top:10px"><span id="rt-day-label" class="rt-pill"></span><span id="rt-achieved" class="rt-pill">0% 완료</span></div>
+<div class="rt-progress" style="margin-top:10px"><i id="rt-progress-bar"></i></div>
+</div>
+
+<div class="card"><h3>🕒 하루 시간표</h3><div id="rt-schedule"></div></div>
+
+<div class="card"><h3>📖 집중 공부시간</h3>
+<div class="rt-small">강의별 체크와 별개로 기록하며, 입력한 실제 집중시간만 합산해요.</div>
+<div id="rt-study" class="rt-stack"></div>
+<p><b>오늘 총 집중 공부시간: <span id="rt-study-total">0분</span></b></p></div>
+
+<div class="card"><h3>🏃 운동</h3>
+<div id="rt-exercise"></div>
+<p class="rt-small">러닝머신 참고 설정: 경사 10%, 속도 3~3.5km/h. 준비·정리운동을 포함하고 컨디션에 따라 강도·시간을 조절하세요.</p></div>
+
+<div class="card"><h3>🍽️ 식사</h3>
+<div id="rt-meals"></div>
+<p class="rt-small">하루 섭취량은 약 1,400~1,500kcal를 시작 참고치로만 활용하고 급식 구성·배고픔·활동량에 맞춰 조절하세요. 주말에 조리·소분·냉동 후 평일 데워 먹는 방식.</p>
+<p class="rt-danger">주의: 대두·땅콩 섭취 후 목 부종과 호흡곤란이 있었다면 해당 성분과 안전이 확인되지 않은 소스·양념은 피하세요. 교차접촉에도 주의가 필요하며 알레르기 전문의와 안전 계획을 상의하세요.</p></div>
+
+<div class="card"><h3>💧 물</h3><div class="rt-head">
+<div><b id="rt-water-num">0mL</b><div class="rt-small" id="rt-water-pct">목표 1,800mL · 0%</div></div>
+<div><button class="rt-btn light" id="rt-water-minus">−200mL</button> <button class="rt-btn" id="rt-water-plus">+200mL</button></div></div>
+<div class="rt-progress" style="margin:12px 0"><i id="rt-water-bar"></i></div>
+<label>하루 목표량 (mL) <input id="rt-water-goal" class="rt-input rt-number" type="number" min="200" max="10000" step="100"/></label>
+</div>
+
+<div class="card"><h3>🌙 수면</h3>
+<div class="rt-grid">
+<label>취침 시각<br><input class="rt-input" type="time" id="rt-sleep-bed"/></label>
+<label>기상 시각<br><input class="rt-input" type="time" id="rt-sleep-wake"/></label>
+</div>
+<div class="rt-row"><input type="checkbox" id="rt-sleep-checked"/><label class="rt-checklabel" for="rt-sleep-checked">수면 기록 완료</label></div>
+<p><b id="rt-sleep-total">실제 수면시간 —</b> <span id="rt-sleep-status" class="rt-small">목표 20:00~04:00 · 8시간</span></p>
+<small>취침은 전날 밤, 기상은 선택한 날짜의 아침으로 기록합니다. 수면시간을 줄이는 목표는 설정하지 않아요.</small>
+</div>
+
+<div class="card"><h3>💊 영양제</h3>
+<div class="rt-row"><input type="checkbox" id="rt-vitd"/><label class="rt-checklabel" for="rt-vitd">비타민 D · 점심 식후 1정 (제품 함량 확인 필요)</label></div>
+<div class="rt-row"><input type="checkbox" id="rt-omega"/><label class="rt-checklabel" for="rt-omega">오메가3 · 저녁 식후 제품 권장량</label></div>
+<div class="rt-row"><label for="rt-vitc">비타민 C 실제 복용량 (1정 1,000mg)</label><input id="rt-vitc" class="rt-input rt-number" type="number" min="0" max="100" step="1"/></div>
+<div id="rt-vitc-status" class="rt-small"></div>
+<small>비타민 B는 현재 체크 항목에서 제외. 비타민 C 6,000mg을 목표로 설정하지 않아요.</small></div>
+
+<div class="card"><h3>⚖️ 체중·메모</h3>
+<div class="rt-grid">
+<label>체중 (kg)<br><input id="rt-weight" class="rt-input" type="number" min="20" max="400" step=".1" placeholder="기록 선택"/></label>
+<label>14일 챌린지 시작일<br><input id="rt-challenge-start" class="rt-input" type="date"/></label>
+</div>
+<p>자유 메모</p>
+<textarea id="rt-notes" class="rt-input" rows="3" style="width:100%;resize:vertical" placeholder="오늘 기록"></textarea>
+<h3 style="margin-top:16px">체중 변화 그래프</h3><svg id="rt-weight-chart" class="rt-chart" role="img" aria-label="최근 체중 변화 그래프" viewBox="0 0 650 180"></svg>
+</div>
+
+<div class="card"><h3>📆 14일 챌린지</h3><div id="rt-challenge"></div></div>
+
+<div class="card"><h3>📊 최근 7일 기록</h3><div class="rt-grid" id="rt-week-stats"></div></div>
+
+<div class="card"><h3>💾 생활 기록 백업·복원</h3>
+<p class="rt-small">기록은 이 브라우저에 저장돼요. 다른 기기에는 자동 동기화되지 않으므로 기기 이동이나 브라우저 데이터 삭제 전에 백업하세요.</p>
+<button class="rt-btn" id="rt-export">JSON 백업</button>
+<label class="rt-btn light" for="rt-import" style="display:inline-block">JSON 복원 선택</label>
+<input id="rt-import" type="file" accept=".json,application/json" hidden/>
+<p class="rt-small">복원은 생활 루틴 기록만 업데이트하며 기존 공부 체크·저축 저장 키에는 접근하지 않습니다.</p>
+</div>
+</section></div><script>
+(() => {
+"use strict";
+const RK="robotics-routine-v1"; // 기존 공부 / 저축 localStorage 키와 독립
+const $=id=>document.getElementById(id);
+let db={version:1,goal:1800,challengeStart:"",days:{}};
+try { const parsed=JSON.parse(localStorage.getItem(RK)||"null"); if(parsed&&typeof parsed==="object"&&parsed.days&&typeof parsed.days==="object") db={...db,...parsed}; }catch(e){}
+const isoLocal=(d)=>[d.getFullYear(),String(d.getMonth()+1).padStart(2,"0"),String(d.getDate()).padStart(2,"0")].join("-");
+const dateFor=(id)=>{let d=new Date(id+"T12:00:00");return isNaN(d.getTime())?new Date():d;};
+const addDays=(id,n)=>{const d=dateFor(id);d.setDate(d.getDate()+n);return isoLocal(d)};
+const weekday=(id)=>dateFor(id).getDay();
+const store=()=>localStorage.setItem(RK,JSON.stringify(db));
+const def=()=>({checks:{},studies:{},water:0,bed:"",wake:"",weight:"",vitc:0,notes:""});
+let current=isoLocal(new Date());
+const get=(id=current)=>{if(!db.days[id])db.days[id]=def();return db.days[id]};
+function checkRow(container,id,label){
+ const line=document.createElement("div");line.className="rt-row";
+ const input=document.createElement("input");input.type="checkbox";input.id="rt-check-"+id;input.checked=!!get().checks[id];
+ input.addEventListener("change",()=>{get().checks[id]=input.checked;store();renderProgress();renderChallenge();renderStats()});
+ const lab=document.createElement("label");lab.className="rt-checklabel";lab.htmlFor=input.id;lab.textContent=label;
+ line.append(input,lab);container.append(line);
+}
+function schedule(){
+ const day=weekday(current), tue=day===2,weekend=day===0||day===6;
+ const tbl=$("rt-schedule");tbl.replaceChildren();
+ if(weekend){ const p=document.createElement("p");p.textContent="주말은 자유 일정입니다. 아래에서 자유롭게 기록할 수 있어요.";tbl.append(p);
+ const ta=document.createElement("textarea");ta.className="rt-input";ta.style.width="100%";ta.rows=3;ta.placeholder="주말 자유 일정";
+ ta.value=get().weekendSchedule||"";ta.oninput=()=>{get().weekendSchedule=ta.value;store()};tbl.append(ta);return;}
+ const timetable=[
+ ["04:00~04:10","기상 및 세면"],["04:10~05:45","새벽 집중 공부"],["05:45~05:55","운동 준비"],["05:55~06:00","브이업짐 이동"],
+ ["06:00~07:00","운동"],["07:00~07:30","헬스장에서 샤워"],["07:30~08:05","학교 이동"],
+ ["08:05~08:20","아침 식사"],["08:20~08:40","수업 준비"],["08:40~11:30","학교 근무 및 수업"],
+ ["11:30~12:10","점심 식사"],["12:10~"+(tue?"14:30":"13:50"),"학교 근무 및 수업"],
+ [(tue?"14:30":"13:50")+"~16:30","학교에서 공부"],["16:30~16:40","퇴근 준비"],["16:40~17:15","귀가"],
+ ["17:15~17:45","저녁 식사"],["17:45~19:20","저녁 공부"],["19:20~20:00","취침 준비"],["20:00~04:00","수면 8시간"]];
+ const table=document.createElement("table");table.className="rt-tbl";
+ const head=document.createElement("thead");head.innerHTML="<tr><th>시간</th><th>활동</th></tr>";table.append(head);
+ const body=document.createElement("tbody");
+ timetable.forEach(([time,act])=>{let tr=document.createElement("tr");[time,act].forEach(t=>{let td=document.createElement("td");td.textContent=t;tr.append(td)});body.append(tr)});
+ table.append(body);tbl.append(table);
+}
+function studies(){
+ const w=weekday(current),weekend=w===0||w===6;
+ const blocks=weekend?[["자유 공부 1",0],["자유 공부 2",0],["자유 공부 3",0]]:
+ [["새벽 공부 04:10~05:45",95],[`학교 공부 ${w===2?"14:30":"13:50"}~16:30`,w===2?120:160],["저녁 공부 17:45~19:20",95]];
+ const holder=$("rt-study");holder.replaceChildren();
+ blocks.forEach(([name,minutes],i)=>{
+  const key="slot"+i,obj=get().studies[key]||{};
+  const card=document.createElement("div");card.style.padding="8px";card.style.border="1px solid #eee";card.style.borderRadius="10px";
+  const title=document.createElement("b");title.textContent=name+(minutes?" · 계획 "+minutes+"분":"");card.append(title);
+  const row=document.createElement("div");row.className="rt-row";
+  const chk=document.createElement("input");chk.type="checkbox";chk.checked=!!obj.done;
+  const label=document.createElement("label");label.className="rt-checklabel";label.textContent="완료";
+  const subject=document.createElement("input");subject.type="text";subject.className="rt-input";subject.placeholder="공부 과목";subject.style.flex="1";subject.value=obj.subject||"";
+  const actual=document.createElement("input");actual.type="number";actual.min="0";actual.max="1440";actual.step="1";actual.className="rt-input rt-number";actual.placeholder="실제 분";actual.value=obj.minutes??"";
+  const update=()=>{get().studies[key]={done:chk.checked,subject:subject.value,minutes:actual.value};store();studyTotal();renderProgress();renderStats();renderChallenge()};
+  [chk,subject,actual].forEach(x=>x.addEventListener("change",update));subject.addEventListener("input",update);actual.addEventListener("input",update);
+  row.append(chk,label,subject,actual);card.append(row);holder.append(card);
+ });
+ studyTotal();
+}
+function studyTotal(){const total=Object.values(get().studies).reduce((sum,s)=>sum+Math.max(0,Math.min(1440,Number(s.minutes)||0)),0);$("rt-study-total").textContent=total+"분";}
+function exercise(){
+ const el=$("rt-exercise");el.replaceChildren();const w=weekday(current);
+ if(w===0){el.textContent="일요일 · 휴식";return}
+ if(w===6){checkRow(el,"exercise-walk","토요일 · 휴식 또는 가벼운 걷기 (선택)");return}
+ if(w===2||w===4){checkRow(el,"exercise-strength","근력운동 20분");checkRow(el,"exercise-run","러닝머신 40분");}
+ else checkRow(el,"exercise-run","러닝머신 50분");
+}
+function meals(){
+ const el=$("rt-meals");el.replaceChildren();
+ [["breakfast","아침 08:05 · 맥반석 계란 2개, 찐 고구마 150g, 바나나 1개"],
+ ["lunch","점심 11:30 · 급식/일반식, 밥 100~120g, 단백질 반찬·채소"],
+ ["snack","선택 간식 · 배고프면 맥반석 계란 1개"],
+ ["dinner","저녁 17:15 · 닭가슴살 150g(조리 후), 현미·백미 1:1 밥 150g(조리 후), 양배추 100g, 브로콜리 100g, 올리브유 1작은술"]]
+ .forEach(([id,label])=>checkRow(el,"meal-"+id,label));
+}
+function water(){
+ const amt=Math.max(0,Number(get().water)||0),goal=Math.max(200,Number(db.goal)||1800),pct=Math.round(amt/goal*100);
+ $("rt-water-num").textContent=amt.toLocaleString()+"mL";
+ $("rt-water-goal").value=goal;
+ $("rt-water-pct").textContent="목표 "+goal.toLocaleString()+"mL · "+pct+"%";
+ $("rt-water-bar").style.width=Math.min(100,pct)+"%";
+}
+function sleepMinutes(d){
+ if(!d.bed||!d.wake)return null;
+ const parse=t=>{let v=t.split(":").map(Number);return v[0]*60+v[1]};
+ let diff=parse(d.wake)-parse(d.bed);if(diff<=0)diff+=1440;
+ return diff;
+}
+function sleep(){
+ const d=get();$("rt-sleep-bed").value=d.bed||"";$("rt-sleep-wake").value=d.wake||"";$("rt-sleep-checked").checked=!!d.checks.sleep;
+ const m=sleepMinutes(d);
+ $("rt-sleep-total").textContent=m===null?"실제 수면시간 —":"실제 수면시간 "+Math.floor(m/60)+"시간 "+m%60+"분";
+ $("rt-sleep-status").textContent=m===null?"목표 8시간":m>=480?"8시간 달성":"8시간 미달";
+ $("rt-sleep-status").className=m!==null&&m>=480?"rt-good":"rt-small";
+}
+function vitc(){
+ const count=Number(get().vitc)||0,mg=count*1000;
+ $("rt-vitc").value=count;
+ $("rt-vitc-status").textContent="복용 "+count+"정 · 총 "+mg.toLocaleString()+"mg"+(mg>2000?" · 주의: 성인 상한섭취량 2,000mg 초과":"");
+ $("rt-vitc-status").className=mg>2000?"rt-danger":"rt-small";
+}
+const eligible=()=>{
+ const w=weekday(current),checks=get().checks;
+ const mandatory=["meal-breakfast","meal-lunch","meal-dinner"];
+ if(w>0&&w<6)mandatory.push("exercise-run");
+ if(w===2||w===4)mandatory.push("exercise-strength");
+ mandatory.push("vitd","omega","sleep");
+ return mandatory;
+};
+function completion(id){
+ const d=db.days[id]||def(),w=weekday(id),c=d.checks||{};
+ const req=["meal-breakfast","meal-lunch","meal-dinner","vitd","omega","sleep"];
+ if(w>0&&w<6)req.push("exercise-run");
+ if(w===2||w===4)req.push("exercise-strength");
+ const work=w===0||w===6?[]:["slot0","slot1","slot2"];
+ const done=req.filter(x=>c[x]).length+work.filter(x=>d.studies&&d.studies[x]&&d.studies[x].done).length+(Number(d.water)>=Math.max(200,Number(db.goal)||1800)?1:0);
+ return Math.round(done/(req.length+work.length+1)*100);
+}
+function renderProgress(){
+ let pct=completion(current);$("rt-achieved").textContent=pct+"% 완료";$("rt-progress-bar").style.width=pct+"%";
+}
+function renderChallenge(){
+ $("rt-challenge-start").value=db.challengeStart||"";
+ const el=$("rt-challenge");el.replaceChildren();
+ if(!db.challengeStart){el.textContent="시작일을 설정하면 14일 기록이 표시됩니다.";return}
+ const tbl=document.createElement("table");tbl.className="rt-tbl";
+ const head=document.createElement("tr");["날짜","달성률"].forEach(x=>{let th=document.createElement("th");th.textContent=x;head.append(th)});tbl.append(head);
+ for(let i=0;i<14;i++){const id=addDays(db.challengeStart,i);let tr=document.createElement("tr");let a=document.createElement("td"),b=document.createElement("td");a.textContent=(i+1)+"일차 · "+id;b.textContent=completion(id)+"%";tr.append(a,b);tbl.append(tr)}
+ el.append(tbl);
+}
+function renderStats(){
+ const el=$("rt-week-stats");el.replaceChildren();
+ const days=Array.from({length:7},(_,i)=>addDays(current,-6+i));
+ const ds=days.map(x=>db.days[x]||def());
+ const total=ds.reduce((s,d)=>s+Object.values(d.studies||{}).reduce((t,p)=>t+(Number(p.minutes)||0),0),0);
+ const workouts=ds.filter(d=>(d.checks||{})["exercise-run"]||(d.checks||{})["exercise-strength"]||(d.checks||{})["exercise-walk"]).length;
+ const sleepValues=ds.map(sleepMinutes).filter(v=>v!==null);
+ const waterDays=ds.filter(d=>Number(d.water)>=Math.max(200,Number(db.goal)||1800)).length;
+ const mealScores=ds.map(d=>["breakfast","lunch","dinner"].filter(x=>(d.checks||{})["meal-"+x]).length/3);
+ const avgMeal=Math.round(100*mealScores.reduce((a,b)=>a+b,0)/7);
+ const cells=[["집중 공부",Math.round(total/60*10)/10+"시간"],["운동한 날",workouts+"일"],["평균 수면",sleepValues.length?(Math.round(sleepValues.reduce((a,b)=>a+b,0)/sleepValues.length/6)/10)+"시간":"기록 없음"],["물 목표 달성",waterDays+"/7일"],["필수 식사 체크",avgMeal+"%"]];
+ for(const [name,val] of cells){const card=document.createElement("div");card.className="rt-pill";card.style.padding="12px";card.textContent=name+" · "+val;el.append(card)}
+}
+function drawChart(){
+ const svg=$("rt-weight-chart");while(svg.firstChild)svg.removeChild(svg.firstChild);
+ const ns="http://www.w3.org/2000/svg",entries=Object.entries(db.days).filter(([id,d])=>d.weight!==""&&Number(d.weight)>0).sort((a,b)=>a[0].localeCompare(b[0])).slice(-30);
+ const add=(name,attrs,txt)=>{let e=document.createElementNS(ns,name);Object.entries(attrs).forEach(([k,v])=>e.setAttribute(k,v));if(txt)e.textContent=txt;svg.append(e);return e};
+ if(!entries.length){add("text",{x:20,y:90,fill:"#666","font-size":16},"체중 기록을 입력하면 그래프가 나타납니다.");return}
+ const vals=entries.map(([,d])=>Number(d.weight)),min=Math.min(...vals)-0.5,max=Math.max(...vals)+0.5,range=Math.max(max-min,1);
+ const x=i=>entries.length===1?325:45+550*i/(entries.length-1),y=v=>140-(v-min)/range*100;
+ for(let i=0;i<3;i++){const v=min+(max-min)*i/2;add("line",{x1:40,y1:y(v),x2:615,y2:y(v),stroke:"#e4e7eb"});add("text",{x:5,y:y(v)+5,fill:"#777","font-size":12},v.toFixed(1));}
+ if(entries.length>1)add("polyline",{points:vals.map((v,i)=>x(i)+","+y(v)).join(" "),fill:"none",stroke:"#30353d","stroke-width":2});
+ vals.forEach((v,i)=>add("circle",{cx:x(i),cy:y(v),r:3.5,fill:"#30353d"}));
+ add("text",{x:45,y:165,fill:"#777","font-size":12},entries[0][0]);
+ add("text",{x:520,y:165,fill:"#777","font-size":12},entries[entries.length-1][0]);
+}
+function render(){
+ const d=get(),day=["일","월","화","수","목","금","토"][weekday(current)];
+ $("rt-date").value=current;$("rt-day-label").textContent=current+" ("+day+")";
+ schedule();studies();exercise();meals();water();sleep();vitc();
+ $("rt-vitd").checked=!!d.checks.vitd;$("rt-omega").checked=!!d.checks.omega;
+ $("rt-weight").value=d.weight??"";$("rt-notes").value=d.notes||"";
+ renderProgress();renderChallenge();renderStats();drawChart();
+}
+$("rt-date").onchange=e=>{if(e.target.value){current=e.target.value;render()}};
+$("rt-water-minus").onclick=()=>{get().water=Math.max(0,(Number(get().water)||0)-200);store();water();renderProgress();renderChallenge();renderStats()};
+$("rt-water-plus").onclick=()=>{get().water=(Number(get().water)||0)+200;store();water();renderProgress();renderChallenge();renderStats()};
+$("rt-water-goal").onchange=e=>{db.goal=Math.max(200,Number(e.target.value)||1800);store();water();renderProgress();renderChallenge();renderStats()};
+["rt-sleep-bed","rt-sleep-wake"].forEach(id=>$(id).onchange=e=>{get()[id==="rt-sleep-bed"?"bed":"wake"]=e.target.value;store();sleep();renderProgress();renderStats()});
+$("rt-sleep-checked").onchange=e=>{get().checks.sleep=e.target.checked;store();renderProgress();renderChallenge()};
+[["rt-vitd","vitd"],["rt-omega","omega"]].forEach(([id,k])=>$(id).onchange=e=>{get().checks[k]=e.target.checked;store();renderProgress();renderChallenge()});
+$("rt-vitc").onchange=e=>{get().vitc=Math.max(0,Math.floor(Number(e.target.value)||0));store();vitc()};
+$("rt-weight").oninput=e=>{get().weight=e.target.value;store();drawChart()};
+$("rt-notes").oninput=e=>{get().notes=e.target.value;store()};
+$("rt-challenge-start").onchange=e=>{db.challengeStart=e.target.value;store();renderChallenge()};
+$("rt-export").onclick=()=>{
+ const blob=new Blob([JSON.stringify(db,null,2)],{type:"application/json"});
+ const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="robotics_routine_backup_"+current+".json";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1500);
+};
+$("rt-import").onchange=async e=>{
+ const file=e.target.files[0];if(!file)return;
+ try{
+  const parsed=JSON.parse(await file.text());
+  if(!parsed||typeof parsed!=="object"||!parsed.days||typeof parsed.days!=="object"||Array.isArray(parsed.days))throw Error("잘못된 생활 기록 형식");
+  if(!confirm("현재 생활 루틴 기록을 백업 파일로 교체할까요? 공부/저축 기록은 유지됩니다."))return;
+  db={version:1,goal:Math.max(200,Number(parsed.goal)||1800),challengeStart:typeof parsed.challengeStart==="string"?parsed.challengeStart:"",days:parsed.days};
+  store();render();alert("생활 기록 복원을 완료했어요.");
+ }catch(err){alert("복원 실패: "+err.message)}finally{e.target.value=""}
+};
+render();
+})();
 </script></body></html>
