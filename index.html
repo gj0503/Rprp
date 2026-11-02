@@ -3,401 +3,438 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>로봇 공부 대시보드 | 11월 2~8일</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>로봇 공부 대시보드 | 2026년 11월</title>
 <style>
 :root{
-  --bg:#f5f4f0;--white:#fff;--ink:#263333;
-  --muted:#788582;--green:#517e71;--line:#e6e9e5;
-  --soft:#edf3ef;--orange:#b67a45;
+ --bg:#f7f4ef;--paper:#fffdf9;--ink:#293a37;
+ --muted:#81908a;--sage:#5d907b;--soft:#eaf2eb;
+ --border:#e8e9e3;--peach:#f7e9e1;
 }
 *{box-sizing:border-box}
+html{scroll-behavior:smooth}
 body{margin:0;background:var(--bg);color:var(--ink);
-font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo",
-"Malgun Gothic",sans-serif}
+ font-family:-apple-system,BlinkMacSystemFont,
+ "Apple SD Gothic Neo","Malgun Gothic",sans-serif}
 button,input,textarea{font:inherit}
 button{cursor:pointer}
 .app{display:flex;min-height:100vh}
-.sidebar{width:220px;flex:none;background:white;
-border-right:1px solid var(--line);padding:24px 14px;
-position:sticky;top:0;height:100vh}
-.logo{font-weight:850;font-size:20px;padding:10px 12px 25px}
-.logo small{display:block;font-size:11px;color:var(--muted);
-font-weight:400;margin-top:5px}
-.nav{display:flex;flex-direction:column;gap:6px}
-.nav button{border:0;background:none;text-align:left;
-padding:13px;border-radius:12px;color:#60716c}
-.nav button.active,.nav button:hover{background:var(--soft);
-color:var(--green);font-weight:750}
-.main{padding:26px;max-width:1600px;width:100%;margin:auto;
-min-width:0}
-.page{display:none}
-.page.active{display:block}
-h1{margin:0 0 7px;font-size:29px}
-h2{font-size:19px;margin:27px 0 14px}
-h3{font-size:15px;margin:0 0 10px}
-.sub{font-size:13px;color:var(--muted);line-height:1.7}
-.card{background:#fff;border:1px solid var(--line);
-border-radius:17px;padding:18px;min-width:0}
-.grid{display:grid;gap:13px}
-.hero{grid-template-columns:1.4fr 1fr}
-.photo{position:relative;min-height:225px;overflow:hidden;
-border-radius:17px;background:#283b38}
-.photo img{width:100%;height:100%;position:absolute;
-inset:0;object-fit:cover}
-.photo:after{content:"";position:absolute;inset:0;
-background:linear-gradient(transparent 30%,rgba(0,0,0,.7))}
-.photo .caption{position:absolute;bottom:19px;left:20px;right:15px;
-z-index:2;color:white;font-size:20px;font-weight:800}
-.photo .caption small{display:block;font-size:12px;
-font-weight:400;margin-top:6px}
+.sidebar{width:215px;flex:none;background:#fffdf9;
+ border-right:1px solid var(--border);padding:24px 15px;
+ position:sticky;top:0;height:100vh;overflow:auto}
+.brand{display:flex;gap:11px;align-items:center;
+ margin-bottom:31px;font-weight:850;font-size:16px}
+.brand-icon{display:grid;place-items:center;
+ width:38px;height:38px;border-radius:12px;background:var(--soft)}
+.brand small{display:block;font-size:10px;
+ font-weight:400;color:var(--muted);margin-top:4px}
+.nav{display:grid;gap:5px}
+.nav button{border:0;background:transparent;color:#66716d;
+ padding:12px;border-radius:10px;text-align:left;
+ font-weight:700;font-size:13px}
+.nav button.active,.nav button:hover{background:#e4efe6;
+ color:#396d57}
+.calendar{background:#fff;border:1px solid var(--border);
+ border-radius:14px;padding:13px;margin-top:28px}
+.calendar h3{font-size:13px;margin:0 0 13px}
+.calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);
+ gap:3px;text-align:center}
+.calendar-grid span{font-size:10px;padding:7px 1px}
+.calendar-grid .weekday{color:#96a19c;font-weight:700}
+.calendar-grid .current{background:#cce6d7;
+ border-radius:8px;color:#2d694e;font-weight:850}
+.calendar-grid .week-date{color:#467c64;font-weight:850}
+.side-note{font-size:12px;line-height:1.8;color:#697b6e;
+ margin-top:17px;background:#edf3eb;padding:13px;border-radius:13px}
+main{width:100%;min-width:0;max-width:1700px;
+ padding:20px 23px 65px;margin:auto}
+.page{display:none}.page.active{display:block}
+h1{font-size:26px;letter-spacing:-.8px;margin:6px 0}
+h2{font-size:18px;letter-spacing:-.4px;margin:24px 0 13px}
+h3{font-size:14px;margin:0 0 12px}
+.sub{font-size:12px;color:var(--muted);line-height:1.75}
+.card{background:white;border:1px solid var(--border);
+ border-radius:15px;padding:17px;min-width:0}
+.grid{display:grid;gap:12px}
+.hero{grid-template-columns:1.3fr 1fr;margin-top:17px}
+.hero-card{position:relative;min-height:240px;border-radius:17px;
+ overflow:hidden;background:#dfded8}
+.hero-card img{width:100%;height:100%;position:absolute;
+ inset:0;object-fit:cover}
+.hero-card:after{content:"";position:absolute;inset:0;
+ background:linear-gradient(0deg,rgba(18,30,28,.78),
+ rgba(18,30,28,.1) 60%)}
+.hero-caption{position:absolute;left:23px;bottom:22px;right:12px;
+ color:white;z-index:1}
+.hero-caption b{font-size:22px;letter-spacing:-.5px}
+.hero-caption span{display:block;font-size:12px;
+ margin-top:7px;color:#e9efeb}
 .robot-grid{grid-template-columns:repeat(6,minmax(0,1fr))}
-.robot{overflow:hidden;padding:0}
-.robot img{width:100%;height:110px;object-fit:cover;
-display:block;background:#e5ebe8}
-.robot strong{display:block;font-size:12px;padding:12px}
-.week-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));
-gap:10px;align-items:start}
-.day{padding:13px;min-height:240px}
-.day h3{font-size:14px;margin:0 0 4px}
-.day .date{font-size:11px;color:var(--muted);
-margin-bottom:12px}
-.day.rest{background:#f0f2ee}
+.robot-card{overflow:hidden;border-radius:12px;background:white;
+ border:1px solid var(--border);min-width:0}
+.robot-card img{width:100%;height:106px;object-fit:cover;
+ display:block}
+.robot-card b{display:block;padding:10px 5px;text-align:center;
+ font-size:11px}
+.heading-row{display:flex;justify-content:space-between;
+ gap:10px;align-items:center}
+.pill{font-size:11px;font-weight:750;color:#447662;
+ background:var(--soft);border-radius:30px;padding:7px 11px}
+.week-scroll{width:100%;overflow-x:auto;padding-bottom:9px}
+.week-grid{display:grid;grid-template-columns:repeat(7,minmax(158px,1fr));
+ gap:8px;align-items:stretch}
+.day{padding:12px 10px;min-height:320px;display:flex;
+ flex-direction:column}
+.day:nth-child(3){background:#edf4ed}
+.day:nth-child(7){background:#fff8f5}
+.day-head{display:flex;justify-content:space-between;
+ align-items:center;margin-bottom:12px}
+.day-head b{font-size:13px}
+.day-head small{font-size:10px;color:var(--muted)}
 .task{display:flex;gap:7px;align-items:flex-start;
-font-size:12px;line-height:1.5;padding:8px 0;
-border-bottom:1px solid #f0f1ed}
-.task:last-child{border:0}
-.task input{accent-color:var(--green);margin-top:2px;
-flex:none}
-.task label{cursor:pointer;overflow-wrap:anywhere}
-.task input:checked+label{text-decoration:line-through;
-color:#a7b0ab}
-.kind{display:block;font-size:10px;color:var(--orange);
-margin-bottom:2px}
-.pill{display:inline-block;border-radius:30px;padding:5px 9px;
-background:var(--soft);color:var(--green);font-size:11px;
-font-weight:700}
-.stats{grid-template-columns:1.4fr 1fr 1fr 1fr;align-items:stretch}
-.progress-row{margin:12px 0}
-.prog-head{display:flex;justify-content:space-between;
-gap:8px;font-size:12px;margin-bottom:6px}
-.bar{height:7px;background:#edf0ed;border-radius:9px;
-overflow:hidden}
-.fill{height:100%;background:#75a392;border-radius:9px}
-.big{font-size:26px;font-weight:800;margin:10px 0}
-.small{font-size:12px;color:var(--muted);line-height:1.7}
-.action{border:0;border-radius:10px;background:var(--green);
-padding:10px 14px;color:white;font-weight:700}
-.secondary{background:var(--soft);color:var(--green)}
-.action-row{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}
-.photo-row{grid-template-columns:repeat(3,minmax(0,1fr))}
-.photo-row .photo{min-height:180px}
-.photo-row .caption{font-size:15px}
-.study-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-.study-card h3{color:var(--green)}
-.status{font-size:12px;padding:9px 10px;background:#f7f9f7;
-border-radius:9px;margin:8px 0;line-height:1.6}
-.review-item{padding:12px;border-bottom:1px solid var(--line);
-display:flex;gap:10px;align-items:flex-start;font-size:13px}
-.review-item input{accent-color:var(--green);margin-top:3px}
+ border-bottom:1px solid #f0f2ee;padding:8px 0;
+ line-height:1.5}
+.task input{accent-color:#58947b;margin:3px 0 0;flex:none}
+.task label{font-size:11px;cursor:pointer;overflow-wrap:anywhere}
+.task input:checked+label{color:#a1aaa4;text-decoration:line-through}
+.task em{display:block;font-size:10px;font-style:normal;
+ color:#bc8a61;margin-bottom:2px}
+.day-count{font-size:10px;color:#688476;
+ margin-top:auto;padding-top:13px}
+.track{height:8px;background:#e9ede8;
+ border-radius:30px;overflow:hidden;margin:9px 0}
+.track>div{height:100%;background:#79ae94;
+ border-radius:30px;transition:width .2s}
+.bottom-grid{grid-template-columns:1.35fr 1fr 1fr 1fr}
+.bottom-grid>.card{min-height:215px}
+.progress-line{margin:10px 0}
+.progress-line>div:first-child{display:flex;justify-content:space-between;
+ gap:5px;font-size:11px}
+.progress-line small{color:var(--muted)}
+.amount{font-size:23px;font-weight:850;margin:14px 0}
+.btn{border:0;border-radius:10px;background:#568a75;
+ color:white;padding:10px 13px;font-size:12px;font-weight:750}
+.btn.light{background:#eaf2eb;color:#487660}
+.btn-row{display:flex;flex-wrap:wrap;gap:7px;margin-top:13px}
+.quick-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.quick-grid button{border:0;border-radius:9px;padding:12px 5px;
+ font-size:11px;background:#f2f5f1;color:#496d5c;font-weight:750}
+.goal-grid{grid-template-columns:repeat(3,minmax(0,1fr));margin-top:12px}
+.goal-photo{position:relative;overflow:hidden;border-radius:12px;
+ min-height:165px;background:#ddd}
+.goal-photo img{width:100%;height:100%;
+ object-fit:cover;position:absolute;inset:0}
+.goal-photo span{position:absolute;bottom:0;left:0;right:0;
+ background:linear-gradient(transparent,#16201cce);color:white;
+ padding:24px 15px 11px;font-size:13px;font-weight:800}
+.course-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.course-number{font-size:22px;font-weight:850;
+ color:#547d69;margin:12px 0}
+.note{background:#f0f6f1;border-radius:11px;
+ padding:13px;font-size:12px;line-height:1.8;color:#557363}
+.review-item{display:flex;gap:10px;padding:11px 0;
+ border-bottom:1px solid var(--border);font-size:13px;
+ line-height:1.6}
+.review-item input{accent-color:#58947b;margin-top:4px}
+.review-item input:checked+label{text-decoration:line-through;
+ color:#a1aaa4}
 .review-item label{cursor:pointer}
-.review-item:has(input:checked) label{color:#9aa5a0;
-text-decoration:line-through}
-textarea{width:100%;min-height:115px;border:1px solid var(--line);
-border-radius:10px;padding:12px;background:white;resize:vertical}
-input[type=number]{max-width:145px;padding:9px;border-radius:9px;
-border:1px solid #dbe3dc}
-.info{background:var(--soft);border-radius:12px;
-padding:13px;color:#4b6f60;font-size:12px;line-height:1.8}
-.sectiongap{margin-top:16px}
-#toast{position:fixed;bottom:20px;right:20px;background:#243e35;
-color:white;padding:12px 17px;border-radius:12px;
-display:none;z-index:100}
-@media(max-width:1250px){
-.sidebar{width:170px}
-.main{padding:18px}
-.week-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
-.robot-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
-.stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+input[type=number]{border:1px solid #dce4dd;border-radius:9px;
+ padding:10px;max-width:170px;width:100%}
+textarea{border:1px solid #dce4dd;border-radius:9px;
+ padding:12px;width:100%;min-height:110px;resize:vertical}
+.status-row{padding:11px;border-radius:10px;
+ background:#f6f7f4;margin:7px 0;font-size:12px}
+#toast{position:fixed;bottom:18px;right:18px;
+ padding:12px 17px;background:#263e32;color:white;
+ border-radius:12px;display:none;font-size:12px;z-index:99}
+@media(max-width:1200px){
+ .sidebar{width:175px}
+ .bottom-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .robot-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
 }
-@media(max-width:760px){
-.app{display:block}
-.sidebar{width:100%;height:auto;position:sticky;z-index:20;
-padding:9px;border-bottom:1px solid var(--line)}
-.logo{font-size:16px;padding:5px 8px}
-.logo small{display:none}
-.nav{flex-direction:row;overflow:auto}
-.nav button{white-space:nowrap;padding:9px;font-size:12px}
-.main{padding:13px}
-h1{font-size:23px}
-.hero,.study-grid,.photo-row{grid-template-columns:1fr}
-.week-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-.day{min-height:0}
-.stats{grid-template-columns:1fr 1fr}
-.photo{min-height:200px}
-.robot-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
-.robot img{height:85px}
+@media(max-width:800px){
+ .app{display:block}
+ .sidebar{position:sticky;top:0;z-index:20;width:100%;
+ height:auto;padding:9px 12px;border-bottom:1px solid var(--border)}
+ .brand{margin-bottom:7px;font-size:14px}
+ .brand-icon{width:30px;height:30px}
+ .nav{display:flex;gap:4px;overflow-x:auto}
+ .nav button{white-space:nowrap;padding:9px;font-size:11px}
+ .calendar,.side-note{display:none}
+ main{padding:13px}
+ .hero{grid-template-columns:1fr 1fr}
+ .hero-card{min-height:180px}
+ .hero-caption{left:12px;bottom:12px}
+ .hero-caption b{font-size:15px}
+ .hero-caption span{font-size:10px}
+ .goal-grid{grid-template-columns:1fr}
+ .goal-photo{min-height:190px}
 }
-@media(max-width:420px){
-.stats{grid-template-columns:1fr}
-.robot-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media(max-width:550px){
+ .hero{grid-template-columns:1fr}
+ .hero-card{min-height:220px}
+ .robot-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+ .robot-card img{height:80px}
+ .bottom-grid,.course-grid{grid-template-columns:1fr}
+ .bottom-grid>.card{min-height:0}
 }
 </style>
 </head>
 <body>
 <div class="app">
+
 <aside class="sidebar">
-  <div class="logo">ROBOT STUDY
-    <small>2027 Robotics Graduate School</small>
-  </div>
-  <nav class="nav">
-    <button class="active" data-page="home">이번 주 계획</button>
-    <button data-page="courses">과목별 진도</button>
-    <button data-page="reviews">복습 관리</button>
-    <button data-page="history">지난주 기록</button>
-    <button data-page="routine">하루 루틴</button>
-    <button data-page="money">저축</button>
-    <button data-page="backup">데이터 관리</button>
-  </nav>
+ <div class="brand">
+  <span class="brand-icon">▣</span>
+  <span>ROBOT STUDY
+   <small>학습 · 복습 · 생활 관리</small>
+  </span>
+ </div>
+ <nav class="nav">
+  <button class="active" data-page="home">이번 주 계획</button>
+  <button data-page="courses">과목별 진도</button>
+  <button data-page="review">복습 관리</button>
+  <button data-page="history">지난주 기록</button>
+  <button data-page="routine">하루 루틴</button>
+  <button data-page="money">저축 관리</button>
+  <button data-page="backup">백업</button>
+ </nav>
+ <div class="calendar">
+  <h3>2026년 11월</h3>
+  <div id="calendarGrid" class="calendar-grid"></div>
+ </div>
+ <div class="side-note">
+  <b>이번 주 학습 원칙</b>
+  <p>요일별 집중 과목을 고정하고 강의 진도와 복습을 따로 기록해.</p>
+  <p>LU 분해·C언어 포인터는 이해한 다음 다음 진도로 넘어가기.</p>
+ </div>
 </aside>
 
-<main class="main">
+<main>
 
-<section id="home" class="page active">
-  <h1>로봇 공부 대시보드</h1>
-  <div class="sub">
-    2026.11.02 ~ 11.08 · 수요일 휴식 · 일요일 복습
+<section class="page active" id="home">
+ <h1>로봇 공부 대시보드</h1>
+ <div class="sub">2026년 11월 2일~8일 · 새 강의 최대 31강</div>
+
+ <div class="grid hero">
+  <div class="hero-card">
+   <img alt="현대적인 건축물"
+    src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&q=85">
+   <div class="hero-caption">
+    <b>DAECHI ROBOTICS ACADEMY</b>
+    <span>미래의 로봇 연구·교육 공간</span>
+   </div>
   </div>
-
-  <div class="grid hero sectiongap">
-    <div class="photo">
-      <img loading="lazy"
-        src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1100&q=85"
-        alt="대형 건축물">
-      <div class="caption">DAECHI ROBOTICS ACADEMY
-        <small>로봇 연구 · 교육 · 실습 공간</small>
-      </div>
-    </div>
-    <div class="photo">
-      <img loading="lazy"
-        src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=900&q=85"
-        alt="넓은 주거 공간">
-      <div class="caption">미래의 생활 공간
-        <small>한강뷰 주거 목표 · 가사 자동화</small>
-      </div>
-    </div>
+  <div class="hero-card">
+   <img alt="넓고 밝은 고급 주거 공간"
+    src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1000&q=85">
+   <div class="hero-caption">
+    <b>FUTURE HOME</b>
+    <span>한강뷰 주거 목표 · 생활 자동화</span>
+   </div>
   </div>
+ </div>
 
-  <h2>로봇 프로젝트 목표</h2>
-  <div class="grid robot-grid">
-    <div class="card robot">
-      <img src="https://images.unsplash.com/photo-1556911220-bff31c812dba?w=400&q=80" alt="주방">
-      <strong>요리 로봇</strong>
-    </div>
-    <div class="card robot">
-      <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=400&q=80" alt="매장">
-      <strong>매장 관리 로봇</strong>
-    </div>
-    <div class="card robot">
-      <img src="https://images.unsplash.com/photo-1566576912321-d58ddd7a6088?w=400&q=80" alt="물류">
-      <strong>배송·물류 로봇</strong>
-    </div>
-    <div class="card robot">
-      <img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=400&q=80" alt="로봇">
-      <strong>사족보행 로봇</strong>
-    </div>
-    <div class="card robot">
-      <img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=400&q=80" alt="청소">
-      <strong>가사 보조 로봇</strong>
-    </div>
-    <div class="card robot">
-      <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?w=400&q=80" alt="교육">
-      <strong>로봇 교육</strong>
-    </div>
+ <div class="heading-row">
+  <h2>미래 로봇 프로젝트</h2>
+  <span class="pill">Robotics & Physical AI</span>
+ </div>
+ <div class="grid robot-grid">
+  <div class="robot-card">
+   <img alt="주방"
+    src="https://images.unsplash.com/photo-1556911220-bff31c812dba?w=450&q=80">
+   <b>요리 로봇</b>
   </div>
-
-  <h2>이번 주 학습 계획 <span class="pill" id="weekCount">0개 완료</span></h2>
-  <div class="info">
-    강의 시청 체크와 복습 완료 체크는 별개야.
-    선형대수 14강은 GPT 예습 후 재수강하고,
-    C언어는 포인터 보완을 우선 진행해.
+  <div class="robot-card">
+   <img alt="매장"
+    src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=450&q=80">
+   <b>매장 관리</b>
   </div>
-  <div id="weekGrid" class="week-grid sectiongap"></div>
-
-  <h2>학습 및 생활 현황</h2>
-  <div class="grid stats">
-    <div class="card">
-      <h3>과목별 진도</h3>
-      <div id="miniProgress"></div>
-      <button class="action secondary"
-        onclick="go('courses')">상세 진도 보기</button>
-    </div>
-    <div class="card">
-      <h3>전세자금 모으기</h3>
-      <div class="big" id="moneySummary">2,670만 원</div>
-      <div class="small">목표 4,000만 원</div>
-      <div class="bar sectiongap">
-        <div class="fill" id="moneyFill"></div>
-      </div>
-      <p class="small" id="moneyRemaining"></p>
-      <button class="action secondary"
-        onclick="go('money')">저축 관리</button>
-    </div>
-    <div class="card">
-      <h3>오늘의 하루 루틴</h3>
-      <div class="big" id="routineSummary">0/0</div>
-      <div class="small">오늘 완료한 루틴</div>
-      <div class="action-row">
-        <button class="action secondary"
-          onclick="go('routine')">루틴 기록</button>
-      </div>
-    </div>
-    <div class="card">
-      <h3>빠른 이동</h3>
-      <div class="action-row">
-        <button class="action secondary"
-          onclick="go('reviews')">복습 목록</button>
-        <button class="action secondary"
-          onclick="go('courses')">진도 현황</button>
-        <button class="action secondary"
-          onclick="go('history')">지난주</button>
-        <button class="action secondary"
-          onclick="go('backup')">백업</button>
-      </div>
-    </div>
+  <div class="robot-card">
+   <img alt="물류"
+    src="https://images.unsplash.com/photo-1566576912321-d58ddd7a6088?w=450&q=80">
+   <b>배달·물류</b>
   </div>
-
-  <div class="grid photo-row sectiongap">
-    <div class="photo">
-      <img loading="lazy"
-        src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=700&q=80"
-        alt="넓은 거실">
-      <div class="caption">주거 목표</div>
-    </div>
-    <div class="photo">
-      <img loading="lazy"
-        src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=700&q=80"
-        alt="로봇">
-      <div class="caption">로봇 개발</div>
-    </div>
-    <div class="photo">
-      <img loading="lazy"
-        src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=700&q=80"
-        alt="교육 시설">
-      <div class="caption">로봇 아카데미</div>
-    </div>
+  <div class="robot-card">
+   <img alt="로봇 기술"
+    src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=450&q=80">
+   <b>사족보행</b>
   </div>
-  <p class="small">상단 이미지는 목표를 나타내는 참고 사진이며, 실제 로봇 학원·제품 사진과 일치하지 않을 수 있어.</p>
-</section>
-
-<section id="courses" class="page">
-  <h1>과목별 진도 관리</h1>
-  <p class="sub">지난주 확인된 시청 기록을 기준으로 표시해.
-  강의 시청과 개념 이해·복습 완료는 서로 다른 상태야.</p>
-  <div id="courseGrid" class="grid study-grid"></div>
-  <div class="info sectiongap">
-    선형대수 15강을 체크했더라도 14강 LU 분해는
-    이해 보완이 필요해. C언어도 36강까지 시청한
-    기록과 별도로 포인터 복습이 필요해.
+  <div class="robot-card">
+   <img alt="가사 보조"
+    src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=450&q=80">
+   <b>가사 보조</b>
   </div>
-</section>
+  <div class="robot-card">
+   <img alt="교육"
+    src="https://images.unsplash.com/photo-1531482615713-2afd69097998?w=450&q=80">
+   <b>로봇 교육</b>
+  </div>
+ </div>
 
-<section id="reviews" class="page">
-  <h1>복습 관리</h1>
-  <p class="sub">강의 시청과 별개로 저장돼.
-  복습시험 응시와 오답 확인까지 마친 뒤 체크해.</p>
+ <div class="heading-row">
+  <h2>11월 2일~8일 주간 학습</h2>
+  <span id="weekStatus" class="pill">0/0 완료</span>
+ </div>
+ <div class="note" style="margin-bottom:12px">
+  강의 시청과 복습 완료는 서로 다른 항목으로 저장돼.
+  선형대수 14강은 예습 후 재수강하고,
+  C언어는 포인터 이해를 우선 보완해.
+ </div>
+ <div class="week-scroll">
+  <div id="weekGrid" class="week-grid"></div>
+ </div>
+
+ <h2>학습 및 생활 현황</h2>
+ <div class="grid bottom-grid">
   <div class="card">
-    <h3>집중 보완</h3>
-    <div id="blockerList"></div>
+   <h3>과목별 진도</h3>
+   <div id="miniProgress"></div>
+   <button class="btn light" onclick="go('courses')">
+    전체 진도 보기
+   </button>
   </div>
-  <div class="card sectiongap">
-    <h3>이번 주 강의별 복습</h3>
-    <div id="reviewList"></div>
+  <div class="card">
+   <h3>전세자금 모으기</h3>
+   <div class="amount" id="homeMoney"></div>
+   <p class="sub">목표 4,000만 원</p>
+   <div class="track"><div id="homeMoneyBar"></div></div>
+   <p id="homeRemain" class="sub"></p>
+   <button class="btn light" onclick="go('money')">
+    저축 기록
+   </button>
   </div>
+  <div class="card">
+   <h3>오늘의 하루 루틴</h3>
+   <div class="amount" id="routineCount">0/0</div>
+   <p class="sub">오늘 완료한 루틴</p>
+   <button class="btn light" onclick="go('routine')">
+    루틴 기록하기
+   </button>
+  </div>
+  <div class="card">
+   <h3>빠른 이동</h3>
+   <div class="quick-grid">
+    <button onclick="go('review')">복습 목록</button>
+    <button onclick="go('courses')">진도 관리</button>
+    <button onclick="go('history')">지난주</button>
+    <button onclick="go('backup')">백업</button>
+   </div>
+  </div>
+ </div>
+
+ <div class="grid goal-grid">
+  <div class="goal-photo">
+   <img alt="고급 주거 공간"
+    src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=850&q=80">
+   <span>미래의 주거 공간</span>
+  </div>
+  <div class="goal-photo">
+   <img alt="로봇 기술"
+    src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=850&q=80">
+   <span>생활을 돕는 로봇</span>
+  </div>
+  <div class="goal-photo">
+   <img alt="교육 시설"
+    src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=850&q=80">
+   <span>대치 로봇 아카데미</span>
+  </div>
+ </div>
+ <p class="sub">사진은 목표를 표현하는 참고 이미지이며,
+ 실제 로봇 제품이나 학원 사진은 아니야.</p>
 </section>
 
-<section id="history" class="page">
-  <h1>지난주 기록</h1>
-  <p class="sub">2026.10.26 ~ 11.01</p>
-  <div class="card">
-    <h3>지난주 확인된 내용</h3>
-    <p>강의 계획 26개 중 19개 체크 기록이 있었지만,
-    복습을 전부 완료한 것은 아니야.</p>
-    <div class="status">선형대수: 15강까지 체크, 14강 LU 분해 보완</div>
-    <div class="status">고등대수: 30강까지 체크</div>
-    <div class="status">미적분 기초: 9강까지 체크</div>
-    <div class="status">고등물리: 9강까지 체크</div>
-    <div class="status">아두이노: 10강까지 체크</div>
-    <div class="status">C언어: 36강까지 체크, 포인터 보완</div>
-    <div class="status">Python: 22강까지 체크</div>
-    <p class="small">
-      위 기록은 대화에서 확인한 요약이야.
-      예전 HTML에 저장된 개별 체크박스 데이터는
-      삭제하지 않지만, 여기서 자동으로 완료 처리하지는 않아.
-    </p>
-  </div>
+<section class="page" id="courses">
+ <h1>과목별 진도</h1>
+ <p class="sub">최근 확인된 강의 시청 기록을 기준으로 표시해.
+  복습과 개념 이해는 별도로 관리해.</p>
+ <div id="courseGrid" class="grid course-grid"></div>
 </section>
 
-<section id="routine" class="page">
-  <h1>하루 루틴</h1>
-  <p class="sub">날짜별로 저장되는 체크리스트</p>
-  <div class="card">
-    <h3 id="routineDate"></h3>
-    <div id="routineList"></div>
-    <h3 class="sectiongap">물 섭취</h3>
-    <div class="big"><span id="waterVal">0</span> mL</div>
-    <div class="action-row">
-      <button class="action" onclick="addWater(200)">+200 mL</button>
-      <button class="action secondary"
-        onclick="addWater(-200)">-200 mL</button>
-    </div>
-    <p class="small">목표 1,800mL</p>
-    <h3 class="sectiongap">오늘 기록</h3>
-    <textarea id="dailyNote"
-      placeholder="공부시간, 이해한 내용, 남은 과제 등을 기록"></textarea>
-  </div>
+<section class="page" id="review">
+ <h1>복습 관리</h1>
+ <p class="sub">강의 시청만으로 복습 완료 처리하지 않아.
+  복습시험과 오답 확인까지 끝나면 체크해.</p>
+ <div class="card">
+  <h3>집중 보완 과제</h3>
+  <div id="blockers"></div>
+ </div>
+ <div class="card" style="margin-top:13px">
+  <h3>이번 주 강의별 복습</h3>
+  <div id="reviews"></div>
+ </div>
 </section>
 
-<section id="money" class="page">
-  <h1>전세자금 관리</h1>
-  <div class="card">
-    <div class="small">목표 금액</div>
-    <div class="big">40,000,000원</div>
-    <div class="small">현재 저축액</div>
-    <div class="big" id="savingNow"></div>
-    <div class="bar">
-      <div class="fill" id="savingFill"></div>
-    </div>
-    <p id="savingText" class="small"></p>
-    <h3 class="sectiongap">저축 금액 수정</h3>
-    <input id="savingInput" type="number"
-      min="0" step="10000">
-    <button class="action" onclick="saveMoney()">저장</button>
-    <p class="small">단위: 원</p>
-  </div>
+<section class="page" id="history">
+ <h1>지난주 기록</h1>
+ <p class="sub">2026년 10월 26일~11월 1일</p>
+ <div class="card">
+  <h3>확인된 학습 현황</h3>
+  <p class="sub">지난주 계획 26개 중 19개가 체크됐지만,
+   복습을 모두 마친 것은 아니야.</p>
+  <div id="historyRows"></div>
+  <p class="sub">이전 홈페이지에 저장된 개별 체크 기록은
+   삭제하지 않아. 단, 이 화면은 대화에서 확인한
+   진도 요약이며 이전 데이터와 자동 동기화되지는 않아.</p>
+ </div>
 </section>
 
-<section id="backup" class="page">
-  <h1>데이터 백업·복원</h1>
-  <div class="card">
-    <h3>학습 및 생활 데이터</h3>
-    <p class="sub">이번 버전의 체크 기록을 JSON 파일로
-    저장하거나 다시 불러올 수 있어.</p>
-    <div class="action-row">
-      <button class="action"
-        onclick="exportData()">JSON 내보내기</button>
-      <label class="action secondary">
-        JSON 불러오기
-        <input type="file" accept=".json,application/json"
-          onchange="importData(event)" hidden>
-      </label>
-    </div>
-    <p class="small">
-      이전 대시보드의 저장소 키는 삭제하거나 초기화하지 않아.
-      다만 이전 버전의 체크 ID가 달라 자동 병합되지 않을 수 있어.
-      GitHub Pages의 로컬 저장 데이터는 기기별로 별도 관리돼.
-    </p>
+<section class="page" id="routine">
+ <h1>하루 루틴</h1>
+ <p class="sub">날짜별로 저장되는 생활 기록</p>
+ <div class="card">
+  <h3 id="todayLabel"></h3>
+  <div id="routineList"></div>
+  <h2>물 섭취</h2>
+  <div class="amount"><span id="waterCount">0</span>mL</div>
+  <div class="btn-row">
+   <button class="btn" onclick="water(200)">+200mL</button>
+   <button class="btn light" onclick="water(-200)">-200mL</button>
   </div>
+  <p class="sub">하루 목표 1,800mL</p>
+  <h2>오늘의 기록</h2>
+  <textarea id="dailyMemo"
+   placeholder="공부시간, 배운 내용, 오답, 운동, 식사 등을 기록"></textarea>
+ </div>
+</section>
+
+<section class="page" id="money">
+ <h1>전세자금 관리</h1>
+ <div class="card">
+  <p class="sub">저축 목표</p>
+  <div class="amount">40,000,000원</div>
+  <p class="sub">현재 저축액</p>
+  <div class="amount" id="moneyValue"></div>
+  <div class="track"><div id="moneyBar"></div></div>
+  <p class="sub" id="moneyInfo"></p>
+  <h2>저축액 변경</h2>
+  <input id="moneyInput" type="number" min="0" step="10000">
+  <button class="btn" onclick="saveMoney()">저장</button>
+  <p class="sub">입력 단위는 원이야.</p>
+ </div>
+</section>
+
+<section class="page" id="backup">
+ <h1>데이터 백업</h1>
+ <div class="card">
+  <h3>공부 및 생활 기록</h3>
+  <p class="sub">이번 대시보드의 체크 상태와 기록을
+   JSON으로 저장하고 다시 불러올 수 있어.</p>
+  <div class="btn-row">
+   <button class="btn" onclick="exportData()">
+    JSON 내보내기
+   </button>
+   <label class="btn light" style="cursor:pointer">
+    JSON 불러오기
+    <input hidden type="file" accept=".json"
+     onchange="importData(event)">
+   </label>
+  </div>
+  <p class="sub">기존 홈페이지에 저장된 데이터는 삭제하지 않지만
+   새로운 저장 형식과 자동 병합하지는 않아.
+   같은 주소에서 열어도 기기 간 기록이 자동 동기화되지는 않아.</p>
+ </div>
 </section>
 
 </main>
@@ -407,357 +444,396 @@ h1{font-size:23px}
 <script>
 "use strict";
 
-// 이 버전은 자체 저장소를 사용하고,
-// 이전 대시보드의 localStorage를 삭제하지 않습니다.
-const KEY="robot-study-week-20261102-v1";
-const TARGET=40000000;
+const KEY="robot-study-november-2026-v1";
+const MONEY_GOAL=40000000;
 
 const subjects=[
- {id:"la",name:"선형대수",start:15,total:65,
-  note:"14강 LU 분해: GPT 예습 → 강의 재수강 → 실습"},
- {id:"alg",name:"고등대수",start:30,total:null,
-  note:"31강부터 진행, 복습 별도"},
- {id:"calc",name:"미적분 기초",start:9,total:47,
-  note:"10강부터 진행"},
- {id:"phy",name:"고등물리",start:9,total:22,
-  note:"10강부터 진행"},
- {id:"ard",name:"아두이노",start:10,total:28,
-  note:"11강부터 진행, 코드 복습 별도"},
- {id:"c",name:"C언어",start:36,total:null,
-  note:"RAM·포인터·이중 포인터·change() 보완"},
- {id:"py",name:"Python",start:22,total:null,
-  note:"23강부터 진행, 수강 직후 복습"}
+ {id:"la",name:"선형대수",base:15,total:65,
+ note:"14강 LU 분해 이해 보완 · 예습 후 재수강"},
+ {id:"alg",name:"고등대수",base:30,total:null,
+ note:"31강부터 진도 · 이전 복습 확인"},
+ {id:"calc",name:"미적분 기초",base:9,total:47,
+ note:"10강부터 진도"},
+ {id:"phy",name:"고등물리",base:9,total:22,
+ note:"10강부터 진도"},
+ {id:"ard",name:"아두이노",base:10,total:28,
+ note:"11강부터 진도 · 실습 코드 복습"},
+ {id:"c",name:"C언어",base:36,total:null,
+ note:"RAM, 포인터, 이중 포인터, change() 함수 보완"},
+ {id:"py",name:"Python",base:22,total:null,
+ note:"23강부터 진도 · 강의 직후 복습"}
 ];
 
 const plan=[
  {date:"11/2",day:"월",tasks:[
-  ["la14","선형대수 14강 LU 분해 재학습","보완","la",14],
-  ["py23","Python 23강","강의","py",23],
-  ["py24","Python 24강","강의","py",24],
-  ["ram","C언어 RAM·메모리","보완","c",null]
+  ["la14","선형대수 14강 LU 분해 재수강","재학습","la",14],
+  ["py23","Python 23강","새 강의","py",23],
+  ["py24","Python 24강","새 강의","py",24],
+  ["py25","Python 25강","새 강의","py",25],
+  ["py26","Python 26강","새 강의","py",26],
+  ["ram","C언어 RAM 복습","보완","c",null]
  ]},
  {date:"11/3",day:"화",tasks:[
-  ["alg31","고등대수 31강","강의","alg",31],
-  ["calc10","미적분 10강","강의","calc",10],
-  ["py25","Python 25강","강의","py",25],
-  ["py26","Python 26강","강의","py",26],
-  ["ptr","C언어 포인터·주소 연산","보완","c",null]
+  ["alg31","고등대수 31강","새 강의","alg",31],
+  ["alg32","고등대수 32강","새 강의","alg",32],
+  ["calc10","미적분 10강","새 강의","calc",10],
+  ["py27","Python 27강","새 강의","py",27],
+  ["py28","Python 28강","새 강의","py",28],
+  ["py29","Python 29강","새 강의","py",29],
+  ["pointer","C언어 포인터 복습","보완","c",null]
  ]},
  {date:"11/4",day:"수",tasks:[]},
  {date:"11/5",day:"목",tasks:[
-  ["phy10","고등물리 10강","강의","phy",10],
-  ["ard11","아두이노 11강","강의","ard",11],
-  ["py27","Python 27강","강의","py",27],
-  ["py28","Python 28강","강의","py",28],
-  ["dptr","C언어 이중 포인터","보완","c",null]
+  ["phy10","고등물리 10강","새 강의","phy",10],
+  ["phy11","고등물리 11강","새 강의","phy",11],
+  ["ard11","아두이노 11강","새 강의","ard",11],
+  ["ard12","아두이노 12강","새 강의","ard",12],
+  ["py30","Python 30강","새 강의","py",30],
+  ["py31","Python 31강","새 강의","py",31],
+  ["py32","Python 32강","새 강의","py",32],
+  ["double","C언어 이중 포인터 실습","보완","c",null]
  ]},
  {date:"11/6",day:"금",tasks:[
-  ["calc11","미적분 11강","강의","calc",11],
-  ["py29","Python 29강","강의","py",29],
-  ["py30","Python 30강","강의","py",30],
-  ["change","C언어 change() 함수","보완","c",null],
-  ["la16","선형대수 16강 (조건부)","선택","la",16]
+  ["la16","선형대수 16강 (LU 이해 후)","조건부","la",16],
+  ["calc11","미적분 11강","새 강의","calc",11],
+  ["calc12","미적분 12강","새 강의","calc",12],
+  ["py33","Python 33강","새 강의","py",33],
+  ["py34","Python 34강","새 강의","py",34],
+  ["py35","Python 35강","새 강의","py",35],
+  ["change","C언어 change() 함수","보완","c",null]
  ]},
  {date:"11/7",day:"토",tasks:[
-  ["alg32","고등대수 32강","강의","alg",32],
-  ["phy11","고등물리 11강","강의","phy",11],
-  ["ard12","아두이노 12강","강의","ard",12],
-  ["ctest","포인터 코드 재시험","복습","c",null]
+  ["alg33","고등대수 33강","새 강의","alg",33],
+  ["alg34","고등대수 34강","새 강의","alg",34],
+  ["phy12","고등물리 12강","새 강의","phy",12],
+  ["ard13","아두이노 13강","새 강의","ard",13],
+  ["ard14","아두이노 14강","새 강의","ard",14],
+  ["py36","Python 36강","새 강의","py",36],
+  ["py37","Python 37강","새 강의","py",37],
+  ["py38","Python 38강","새 강의","py",38],
+  ["ctest","C언어 포인터 코드 재시험","복습","c",null]
  ]},
  {date:"11/8",day:"일",tasks:[
-  ["mathrev","수학 과목 오답 복습","복습",null,null],
-  ["coderev","C·Python 누적 복습","복습",null,null],
+  ["mathrev","수학 누적 복습·오답","복습",null,null],
+  ["coderev","C언어·Python 복습","복습",null,null],
   ["robotrev","물리·아두이노 복습","복습",null,null]
  ]}
 ];
 
 const blockers=[
  ["b_lu","선형대수 14강 LU 분해 이해 확인"],
- ["b_ram","C언어 RAM 필요성 설명"],
- ["b_pointer","포인터·주소·역참조 코드"],
- ["b_double","이중 포인터 실습"],
+ ["b_ram","C언어 RAM과 메모리 역할"],
+ ["b_pointer","포인터·주소·역참조"],
+ ["b_double","이중 포인터 ** 실습"],
  ["b_change","change() 함수 코드 분석"],
- ["b_ctest","포인터 코드 재시험·오답 정리"]
+ ["b_test","포인터 코드 재시험 및 오답 정리"]
 ];
 
-const routineTasks=[
- ["wake","기상·수면 일정"],
+const routineItems=[
+ ["wake","기상·수면 기록"],
  ["study","오늘의 공부 진행"],
  ["exercise","유산소 또는 근력운동"],
- ["protein","단백질 식사 챙기기"],
- ["vegetables","채소·식이섬유 챙기기"],
- ["supplements","영양제 체크"],
- ["review","오늘 배운 내용 정리"]
+ ["protein","단백질 식사"],
+ ["vegetable","채소·식이섬유"],
+ ["supplement","영양제 체크"],
+ ["review","오늘 공부한 내용 정리"]
 ];
 
+function initial(){
+ return {
+  study:{},reviews:{},blockers:{},
+  routines:{},money:26700000
+ };
+}
 function load(){
  try{
-  const obj=JSON.parse(localStorage.getItem(KEY)||"{}");
-  return obj && typeof obj==="object" ? obj : {};
- }catch(e){return {}}
+  const x=JSON.parse(localStorage.getItem(KEY)||"null");
+  return x&&typeof x==="object"?x:initial();
+ }catch(e){return initial()}
 }
-let data=load();
-data.study=data.study||{};
-data.review=data.review||{};
-data.blockers=data.blockers||{};
-data.routines=data.routines||{};
-if(typeof data.saving!=="number")data.saving=26700000;
+let db=load();
+db.study=db.study||{};
+db.reviews=db.reviews||{};
+db.blockers=db.blockers||{};
+db.routines=db.routines||{};
+if(typeof db.money!=="number")db.money=26700000;
 
-function persist(){
- try{localStorage.setItem(KEY,JSON.stringify(data))}
- catch(e){alert("저장 공간을 확인해 주세요.")}
+function store(){
+ try{localStorage.setItem(KEY,JSON.stringify(db))}
+ catch(e){alert("브라우저 저장 공간을 확인해 줘.")}
 }
-
-function text(el,val){
- document.getElementById(el).textContent=val;
+function el(id){return document.getElementById(id)}
+function setText(id,value){el(id).textContent=value}
+function isDone(type,id){return !!db[type][id]}
+function setDone(type,id,value){
+ db[type][id]=value;
+ store();
+ refreshSummary();
+ if(type==="study"){
+  renderCourses();
+  renderReviews();
+ }
 }
-function checked(group,key){
- return !!(data[group]&&data[group][key]);
-}
-function toggle(group,key,value){
- data[group][key]=value;
- persist();
- renderSummaries();
- if(group==="study")renderCourses();
- if(group==="study"||group==="review")renderReviews();
-}
-function taskElement(key,label,kind,group){
- const div=document.createElement("div");
- div.className=group==="study"?"task":"review-item";
+function checkbox(id,label,type,kind){
+ const row=document.createElement("div");
+ row.className=type==="study"?"task":"review-item";
  const cb=document.createElement("input");
  cb.type="checkbox";
- cb.id=group+"_"+key;
- cb.checked=checked(group,key);
- const lbl=document.createElement("label");
- lbl.htmlFor=cb.id;
- if(group==="study"){
-  const tag=document.createElement("span");
-  tag.className="kind";
-  tag.textContent=kind;
-  lbl.append(tag);
+ cb.id=type+"_"+id;
+ cb.checked=isDone(type,id);
+ const txt=document.createElement("label");
+ txt.htmlFor=cb.id;
+ if(kind){
+  const k=document.createElement("em");
+  k.textContent=kind;
+  txt.append(k);
  }
- lbl.append(document.createTextNode(label));
+ txt.append(document.createTextNode(label));
  cb.addEventListener("change",()=>{
-  toggle(group,key,cb.checked);
+  setDone(type,id,cb.checked);
  });
- div.append(cb,lbl);
- return div;
+ row.append(cb,txt);
+ return row;
 }
-
-function renderWeek(){
- const grid=document.getElementById("weekGrid");
- grid.replaceChildren();
- plan.forEach(d=>{
-  const card=document.createElement("div");
-  card.className="card day"+(!d.tasks.length?" rest":"");
-  const title=document.createElement("h3");
-  title.textContent=d.day+"요일";
-  const date=document.createElement("div");
-  date.className="date";
-  date.textContent=d.date;
-  card.append(title,date);
-  if(!d.tasks.length){
-   const p=document.createElement("p");
-   p.className="small";
-   p.textContent="완전 휴식";
-   card.append(p);
+function renderCalendar(){
+ const box=el("calendarGrid");
+ box.replaceChildren();
+ ["일","월","화","수","목","금","토"].forEach(d=>{
+  const s=document.createElement("span");
+  s.className="weekday";s.textContent=d;box.append(s);
+ });
+ // 2026-11-01은 일요일
+ for(let d=1;d<=30;d++){
+  const s=document.createElement("span");
+  s.textContent=d;
+  if(d>=2&&d<=8)s.className="week-date";
+  if(new Date().getFullYear()===2026 &&
+    new Date().getMonth()===10 &&
+    new Date().getDate()===d){
+   s.className="current";
   }
-  d.tasks.forEach(t=>{
-   card.append(taskElement(t[0],t[1],t[2],"study"));
+  box.append(s);
+ }
+}
+function renderWeek(){
+ const grid=el("weekGrid");
+ grid.replaceChildren();
+ plan.forEach(day=>{
+  const card=document.createElement("div");
+  card.className="card day";
+  const head=document.createElement("div");
+  head.className="day-head";
+  const name=document.createElement("b");
+  name.textContent=day.date+" "+day.day;
+  const tag=document.createElement("small");
+  tag.textContent=day.tasks.length?day.tasks.length+"개 과제":"휴식";
+  head.append(name,tag);card.append(head);
+  if(!day.tasks.length){
+   const rest=document.createElement("p");
+   rest.className="sub";
+   rest.textContent="완전 휴식";
+   card.append(rest);
+  }
+  day.tasks.forEach(t=>{
+   card.append(checkbox(t[0],t[1],"study",t[2]));
   });
+  const done=document.createElement("div");
+  done.className="day-count";
+  done.id="day_"+day.date.replace("/","");
+  card.append(done);
   grid.append(card);
  });
 }
 
-function lecturesOf(id){
- const records=[];
- plan.forEach(d=>d.tasks.forEach(t=>{
-  if(t[3]===id && t[4]!==null &&
-    t[2]!=="선택" && checked("study",t[0])){
-   records.push(t[4]);
+function watched(s){
+ let highest=s.base;
+ plan.forEach(day=>day.tasks.forEach(t=>{
+  if(t[3]===s.id && Number.isInteger(t[4]) &&
+     t[2]!=="조건부" && isDone("study",t[0])){
+   highest=Math.max(highest,t[4]);
+  }
+  if(t[3]===s.id && t[2]==="조건부" &&
+     isDone("study",t[0])){
+   highest=Math.max(highest,t[4]);
   }
  }));
- return records;
+ return highest;
 }
-function currentProgress(s){
- const nums=lecturesOf(s.id);
- return Math.max(s.start,...nums);
-}
-function renderCourses(){
- const grid=document.getElementById("courseGrid");
- const mini=document.getElementById("miniProgress");
- grid.replaceChildren();
- mini.replaceChildren();
- subjects.forEach(s=>{
-  const n=currentProgress(s);
-  const card=document.createElement("div");
-  card.className="card study-card";
-  const h=document.createElement("h3");
-  h.textContent=s.name;
-  const big=document.createElement("div");
-  big.className="big";
-  big.textContent=n+"강 시청 기록";
-  const status=document.createElement("div");
-  status.className="status";
-  status.textContent=s.note;
-  const p=document.createElement("p");
-  p.className="small";
-  p.textContent="최고 시청 강의 번호 기준이며, "+
-    "중간 미완료 강의와 복습 완료를 뜻하지는 않아.";
-  card.append(h,big,status,p);
-  grid.append(card);
 
-  const row=document.createElement("div");
-  row.className="progress-row";
-  const head=document.createElement("div");
-  head.className="prog-head";
+function renderCourses(){
+ const box=el("courseGrid");
+ const mini=el("miniProgress");
+ box.replaceChildren();mini.replaceChildren();
+ subjects.forEach(s=>{
+  const value=watched(s);
+  const c=document.createElement("div");
+  c.className="card";
+  const title=document.createElement("h3");
+  title.textContent=s.name;
+  const number=document.createElement("div");
+  number.className="course-number";
+  number.textContent=value+"강 시청 기록";
+  const note=document.createElement("div");
+  note.className="note";note.textContent=s.note;
+  const desc=document.createElement("p");
+  desc.className="sub";
+  desc.textContent="최고 시청 강의 번호를 표시해. "+
+   "중간에 남은 강의나 미완료 복습은 별도 관리해.";
+  c.append(title,number,note,desc);
+  box.append(c);
+
+  const p=document.createElement("div");
+  p.className="progress-line";
+  const top=document.createElement("div");
   const a=document.createElement("span");
   a.textContent=s.name;
-  const b=document.createElement("span");
-  b.textContent=n+"강";
-  head.append(a,b);
-  const bar=document.createElement("div");
-  bar.className="bar";
+  const b=document.createElement("small");
+  b.textContent=value+"강";
+  top.append(a,b);
+  const track=document.createElement("div");
+  track.className="track";
   const fill=document.createElement("div");
-  fill.className="fill";
-  // 전체 강의 수가 알려진 과목만 비율 표시
   fill.style.width=s.total?
-    Math.min(100,n/s.total*100)+"%":"0%";
-  bar.append(fill);
-  row.append(head,bar);
-  mini.append(row);
+   Math.min(100,value/s.total*100)+"%":"0%";
+  track.append(fill);p.append(top,track);
+  mini.append(p);
  });
 }
 
 function renderReviews(){
- const box=document.getElementById("blockerList");
- const list=document.getElementById("reviewList");
- box.replaceChildren();
- list.replaceChildren();
-
- blockers.forEach(b=>{
-  box.append(taskElement(b[0],b[1],"","blockers"));
+ const bs=el("blockers");
+ const rs=el("reviews");
+ bs.replaceChildren();rs.replaceChildren();
+ blockers.forEach(x=>{
+  bs.append(checkbox(x[0],x[1],"blockers",""));
  });
-
- plan.forEach(d=>{
-  if(!d.tasks.length)return;
+ const pending=[];
+ plan.forEach(day=>{
+  const lectureTasks=day.tasks.filter(t=>t[4]!==null);
+  if(!lectureTasks.length)return;
   const heading=document.createElement("h3");
-  heading.style.marginTop="17px";
-  heading.textContent=d.date+" "+d.day+"요일";
-  list.append(heading);
-  d.tasks.forEach(t=>{
-   if(t[4]!==null){
-    list.append(taskElement(
-      t[0],t[1]+" · 복습시험 및 오답","","review"
-    ));
+  heading.style.marginTop="18px";
+  heading.textContent=day.date+" "+day.day+"요일";
+  rs.append(heading);
+  lectureTasks.forEach(t=>{
+   rs.append(checkbox(t[0],
+    t[1]+" · 복습시험 및 오답 정리","reviews",""));
+   if(isDone("study",t[0])&&!isDone("reviews",t[0])){
+    pending.push(t[1]);
    }
   });
  });
+ const notice=document.createElement("div");
+ notice.className="note";
+ notice.textContent=pending.length?
+  "강의 시청 후 복습 대기: "+pending.join(", "):
+  "현재 시청 완료로 체크한 강의 중 복습 대기 항목 없음";
+ rs.prepend(notice);
+}
 
- const pending=[];
- plan.forEach(d=>d.tasks.forEach(t=>{
-  if(t[4]!==null&&checked("study",t[0])&&
-     !checked("review",t[0])){
-    pending.push(t[1]);
+function refreshSummary(){
+ const tasks=plan.flatMap(d=>d.tasks);
+ const count=tasks.filter(t=>isDone("study",t[0])).length;
+ setText("weekStatus",count+"/"+tasks.length+"개 과제 완료");
+ plan.forEach(day=>{
+  const id="day_"+day.date.replace("/","");
+  if(el(id)){
+   const n=day.tasks.filter(t=>isDone("study",t[0])).length;
+   setText(id,n+"/"+day.tasks.length+"개 완료");
   }
- }));
- const info=document.createElement("div");
- info.className="info";
- info.textContent=pending.length?
-  "시청 후 복습 대기: "+pending.join(", "):
-  "현재 이번 주 시청 체크 중 복습 대기 강의 없음";
- list.prepend(info);
+ });
+ const t=today();
+ const n=routineItems.filter(x=>!!t.checks[x[0]]).length;
+ setText("routineCount",n+"/"+routineItems.length);
 }
-
-function localDate(){
- const now=new Date();
- const y=now.getFullYear();
- const m=String(now.getMonth()+1).padStart(2,"0");
- const d=String(now.getDate()).padStart(2,"0");
- return y+"-"+m+"-"+d;
+function dateKey(){
+ const d=new Date();
+ return d.getFullYear()+"-"+
+  String(d.getMonth()+1).padStart(2,"0")+"-"+
+  String(d.getDate()).padStart(2,"0");
 }
-function todayData(){
- const date=localDate();
- if(!data.routines[date]){
-  data.routines[date]={checks:{},water:0,note:""};
+function today(){
+ const key=dateKey();
+ if(!db.routines[key]){
+  db.routines[key]={checks:{},water:0,memo:""};
  }
- return data.routines[date];
+ return db.routines[key];
 }
 function renderRoutine(){
- const r=todayData();
- text("routineDate",localDate());
- text("waterVal",r.water||0);
- const list=document.getElementById("routineList");
- list.replaceChildren();
- routineTasks.forEach(([key,label])=>{
+ const t=today();
+ setText("todayLabel",dateKey());
+ setText("waterCount",t.water||0);
+ const box=el("routineList");
+ box.replaceChildren();
+ routineItems.forEach(([id,label])=>{
   const row=document.createElement("div");
   row.className="review-item";
-  const cb=document.createElement("input");
-  cb.type="checkbox";
-  cb.checked=!!r.checks[key];
-  const lbl=document.createElement("label");
-  lbl.textContent=label;
-  lbl.style.cursor="pointer";
-  const id="rt_"+key;
-  cb.id=id;lbl.htmlFor=id;
-  cb.onchange=()=>{
-   todayData().checks[key]=cb.checked;
-   persist();renderSummaries();
-  };
-  row.append(cb,lbl);
-  list.append(row);
+  const input=document.createElement("input");
+  input.type="checkbox";
+  input.id="routine_"+id;
+  input.checked=!!t.checks[id];
+  const name=document.createElement("label");
+  name.htmlFor=input.id;name.textContent=label;
+  input.addEventListener("change",()=>{
+   today().checks[id]=input.checked;
+   store();refreshSummary();
+  });
+  row.append(input,name);box.append(row);
  });
- document.getElementById("dailyNote").value=r.note||"";
- renderSummaries();
+ el("dailyMemo").value=t.memo||"";
+ refreshSummary();
 }
-function addWater(delta){
- const r=todayData();
- r.water=Math.max(0,(r.water||0)+delta);
- persist();
- renderRoutine();
+function water(delta){
+ const t=today();
+ t.water=Math.max(0,(t.water||0)+delta);
+ store();renderRoutine();
 }
-document.getElementById("dailyNote").addEventListener(
- "input",e=>{
-  todayData().note=e.target.value;
-  persist();
- }
-);
+el("dailyMemo").addEventListener("input",e=>{
+ today().memo=e.target.value;
+ store();
+});
 
-function formatMoney(value){
- return Number(value).toLocaleString("ko-KR")+"원";
+function moneyFormat(x){
+ return Number(x).toLocaleString("ko-KR")+"원";
 }
 function renderMoney(){
- const n=data.saving;
- text("savingNow",formatMoney(n));
- text("moneySummary",(n/10000).toLocaleString("ko-KR")+"만 원");
- text("savingText","목표까지 "+formatMoney(Math.max(0,TARGET-n))+" 남음");
- text("moneyRemaining",Math.round(n/TARGET*1000)/10+"% 달성");
- document.getElementById("savingInput").value=n;
- document.getElementById("savingFill").style.width=
-  Math.min(100,100*n/TARGET)+"%";
- document.getElementById("moneyFill").style.width=
-  Math.min(100,100*n/TARGET)+"%";
+ const n=db.money;
+ setText("moneyValue",moneyFormat(n));
+ setText("homeMoney",(n/10000).toLocaleString("ko-KR")+"만 원");
+ const remaining=Math.max(0,MONEY_GOAL-n);
+ const pct=Math.min(100,100*n/MONEY_GOAL);
+ setText("homeRemain",moneyFormat(remaining)+" 남음");
+ setText("moneyInfo",pct.toFixed(1)+"% 달성 · "+
+  moneyFormat(remaining)+" 남음");
+ el("homeMoneyBar").style.width=pct+"%";
+ el("moneyBar").style.width=pct+"%";
+ el("moneyInput").value=n;
 }
 function saveMoney(){
- const n=Number(document.getElementById("savingInput").value);
+ const n=Number(el("moneyInput").value);
  if(!Number.isFinite(n)||n<0){
-  alert("0 이상의 금액을 입력해 주세요.");return;
+  alert("올바른 금액을 입력해 줘.");return;
  }
- data.saving=n;
- persist();
- renderMoney();
+ db.money=n;store();renderMoney();
  toast("저축액 저장 완료");
 }
-
-function renderSummaries(){
- const all=plan.flatMap(d=>d.tasks);
- const count=all.filter(t=>checked("study",t[0])).length;
- text("weekCount",count+"/"+all.length+"개 완료");
- const r=todayData();
- const n=routineTasks.filter(([key])=>!!r.checks[key]).length;
- text("routineSummary",n+"/"+routineTasks.length);
+function renderHistory(){
+ const box=el("historyRows");
+ const rows=[
+  "선형대수: 15강까지 체크, 14강 LU 분해 보완",
+  "고등대수: 30강까지 체크",
+  "미적분 기초: 9강까지 체크",
+  "고등물리: 9강까지 체크",
+  "아두이노: 10강까지 체크",
+  "C언어: 36강까지 체크, 포인터 보완",
+  "Python: 22강까지 체크"
+ ];
+ rows.forEach(line=>{
+  const div=document.createElement("div");
+  div.className="status-row";
+  div.textContent=line;box.append(div);
+ });
 }
-
 function go(id){
  document.querySelectorAll(".page").forEach(p=>{
   p.classList.toggle("active",p.id===id);
@@ -765,27 +841,27 @@ function go(id){
  document.querySelectorAll(".nav button").forEach(b=>{
   b.classList.toggle("active",b.dataset.page===id);
  });
- if(id==="routine")renderRoutine();
  if(id==="courses")renderCourses();
- if(id==="reviews")renderReviews();
+ if(id==="review")renderReviews();
+ if(id==="routine")renderRoutine();
  if(id==="money")renderMoney();
- window.scrollTo({top:0,behavior:"auto"});
+ window.scrollTo(0,0);
 }
 document.querySelectorAll(".nav button").forEach(b=>{
  b.addEventListener("click",()=>go(b.dataset.page));
 });
 
 function exportData(){
- const blob=new Blob([JSON.stringify({
-  format:"robot-study-20261102-v1",
-  exportedAt:new Date().toISOString(),
-  data:data
- },null,2)],{type:"application/json"});
+ const output={
+  format:"robot-study-november-2026-v1",
+  date:new Date().toISOString(),data:db
+ };
+ const blob=new Blob([JSON.stringify(output,null,2)],
+  {type:"application/json"});
  const url=URL.createObjectURL(blob);
  const a=document.createElement("a");
- a.href=url;a.download="robot-study-backup.json";
- document.body.append(a);
- a.click();a.remove();
+ a.href=url;a.download="robot-study-november-backup.json";
+ document.body.append(a);a.click();a.remove();
  setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
 async function importData(event){
@@ -793,35 +869,35 @@ async function importData(event){
  if(!file)return;
  try{
   const raw=JSON.parse(await file.text());
-  if(raw.format!=="robot-study-20261102-v1"||
+  if(raw.format!=="robot-study-november-2026-v1"||
      !raw.data||typeof raw.data!=="object"){
-   throw new Error("이 버전의 백업 파일이 아닙니다.");
+   throw Error("이 버전의 백업 파일이 아닙니다.");
   }
-  if(!confirm("현재 기록을 백업 파일로 교체할까요?"))return;
-  data=raw.data;
-  data.study=data.study||{};
-  data.review=data.review||{};
-  data.blockers=data.blockers||{};
-  data.routines=data.routines||{};
-  if(typeof data.saving!=="number")data.saving=26700000;
-  persist();
-  location.reload();
+  if(!confirm("현재 기록을 백업 내용으로 교체할까요?"))return;
+  db=raw.data;
+  db.study=db.study||{};
+  db.reviews=db.reviews||{};
+  db.blockers=db.blockers||{};
+  db.routines=db.routines||{};
+  if(typeof db.money!=="number")db.money=26700000;
+  store();location.reload();
  }catch(e){alert("불러오기 실패: "+e.message)}
  finally{event.target.value=""}
 }
-
 function toast(msg){
- const e=document.getElementById("toast");
- e.textContent=msg;e.style.display="block";
- setTimeout(()=>{e.style.display="none"},1800);
+ const box=el("toast");
+ box.textContent=msg;box.style.display="block";
+ setTimeout(()=>box.style.display="none",1800);
 }
 
+renderCalendar();
 renderWeek();
 renderCourses();
 renderReviews();
+renderHistory();
 renderRoutine();
 renderMoney();
-renderSummaries();
+refreshSummary();
 </script>
 </body>
 </html>
