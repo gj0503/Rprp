@@ -1,335 +1,827 @@
-from pathlib import Path
-from bs4 import BeautifulSoup
-import json, re, zipfile, subprocess
 
-source = Path('/mnt/data/robot_dashboard_compact_fixed/index.html')
-soup = BeautifulSoup(source.read_text(encoding='utf-8'), 'html.parser')
-current = soup.find(id='w2')
-archive = soup.new_tag('section', attrs={'id':'week1026','class':'week'})
-arch_head = soup.new_tag('h2')
-arch_head.string = '10/26~11/1 지난주 공부 기록'
-archive.append(arch_head)
-note = soup.new_tag('div', attrs={'class':'card road'})
-note.string = '지난주 체크 기록을 보존했어. 강의 시청과 복습·이해 완료는 별개이며, 실제 체크 상태는 이 브라우저에 저장된 기록을 따른다.'
-archive.append(note)
-oldgrid=current.select_one('.week-grid').extract()
-archive.append(oldgrid)
-current.insert_after(archive)
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>로봇 공부 대시보드 | 11월 2~8일</title>
+<style>
+:root{
+  --bg:#f5f4f0;--white:#fff;--ink:#263333;
+  --muted:#788582;--green:#517e71;--line:#e6e9e5;
+  --soft:#edf3ef;--orange:#b67a45;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo",
+"Malgun Gothic",sans-serif}
+button,input,textarea{font:inherit}
+button{cursor:pointer}
+.app{display:flex;min-height:100vh}
+.sidebar{width:220px;flex:none;background:white;
+border-right:1px solid var(--line);padding:24px 14px;
+position:sticky;top:0;height:100vh}
+.logo{font-weight:850;font-size:20px;padding:10px 12px 25px}
+.logo small{display:block;font-size:11px;color:var(--muted);
+font-weight:400;margin-top:5px}
+.nav{display:flex;flex-direction:column;gap:6px}
+.nav button{border:0;background:none;text-align:left;
+padding:13px;border-radius:12px;color:#60716c}
+.nav button.active,.nav button:hover{background:var(--soft);
+color:var(--green);font-weight:750}
+.main{padding:26px;max-width:1600px;width:100%;margin:auto;
+min-width:0}
+.page{display:none}
+.page.active{display:block}
+h1{margin:0 0 7px;font-size:29px}
+h2{font-size:19px;margin:27px 0 14px}
+h3{font-size:15px;margin:0 0 10px}
+.sub{font-size:13px;color:var(--muted);line-height:1.7}
+.card{background:#fff;border:1px solid var(--line);
+border-radius:17px;padding:18px;min-width:0}
+.grid{display:grid;gap:13px}
+.hero{grid-template-columns:1.4fr 1fr}
+.photo{position:relative;min-height:225px;overflow:hidden;
+border-radius:17px;background:#283b38}
+.photo img{width:100%;height:100%;position:absolute;
+inset:0;object-fit:cover}
+.photo:after{content:"";position:absolute;inset:0;
+background:linear-gradient(transparent 30%,rgba(0,0,0,.7))}
+.photo .caption{position:absolute;bottom:19px;left:20px;right:15px;
+z-index:2;color:white;font-size:20px;font-weight:800}
+.photo .caption small{display:block;font-size:12px;
+font-weight:400;margin-top:6px}
+.robot-grid{grid-template-columns:repeat(6,minmax(0,1fr))}
+.robot{overflow:hidden;padding:0}
+.robot img{width:100%;height:110px;object-fit:cover;
+display:block;background:#e5ebe8}
+.robot strong{display:block;font-size:12px;padding:12px}
+.week-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));
+gap:10px;align-items:start}
+.day{padding:13px;min-height:240px}
+.day h3{font-size:14px;margin:0 0 4px}
+.day .date{font-size:11px;color:var(--muted);
+margin-bottom:12px}
+.day.rest{background:#f0f2ee}
+.task{display:flex;gap:7px;align-items:flex-start;
+font-size:12px;line-height:1.5;padding:8px 0;
+border-bottom:1px solid #f0f1ed}
+.task:last-child{border:0}
+.task input{accent-color:var(--green);margin-top:2px;
+flex:none}
+.task label{cursor:pointer;overflow-wrap:anywhere}
+.task input:checked+label{text-decoration:line-through;
+color:#a7b0ab}
+.kind{display:block;font-size:10px;color:var(--orange);
+margin-bottom:2px}
+.pill{display:inline-block;border-radius:30px;padding:5px 9px;
+background:var(--soft);color:var(--green);font-size:11px;
+font-weight:700}
+.stats{grid-template-columns:1.4fr 1fr 1fr 1fr;align-items:stretch}
+.progress-row{margin:12px 0}
+.prog-head{display:flex;justify-content:space-between;
+gap:8px;font-size:12px;margin-bottom:6px}
+.bar{height:7px;background:#edf0ed;border-radius:9px;
+overflow:hidden}
+.fill{height:100%;background:#75a392;border-radius:9px}
+.big{font-size:26px;font-weight:800;margin:10px 0}
+.small{font-size:12px;color:var(--muted);line-height:1.7}
+.action{border:0;border-radius:10px;background:var(--green);
+padding:10px 14px;color:white;font-weight:700}
+.secondary{background:var(--soft);color:var(--green)}
+.action-row{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}
+.photo-row{grid-template-columns:repeat(3,minmax(0,1fr))}
+.photo-row .photo{min-height:180px}
+.photo-row .caption{font-size:15px}
+.study-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.study-card h3{color:var(--green)}
+.status{font-size:12px;padding:9px 10px;background:#f7f9f7;
+border-radius:9px;margin:8px 0;line-height:1.6}
+.review-item{padding:12px;border-bottom:1px solid var(--line);
+display:flex;gap:10px;align-items:flex-start;font-size:13px}
+.review-item input{accent-color:var(--green);margin-top:3px}
+.review-item label{cursor:pointer}
+.review-item:has(input:checked) label{color:#9aa5a0;
+text-decoration:line-through}
+textarea{width:100%;min-height:115px;border:1px solid var(--line);
+border-radius:10px;padding:12px;background:white;resize:vertical}
+input[type=number]{max-width:145px;padding:9px;border-radius:9px;
+border:1px solid #dbe3dc}
+.info{background:var(--soft);border-radius:12px;
+padding:13px;color:#4b6f60;font-size:12px;line-height:1.8}
+.sectiongap{margin-top:16px}
+#toast{position:fixed;bottom:20px;right:20px;background:#243e35;
+color:white;padding:12px 17px;border-radius:12px;
+display:none;z-index:100}
+@media(max-width:1250px){
+.sidebar{width:170px}
+.main{padding:18px}
+.week-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+.robot-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:760px){
+.app{display:block}
+.sidebar{width:100%;height:auto;position:sticky;z-index:20;
+padding:9px;border-bottom:1px solid var(--line)}
+.logo{font-size:16px;padding:5px 8px}
+.logo small{display:none}
+.nav{flex-direction:row;overflow:auto}
+.nav button{white-space:nowrap;padding:9px;font-size:12px}
+.main{padding:13px}
+h1{font-size:23px}
+.hero,.study-grid,.photo-row{grid-template-columns:1fr}
+.week-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.day{min-height:0}
+.stats{grid-template-columns:1fr 1fr}
+.photo{min-height:200px}
+.robot-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.robot img{height:85px}
+}
+@media(max-width:420px){
+.stats{grid-template-columns:1fr}
+.robot-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar">
+  <div class="logo">ROBOT STUDY
+    <small>2027 Robotics Graduate School</small>
+  </div>
+  <nav class="nav">
+    <button class="active" data-page="home">이번 주 계획</button>
+    <button data-page="courses">과목별 진도</button>
+    <button data-page="reviews">복습 관리</button>
+    <button data-page="history">지난주 기록</button>
+    <button data-page="routine">하루 루틴</button>
+    <button data-page="money">저축</button>
+    <button data-page="backup">데이터 관리</button>
+  </nav>
+</aside>
 
-weekplan = [
- ('11/2 월',[
-  ('la14','선형대수 14강 · LU 분해 예습 → 재수강','la',14,'수강·재학습'),
-  ('py23','Python 23강','py',23,'새 강의'),
-  ('py24','Python 24강','py',24,'새 강의'),
-  ('ram','C언어 29강 · RAM·메모리 보완','c',None,'기초 복습')
- ]),
- ('11/3 화',[
-  ('alg31','고등대수 31강','alg',31,'새 강의'),
-  ('calc10','미적분 기초 10강','calc',10,'새 강의'),
-  ('py25','Python 25강','py',25,'새 강의'),
-  ('py26','Python 26강','py',26,'새 강의'),
-  ('pointer','C언어 · 포인터·주소 연산 실습','c',None,'취약점 보완')
- ]),
- ('11/4 수',[]),
- ('11/5 목',[
-  ('phy10','고등물리 10강','phy',10,'새 강의'),
-  ('ard11','아두이노 11강','ard',11,'새 강의'),
-  ('py27','Python 27강','py',27,'새 강의'),
-  ('py28','Python 28강','py',28,'새 강의'),
-  ('double','C언어 · 이중 포인터 ** 실습','c',None,'취약점 보완')
- ]),
- ('11/6 금',[
-  ('calc11','미적분 기초 11강','calc',11,'새 강의'),
-  ('py29','Python 29강','py',29,'새 강의'),
-  ('py30','Python 30강','py',30,'새 강의'),
-  ('change','C언어 · change() 함수 코드 분석','c',None,'취약점 보완'),
-  ('la16','선형대수 16강 · LU 이해 후 선택','la',16,'조건부')
- ]),
- ('11/7 토',[
-  ('alg32','고등대수 32강','alg',32,'새 강의'),
-  ('phy11','고등물리 11강','phy',11,'새 강의'),
-  ('ard12','아두이노 12강','ard',12,'새 강의'),
-  ('ctest','C언어 · 포인터 코드 재시험·오답','c',None,'취약점 보완')
- ]),
- ('11/8 일',[
-  ('srev','선형대수·대수·미적분 오답 복습',None,None,'복습'),
-  ('crev','C언어 포인터·Python 누적 복습',None,None,'복습'),
-  ('prev','물리·아두이노 오답 확인',None,None,'복습')
- ]),
-]
-grid=soup.new_tag('div',attrs={'class':'week-grid'})
-lecture_rows=[]
-for dayno,(date,rows) in enumerate(weekplan):
- card=soup.new_tag('div',attrs={'class':'card planner-day','data-day-index':str(dayno),'data-calendar-date':date.split()[0].replace('/','').zfill(4)})
- d=soup.new_tag('div',attrs={'class':'date'});d.string=date;card.append(d)
- pill=soup.new_tag('span',attrs={'class':'day-pill'});pill.string=f'DAY {dayno+1}';card.append(pill)
- count=soup.new_tag('span',attrs={'class':'planner-count'});count.string='0/0 완료';card.append(count)
- if not rows:
-  rest=soup.new_tag('div',attrs={'class':'rest'});rest.string='완전 휴식 · 공부/복습 없음';card.append(rest)
- for suffix,label,k,number,kind in rows:
-  daydigits=date.split()[0].replace('/','')
-  lid=f'w{daydigits}_{suffix}'
-  row=soup.new_tag('div',attrs={'class':'task','data-type':('math' if k in ('la','alg','calc') else 'physics' if k=='phy' else 'robotics' if k=='ard' else 'python' if k=='py' else 'code' if k=='c' else 'review')})
-  inp=soup.new_tag('input',attrs={'type':'checkbox','id':lid,'data-study': '1' if number is not None else '0'})
-  if number is not None:inp['data-subject']=k;inp['data-lecture']=str(number)
-  if kind=='조건부':inp['data-optional']='true'
-  lab=soup.new_tag('label',attrs={'for':lid});lab.string=label
-  row.extend([inp,lab])
-  card.append(row)
-  if number is not None: lecture_rows.append((date,lid,label,k,number,kind))
- grid.append(card)
- 
-# Change old section.
-oldheading=current.select_one('.study-week-heading')
-for x in oldheading.find_all(string=True):
- if '10월 26일 ~ 11월 1일' in x:
-  x.replace_with(x.replace('10월 26일 ~ 11월 1일','11월 2일 ~ 11월 8일'))
-# old.week-grid was extracted. Insert grid following heading
-oldheading.insert_after(grid)
-# Cards notice main note
-reality=current.select_one('.reality-note')
-reality.string='진도 기준: 11월 2일에 확인한 지난주 체크 기록(19/26), 선형대수 14강 이해 보완, C언어 포인터 재학습. 시청과 복습은 따로 기록해요.'
-# Savings and picture all preserved.
+<main class="main">
 
-# First week CSS includes overall progress count from previous script. Ensure data fields updated.
-for label in soup.select('.tabs [data-x="w2"]'):label.string='🗓️ 11/2~11/8'
-tabbar=soup.select_one('.tabs')
-last_tab=soup.new_tag('button',attrs={'data-x':'week1026'});last_tab.string='지난주 기록'
-tabbar.select_one('[data-x="w2"]').insert_after(last_tab)
-nav=soup.select_one('.side-nav')
-nav.select_one('[data-target="w2"] span:last-child').string='이번 주 계획'
-archbtn=soup.new_tag('button',attrs={'data-target':'week1026','type':'button'})
-ic=soup.new_tag('span',attrs={'class':'nav-icon'});ic.string='◷'
-textspan=soup.new_tag('span');textspan.string='지난주 기록'
-archbtn.extend([ic,textspan])
-nav.select_one('[data-target="w2"]').insert_after(archbtn)
+<section id="home" class="page active">
+  <h1>로봇 공부 대시보드</h1>
+  <div class="sub">
+    2026.11.02 ~ 11.08 · 수요일 휴식 · 일요일 복습
+  </div>
 
-# New progress tracking tab
-progress_btn=soup.new_tag('button',attrs={'data-x':'study-progress'})
-progress_btn.string='과목별 진도'
-tabbar.select_one('[data-x="week1026"]').insert_after(progress_btn)
-sidebar_btn=soup.new_tag('button',attrs={'type':'button','data-target':'study-progress'})
-icon=soup.new_tag('span',attrs={'class':'nav-icon'});icon.string='▤'
-txt=soup.new_tag('span');txt.string='진도 관리'
-sidebar_btn.extend([icon,txt])
-nav.select_one('[data-target="week1026"]').insert_after(sidebar_btn)
+  <div class="grid hero sectiongap">
+    <div class="photo">
+      <img loading="lazy"
+        src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1100&q=85"
+        alt="대형 건축물">
+      <div class="caption">DAECHI ROBOTICS ACADEMY
+        <small>로봇 연구 · 교육 · 실습 공간</small>
+      </div>
+    </div>
+    <div class="photo">
+      <img loading="lazy"
+        src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=900&q=85"
+        alt="넓은 주거 공간">
+      <div class="caption">미래의 생활 공간
+        <small>한강뷰 주거 목표 · 가사 자동화</small>
+      </div>
+    </div>
+  </div>
 
-prsection=soup.new_tag('section',attrs={'id':'study-progress','class':'week'})
-prsection.append(BeautifulSoup('''<h2>진도 관리</h2>
-<div class="card road"><b>진도와 복습의 기준</b><br>진도 = 강의를 끝까지 본 기록. 복습 = 문제를 풀고 오답을 확인한 기록. 강의를 시청했다고 복습 완료로 처리하지 않음.<br><small>진도는 최근 확인된 시청 강의 번호를 기준으로 기록하며, 중간 미완료 강의가 있으면 별도 표시.</small></div>
-<div id="tracked-subjects" class="tracked-grid"></div>
-<div class="card">
-<b>이번 주 관리 방법</b>
-<p>월·화·목·금·토는 정해진 과목만 진행하고, 미완료 강의는 다음 해당 요일에 먼저 이어서 공부. LU 분해와 포인터처럼 막힌 개념은 강의 숫자를 억지로 늘리지 않고 보완 목록에서 따로 관리.</p>
-</div>''','html.parser'))
-archive.insert_after(prsection)
+  <h2>로봇 프로젝트 목표</h2>
+  <div class="grid robot-grid">
+    <div class="card robot">
+      <img src="https://images.unsplash.com/photo-1556911220-bff31c812dba?w=400&q=80" alt="주방">
+      <strong>요리 로봇</strong>
+    </div>
+    <div class="card robot">
+      <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=400&q=80" alt="매장">
+      <strong>매장 관리 로봇</strong>
+    </div>
+    <div class="card robot">
+      <img src="https://images.unsplash.com/photo-1566576912321-d58ddd7a6088?w=400&q=80" alt="물류">
+      <strong>배송·물류 로봇</strong>
+    </div>
+    <div class="card robot">
+      <img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=400&q=80" alt="로봇">
+      <strong>사족보행 로봇</strong>
+    </div>
+    <div class="card robot">
+      <img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=400&q=80" alt="청소">
+      <strong>가사 보조 로봇</strong>
+    </div>
+    <div class="card robot">
+      <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?w=400&q=80" alt="교육">
+      <strong>로봇 교육</strong>
+    </div>
+  </div>
 
-# Add separate review completion queue on top of review tab.
-rv=soup.select_one('#review')
-review_html='''<div class="card review-tracker">
-<h3>이번 주 복습 완료 체크</h3>
-<p class="note">강의 시청 체크와 분리돼 있어. 강의자료 기반 객관식 풀이 및 오답 확인까지 끝나면 여기에서 체크.</p>
-<div class="review-meter"><div class="review-meter-fill" id="review-meter-fill"></div></div>
-<div class="review-meter-label" id="review-meter-label">0/0 완료</div>
-<div class="review-pending" id="review-pending">수강 완료 후 복습 미완료 강의가 여기에 표시돼.</div>
-<div id="review-week-details"></div>
-<h4>집중 보완 항목</h4>
-<div id="review-blockers"></div>
-</div>'''
-rblock=BeautifulSoup(review_html,'html.parser').div
-rv.select_one('h2').insert_after(rblock)
+  <h2>이번 주 학습 계획 <span class="pill" id="weekCount">0개 완료</span></h2>
+  <div class="info">
+    강의 시청 체크와 복습 완료 체크는 별개야.
+    선형대수 14강은 GPT 예습 후 재수강하고,
+    C언어는 포인터 보완을 우선 진행해.
+  </div>
+  <div id="weekGrid" class="week-grid sectiongap"></div>
 
-day_groups={}
-for date,lid,label,k,n,kind in lecture_rows:
- day_groups.setdefault(date,[]).append((lid,label,k,n,kind))
-review_recs=[]
-for date,items in day_groups.items():
- details=soup.new_tag('details',attrs={'class':'review-day'})
- summary=soup.new_tag('summary');summary.string=date+' · 강의별 복습';details.append(summary)
- for lid,label,k,n,kind in items:
-  rid='rev_'+lid;review_recs.append({'reviewId':rid,'lectureId':lid,'label':label})
-  row=soup.new_tag('div',attrs={'class':'review-check-row'})
-  ch=soup.new_tag('input',attrs={'type':'checkbox','id':rid,'data-review-only':'true','data-review-for':lid})
-  lb=soup.new_tag('label',attrs={'for':rid});lb.string=label+' · 복습시험+오답'
-  row.extend([ch,lb]);details.append(row)
- rblock.select_one('#review-week-details').append(details)
+  <h2>학습 및 생활 현황</h2>
+  <div class="grid stats">
+    <div class="card">
+      <h3>과목별 진도</h3>
+      <div id="miniProgress"></div>
+      <button class="action secondary"
+        onclick="go('courses')">상세 진도 보기</button>
+    </div>
+    <div class="card">
+      <h3>전세자금 모으기</h3>
+      <div class="big" id="moneySummary">2,670만 원</div>
+      <div class="small">목표 4,000만 원</div>
+      <div class="bar sectiongap">
+        <div class="fill" id="moneyFill"></div>
+      </div>
+      <p class="small" id="moneyRemaining"></p>
+      <button class="action secondary"
+        onclick="go('money')">저축 관리</button>
+    </div>
+    <div class="card">
+      <h3>오늘의 하루 루틴</h3>
+      <div class="big" id="routineSummary">0/0</div>
+      <div class="small">오늘 완료한 루틴</div>
+      <div class="action-row">
+        <button class="action secondary"
+          onclick="go('routine')">루틴 기록</button>
+      </div>
+    </div>
+    <div class="card">
+      <h3>빠른 이동</h3>
+      <div class="action-row">
+        <button class="action secondary"
+          onclick="go('reviews')">복습 목록</button>
+        <button class="action secondary"
+          onclick="go('courses')">진도 현황</button>
+        <button class="action secondary"
+          onclick="go('history')">지난주</button>
+        <button class="action secondary"
+          onclick="go('backup')">백업</button>
+      </div>
+    </div>
+  </div>
 
-blockers=[
-('ram','C언어 RAM 필요성·메모리'),
-('pointer','C언어 포인터·주소·역참조'),
-('double','C언어 이중 포인터 **'),
-('change','C언어 change() 함수 코드'),
-('ctest','C언어 포인터 코드 재시험·오답'),
-('la','선형대수 14강 LU 예제와 이해 확인')
-]
-for key,label in blockers:
- rid='rev_block_'+key
- row=soup.new_tag('div',attrs={'class':'review-check-row'})
- ch=soup.new_tag('input',attrs={'type':'checkbox','id':rid,'data-review-only':'true'})
- lb=soup.new_tag('label',attrs={'for':rid});lb.string=label
- row.extend([ch,lb]);rblock.select_one('#review-blockers').append(row)
-# Scrip 0 excludes the new review checkboxes (separate key below)
-script0=soup.select('script')[0]
-assert "document.querySelectorAll('input[type=\"checkbox\"]')" in script0.string
-script0.string=script0.string.replace(
- "document.querySelectorAll('input[type=\"checkbox\"]')",
- "document.querySelectorAll('input[type=\"checkbox\"]:not([data-review-only])')"
-)
-# Edit static graph.
-graph=soup.select_one('#progress-graph')
-graph.select_one('small').string='11/2 확인된 강의 시청 기록. 복습 통과율은 별도 관리.'
-graph.select_one('.legend span').string='막대는 최근 시청한 강의 번호 기준 · 중간 미완료 강의가 있으면 별도 표시'
-for r in graph.select('.prow'):
- title=r.select_one('.phead b')
- if not title:continue
- name=title.get_text(' ',strip=True)
- latest={"선형대수":(15,65,'14강 LU 분해 이해 보완 필요'),"고등대수":(30,None,'31강부터'),"대학 미적분 기초":(9,47,'10강부터'),"고등물리":(9,22,'10강부터'),"아두이노":(10,28,'11강부터')}.get(name)
- if name.startswith('Python'):latest=(22,None,'23강부터, 복습 별도')
- elif name.startswith('C언어'):latest=(36,None,'포인터 이해 보완, 37강 보류')
- if latest:
-  n,total,note=latest
-  h=r.select_one('.phead small')
-  if h:h.string=f'{n}강 시청 기록 · '+note
-  level=r.select_one('.level')
-  if level: level.string=note
-  cur=r.select_one('.pcurrent')
-  target=r.select_one('.ptarget')
-  if cur:cur['style']=f'width:{100*n/total:.3f}%' if total else 'width:0%'
-  if target:target['style']='width:0%'
-# better progress bars refresh JS from stable baseline on front #subject-strip-main.
-js5=soup.select('script')[5]
-assert 'const base={la:13' in js5.string
-js5.string=js5.string.replace(
- 'const base={la:13,alg:28,calc:7,phy:7,ard:8,c:33,py:15};',
- 'const base={la:15,alg:30,calc:9,phy:9,ard:10,c:36,py:22};')
-# Update uses course lecture max, LA14 shouldn't make 16 and review tasks shouldn't change position.
-js5.string=js5.string.replace(
- '''    document.querySelectorAll('#w2 .planner-day input[type="checkbox"]').forEach(ch=>{
-      const k=courseOf(ch.id); if(k&&ch.checked)done[k]++;
-    });''',
- '''    document.querySelectorAll('#w2 .planner-day input[data-lecture]').forEach(ch=>{
-      const k=ch.dataset.subject, n=Number(ch.dataset.lecture);
-      if(k && ch.checked && Number.isFinite(n))done[k]=Math.max(done[k],n);
-    });'''
-)
-js5.string=js5.string.replace("if(e.target.matches('#w2 .planner-day input[type=\"checkbox\"]'))update();","if(e.target.matches('#w2 .planner-day input[data-lecture]'))update();")
-# replace "N강 완료" misleading because highest watched number, not necessarily contiguous
-js5.string=js5.string.replace('`${n}강 완료`','`${n}강 시청`')
-for el in soup.select('#subject-strip-main .subject-card'):
- v=el.select_one('.subject-value')
- if v and '완료' in v.get_text():v.string=v.get_text().replace('완료','시청')
-# Include fixed per-subject status rows and overview review automation.
-final_js=r'''(() => {
- "use strict";
- const K="robotics-review-tracker-v2";
- const reviewEls=[...document.querySelectorAll('input[data-review-only="true"]')];
- const stored=(()=>{try{return JSON.parse(localStorage.getItem(K)||"{}")||{}}catch{return {}}})();
- const studyKey="robotdash-1005-1011-corrected-v1";
- const lessons=[...document.querySelectorAll('#w2 input[data-lecture]')];
- const e=id=>document.getElementById(id);
- const states=[
-  ['선형대수','15강 시청','14강 LU 분해 미이해 · 예습 후 재수강'],
-  ['고등대수','30강 시청','31강부터 새 진도 · 단원 복습 별도'],
-  ['미적분 기초','9강 시청','10강부터 새 진도'],
-  ['고등물리','9강 시청','10강부터 새 진도'],
-  ['아두이노','10강 시청','11강부터 · 코드 복습 필요'],
-  ['C언어','36강 시청','RAM·포인터·이중 포인터·change() 보완 후 37강'],
-  ['Python','22강 시청','23강부터 · 강의마다 즉시 복습']
- ];
- const holder=e('tracked-subjects');
- states.forEach(([n,current,next])=>{
-  const div=document.createElement('article');div.className='tracked-subject';
-  const title=document.createElement('strong');title.textContent=n;
-  const val=document.createElement('span');val.className='track-count';val.textContent=current;
-  const p=document.createElement('small');p.textContent=next;
-  div.append(title,val,p);holder.append(div);
- });
- reviewEls.forEach(ch=>{
-  ch.checked=!!stored[ch.id];
-  ch.addEventListener('change',()=>{
-    stored[ch.id]=ch.checked;
-    try{localStorage.setItem(K,JSON.stringify(stored))}catch(e){console.warn(e)}
-    refresh();
-  });
- });
- function refresh(){
-  let checked=reviewEls.filter(x=>x.checked).length;
-  e('review-meter-label').textContent=`${checked}/${reviewEls.length} 항목 완료`;
-  e('review-meter-fill').style.width=(reviewEls.length?100*checked/reviewEls.length:0)+'%';
-  const pending=lessons.filter(x=>x.checked && !stored['rev_'+x.id]).map(x=>{
-    const lbl=document.querySelector('label[for="'+x.id+'"]');
-    return lbl?lbl.textContent:x.id;
-  });
-  const p=e('review-pending');
-  if(!pending.length) p.textContent='현재 주간 계획에서 시청 완료로 체크한 강의 중 복습 대기는 없어.';
-  else p.textContent='시청 완료 · 복습 대기: '+pending.join(' / ');
+  <div class="grid photo-row sectiongap">
+    <div class="photo">
+      <img loading="lazy"
+        src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=700&q=80"
+        alt="넓은 거실">
+      <div class="caption">주거 목표</div>
+    </div>
+    <div class="photo">
+      <img loading="lazy"
+        src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=700&q=80"
+        alt="로봇">
+      <div class="caption">로봇 개발</div>
+    </div>
+    <div class="photo">
+      <img loading="lazy"
+        src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=700&q=80"
+        alt="교육 시설">
+      <div class="caption">로봇 아카데미</div>
+    </div>
+  </div>
+  <p class="small">상단 이미지는 목표를 나타내는 참고 사진이며, 실제 로봇 학원·제품 사진과 일치하지 않을 수 있어.</p>
+</section>
+
+<section id="courses" class="page">
+  <h1>과목별 진도 관리</h1>
+  <p class="sub">지난주 확인된 시청 기록을 기준으로 표시해.
+  강의 시청과 개념 이해·복습 완료는 서로 다른 상태야.</p>
+  <div id="courseGrid" class="grid study-grid"></div>
+  <div class="info sectiongap">
+    선형대수 15강을 체크했더라도 14강 LU 분해는
+    이해 보완이 필요해. C언어도 36강까지 시청한
+    기록과 별도로 포인터 복습이 필요해.
+  </div>
+</section>
+
+<section id="reviews" class="page">
+  <h1>복습 관리</h1>
+  <p class="sub">강의 시청과 별개로 저장돼.
+  복습시험 응시와 오답 확인까지 마친 뒤 체크해.</p>
+  <div class="card">
+    <h3>집중 보완</h3>
+    <div id="blockerList"></div>
+  </div>
+  <div class="card sectiongap">
+    <h3>이번 주 강의별 복습</h3>
+    <div id="reviewList"></div>
+  </div>
+</section>
+
+<section id="history" class="page">
+  <h1>지난주 기록</h1>
+  <p class="sub">2026.10.26 ~ 11.01</p>
+  <div class="card">
+    <h3>지난주 확인된 내용</h3>
+    <p>강의 계획 26개 중 19개 체크 기록이 있었지만,
+    복습을 전부 완료한 것은 아니야.</p>
+    <div class="status">선형대수: 15강까지 체크, 14강 LU 분해 보완</div>
+    <div class="status">고등대수: 30강까지 체크</div>
+    <div class="status">미적분 기초: 9강까지 체크</div>
+    <div class="status">고등물리: 9강까지 체크</div>
+    <div class="status">아두이노: 10강까지 체크</div>
+    <div class="status">C언어: 36강까지 체크, 포인터 보완</div>
+    <div class="status">Python: 22강까지 체크</div>
+    <p class="small">
+      위 기록은 대화에서 확인한 요약이야.
+      예전 HTML에 저장된 개별 체크박스 데이터는
+      삭제하지 않지만, 여기서 자동으로 완료 처리하지는 않아.
+    </p>
+  </div>
+</section>
+
+<section id="routine" class="page">
+  <h1>하루 루틴</h1>
+  <p class="sub">날짜별로 저장되는 체크리스트</p>
+  <div class="card">
+    <h3 id="routineDate"></h3>
+    <div id="routineList"></div>
+    <h3 class="sectiongap">물 섭취</h3>
+    <div class="big"><span id="waterVal">0</span> mL</div>
+    <div class="action-row">
+      <button class="action" onclick="addWater(200)">+200 mL</button>
+      <button class="action secondary"
+        onclick="addWater(-200)">-200 mL</button>
+    </div>
+    <p class="small">목표 1,800mL</p>
+    <h3 class="sectiongap">오늘 기록</h3>
+    <textarea id="dailyNote"
+      placeholder="공부시간, 이해한 내용, 남은 과제 등을 기록"></textarea>
+  </div>
+</section>
+
+<section id="money" class="page">
+  <h1>전세자금 관리</h1>
+  <div class="card">
+    <div class="small">목표 금액</div>
+    <div class="big">40,000,000원</div>
+    <div class="small">현재 저축액</div>
+    <div class="big" id="savingNow"></div>
+    <div class="bar">
+      <div class="fill" id="savingFill"></div>
+    </div>
+    <p id="savingText" class="small"></p>
+    <h3 class="sectiongap">저축 금액 수정</h3>
+    <input id="savingInput" type="number"
+      min="0" step="10000">
+    <button class="action" onclick="saveMoney()">저장</button>
+    <p class="small">단위: 원</p>
+  </div>
+</section>
+
+<section id="backup" class="page">
+  <h1>데이터 백업·복원</h1>
+  <div class="card">
+    <h3>학습 및 생활 데이터</h3>
+    <p class="sub">이번 버전의 체크 기록을 JSON 파일로
+    저장하거나 다시 불러올 수 있어.</p>
+    <div class="action-row">
+      <button class="action"
+        onclick="exportData()">JSON 내보내기</button>
+      <label class="action secondary">
+        JSON 불러오기
+        <input type="file" accept=".json,application/json"
+          onchange="importData(event)" hidden>
+      </label>
+    </div>
+    <p class="small">
+      이전 대시보드의 저장소 키는 삭제하거나 초기화하지 않아.
+      다만 이전 버전의 체크 ID가 달라 자동 병합되지 않을 수 있어.
+      GitHub Pages의 로컬 저장 데이터는 기기별로 별도 관리돼.
+    </p>
+  </div>
+</section>
+
+</main>
+</div>
+<div id="toast"></div>
+
+<script>
+"use strict";
+
+// 이 버전은 자체 저장소를 사용하고,
+// 이전 대시보드의 localStorage를 삭제하지 않습니다.
+const KEY="robot-study-week-20261102-v1";
+const TARGET=40000000;
+
+const subjects=[
+ {id:"la",name:"선형대수",start:15,total:65,
+  note:"14강 LU 분해: GPT 예습 → 강의 재수강 → 실습"},
+ {id:"alg",name:"고등대수",start:30,total:null,
+  note:"31강부터 진행, 복습 별도"},
+ {id:"calc",name:"미적분 기초",start:9,total:47,
+  note:"10강부터 진행"},
+ {id:"phy",name:"고등물리",start:9,total:22,
+  note:"10강부터 진행"},
+ {id:"ard",name:"아두이노",start:10,total:28,
+  note:"11강부터 진행, 코드 복습 별도"},
+ {id:"c",name:"C언어",start:36,total:null,
+  note:"RAM·포인터·이중 포인터·change() 보완"},
+ {id:"py",name:"Python",start:22,total:null,
+  note:"23강부터 진행, 수강 직후 복습"}
+];
+
+const plan=[
+ {date:"11/2",day:"월",tasks:[
+  ["la14","선형대수 14강 LU 분해 재학습","보완","la",14],
+  ["py23","Python 23강","강의","py",23],
+  ["py24","Python 24강","강의","py",24],
+  ["ram","C언어 RAM·메모리","보완","c",null]
+ ]},
+ {date:"11/3",day:"화",tasks:[
+  ["alg31","고등대수 31강","강의","alg",31],
+  ["calc10","미적분 10강","강의","calc",10],
+  ["py25","Python 25강","강의","py",25],
+  ["py26","Python 26강","강의","py",26],
+  ["ptr","C언어 포인터·주소 연산","보완","c",null]
+ ]},
+ {date:"11/4",day:"수",tasks:[]},
+ {date:"11/5",day:"목",tasks:[
+  ["phy10","고등물리 10강","강의","phy",10],
+  ["ard11","아두이노 11강","강의","ard",11],
+  ["py27","Python 27강","강의","py",27],
+  ["py28","Python 28강","강의","py",28],
+  ["dptr","C언어 이중 포인터","보완","c",null]
+ ]},
+ {date:"11/6",day:"금",tasks:[
+  ["calc11","미적분 11강","강의","calc",11],
+  ["py29","Python 29강","강의","py",29],
+  ["py30","Python 30강","강의","py",30],
+  ["change","C언어 change() 함수","보완","c",null],
+  ["la16","선형대수 16강 (조건부)","선택","la",16]
+ ]},
+ {date:"11/7",day:"토",tasks:[
+  ["alg32","고등대수 32강","강의","alg",32],
+  ["phy11","고등물리 11강","강의","phy",11],
+  ["ard12","아두이노 12강","강의","ard",12],
+  ["ctest","포인터 코드 재시험","복습","c",null]
+ ]},
+ {date:"11/8",day:"일",tasks:[
+  ["mathrev","수학 과목 오답 복습","복습",null,null],
+  ["coderev","C·Python 누적 복습","복습",null,null],
+  ["robotrev","물리·아두이노 복습","복습",null,null]
+ ]}
+];
+
+const blockers=[
+ ["b_lu","선형대수 14강 LU 분해 이해 확인"],
+ ["b_ram","C언어 RAM 필요성 설명"],
+ ["b_pointer","포인터·주소·역참조 코드"],
+ ["b_double","이중 포인터 실습"],
+ ["b_change","change() 함수 코드 분석"],
+ ["b_ctest","포인터 코드 재시험·오답 정리"]
+];
+
+const routineTasks=[
+ ["wake","기상·수면 일정"],
+ ["study","오늘의 공부 진행"],
+ ["exercise","유산소 또는 근력운동"],
+ ["protein","단백질 식사 챙기기"],
+ ["vegetables","채소·식이섬유 챙기기"],
+ ["supplements","영양제 체크"],
+ ["review","오늘 배운 내용 정리"]
+];
+
+function load(){
+ try{
+  const obj=JSON.parse(localStorage.getItem(KEY)||"{}");
+  return obj && typeof obj==="object" ? obj : {};
+ }catch(e){return {}}
+}
+let data=load();
+data.study=data.study||{};
+data.review=data.review||{};
+data.blockers=data.blockers||{};
+data.routines=data.routines||{};
+if(typeof data.saving!=="number")data.saving=26700000;
+
+function persist(){
+ try{localStorage.setItem(KEY,JSON.stringify(data))}
+ catch(e){alert("저장 공간을 확인해 주세요.")}
+}
+
+function text(el,val){
+ document.getElementById(el).textContent=val;
+}
+function checked(group,key){
+ return !!(data[group]&&data[group][key]);
+}
+function toggle(group,key,value){
+ data[group][key]=value;
+ persist();
+ renderSummaries();
+ if(group==="study")renderCourses();
+ if(group==="study"||group==="review")renderReviews();
+}
+function taskElement(key,label,kind,group){
+ const div=document.createElement("div");
+ div.className=group==="study"?"task":"review-item";
+ const cb=document.createElement("input");
+ cb.type="checkbox";
+ cb.id=group+"_"+key;
+ cb.checked=checked(group,key);
+ const lbl=document.createElement("label");
+ lbl.htmlFor=cb.id;
+ if(group==="study"){
+  const tag=document.createElement("span");
+  tag.className="kind";
+  tag.textContent=kind;
+  lbl.append(tag);
  }
- document.addEventListener('change',e=>{
-  if(e.target.matches('#w2 input[data-lecture]'))refresh();
+ lbl.append(document.createTextNode(label));
+ cb.addEventListener("change",()=>{
+  toggle(group,key,cb.checked);
  });
- refresh();
-})();
-'''
-newscript=soup.new_tag('script');newscript.string=final_js
-soup.body.append(newscript)
+ div.append(cb,lbl);
+ return div;
+}
 
-# Extend style without disrupting existing.
-style=soup.select_one('style')
-style.string+='''
-/* 2026.11.2~8: lecture and review records separated */
-#tracked-subjects.tracked-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(195px,1fr));gap:10px;margin:12px 0 20px}
-.tracked-subject{display:flex;flex-direction:column;gap:6px;padding:16px;background:#fff;border:1px solid #e2e5e5;border-radius:14px;min-height:125px}
-.tracked-subject strong{font-size:14px;color:#344e54}
-.tracked-subject .track-count{font-weight:750;font-size:19px;color:#527f77}
-.tracked-subject small{font-size:12px;color:#738087;line-height:1.5}
-.review-tracker{padding:20px}
-.review-tracker h3{margin:0 0 8px}
-.review-tracker h4{margin:19px 0 8px}
-.review-meter{height:11px;overflow:hidden;background:#e8ece9;border-radius:12px}
-.review-meter-fill{width:0;height:100%;background:#73a88f;transition:width .3s}
-.review-meter-label{margin:9px 0;color:#597a74;font-size:12px}
-.review-pending{padding:13px;background:#f0f7f4;border-radius:12px;color:#547367;font-size:12px;line-height:1.65}
-.review-day{border:1px solid #e2e8e4;border-radius:11px;margin:8px 0;padding:11px 14px}
-.review-day summary{font-weight:700;cursor:pointer}
-.review-check-row{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid #ebeeec;font-size:13px}
-.review-check-row input{margin-top:3px;accent-color:#609e87}
-.review-check-row:has(input:checked) label{text-decoration:line-through;color:#9eaaa4}
-#week1026{padding:12px 0}
-#week1026 .week-grid{margin-top:14px}
-#week1026 .card.planner-day{min-height:230px}
-#w2 .task:has(input[data-optional="true"]){background:#fffaf0}
-@media(max-width:700px){#tracked-subjects.tracked-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-'''
-# update HTML title
-soup.title.string='로봇 공부 · 2026.11.02~11.08'
-# script #0 initially all checkbox with review excluded. success check.
-outdir=Path('/mnt/data/robot_dashboard_1102_1108')
-outdir.mkdir(exist_ok=True)
-htmlcode=str(soup)
-(outdir/'index.html').write_text(htmlcode,encoding='utf-8')
-Path('/mnt/data/robot_dashboard_1102_1108_full_code.txt').write_text(htmlcode,encoding='utf-8')
-(outdir/'README.md').write_text('''# 로봇 공부 대시보드 — 2026-11-02~11-08
+function renderWeek(){
+ const grid=document.getElementById("weekGrid");
+ grid.replaceChildren();
+ plan.forEach(d=>{
+  const card=document.createElement("div");
+  card.className="card day"+(!d.tasks.length?" rest":"");
+  const title=document.createElement("h3");
+  title.textContent=d.day+"요일";
+  const date=document.createElement("div");
+  date.className="date";
+  date.textContent=d.date;
+  card.append(title,date);
+  if(!d.tasks.length){
+   const p=document.createElement("p");
+   p.className="small";
+   p.textContent="완전 휴식";
+   card.append(p);
+  }
+  d.tasks.forEach(t=>{
+   card.append(taskElement(t[0],t[1],t[2],"study"));
+  });
+  grid.append(card);
+ });
+}
 
-- `index.html`을 기존 GitHub Pages 저장소에 전체 교체합니다.
-- 새 주간 계획은 11/2~11/8, 지난주 10/26~11/1 체크박스는 '지난주 기록'에 보존, 10/19~10/25 기록도 보존합니다.
-- 과목별 진도·복습 기록을 별도 화면/저장 키로 관리합니다.
-- 기존 강의 체크 저장 키: robotdash-1005-1011-corrected-v1 (변경 없음)
-- 생활 기록 저장 키: robotics-routine-v1 (변경 없음)
-- 저축 기록 저장 키: savingsLog-v2 (변경 없음)
-- 신규 복습 기록 저장 키: robotics-review-tracker-v2
-- 장기 목표 로봇·집·학원 사진 포함, 별도 이미지 파일 필요 없음.
-- GitHub Pages는 기기 간 기록 자동 동기화를 지원하지 않습니다.
-''',encoding='utf-8')
-with zipfile.ZipFile('/mnt/data/robot_dashboard_1102_1108.zip','w',zipfile.ZIP_DEFLATED) as z:
- for f in outdir.iterdir():z.write(f,arcname=f.name)
-# inspect
-checks=[]
-for i,tag in enumerate(soup.select('script')):
- f=Path('/mnt/data/verify_week_'+str(i)+'.js');f.write_text(tag.get_text(),encoding='utf8')
- q=subprocess.run(['node','--check',str(f)],capture_output=True,text=True)
- checks.append((i,q.returncode,q.stderr[:230]))
-print(checks)
-print('new lessons',len(lecture_rows),'review checkboxes',len(reviewEls) if 'reviewEls' in locals() else len(soup.select('input[data-review-only]')))
-print('new task inputs',len(soup.select('#w2 .week-grid input')),'lastweek',len(soup.select('#week1026 input')))
-print('tab names',[x.get_text(' ',strip=True) for x in soup.select('.tabs button')])
-print('Saved', len(htmlcode),'bytes')
+function lecturesOf(id){
+ const records=[];
+ plan.forEach(d=>d.tasks.forEach(t=>{
+  if(t[3]===id && t[4]!==null &&
+    t[2]!=="선택" && checked("study",t[0])){
+   records.push(t[4]);
+  }
+ }));
+ return records;
+}
+function currentProgress(s){
+ const nums=lecturesOf(s.id);
+ return Math.max(s.start,...nums);
+}
+function renderCourses(){
+ const grid=document.getElementById("courseGrid");
+ const mini=document.getElementById("miniProgress");
+ grid.replaceChildren();
+ mini.replaceChildren();
+ subjects.forEach(s=>{
+  const n=currentProgress(s);
+  const card=document.createElement("div");
+  card.className="card study-card";
+  const h=document.createElement("h3");
+  h.textContent=s.name;
+  const big=document.createElement("div");
+  big.className="big";
+  big.textContent=n+"강 시청 기록";
+  const status=document.createElement("div");
+  status.className="status";
+  status.textContent=s.note;
+  const p=document.createElement("p");
+  p.className="small";
+  p.textContent="최고 시청 강의 번호 기준이며, "+
+    "중간 미완료 강의와 복습 완료를 뜻하지는 않아.";
+  card.append(h,big,status,p);
+  grid.append(card);
+
+  const row=document.createElement("div");
+  row.className="progress-row";
+  const head=document.createElement("div");
+  head.className="prog-head";
+  const a=document.createElement("span");
+  a.textContent=s.name;
+  const b=document.createElement("span");
+  b.textContent=n+"강";
+  head.append(a,b);
+  const bar=document.createElement("div");
+  bar.className="bar";
+  const fill=document.createElement("div");
+  fill.className="fill";
+  // 전체 강의 수가 알려진 과목만 비율 표시
+  fill.style.width=s.total?
+    Math.min(100,n/s.total*100)+"%":"0%";
+  bar.append(fill);
+  row.append(head,bar);
+  mini.append(row);
+ });
+}
+
+function renderReviews(){
+ const box=document.getElementById("blockerList");
+ const list=document.getElementById("reviewList");
+ box.replaceChildren();
+ list.replaceChildren();
+
+ blockers.forEach(b=>{
+  box.append(taskElement(b[0],b[1],"","blockers"));
+ });
+
+ plan.forEach(d=>{
+  if(!d.tasks.length)return;
+  const heading=document.createElement("h3");
+  heading.style.marginTop="17px";
+  heading.textContent=d.date+" "+d.day+"요일";
+  list.append(heading);
+  d.tasks.forEach(t=>{
+   if(t[4]!==null){
+    list.append(taskElement(
+      t[0],t[1]+" · 복습시험 및 오답","","review"
+    ));
+   }
+  });
+ });
+
+ const pending=[];
+ plan.forEach(d=>d.tasks.forEach(t=>{
+  if(t[4]!==null&&checked("study",t[0])&&
+     !checked("review",t[0])){
+    pending.push(t[1]);
+  }
+ }));
+ const info=document.createElement("div");
+ info.className="info";
+ info.textContent=pending.length?
+  "시청 후 복습 대기: "+pending.join(", "):
+  "현재 이번 주 시청 체크 중 복습 대기 강의 없음";
+ list.prepend(info);
+}
+
+function localDate(){
+ const now=new Date();
+ const y=now.getFullYear();
+ const m=String(now.getMonth()+1).padStart(2,"0");
+ const d=String(now.getDate()).padStart(2,"0");
+ return y+"-"+m+"-"+d;
+}
+function todayData(){
+ const date=localDate();
+ if(!data.routines[date]){
+  data.routines[date]={checks:{},water:0,note:""};
+ }
+ return data.routines[date];
+}
+function renderRoutine(){
+ const r=todayData();
+ text("routineDate",localDate());
+ text("waterVal",r.water||0);
+ const list=document.getElementById("routineList");
+ list.replaceChildren();
+ routineTasks.forEach(([key,label])=>{
+  const row=document.createElement("div");
+  row.className="review-item";
+  const cb=document.createElement("input");
+  cb.type="checkbox";
+  cb.checked=!!r.checks[key];
+  const lbl=document.createElement("label");
+  lbl.textContent=label;
+  lbl.style.cursor="pointer";
+  const id="rt_"+key;
+  cb.id=id;lbl.htmlFor=id;
+  cb.onchange=()=>{
+   todayData().checks[key]=cb.checked;
+   persist();renderSummaries();
+  };
+  row.append(cb,lbl);
+  list.append(row);
+ });
+ document.getElementById("dailyNote").value=r.note||"";
+ renderSummaries();
+}
+function addWater(delta){
+ const r=todayData();
+ r.water=Math.max(0,(r.water||0)+delta);
+ persist();
+ renderRoutine();
+}
+document.getElementById("dailyNote").addEventListener(
+ "input",e=>{
+  todayData().note=e.target.value;
+  persist();
+ }
+);
+
+function formatMoney(value){
+ return Number(value).toLocaleString("ko-KR")+"원";
+}
+function renderMoney(){
+ const n=data.saving;
+ text("savingNow",formatMoney(n));
+ text("moneySummary",(n/10000).toLocaleString("ko-KR")+"만 원");
+ text("savingText","목표까지 "+formatMoney(Math.max(0,TARGET-n))+" 남음");
+ text("moneyRemaining",Math.round(n/TARGET*1000)/10+"% 달성");
+ document.getElementById("savingInput").value=n;
+ document.getElementById("savingFill").style.width=
+  Math.min(100,100*n/TARGET)+"%";
+ document.getElementById("moneyFill").style.width=
+  Math.min(100,100*n/TARGET)+"%";
+}
+function saveMoney(){
+ const n=Number(document.getElementById("savingInput").value);
+ if(!Number.isFinite(n)||n<0){
+  alert("0 이상의 금액을 입력해 주세요.");return;
+ }
+ data.saving=n;
+ persist();
+ renderMoney();
+ toast("저축액 저장 완료");
+}
+
+function renderSummaries(){
+ const all=plan.flatMap(d=>d.tasks);
+ const count=all.filter(t=>checked("study",t[0])).length;
+ text("weekCount",count+"/"+all.length+"개 완료");
+ const r=todayData();
+ const n=routineTasks.filter(([key])=>!!r.checks[key]).length;
+ text("routineSummary",n+"/"+routineTasks.length);
+}
+
+function go(id){
+ document.querySelectorAll(".page").forEach(p=>{
+  p.classList.toggle("active",p.id===id);
+ });
+ document.querySelectorAll(".nav button").forEach(b=>{
+  b.classList.toggle("active",b.dataset.page===id);
+ });
+ if(id==="routine")renderRoutine();
+ if(id==="courses")renderCourses();
+ if(id==="reviews")renderReviews();
+ if(id==="money")renderMoney();
+ window.scrollTo({top:0,behavior:"auto"});
+}
+document.querySelectorAll(".nav button").forEach(b=>{
+ b.addEventListener("click",()=>go(b.dataset.page));
+});
+
+function exportData(){
+ const blob=new Blob([JSON.stringify({
+  format:"robot-study-20261102-v1",
+  exportedAt:new Date().toISOString(),
+  data:data
+ },null,2)],{type:"application/json"});
+ const url=URL.createObjectURL(blob);
+ const a=document.createElement("a");
+ a.href=url;a.download="robot-study-backup.json";
+ document.body.append(a);
+ a.click();a.remove();
+ setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+async function importData(event){
+ const file=event.target.files[0];
+ if(!file)return;
+ try{
+  const raw=JSON.parse(await file.text());
+  if(raw.format!=="robot-study-20261102-v1"||
+     !raw.data||typeof raw.data!=="object"){
+   throw new Error("이 버전의 백업 파일이 아닙니다.");
+  }
+  if(!confirm("현재 기록을 백업 파일로 교체할까요?"))return;
+  data=raw.data;
+  data.study=data.study||{};
+  data.review=data.review||{};
+  data.blockers=data.blockers||{};
+  data.routines=data.routines||{};
+  if(typeof data.saving!=="number")data.saving=26700000;
+  persist();
+  location.reload();
+ }catch(e){alert("불러오기 실패: "+e.message)}
+ finally{event.target.value=""}
+}
+
+function toast(msg){
+ const e=document.getElementById("toast");
+ e.textContent=msg;e.style.display="block";
+ setTimeout(()=>{e.style.display="none"},1800);
+}
+
+renderWeek();
+renderCourses();
+renderReviews();
+renderRoutine();
+renderMoney();
+renderSummaries();
+</script>
+</body>
+</html>
