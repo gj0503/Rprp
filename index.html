@@ -1,861 +1,253 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>로봇 공부 대시보드 | 2026년 11월</title>
+<title>학습 진도표</title>
 <style>
-:root{
- --bg:#f7f4ef;--paper:#fffdfa;--ink:#293b36;
- --muted:#84938c;--green:#60947d;--soft:#e9f3eb;
- --line:#e7e8e2;--orange:#b98761;
-}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);
-font-family:-apple-system,BlinkMacSystemFont,
-"Apple SD Gothic Neo","Malgun Gothic",sans-serif}
-button,input,textarea{font:inherit}
-button{cursor:pointer}
-.shell{display:flex;min-height:100vh}
-.sidebar{width:205px;flex:none;position:sticky;top:0;
-height:100vh;overflow:auto;background:#fffdf9;
-border-right:1px solid var(--line);padding:22px 13px}
-.brand{font-size:17px;font-weight:850;margin:5px 9px 28px}
-.brand small{display:block;color:var(--muted);
-font-size:10px;font-weight:400;margin-top:6px}
-.nav{display:grid;gap:5px}
-.nav button{padding:13px 10px;border:0;background:none;
-text-align:left;font-size:13px;font-weight:700;
-border-radius:10px;color:#65716b}
-.nav button.active,.nav button:hover{
-background:#dfeee2;color:#376c53}
-.calendar{margin-top:25px;background:white;border:1px solid var(--line);
-padding:14px;border-radius:15px}
-.calendar h3{margin:0 0 13px;font-size:14px}
-.calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);
-gap:3px;text-align:center}
-.calendar-grid span{font-size:11px;padding:7px 0}
-.calendar-grid .head{color:#a0aaa5}
-.calendar-grid .thisweek{color:#49826b;font-weight:800}
-.calendar-grid .today{background:#cde7d8;
-border-radius:8px;color:#296448;font-weight:850}
-main{flex:1;min-width:0;max-width:1680px;
-padding:19px 23px 60px;margin:auto}
-.page{display:none}
-.page.active{display:block}
-h1{font-size:25px;letter-spacing:-.6px;margin:6px 0}
-h2{font-size:18px;margin:24px 0 13px}
-h3{font-size:14px;margin:0 0 11px}
-.sub{font-size:12px;color:var(--muted);line-height:1.7}
-.card{background:white;border:1px solid var(--line);
-border-radius:15px;padding:16px;min-width:0}
-.grid{display:grid;gap:11px}
-.hero{grid-template-columns:1.25fr 1fr;margin-top:15px}
-.hero-card{position:relative;overflow:hidden;border-radius:16px;
-height:245px;background:#dedbd3}
-.hero-card img{width:100%;height:100%;object-fit:cover}
-.hero-card:after{content:"";position:absolute;inset:0;
-background:linear-gradient(0deg,#15221cba,transparent 65%)}
-.hero-caption{position:absolute;z-index:1;bottom:19px;
-left:19px;color:white}
-.hero-caption b{font-size:20px}
-.hero-caption small{display:block;margin-top:7px;color:#e5ede7}
-.robot-grid{grid-template-columns:repeat(6,minmax(0,1fr))}
-.robot{border:1px solid var(--line);border-radius:12px;
-overflow:hidden;background:white}
-.robot img{width:100%;height:108px;object-fit:cover;display:block}
-.robot b{display:block;text-align:center;padding:10px 2px;font-size:11px}
-.row-head{display:flex;align-items:center;
-justify-content:space-between;gap:12px}
-.pill{background:var(--soft);border-radius:30px;
-padding:7px 11px;color:#4c8168;font-size:11px;font-weight:750}
-.note{background:#edf4ee;border-radius:11px;padding:13px;
-color:#557366;font-size:12px;line-height:1.7}
-.week-scroll{overflow-x:auto;padding-bottom:10px}
-.week-grid{display:grid;grid-template-columns:repeat(7,minmax(166px,1fr));
-gap:8px;align-items:stretch}
-.day{padding:12px 10px;display:flex;flex-direction:column;
-min-height:360px}
-.day:nth-child(3){background:#eef5ef}
-.day:nth-child(7){background:#fff8f5}
-.day-head{display:flex;justify-content:space-between;
-align-items:center;margin-bottom:9px}
-.day-head b{font-size:13px}
-.day-head small{font-size:10px;color:var(--muted)}
-.task{display:flex;gap:7px;align-items:flex-start;
-padding:7px 0;border-bottom:1px solid #f0f1ed}
-.task input{accent-color:#5b9b7d;flex:none;margin:3px 0 0}
-.task label{font-size:11px;line-height:1.45;cursor:pointer}
-.task label em{display:block;font-size:10px;font-style:normal;
-color:var(--orange);margin-bottom:2px}
-.task input:checked+label{color:#a0a9a3;text-decoration:line-through}
-.day-count{margin-top:auto;padding-top:12px;
-font-size:10px;color:#60816e}
-.bar{height:8px;background:#e9eee9;border-radius:20px;overflow:hidden}
-.fill{height:100%;background:#79b296;border-radius:20px}
-.bottom{grid-template-columns:1.35fr 1fr 1fr 1fr}
-.bottom .card{min-height:220px}
-.progress-row{margin:9px 0}
-.progress-row>div:first-child{display:flex;
-justify-content:space-between;font-size:11px}
-.progress-row small{color:var(--muted)}
-.big{font-size:23px;font-weight:850;margin:13px 0}
-.btn{background:#568a73;color:white;border:0;
-border-radius:9px;padding:10px 13px;font-size:12px;font-weight:750}
-.btn.light{background:#eaf2eb;color:#4c8064}
-.btn-row{display:flex;gap:7px;flex-wrap:wrap;margin-top:13px}
-.quick{display:grid;grid-template-columns:1fr 1fr;gap:7px}
-.quick button{border:0;background:#f0f5ef;color:#4c785e;
-border-radius:9px;padding:12px 5px;font-size:11px;font-weight:700}
-.goal-grid{grid-template-columns:repeat(3,minmax(0,1fr));
-margin-top:12px}
-.goal{height:175px;position:relative;border-radius:13px;
-overflow:hidden;background:#d9ddd7}
-.goal img{width:100%;height:100%;object-fit:cover}
-.goal span{position:absolute;bottom:0;left:0;right:0;
-padding:25px 13px 12px;color:white;font-weight:800;font-size:13px;
-background:linear-gradient(transparent,#18211ec9)}
-.course-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-.course-number{font-size:22px;font-weight:850;color:#547f69;
-margin:10px 0}
-.status{background:#f3f7f3;border-radius:9px;padding:11px;
-font-size:12px;line-height:1.7}
-.review-row{display:flex;gap:10px;padding:10px 0;
-border-bottom:1px solid var(--line);font-size:12px;line-height:1.6}
-.review-row input{accent-color:var(--green);margin-top:3px}
-.review-row label{cursor:pointer}
-.review-row input:checked+label{text-decoration:line-through;
-color:#9da7a0}
-input[type=number],textarea{border:1px solid #dbe3dd;
-border-radius:9px;padding:10px}
-textarea{width:100%;min-height:115px;resize:vertical}
-#toast{position:fixed;bottom:20px;right:20px;background:#264c3b;
-color:white;padding:12px 16px;border-radius:10px;display:none}
-@media(max-width:1200px){
-.sidebar{width:170px}
-.bottom{grid-template-columns:repeat(2,minmax(0,1fr))}
-.robot-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
-}
-@media(max-width:800px){
-.shell{display:block}
-.sidebar{width:100%;height:auto;position:sticky;z-index:15;
-padding:9px;border-bottom:1px solid var(--line)}
-.brand{font-size:14px;margin:5px}
-.brand small,.calendar{display:none}
-.nav{display:flex;overflow-x:auto}
-.nav button{white-space:nowrap;padding:9px;font-size:11px}
-main{padding:13px}
-.hero-card{height:175px}
-.hero-caption b{font-size:14px}
-.hero-caption small{font-size:10px}
-}
-@media(max-width:560px){
-.hero{grid-template-columns:1fr}
-.hero-card{height:200px}
-.bottom,.course-grid,.goal-grid{grid-template-columns:1fr}
-.bottom .card{min-height:0}
-}
+:root{color-scheme:light;--ink:#142b26;--muted:#526760;--green:#12624f;--line:#dce6df;--paper:#f3f7f3;--white:#fff;font:16px/1.55 "Inter","Malgun Gothic",system-ui,sans-serif}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink)}button,input,select,textarea{font:inherit;color:inherit}button,select,input[type=date]{border:1px solid var(--line);border-radius:10px;padding:.54rem .82rem;background:white}button{cursor:pointer;font-weight:700}button:hover{background:#e8f4eb}button:disabled{opacity:.4;cursor:default}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #289c75;outline-offset:2px}header{background:#102d26;color:#fff}header .inner{display:flex;justify-content:space-between;align-items:center;padding-block:1rem;gap:.7rem;flex-wrap:wrap}.brand{font-weight:800;letter-spacing:-.035em}.brand i{display:inline-block;width:.7rem;height:.7rem;border-radius:50%;background:#acf29e;margin-right:.55rem}.actions,.toolbar,.pills,.checks{display:flex;align-items:center;gap:.55rem;flex-wrap:wrap}.actions button{background:transparent;color:white;border-color:#55776a;font-size:.83rem}.actions button:hover{background:#254e42}.inner{width:min(1450px,calc(100% - 48px));margin:auto}main{padding:24px 0 56px}.hero{border-radius:24px;padding:clamp(24px,4vw,56px);color:white;background:radial-gradient(ellipse at 88% 0%,#337257,transparent 55%),#173c32;display:grid;grid-template-columns:1.35fr 1fr;gap:24px;align-items:center}.hero p{color:#d0e7dc;margin:.4rem 0 0}.hero h1{font-size:clamp(2rem,5vw,4rem);letter-spacing:-.065em;line-height:1.12;margin:0}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.stat{padding:.8rem;border:1px solid #537b6d;border-radius:13px;background:#ffffff10}.stat strong{font-size:clamp(1.25rem,2.4vw,2.1rem);display:block}.stat small{color:#d0e7dc}nav{display:flex;gap:.35rem;overflow:auto;padding:16px 0}nav button{white-space:nowrap;background:transparent;border-color:transparent}nav [aria-current=true]{background:#d7eddd;color:#104b39;border-color:#c4dfcd}.panel,.day,.entry{background:white;border:1px solid var(--line);border-radius:16px}.panel{padding:clamp(14px,2vw,25px)}h2,h3,p{margin:0}h2{font-size:1.45rem;letter-spacing:-.05em}.muted,small{color:var(--muted)}.toolbar{justify-content:space-between;margin-bottom:14px}.settings{font-size:.87rem}.settings summary{cursor:pointer}.calendar{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px;margin-top:16px}.day{min-width:0;overflow:hidden}.day header{padding:.7rem .7rem .55rem;background:#e6efe8;color:var(--ink)}.day.weekend header{background:#e9edf9}.day.today{outline:2px solid #33866a}.day p{padding:.65rem;font-size:.78rem}.task{display:flex;gap:.42rem;padding:.62rem .55rem;border-top:1px solid var(--line);cursor:pointer;overflow-wrap:anywhere;font-size:.82rem}.task small{display:block;font-size:.72rem}.task.robot{background:#f2f5fd}.task:has(input:checked){background:#e8f6eb}input[type=checkbox]{width:1rem;height:1rem;flex:none;margin:.2rem 0 0;accent-color:var(--green)}.badge{display:inline-block;border-radius:20px;background:#e6f2e8;color:#1f604a;padding:.12rem .55rem;font-size:.74rem;font-weight:700}.badge.amber{background:#fff0d6;color:#6a4310}.badge.blue{background:#e9edff;color:#374584}.layout{display:grid;grid-template-columns:minmax(230px,1fr) minmax(0,3fr);gap:14px;align-items:start}.course-list{display:grid;gap:.35rem}.course-list button{text-align:left;display:grid;gap:.25rem}.course-list button.active{background:#def0e3;border-color:#a7cbb1}.course-list small{font-weight:400}.course-list progress,.progress{width:100%;height:.42rem;accent-color:#17745a}.entries{display:grid;gap:.55rem}.entry{padding:.75rem .85rem;display:grid;gap:.45rem}.entry strong{overflow-wrap:anywhere}.checks label{display:inline-flex;gap:.36rem;align-items:center;font-size:.84rem;background:#f1f6f2;padding:.32rem .55rem;border-radius:8px;cursor:pointer}.checks input{margin:0}.filter{width:min(100%,260px);padding:.55rem .7rem;border:1px solid var(--line);border-radius:10px}.note{padding:.6rem 0;color:var(--muted);font-size:.88rem}.road{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.road section{min-width:0}.road .entry{margin-top:8px}.entry details{font-size:.84rem}.entry textarea{display:block;width:100%;min-height:64px;border:1px solid var(--line);border-radius:8px;margin:.4rem 0}.status{font-size:.8rem;color:#d0e7dc}.empty{padding:1rem 0}.now{font-weight:700;color:var(--green)}
+@media(max-width:1120px){.calendar{grid-template-columns:repeat(4,minmax(0,1fr))}.road{grid-template-columns:repeat(2,1fr)}}@media(max-width:730px){.inner{width:calc(100% - 24px)}.hero,.layout{grid-template-columns:1fr}.course-list{max-height:190px;overflow:auto}.calendar{grid-template-columns:repeat(2,minmax(0,1fr))}.hero{gap:18px}.task{font-size:.84rem}}@media(max-width:380px){.calendar,.road{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-<div class="shell">
-
-<aside class="sidebar">
-<div class="brand">ROBOT STUDY
-<small>학습 · 복습 · 생활 관리</small></div>
-
-<nav class="nav">
-<button data-page="home" class="active">이번 주 계획</button>
-<button data-page="courses">과목별 진도</button>
-<button data-page="reviews">복습 관리</button>
-<button data-page="history">지난주 기록</button>
-<button data-page="routine">하루 루틴</button>
-<button data-page="money">저축 관리</button>
-<button data-page="backup">백업</button>
-</nav>
-
-<div class="calendar">
-<h3>2026년 11월</h3>
-<div class="calendar-grid" id="calendarGrid"></div>
-</div>
-</aside>
-
-<main>
-
-<section id="home" class="page active">
-<h1>로봇 공부 대시보드</h1>
-<p class="sub">2026년 11월 2일~8일 · 오늘 학습 진도 반영</p>
-
-<div class="grid hero">
-<div class="hero-card">
-<img alt="로봇 아카데미 목표 건축물"
-src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1100&q=85">
-<div class="hero-caption">
-<b>DAECHI ROBOTICS ACADEMY</b>
-<small>미래의 로봇 연구·교육 공간</small>
-</div></div>
-<div class="hero-card">
-<img alt="고급 주거 공간"
-src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=900&q=85">
-<div class="hero-caption">
-<b>FUTURE HOME</b>
-<small>한강뷰 주거 목표 · 로봇과 함께하는 생활</small>
-</div></div>
-</div>
-
-<h2>미래 로봇 프로젝트</h2>
-<div class="grid robot-grid">
-<div class="robot">
-<img alt="주방" src="https://images.unsplash.com/photo-1556911220-bff31c812dba?w=400">
-<b>요리 로봇</b></div>
-<div class="robot">
-<img alt="매장" src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=400">
-<b>매장 관리</b></div>
-<div class="robot">
-<img alt="물류" src="https://images.unsplash.com/photo-1566576912321-d58ddd7a6088?w=400">
-<b>물류·배달</b></div>
-<div class="robot">
-<img alt="로봇" src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=400">
-<b>사족보행</b></div>
-<div class="robot">
-<img alt="청소" src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=400">
-<b>가사 보조</b></div>
-<div class="robot">
-<img alt="교육" src="https://images.unsplash.com/photo-1531482615713-2afd69097998?w=400">
-<b>교육용 로봇</b></div>
-</div>
-
-<div class="row-head">
-<h2>11월 2일~8일 주간 학습</h2>
-<span class="pill" id="weekTotal">0/0 완료</span>
-</div>
-
-<div class="note" style="margin-bottom:12px">
-<strong>11월 2일 확인 기록:</strong>
-Python 23~37강, 고등대수 31강 완료.
-LU 분해와 C언어 RAM·포인터는 미완료 상태로 유지.
-강의 시청과 복습 완료는 각각 기록해.
-</div>
-
-<div class="week-scroll">
-<div id="weekGrid" class="week-grid"></div>
-</div>
-
-<h2>학습 및 생활 현황</h2>
-<div class="grid bottom">
-<div class="card">
-<h3>과목별 진도</h3>
-<div id="miniProgress"></div>
-<button class="btn light" onclick="go('courses')">상세 진도</button>
-</div>
-
-<div class="card">
-<h3>전세자금 모으기</h3>
-<div class="big" id="homeMoney"></div>
-<p class="sub">목표 4,000만 원</p>
-<div class="bar"><div id="homeMoneyBar" class="fill"></div></div>
-<p class="sub" id="homeRemain"></p>
-<button class="btn light" onclick="go('money')">저축 관리</button>
-</div>
-
-<div class="card">
-<h3>오늘의 하루 루틴</h3>
-<div id="routineCount" class="big">0/7</div>
-<p class="sub">오늘 완료한 루틴</p>
-<button class="btn light" onclick="go('routine')">루틴 기록</button>
-</div>
-
-<div class="card">
-<h3>빠른 이동</h3>
-<div class="quick">
-<button onclick="go('reviews')">복습 목록</button>
-<button onclick="go('courses')">진도 관리</button>
-<button onclick="go('history')">지난주</button>
-<button onclick="go('backup')">백업</button>
-</div>
-</div>
-</div>
-
-<div class="grid goal-grid">
-<div class="goal">
-<img alt="주거 목표"
-src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=700">
-<span>미래 주거 공간</span>
-</div>
-<div class="goal">
-<img alt="로봇 개발"
-src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=700">
-<span>생활 자동화 로봇</span>
-</div>
-<div class="goal">
-<img alt="교육 공간"
-src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=700">
-<span>로봇 아카데미</span>
-</div>
-</div>
-<p class="sub">사진은 목표를 표현하는 참고 이미지야.</p>
-</section>
-
-<section id="courses" class="page">
-<h1>과목별 진도</h1>
-<p class="sub">마지막 시청 강의 번호와 복습 상태는 별도야.</p>
-<div id="courseGrid" class="grid course-grid"></div>
-</section>
-
-<section id="reviews" class="page">
-<h1>복습 관리</h1>
-<p class="sub">복습시험과 오답 정리까지 끝낸 경우에만 체크해.</p>
-<div class="card">
-<h3>우선 보완할 개념</h3>
-<div id="blockers"></div>
-</div>
-<div class="card" style="margin-top:12px">
-<h3>강의별 복습 체크</h3>
-<div id="reviewList"></div>
-</div>
-</section>
-
-<section id="history" class="page">
-<h1>지난주 기록</h1>
-<p class="sub">10월 26일~11월 1일</p>
-<div class="card">
-<h3>이전 주 확인 진도</h3>
-<p class="sub">지난주 19/26개 과제 체크 기록이 있었고,
-복습은 모두 완료된 상태가 아니야.</p>
-<div id="historyList"></div>
-</div>
-</section>
-
-<section id="routine" class="page">
-<h1>하루 루틴</h1>
-<p class="sub">날짜별로 저장되는 기록</p>
-<div class="card">
-<h3 id="todayLabel"></h3>
-<div id="routineList"></div>
-<h2>물 섭취</h2>
-<div class="big"><span id="waterValue">0</span>mL</div>
-<div class="btn-row">
-<button class="btn" onclick="addWater(200)">+200mL</button>
-<button class="btn light" onclick="addWater(-200)">-200mL</button>
-</div>
-<p class="sub">하루 목표 1,800mL</p>
-<h2>오늘 기록</h2>
-<textarea id="dayMemo"
-placeholder="공부시간·복습·운동·식사 등을 기록"></textarea>
-</div>
-</section>
-
-<section id="money" class="page">
-<h1>전세자금 관리</h1>
-<div class="card">
-<h3>저축 목표</h3>
-<div class="big">40,000,000원</div>
-<h3>현재 저축액</h3>
-<div class="big" id="savingValue"></div>
-<div class="bar"><div id="savingBar" class="fill"></div></div>
-<p class="sub" id="savingInfo"></p>
-<h2>저축액 수정</h2>
-<input id="savingInput" type="number" min="0" step="10000">
-<button class="btn" onclick="saveMoney()">저장</button>
-<p class="sub">입력 단위: 원</p>
-</div>
-</section>
-
-<section id="backup" class="page">
-<h1>데이터 백업</h1>
-<div class="card">
-<p class="sub">
-이번 대시보드의 체크·복습·루틴·저축 기록을
-JSON 파일로 보관할 수 있어.
-</p>
-<div class="btn-row">
-<button class="btn" onclick="exportData()">내보내기</button>
-<label class="btn light" style="cursor:pointer">
-불러오기
-<input hidden type="file" accept=".json"
-onchange="importData(event)">
-</label>
-</div>
-<p class="sub">
-기존 브라우저 데이터를 삭제하지 않지만
-이전 버전의 모든 기록을 자동 병합하지는 않아.
-</p>
-</div>
-</section>
-
-</main></div>
-<div id="toast"></div>
-
+<header><div class="inner"><div class="brand"><i></i>학습 진도표</div><div class="actions"><span id="save" class="status" role="status"></span><button id="backup">JSON 백업</button><button id="restore">JSON 복원</button><input type="file" id="file" accept=".json,application/json" hidden></div></div></header>
+<main class="inner">
+<section class="hero"><div><h1>학습 대시보드</h1><p>대학원 준비와 편의점 로봇 프로젝트</p></div><div class="stats" id="stats"></div></section>
+<nav aria-label="화면"><button data-tab="week">주간 달력</button><button data-tab="study">대학원 공부</button><button data-tab="robot">로봇 프로젝트</button><button data-tab="road">선수관계</button></nav>
+<div id="view"></div>
+</main>
+<script type="application/json" id="catalog">{"courses": [{"id": "statics", "name": "정역학", "kind": "study", "items": [{"id": "statics-1", "n": "1", "t": "오리엔테이션", "minutes": null, "initial": false, "review": false}, {"id": "statics-2", "n": "2", "t": "[이론] 정역학의 기초", "minutes": null, "initial": false, "review": false}, {"id": "statics-3", "n": "3", "t": "[이론] 강체의 평형", "minutes": null, "initial": false, "review": false}, {"id": "statics-4", "n": "4", "t": "[문풀] 강체의 평형 문제풀이", "minutes": null, "initial": false, "review": false}, {"id": "statics-5", "n": "5", "t": "[이론] 분포된 힘(1) - 기하중심무게중심", "minutes": null, "initial": false, "review": false}, {"id": "statics-6", "n": "6", "t": "[이론] 분포된 힘(2) - Pappus - Guldinus theorem", "minutes": null, "initial": false, "review": false}, {"id": "statics-7", "n": "7", "t": "[이론] 구조물의 해석(1)", "minutes": null, "initial": false, "review": false}, {"id": "statics-8", "n": "8", "t": "[이론] 구조물의 해석(2)", "minutes": null, "initial": false, "review": false}, {"id": "statics-9", "n": "9", "t": "[이론] 빔과 케이블에서의 힘(1)", "minutes": null, "initial": false, "review": false}, {"id": "statics-10", "n": "10", "t": "[이론] 빔과 케이블에서의 힘(2)", "minutes": null, "initial": false, "review": false}, {"id": "statics-11", "n": "11", "t": "[문풀] 문제풀이(1) - 1번~5번", "minutes": null, "initial": false, "review": false}, {"id": "statics-12", "n": "12", "t": "[문풀] 문제풀이(2) - 6번~10번", "minutes": null, "initial": false, "review": false}, {"id": "statics-13", "n": "13", "t": "[문풀] 문제풀이(3) - 11~13번", "minutes": null, "initial": false, "review": false}, {"id": "statics-14", "n": "14", "t": "[이론] 마찰력(1)", "minutes": null, "initial": false, "review": false}, {"id": "statics-15", "n": "15", "t": "[이론] 마찰력(2)", "minutes": null, "initial": false, "review": false}, {"id": "statics-16", "n": "16", "t": "[이론] 2차 모멘트(1)", "minutes": null, "initial": false, "review": false}, {"id": "statics-17", "n": "17", "t": "[이론] 2차 모멘트(2)", "minutes": null, "initial": false, "review": false}, {"id": "statics-18", "n": "18", "t": "가상일(Chapter 10)", "minutes": null, "initial": false, "review": false}, {"id": "statics-19", "n": "19", "t": "[문풀] 문제풀이(1) -1~9번", "minutes": null, "initial": false, "review": false}, {"id": "statics-20", "n": "20", "t": "[문풀] 문제풀이(2) - 10~12번", "minutes": null, "initial": false, "review": false}], "hold": true}, {"id": "python", "name": "나도코딩 Python", "kind": "study", "items": [{"id": "python-1", "n": "1", "t": "소개", "minutes": null, "initial": true, "review": false}, {"id": "python-2", "n": "2", "t": "환경설정", "minutes": null, "initial": true, "review": false}, {"id": "python-3", "n": "3", "t": "숫자 자료형", "minutes": null, "initial": true, "review": false}, {"id": "python-4", "n": "4", "t": "문자열 자료형", "minutes": null, "initial": true, "review": false}, {"id": "python-5", "n": "5", "t": "boolean 자료형", "minutes": null, "initial": true, "review": false}, {"id": "python-6", "n": "6", "t": "변수", "minutes": null, "initial": true, "review": false}, {"id": "python-7", "n": "7", "t": "주석", "minutes": null, "initial": true, "review": false}, {"id": "python-8", "n": "8", "t": "퀴즈 #1", "minutes": null, "initial": true, "review": false}, {"id": "python-9", "n": "9", "t": "연산자", "minutes": null, "initial": true, "review": false}, {"id": "python-10", "n": "10", "t": "간단한수식", "minutes": null, "initial": true, "review": false}, {"id": "python-11", "n": "11", "t": "숫자처리함수", "minutes": null, "initial": true, "review": false}, {"id": "python-12", "n": "12", "t": "랜덤함수", "minutes": null, "initial": true, "review": false}, {"id": "python-13", "n": "13", "t": "퀴즈 #2", "minutes": null, "initial": true, "review": false}, {"id": "python-14", "n": "14", "t": "문자열", "minutes": null, "initial": true, "review": false}, {"id": "python-15", "n": "15", "t": "슬라이싱", "minutes": null, "initial": true, "review": false}, {"id": "python-16", "n": "16", "t": "문자열처리함수", "minutes": null, "initial": true, "review": false}, {"id": "python-17", "n": "17", "t": "문자열포맷", "minutes": null, "initial": true, "review": false}, {"id": "python-18", "n": "18", "t": "탈출문자", "minutes": null, "initial": true, "review": false}, {"id": "python-19", "n": "19", "t": "퀴즈 #3", "minutes": null, "initial": true, "review": false}, {"id": "python-20", "n": "20", "t": "리스트", "minutes": null, "initial": true, "review": false}, {"id": "python-21", "n": "21", "t": "사전", "minutes": null, "initial": true, "review": false}, {"id": "python-22", "n": "22", "t": "튜플", "minutes": null, "initial": true, "review": false}, {"id": "python-23", "n": "23", "t": "세트", "minutes": null, "initial": true, "review": false}, {"id": "python-24", "n": "24", "t": "자료구조의 변경", "minutes": null, "initial": true, "review": false}, {"id": "python-25", "n": "25", "t": "퀴즈 #4", "minutes": null, "initial": true, "review": false}, {"id": "python-26", "n": "26", "t": "if", "minutes": null, "initial": true, "review": false}, {"id": "python-27", "n": "27", "t": "for", "minutes": null, "initial": true, "review": false}, {"id": "python-28", "n": "28", "t": "while", "minutes": null, "initial": true, "review": false}, {"id": "python-29", "n": "29", "t": "continue 와 break", "minutes": null, "initial": true, "review": false}, {"id": "python-30", "n": "30", "t": "한 줄 for", "minutes": null, "initial": true, "review": false}, {"id": "python-31", "n": "31", "t": "퀴즈 #5", "minutes": null, "initial": true, "review": false}, {"id": "python-32", "n": "32", "t": "함수", "minutes": null, "initial": true, "review": false}, {"id": "python-33", "n": "33", "t": "전달값과 반환값", "minutes": null, "initial": true, "review": false}, {"id": "python-34", "n": "34", "t": "기본값", "minutes": null, "initial": true, "review": false}, {"id": "python-35", "n": "35", "t": "키워드값", "minutes": null, "initial": true, "review": false}, {"id": "python-36", "n": "36", "t": "가변인자", "minutes": null, "initial": true, "review": false}, {"id": "python-37", "n": "37", "t": "지역변수와 전역변수", "minutes": null, "initial": true, "review": false}, {"id": "python-38", "n": "38", "t": "퀴즈 #6", "minutes": null, "initial": true, "review": false}, {"id": "python-39", "n": "39", "t": "표준입출력", "minutes": null, "initial": false, "review": false}, {"id": "python-40", "n": "40", "t": "다양한 출력포맷", "minutes": null, "initial": false, "review": false}, {"id": "python-41", "n": "41", "t": "파일입출력", "minutes": null, "initial": false, "review": false}, {"id": "python-42", "n": "42", "t": "pickle", "minutes": null, "initial": false, "review": false}, {"id": "python-43", "n": "43", "t": "with", "minutes": null, "initial": false, "review": false}, {"id": "python-44", "n": "44", "t": "퀴즈 #7", "minutes": null, "initial": false, "review": false}, {"id": "python-45", "n": "45", "t": "클래스", "minutes": null, "initial": false, "review": false}, {"id": "python-46", "n": "46", "t": "__init__", "minutes": null, "initial": false, "review": false}, {"id": "python-47", "n": "47", "t": "멤버변수", "minutes": null, "initial": false, "review": false}, {"id": "python-48", "n": "48", "t": "메소드", "minutes": null, "initial": false, "review": false}, {"id": "python-49", "n": "49", "t": "상속", "minutes": null, "initial": false, "review": false}, {"id": "python-50", "n": "50", "t": "다중상속", "minutes": null, "initial": false, "review": false}, {"id": "python-51", "n": "51", "t": "메소드 오버라이딩", "minutes": null, "initial": false, "review": false}, {"id": "python-52", "n": "52", "t": "pass", "minutes": null, "initial": false, "review": false}, {"id": "python-53", "n": "53", "t": "super", "minutes": null, "initial": false, "review": false}, {"id": "python-54", "n": "54", "t": "스타크래프트 프로젝트 전반전", "minutes": null, "initial": false, "review": false}, {"id": "python-55", "n": "55", "t": "스타크래프트 프로젝트 후반전", "minutes": null, "initial": false, "review": false}, {"id": "python-56", "n": "56", "t": "퀴즈 #8", "minutes": null, "initial": false, "review": false}, {"id": "python-57", "n": "57", "t": "예외처리", "minutes": null, "initial": false, "review": false}, {"id": "python-58", "n": "58", "t": "에러 발생시키기", "minutes": null, "initial": false, "review": false}, {"id": "python-59", "n": "59", "t": "사용자 정의 예외처리", "minutes": null, "initial": false, "review": false}, {"id": "python-60", "n": "60", "t": "finally", "minutes": null, "initial": false, "review": false}, {"id": "python-61", "n": "61", "t": "퀴즈 #9", "minutes": null, "initial": false, "review": false}, {"id": "python-62", "n": "62", "t": "모듈", "minutes": null, "initial": false, "review": false}, {"id": "python-63", "n": "63", "t": "패키지", "minutes": null, "initial": false, "review": false}, {"id": "python-64", "n": "64", "t": "__all__", "minutes": null, "initial": false, "review": false}, {"id": "python-65", "n": "65", "t": "모듈 직접 실행", "minutes": null, "initial": false, "review": false}, {"id": "python-66", "n": "66", "t": "패키지, 모듈 위치", "minutes": null, "initial": false, "review": false}, {"id": "python-67", "n": "67", "t": "pip install", "minutes": null, "initial": false, "review": false}, {"id": "python-68", "n": "68", "t": "내장함수", "minutes": null, "initial": false, "review": false}, {"id": "python-69", "n": "69", "t": "외장함수", "minutes": null, "initial": false, "review": false}, {"id": "python-70", "n": "70", "t": "퀴즈 #10", "minutes": null, "initial": false, "review": false}, {"id": "python-71", "n": "71", "t": "Outro", "minutes": null, "initial": false, "review": false}], "hold": false}, {"id": "algebra", "name": "현우진 시발점 대수", "kind": "study", "items": [{"id": "algebra-OT", "n": "OT", "t": "OT", "minutes": null, "initial": false, "review": false}, {"id": "algebra-2", "n": "2", "t": "Road MAP", "minutes": null, "initial": true, "review": false}, {"id": "algebra-3", "n": "3", "t": "Theme 1. 거듭제곱근의 뜻과 성질 ①", "minutes": null, "initial": true, "review": false}, {"id": "algebra-4", "n": "4", "t": "Theme 1. 거듭제곱근의 뜻과 성질 ②", "minutes": null, "initial": true, "review": false}, {"id": "algebra-5", "n": "5", "t": "Theme 2. 지수의 확장과 지수법칙 ①", "minutes": null, "initial": true, "review": false}, {"id": "algebra-6", "n": "6", "t": "Theme 2. 지수의 확장과 지수법칙 ②", "minutes": null, "initial": true, "review": false}, {"id": "algebra-7", "n": "7", "t": "Theme 3. 로그의 뜻과 성질 ①", "minutes": null, "initial": true, "review": false}, {"id": "algebra-8", "n": "8", "t": "Theme 3. 로그의 뜻과 성질 ②", "minutes": null, "initial": true, "review": false}, {"id": "algebra-9", "n": "9", "t": "Theme 4. 상용로그", "minutes": null, "initial": true, "review": false}, {"id": "algebra-10", "n": "10", "t": "STEP UP - Theme 1~4", "minutes": null, "initial": true, "review": false}, {"id": "algebra-11", "n": "11", "t": "Theme 5. 지수함수의 뜻과 그래프 ①", "minutes": null, "initial": true, "review": false}, {"id": "algebra-12", "n": "12", "t": "Theme 5. 지수함수의 뜻과 그래프 ②", "minutes": null, "initial": true, "review": false}, {"id": "algebra-13", "n": "13", "t": "Theme 6. 로그함수의 뜻과 그래프 ①", "minutes": null, "initial": true, "review": false}, {"id": "algebra-14", "n": "14", "t": "Theme 6. 로그함수의 뜻과 그래프 ②", "minutes": null, "initial": true, "review": false}, {"id": "algebra-15", "n": "15", "t": "Theme 7. 지수함수와 로그함수의 최대와 최소 ①", "minutes": null, "initial": true, "review": false}, {"id": "algebra-16", "n": "16", "t": "Theme 7. 지수함수와 로그함수의 최대와 최소 ②", "minutes": null, "initial": true, "review": false}, {"id": "algebra-17", "n": "17", "t": "STEP UP - Theme 5~7", "minutes": null, "initial": true, "review": false}, {"id": "algebra-18", "n": "18", "t": "Theme 8. 지수방정식과 지수부등식", "minutes": null, "initial": true, "review": false}, {"id": "algebra-19", "n": "19", "t": "Theme 9. 로그방정식과 로그부등식", "minutes": null, "initial": true, "review": false}, {"id": "algebra-20", "n": "20", "t": "STEP UP - Theme 8~9", "minutes": null, "initial": true, "review": false}, {"id": "algebra-21", "n": "21", "t": "Theme 10. 지수함수와 로그함수의 역함수 관계 ①", "minutes": null, "initial": true, "review": false}, {"id": "algebra-22", "n": "22", "t": "Theme 10. 지수함수와 로그함수의 역함수 관계 ②", "minutes": null, "initial": true, "review": false}, {"id": "algebra-23", "n": "23", "t": "Theme 11. 그래프 해석 ①", "minutes": null, "initial": true, "review": false}, {"id": "algebra-24", "n": "24", "t": "Theme 11. 그래프 해석 ②", "minutes": null, "initial": true, "review": false}, {"id": "algebra-25", "n": "25", "t": "STEP UP - Theme 10~11", "minutes": null, "initial": true, "review": false}, {"id": "algebra-26", "n": "26", "t": "Theme 12. 일반각", "minutes": null, "initial": true, "review": false}, {"id": "algebra-27", "n": "27", "t": "Theme 13. 호도법과 부채꼴", "minutes": null, "initial": true, "review": false}, {"id": "algebra-28", "n": "28", "t": "Theme 14. 삼각함수의 뜻 ①", "minutes": null, "initial": false, "review": false}, {"id": "algebra-29", "n": "29", "t": "Theme 14. 삼각함수의 뜻 ②", "minutes": null, "initial": false, "review": false}, {"id": "algebra-30", "n": "30", "t": "Theme 15. 삼각함수의 각의 변환 ①", "minutes": null, "initial": false, "review": false}, {"id": "algebra-31", "n": "31", "t": "Theme 15. 삼각함수의 각의 변환 ②", "minutes": null, "initial": false, "review": false}, {"id": "algebra-32", "n": "32", "t": "STEP UP - Theme 12~15", "minutes": null, "initial": false, "review": false}, {"id": "algebra-33", "n": "33", "t": "Theme 16. 삼각함수의 그래프 ①", "minutes": null, "initial": false, "review": false}, {"id": "algebra-34", "n": "34", "t": "Theme 16. 삼각함수의 그래프 ②", "minutes": null, "initial": false, "review": false}, {"id": "algebra-35", "n": "35", "t": "Theme 16. 삼각함수의 그래프 ③", "minutes": null, "initial": false, "review": false}, {"id": "algebra-36", "n": "36", "t": "Theme 16. 삼각함수의 그래프 ④", "minutes": null, "initial": false, "review": false}, {"id": "algebra-37", "n": "37", "t": "Theme 17. 삼각함수의 그래프의 평행이동 ①", "minutes": null, "initial": false, "review": false}, {"id": "algebra-38", "n": "38", "t": "Theme 17. 삼각함수의 그래프의 평행이동 ②", "minutes": null, "initial": false, "review": false}, {"id": "algebra-39", "n": "39", "t": "Theme 18. 삼각함수의 최대와 최소", "minutes": null, "initial": false, "review": false}, {"id": "algebra-40", "n": "40", "t": "Theme 19. 삼각방정식과 삼각부등식 ①", "minutes": null, "initial": false, "review": false}, {"id": "algebra-41", "n": "41", "t": "Theme 19. 삼각방정식과 삼각부등식 ②", "minutes": null, "initial": false, "review": false}, {"id": "algebra-42", "n": "42", "t": "Theme 19. 삼각방정식과 삼각부등식 ③", "minutes": null, "initial": false, "review": false}, {"id": "algebra-43", "n": "43", "t": "STEP UP - Theme 16~19", "minutes": null, "initial": false, "review": false}, {"id": "algebra-44", "n": "44", "t": "Theme 20. 사인법칙", "minutes": null, "initial": false, "review": false}, {"id": "algebra-45", "n": "45", "t": "Theme 21. 코사인법칙", "minutes": null, "initial": false, "review": false}, {"id": "algebra-46", "n": "46", "t": "Theme 22. 삼각형의 넓이", "minutes": null, "initial": false, "review": false}, {"id": "algebra-47", "n": "47", "t": "STEP UP - Theme 20~22", "minutes": null, "initial": false, "review": false}, {"id": "algebra-48", "n": "48", "t": "Theme 23. 등차수열은 간격에 주목한다 ①", "minutes": null, "initial": false, "review": false}, {"id": "algebra-49", "n": "49", "t": "Theme 23. 등차수열은 간격에 주목한다 ②", "minutes": null, "initial": false, "review": false}, {"id": "algebra-50", "n": "50", "t": "Theme 24. 등차수열은 직선이다", "minutes": null, "initial": false, "review": false}, {"id": "algebra-51", "n": "51", "t": "Theme 25. 등차수열의 합과 대칭성 ①", "minutes": null, "initial": false, "review": false}, {"id": "algebra-52", "n": "52", "t": "Theme 25. 등차수열의 합과 대칭성 ②", "minutes": null, "initial": false, "review": false}, {"id": "algebra-53", "n": "53", "t": "Theme 26. 수열의 합과 일반항 사이의 관계", "minutes": null, "initial": false, "review": false}, {"id": "algebra-54", "n": "54", "t": "Theme 27. 등차수열의 합은 원점을 지나는 이차함수다 ①", "minutes": null, "initial": false, "review": false}, {"id": "algebra-55", "n": "55", "t": "Theme 27. 등차수열의 합은 원점을 지나는 이차함수다 ②", "minutes": null, "initial": false, "review": false}, {"id": "algebra-56", "n": "56", "t": "STEP UP - Theme 23~27", "minutes": null, "initial": false, "review": false}, {"id": "algebra-57", "n": "57", "t": "Theme 28. 등비수열 역시 간격에 주목한다", "minutes": null, "initial": false, "review": false}, {"id": "algebra-58", "n": "58", "t": "Theme 29. 등비수열의 곱의 대칭성", "minutes": null, "initial": false, "review": false}, {"id": "algebra-59", "n": "59", "t": "Theme 30. 등비수열의 합", "minutes": null, "initial": false, "review": false}, {"id": "algebra-60", "n": "60", "t": "Theme 31. 등비수열의 활용", "minutes": null, "initial": false, "review": false}, {"id": "algebra-61", "n": "61", "t": "STEP UP - Theme 28~31", "minutes": null, "initial": false, "review": false}, {"id": "algebra-62", "n": "62", "t": "Theme 32. 합의 기호 시그마", "minutes": null, "initial": false, "review": false}, {"id": "algebra-63", "n": "63", "t": "Theme 33. 여러 가지 수열의 합 ①", "minutes": null, "initial": false, "review": false}, {"id": "algebra-64", "n": "64", "t": "Theme 33. 여러 가지 수열의 합 ②", "minutes": null, "initial": false, "review": false}, {"id": "algebra-65", "n": "65", "t": "STEP UP - Theme 32~33", "minutes": null, "initial": false, "review": false}, {"id": "algebra-66", "n": "66", "t": "Theme 34. 수열의 귀납적 정의 ①", "minutes": null, "initial": false, "review": false}, {"id": "algebra-67", "n": "67", "t": "Theme 34. 수열의 귀납적 정의 ②", "minutes": null, "initial": false, "review": false}, {"id": "algebra-68", "n": "68", "t": "Theme 35. 수학적 귀납법", "minutes": null, "initial": false, "review": false}, {"id": "algebra-69", "n": "69", "t": "STEP UP - Theme 34~35 ▶완강", "minutes": null, "initial": false, "review": false}], "hold": false}, {"id": "linear", "name": "선형대수학", "kind": "study", "items": [{"id": "linear-OT", "n": "OT", "t": "O.T", "minutes": null, "initial": false, "review": false}, {"id": "linear-1", "n": "1", "t": "연립일차방정식과 행렬", "minutes": null, "initial": true, "review": false}, {"id": "linear-2", "n": "2", "t": "연립일차방정식의 풀이", "minutes": null, "initial": true, "review": false}, {"id": "linear-3", "n": "3", "t": "행렬과 행렬연산", "minutes": null, "initial": true, "review": false}, {"id": "linear-4", "n": "4", "t": "행렬의 연산 - 곱셈", "minutes": null, "initial": true, "review": false}, {"id": "linear-5", "n": "5", "t": "정방행렬의 대각합, 행렬의 거듭제곱, 대각행렬, 특수행렬", "minutes": null, "initial": true, "review": false}, {"id": "linear-6", "n": "6", "t": "예제풀이", "minutes": null, "initial": true, "review": false}, {"id": "linear-7", "n": "7", "t": "역행렬과 그 성질", "minutes": null, "initial": true, "review": false}, {"id": "linear-8", "n": "8", "t": "가우스 소거법, 기본 행 연산, 행 동치, 기본 행렬", "minutes": null, "initial": true, "review": false}, {"id": "linear-9", "n": "9", "t": "가우스 소거법 문제풀이", "minutes": null, "initial": true, "review": false}, {"id": "linear-10", "n": "10", "t": "역행렬과 연립일차방정식 (1)", "minutes": null, "initial": true, "review": false}, {"id": "linear-11", "n": "11", "t": "역행렬과 연립일차방정식 (2)", "minutes": null, "initial": true, "review": false}, {"id": "linear-12", "n": "12", "t": "블록행렬", "minutes": null, "initial": true, "review": false}, {"id": "linear-13", "n": "13", "t": "예제 5.2", "minutes": null, "initial": true, "review": false}, {"id": "linear-14", "n": "14", "t": "LU분해와 연립일차방정식 문제풀이", "minutes": null, "initial": false, "review": true}, {"id": "linear-15", "n": "15", "t": "행렬식", "minutes": null, "initial": true, "review": false}, {"id": "linear-16", "n": "16", "t": "행렬식의 성질", "minutes": null, "initial": true, "review": false}, {"id": "linear-17", "n": "17", "t": "블록행렬과 행렬식, 예제풀이", "minutes": null, "initial": false, "review": false}, {"id": "linear-18", "n": "18", "t": "수반행렬", "minutes": null, "initial": false, "review": false}, {"id": "linear-19", "n": "19", "t": "예제풀이, 크래머공식", "minutes": null, "initial": false, "review": false}, {"id": "linear-20", "n": "20", "t": "예제풀이", "minutes": null, "initial": false, "review": false}, {"id": "linear-21", "n": "21", "t": "벡터공간", "minutes": null, "initial": false, "review": false}, {"id": "linear-22", "n": "22", "t": "부분공간(Subspace)", "minutes": null, "initial": false, "review": false}, {"id": "linear-23", "n": "23", "t": "문제풀이 (p.68)", "minutes": null, "initial": false, "review": false}, {"id": "linear-24", "n": "24", "t": "기저와 차원", "minutes": null, "initial": false, "review": false}, {"id": "linear-25", "n": "25", "t": "기저와 차원", "minutes": null, "initial": false, "review": false}, {"id": "linear-26", "n": "26", "t": "표준 기저, 기저와 차원의 성질, 좌표, 좌표벡터, 좌표행렬", "minutes": null, "initial": false, "review": false}, {"id": "linear-27", "n": "27", "t": "예제풀이", "minutes": null, "initial": false, "review": false}, {"id": "linear-28", "n": "28", "t": "행공간과 열공간 (1)", "minutes": null, "initial": false, "review": false}, {"id": "linear-29", "n": "29", "t": "행공간과 열공간 (2)", "minutes": null, "initial": false, "review": false}, {"id": "linear-30", "n": "30", "t": "가역행렬과 계수(Rank)와의 관계", "minutes": null, "initial": false, "review": false}, {"id": "linear-31", "n": "31", "t": "선형변환", "minutes": null, "initial": false, "review": false}, {"id": "linear-32", "n": "32", "t": "선형사상의 기본성질", "minutes": null, "initial": false, "review": false}, {"id": "linear-33", "n": "33", "t": "선형사상 주요관련 정리", "minutes": null, "initial": false, "review": false}, {"id": "linear-34", "n": "34", "t": "선형사상과 행렬", "minutes": null, "initial": false, "review": false}, {"id": "linear-35", "n": "35", "t": "벡터공간에서 선형사상의 행렬표현", "minutes": null, "initial": false, "review": false}, {"id": "linear-36", "n": "36", "t": "예제풀이", "minutes": null, "initial": false, "review": false}, {"id": "linear-37", "n": "37", "t": "직교변환의 행렬", "minutes": null, "initial": false, "review": false}, {"id": "linear-38", "n": "38", "t": "예제풀이", "minutes": null, "initial": false, "review": false}, {"id": "linear-39", "n": "39", "t": "사영변환", "minutes": null, "initial": false, "review": false}, {"id": "linear-40", "n": "40", "t": "예제풀이", "minutes": null, "initial": false, "review": false}, {"id": "linear-41", "n": "41", "t": "기저의 변환과 행렬의 닮음", "minutes": null, "initial": false, "review": false}, {"id": "linear-42", "n": "42", "t": "행렬의 닮음", "minutes": null, "initial": false, "review": false}, {"id": "linear-43", "n": "43", "t": "내적공간과 직교화", "minutes": null, "initial": false, "review": false}, {"id": "linear-44", "n": "44", "t": "기본적인 내적공간의 몇가지 예", "minutes": null, "initial": false, "review": false}, {"id": "linear-45", "n": "45", "t": "예제풀이&직교여공간", "minutes": null, "initial": false, "review": false}, {"id": "linear-46", "n": "46", "t": "노름 공간(Normed space)&수반사상", "minutes": null, "initial": false, "review": false}, {"id": "linear-47", "n": "47", "t": "예제풀이 (p.130)", "minutes": null, "initial": false, "review": false}, {"id": "linear-48", "n": "48", "t": "예제풀이 (p.131)", "minutes": null, "initial": false, "review": false}, {"id": "linear-49", "n": "49", "t": "직교성과 그람-슈미트 직교화과정 (1)", "minutes": null, "initial": false, "review": false}, {"id": "linear-50", "n": "50", "t": "그람-슈미트 직교화과정 (2)", "minutes": null, "initial": false, "review": false}, {"id": "linear-51", "n": "51", "t": "예제풀이", "minutes": null, "initial": false, "review": false}, {"id": "linear-52", "n": "52", "t": "최소제곱문제", "minutes": null, "initial": false, "review": false}, {"id": "linear-53", "n": "53", "t": "고윳값과 대각화", "minutes": null, "initial": false, "review": false}, {"id": "linear-54", "n": "54", "t": "고윳값과 고유벡터의 기본성질", "minutes": null, "initial": false, "review": false}, {"id": "linear-55", "n": "55", "t": "예제 문제풀이 (1)", "minutes": null, "initial": false, "review": false}, {"id": "linear-56", "n": "56", "t": "예제 문제풀이 (2)", "minutes": null, "initial": false, "review": false}, {"id": "linear-57", "n": "57", "t": "예제 문제풀이 (1)", "minutes": null, "initial": false, "review": false}, {"id": "linear-58", "n": "58", "t": "예제 문제풀이 (2)", "minutes": null, "initial": false, "review": false}, {"id": "linear-59", "n": "59", "t": "예제 문제풀이 (3)", "minutes": null, "initial": false, "review": false}, {"id": "linear-60", "n": "60", "t": "대칭행렬과 직교대각화", "minutes": null, "initial": false, "review": false}, {"id": "linear-61", "n": "61", "t": "예제 문제풀이", "minutes": null, "initial": false, "review": false}, {"id": "linear-62", "n": "62", "t": "정방행렬의 거듭제곱, 차분 방정식, 케일리 해밀턴 정리", "minutes": null, "initial": false, "review": false}, {"id": "linear-63", "n": "63", "t": "행렬지수", "minutes": null, "initial": false, "review": false}, {"id": "linear-64", "n": "64", "t": "이차형식", "minutes": null, "initial": false, "review": false}, {"id": "linear-65", "n": "65", "t": "이차곡면, 양의정부호와 촐레스키 분해 ▶종강", "minutes": null, "initial": false, "review": false}], "hold": false}, {"id": "calc", "name": "기초수학 | 대학 미적분 기초 All-in-One", "kind": "study", "items": [{"id": "calc-OT", "n": "OT", "t": "기초 이론적분학 O.T", "minutes": 32, "skip": false, "initial": true}, {"id": "calc-1", "n": "1", "t": "제 1장 기초개념. 1.1 실수계①", "minutes": 63, "skip": false, "initial": true}, {"id": "calc-2", "n": "2", "t": "1.1 실수계② : 상계와 하계", "minutes": 57, "skip": false, "initial": true}, {"id": "calc-3", "n": "3", "t": "1.2 식의 기초① : 지수 법칙", "minutes": 35, "skip": false, "initial": true}, {"id": "calc-4", "n": "4", "t": "1.2 식의 기초② : 식의 전개, 인수분해, 나눗셈 및 유리식과 무리식", "minutes": 23, "skip": false, "initial": true}, {"id": "calc-5", "n": "5", "t": "1.3 방정식① : 일차방정식, 이차방정식", "minutes": 32, "skip": false, "initial": true}, {"id": "calc-6", "n": "6", "t": "1.3 방정식② : 고차방정식, 연립방정식", "minutes": 29, "skip": false, "initial": true}, {"id": "calc-7", "n": "7", "t": "1.4 부등식", "minutes": 29, "skip": false, "initial": true}, {"id": "calc-8", "n": "8", "t": "1.4 부등식 문제풀이", "minutes": 20, "skip": false, "initial": true}, {"id": "calc-9", "n": "9", "t": "제 2장 수열과 급수. 2.1 수열① : 수열과 수열의 합", "minutes": 54, "skip": false, "initial": true}, {"id": "calc-10", "n": "10", "t": "2.1 수열② : 등차수열, 등비수열 및 계차수열", "minutes": 39, "skip": false, "initial": false}, {"id": "calc-11", "n": "11", "t": "2.2 수열의 극한", "minutes": 70, "skip": false, "initial": false}, {"id": "calc-12", "n": "12", "t": "2.3 급수", "minutes": 50, "skip": false, "initial": false}, {"id": "calc-13", "n": "13", "t": "제 3장 함수의 개념 및 초등함수. 3.1 함수의 개념 및 종류① : 함수의 개념", "minutes": 67, "skip": false, "initial": false}, {"id": "calc-14", "n": "14", "t": "3.1 함수의 개념 및 종류② : 함수의 종류", "minutes": 89, "skip": false, "initial": false}, {"id": "calc-15", "n": "15", "t": "3.1 함수의 개념 및 종류③ : 기타의 함수", "minutes": 54, "skip": false, "initial": false}, {"id": "calc-16", "n": "16", "t": "3.2 다항함수, 거듭제곱함수, 유리함수 및 대수함수", "minutes": 28, "skip": false, "initial": false}, {"id": "calc-17", "n": "17", "t": "3.3 지수함수", "minutes": 66, "skip": false, "initial": false}, {"id": "calc-18", "n": "18", "t": "3.4 로그함수", "minutes": 73, "skip": false, "initial": false}, {"id": "calc-19", "n": "19", "t": "3.5 삼각함수①", "minutes": 67, "skip": false, "initial": false}, {"id": "calc-20", "n": "20", "t": "3.5 삼각함수②", "minutes": 88, "skip": false, "initial": false}, {"id": "calc-21", "n": "21", "t": "3.6 역삼각함수", "minutes": 69, "skip": false, "initial": false}, {"id": "calc-22", "n": "22", "t": "3.6 역삼각함수 문제풀이", "minutes": 44, "skip": false, "initial": false}, {"id": "calc-23", "n": "23", "t": "제 4장 함수의 극한과 연속. 4.1 함수의 극한① : 극한의 개념 및 기본성질", "minutes": 59, "skip": false, "initial": false}, {"id": "calc-24", "n": "24", "t": "4.1 함수의 극한② : 극한의 개념 및 기본성질 문제풀이", "minutes": 68, "skip": false, "initial": false}, {"id": "calc-25", "n": "25", "t": "4.1 함수의 극한③ : 삼각함수와 지수로그 함수의 극한", "minutes": 54, "skip": false, "initial": false}, {"id": "calc-26", "n": "26", "t": "4.2 함수의 연속① : 연속의 개념 및 기본성질", "minutes": 41, "skip": false, "initial": false}, {"id": "calc-27", "n": "27", "t": "4.2 함수의 연속② : 연속의 개념 및 기본성질 문제풀이", "minutes": 76, "skip": false, "initial": false}, {"id": "calc-28", "n": "28", "t": "4.2 함수의 연속③ : 최대·최소값 정리 및 중간값 정리", "minutes": 66, "skip": false, "initial": false}, {"id": "calc-29", "n": "29", "t": "제 5장 함수의 미분. 5.1 미분계수와 도함수", "minutes": 66, "skip": false, "initial": false}, {"id": "calc-30", "n": "30", "t": "5.2 도함수의 성질", "minutes": 54, "skip": false, "initial": false}, {"id": "calc-31", "n": "31", "t": "5.3 연쇄법칙(합성함수의 미분)", "minutes": 45, "skip": false, "initial": false}, {"id": "calc-32", "n": "32", "t": "5.4 음함수미분법과 역함수의 미분① : 음함수미분법", "minutes": 52, "skip": false, "initial": false}, {"id": "calc-33", "n": "33", "t": "5.4 음함수미분법과 역함수의 미분② : 역함수의 미분", "minutes": 36, "skip": false, "initial": false}, {"id": "calc-34", "n": "34", "t": "5.5 다항함수, 거듭제곱함수, 유리함수 및 대수함수의 미분", "minutes": 40, "skip": false, "initial": false}, {"id": "calc-35", "n": "35", "t": "5.6 삼각함수와 역삼각함수의 미분① : 삼각함수의 미분", "minutes": 55, "skip": false, "initial": false}, {"id": "calc-36", "n": "36", "t": "5.6 삼각함수와 역삼각함수의 미분② : 역삼각함수의 미분", "minutes": 42, "skip": false, "initial": false}, {"id": "calc-37", "n": "37", "t": "5.7 지수·로그함수의 미분 및 로그미분법① : 지수·로그함수의 미분", "minutes": 49, "skip": false, "initial": false}, {"id": "calc-38", "n": "38", "t": "5.7 지수·로그함수의 미분 및 로그미분법② : 로그미분법", "minutes": 50, "skip": false, "initial": false}, {"id": "calc-39", "n": "39", "t": "5.8 평균값 정리와 함수의 증가·감소① : 평균값 정리", "minutes": 86, "skip": false, "initial": false}, {"id": "calc-40", "n": "40", "t": "5.8 평균값 정리와 함수의 증가·감소② : 함수의 증가·감소", "minutes": 63, "skip": false, "initial": false}, {"id": "calc-41", "n": "41", "t": "제 6장 함수의 적분. 6.1 부정적분", "minutes": 56, "skip": false, "initial": false}, {"id": "calc-42", "n": "42", "t": "6.2 정적분① : 정적분의 개념 및 정의", "minutes": 92, "skip": false, "initial": false}, {"id": "calc-43", "n": "43", "t": "6.2 정적분② : 정적분의 성질①", "minutes": 65, "skip": false, "initial": false}, {"id": "calc-44", "n": "44", "t": "6.2 정적분③ : 정적분의 성질②", "minutes": 49, "skip": false, "initial": false}, {"id": "calc-45", "n": "45", "t": "6.3 치환적분① : 치환적분의 개념 및 정의", "minutes": 60, "skip": false, "initial": false}, {"id": "calc-46", "n": "46", "t": "6.3 치환적분② : 삼각치환", "minutes": 56, "skip": false, "initial": false}, {"id": "calc-47", "n": "47", "t": "6.4 부분적분 ▶ 증명", "minutes": 64, "skip": false, "initial": false}]}, {"id": "calc3", "name": "미분적분학Ⅰ | 실수계 & 초등함수", "kind": "study", "items": [{"id": "calc3-1", "n": "1", "t": "제1장 실수계 & 초등함수. 1.1 실수계 ①", "minutes": 69, "skip": false, "initial": false}, {"id": "calc3-2", "n": "2", "t": "1.1 실수계 ②", "minutes": 57, "skip": false, "initial": false}, {"id": "calc3-3", "n": "3", "t": "1.2 함수의 개념 및 종류 ①", "minutes": 65, "skip": false, "initial": false}, {"id": "calc3-4", "n": "4", "t": "1.2 함수의 개념 및 종류 ②", "minutes": 58, "skip": false, "initial": false}, {"id": "calc3-5", "n": "5", "t": "1.3 다항함수, 거듭제곱함수, 유리함수 및 대수함수", "minutes": 47, "skip": false, "initial": false}, {"id": "calc3-6", "n": "6", "t": "1.4 지수함수", "minutes": 41, "skip": false, "initial": false}, {"id": "calc3-7", "n": "7", "t": "1.5 로그함수", "minutes": 57, "skip": false, "initial": false}, {"id": "calc3-8", "n": "8", "t": "1.6 삼각함수 ①", "minutes": 67, "skip": false, "initial": false}, {"id": "calc3-9", "n": "9", "t": "1.6 삼각함수 ②", "minutes": 36, "skip": false, "initial": false}, {"id": "calc3-10", "n": "10", "t": "1.7 역삼각함수 ①-1", "minutes": 47, "skip": false, "initial": false}, {"id": "calc3-11", "n": "11", "t": "1.7 역삼각함수 ①-2", "minutes": 42, "skip": false, "initial": false}, {"id": "calc3-12", "n": "12", "t": "1.7 역삼각함수 ②", "minutes": 41, "skip": false, "initial": false}, {"id": "calc3-13", "n": "13", "t": "1.8 쌍곡선함수", "minutes": 61, "skip": false, "initial": false}, {"id": "calc3-14", "n": "14", "t": "1.9 역쌍곡선함수", "minutes": 49, "skip": false, "initial": false}]}, {"id": "calc4", "name": "미분적분학Ⅰ | 함수의 극한과 연속, 함수의 미분", "kind": "study", "items": [{"id": "calc4-1", "n": "1", "t": "제2장 함수의 극한과 연속. 2.1 함수의 극한 ①", "minutes": 51, "skip": false, "initial": false}, {"id": "calc4-2", "n": "2", "t": "2.1 함수의 극한 ②", "minutes": 77, "skip": false, "initial": false}, {"id": "calc4-3", "n": "3", "t": "2.2 함수의 연속 ①", "minutes": 70, "skip": false, "initial": false}, {"id": "calc4-4", "n": "4", "t": "2.2 함수의 연속 ②", "minutes": 60, "skip": false, "initial": false}, {"id": "calc4-5", "n": "5", "t": "제3장 함수의 미분. 3.1 미분계수와 도함수", "minutes": 60, "skip": false, "initial": false}, {"id": "calc4-6", "n": "6", "t": "3.1 미분계수와 도함수 문제풀이", "minutes": 50, "skip": false, "initial": false}, {"id": "calc4-7", "n": "7", "t": "3.2 도함수의 성질", "minutes": 61, "skip": false, "initial": false}, {"id": "calc4-8", "n": "8", "t": "3.3 합성함수의 미분", "minutes": 46, "skip": false, "initial": false}, {"id": "calc4-9", "n": "9", "t": "3.4 음함수미분법과 역함수의 미분", "minutes": 66, "skip": false, "initial": false}, {"id": "calc4-10", "n": "10", "t": "3.5 다항함수, 거듭제곱함수, 유리함수 및 대수함수의 미분", "minutes": 32, "skip": false, "initial": false}, {"id": "calc4-11", "n": "11", "t": "3.6 삼각함수와 역삼각함수의 미분", "minutes": 65, "skip": false, "initial": false}, {"id": "calc4-12", "n": "12", "t": "3.7 지수·로그함수의 미분 및 로그미분법 ①", "minutes": 40, "skip": false, "initial": false}, {"id": "calc4-13", "n": "13", "t": "3.7 지수·로그함수의 미분 및 로그미분법 ②", "minutes": 58, "skip": false, "initial": false}, {"id": "calc4-14", "n": "14", "t": "3.8 쌍곡선함수와 역쌍곡선함수의 미분", "minutes": 47, "skip": false, "initial": false}]}, {"id": "calc5", "name": "미분적분학Ⅰ | 미분의 응용", "kind": "study", "items": [{"id": "calc5-1", "n": "1", "t": "제4장 미분의 응용. 4.1 선형근사와 미분", "minutes": 79, "skip": false, "initial": false}, {"id": "calc5-2", "n": "2", "t": "4.2 뉴턴방법(Newtons Method)", "minutes": 42, "skip": false, "initial": false}, {"id": "calc5-3", "n": "3", "t": "4.3 평균값 정리", "minutes": 46, "skip": false, "initial": false}, {"id": "calc5-4", "n": "4", "t": "4.3 평균값 정리 문제풀이 ①", "minutes": 50, "skip": false, "initial": false}, {"id": "calc5-5", "n": "5", "t": "4.3 평균값 정리 문제풀이 ②", "minutes": 55, "skip": false, "initial": false}, {"id": "calc5-6", "n": "6", "t": "4.4 곡선의 개형 ①", "minutes": 58, "skip": false, "initial": false}, {"id": "calc5-7", "n": "7", "t": "4.4 곡선의 개형 ②", "minutes": 42, "skip": false, "initial": false}, {"id": "calc5-8", "n": "8", "t": "4.4 곡선의 개형 ① 문제풀이", "minutes": 69, "skip": false, "initial": false}, {"id": "calc5-9", "n": "9", "t": "4.5 최댓값과 최솟값 ①", "minutes": 54, "skip": false, "initial": false}, {"id": "calc5-10", "n": "10", "t": "4.5 최댓값과 최솟값 ②", "minutes": 76, "skip": false, "initial": false}, {"id": "calc5-11", "n": "11", "t": "4.5 최댓값과 최솟값 ③", "minutes": 59, "skip": false, "initial": false}, {"id": "calc5-12", "n": "12", "t": "4.6 변화율(The Rate of Change)", "minutes": 60, "skip": false, "initial": false}, {"id": "calc5-13", "n": "13", "t": "4.7 로피탈 정리(L.Hospitals Rule)", "minutes": 64, "skip": false, "initial": false}, {"id": "calc5-14", "n": "14", "t": "4.8 곡률(Curvature)", "minutes": 60, "skip": false, "initial": false}]}, {"id": "calc6", "name": "미분적분학Ⅰ | 함수의 적분", "kind": "study", "items": [{"id": "calc6-1", "n": "1", "t": "제5장 함수의 적분. 5.1 부정적분", "minutes": 48, "skip": false, "initial": false}, {"id": "calc6-2", "n": "2", "t": "5.2 정적분 ①", "minutes": 65, "skip": false, "initial": false}, {"id": "calc6-3", "n": "3", "t": "5.2 정적분 ②", "minutes": 58, "skip": false, "initial": false}, {"id": "calc6-4", "n": "4", "t": "5.2 정적분 ③", "minutes": 52, "skip": false, "initial": false}, {"id": "calc6-5", "n": "5", "t": "5.3 정적분의 성질 ①", "minutes": 65, "skip": false, "initial": false}, {"id": "calc6-6", "n": "6", "t": "5.3 정적분의 성질 ②", "minutes": 49, "skip": false, "initial": false}, {"id": "calc6-7", "n": "7", "t": "5.3 정적분의 성질 ③", "minutes": 66, "skip": false, "initial": false}, {"id": "calc6-8", "n": "8", "t": "5.3 정적분의 성질 ④", "minutes": 67, "skip": false, "initial": false}, {"id": "calc6-9", "n": "9", "t": "5.4 치환적분 ①", "minutes": 63, "skip": false, "initial": false}, {"id": "calc6-10", "n": "10", "t": "5.4 치환적분 ②", "minutes": 56, "skip": false, "initial": false}, {"id": "calc6-11", "n": "11", "t": "5.5 부분적분", "minutes": 88, "skip": false, "initial": false}, {"id": "calc6-12", "n": "12", "t": "5.6 삼각함수의 적분 ①", "minutes": 65, "skip": false, "initial": false}, {"id": "calc6-13", "n": "13", "t": "5.6 삼각함수의 적분 ②", "minutes": 80, "skip": false, "initial": false}, {"id": "calc6-14", "n": "14", "t": "5.7 유리함수의 적분", "minutes": 63, "skip": false, "initial": false}, {"id": "calc6-15", "n": "15", "t": "5.8 수치적분", "minutes": 51, "skip": false, "initial": false}, {"id": "calc6-16", "n": "16", "t": "5.9 이상적분 ①", "minutes": 42, "skip": false, "initial": false}, {"id": "calc6-17", "n": "17", "t": "5.9 이상적분 ②", "minutes": 57, "skip": false, "initial": false}, {"id": "calc6-18", "n": "18", "t": "5.9 이상적분 문제풀이 ①", "minutes": 63, "skip": false, "initial": false}, {"id": "calc6-19", "n": "19", "t": "5.9 이상적분 문제풀이 ②", "minutes": 64, "skip": false, "initial": false}]}, {"id": "calc7", "name": "미분적분학Ⅰ | 무한급수", "kind": "study", "items": [{"id": "calc7-1", "n": "1", "t": "제8장 무한급수. 8.1 수열", "minutes": 81, "skip": false, "initial": false}, {"id": "calc7-2", "n": "2", "t": "8.1 수열 문제풀이", "minutes": 68, "skip": false, "initial": false}, {"id": "calc7-3", "n": "3", "t": "8.2 무한급수와 일반항판정법", "minutes": 65, "skip": false, "initial": false}, {"id": "calc7-4", "n": "4", "t": "8.2 무한급수와 일반항판정법 문제풀이 ①", "minutes": 53, "skip": false, "initial": false}, {"id": "calc7-5", "n": "5", "t": "8.2 무한급수와 일반항판정법 문제풀이 ②", "minutes": 33, "skip": false, "initial": false}, {"id": "calc7-6", "n": "6", "t": "8.3 양항급수 : 적분 판정법", "minutes": 65, "skip": false, "initial": false}, {"id": "calc7-7", "n": "7", "t": "8.3 양항급수 : 적분 판정법 문제풀이 ①", "minutes": 75, "skip": false, "initial": false}, {"id": "calc7-8", "n": "8", "t": "8.3 양항급수 : 적분 판정법 문제풀이 ②", "minutes": 44, "skip": false, "initial": false}, {"id": "calc7-9", "n": "9", "t": "8.4 양항급수 : 비교판정법과 극한 비교판정법 - 비교판정법", "minutes": 49, "skip": false, "initial": false}, {"id": "calc7-10", "n": "10", "t": "8.4 양항급수 : 비교판정법과 극한 비교판정법 - 극한 비교판정법", "minutes": 61, "skip": false, "initial": false}, {"id": "calc7-11", "n": "11", "t": "8.5 교대급수 : 교대급수 판정법", "minutes": 56, "skip": false, "initial": false}, {"id": "calc7-12", "n": "12", "t": "8.5 교대급수 : 교대급수 판정법 문제풀이", "minutes": 66, "skip": false, "initial": false}, {"id": "calc7-13", "n": "13", "t": "8.6 비판정법과 제곱근판정법", "minutes": 52, "skip": false, "initial": false}, {"id": "calc7-14", "n": "14", "t": "8.6 비판정법과 제곱근판정법 문제풀이 ①", "minutes": 51, "skip": false, "initial": false}, {"id": "calc7-15", "n": "15", "t": "8.6 비판정법과 제곱근판정법 문제풀이 ②", "minutes": 69, "skip": false, "initial": false}, {"id": "calc7-16", "n": "16", "t": "제8장 무한급수 Summary : 무한급수의 수렴/발산 판단 전략", "minutes": 33, "skip": false, "initial": false}]}, {"id": "calc8", "name": "미분적분학Ⅰ | 멱급수와 함수의 급수전개", "kind": "study", "items": [{"id": "calc8-1", "n": "1", "t": "제9장 멱급수와 함수의 급수전개. 9.1 멱급수", "minutes": 59, "skip": false, "initial": false}, {"id": "calc8-2", "n": "2", "t": "9.1 멱급수 문제풀이 ①", "minutes": 60, "skip": false, "initial": false}, {"id": "calc8-3", "n": "3", "t": "9.1 멱급수 문제풀이 ②", "minutes": 64, "skip": false, "initial": false}, {"id": "calc8-4", "n": "4", "t": "9.1 멱급수 문제풀이 ③", "minutes": 49, "skip": false, "initial": false}, {"id": "calc8-5", "n": "5", "t": "9.2 멱급수의 연산 ①", "minutes": 34, "skip": false, "initial": false}, {"id": "calc8-6", "n": "6", "t": "9.2 멱급수의 연산 ②", "minutes": 58, "skip": false, "initial": false}, {"id": "calc8-7", "n": "7", "t": "9.2 멱급수의 연산 ③", "minutes": 47, "skip": false, "initial": false}, {"id": "calc8-8", "n": "8", "t": "9.3 테일러 급수와 매클로린 급수 ①", "minutes": 77, "skip": false, "initial": false}, {"id": "calc8-9", "n": "9", "t": "9.3 테일러 급수와 매클로린 급수 ②", "minutes": 57, "skip": false, "initial": false}, {"id": "calc8-10", "n": "10", "t": "9.3 테일러 급수와 매클로린 급수 ③", "minutes": 43, "skip": false, "initial": false}, {"id": "calc8-11", "n": "11", "t": "9.3 테일러 급수와 매클로린 급수 ④", "minutes": 52, "skip": false, "initial": false}, {"id": "calc8-12", "n": "12", "t": "9.3 테일러 급수와 매클로린 급수 ⑤ ▶ 종강", "minutes": 77, "skip": false, "initial": false}]}, {"id": "phy0", "name": "고등기초 물리학Ⅰ", "kind": "study", "items": [{"id": "phy0-OT", "n": "OT", "t": "OT", "minutes": 24, "skip": false, "initial": false}, {"id": "phy0-1", "n": "1", "t": "교재 소개", "minutes": 2, "skip": false, "initial": false}, {"id": "phy0-2", "n": "2", "t": "1강. 여러 가지 운동 (1) - 속력과 속도 (~11p 예제 ②)", "minutes": 86, "skip": false, "initial": false}, {"id": "phy0-3", "n": "3", "t": "2강. 여러 가지 운동 (2) - 가속도 (~12p)", "minutes": 42, "skip": false, "initial": false}, {"id": "phy0-4", "n": "4", "t": "3강. 여러 가지 운동 (3) - 등가속도 운동 (~14p)", "minutes": 26, "skip": false, "initial": false}, {"id": "phy0-5", "n": "5", "t": "4강. 여러 가지 운동 (4) - 시간 기록계 실험 해석 (17p)", "minutes": 53, "skip": false, "initial": false}, {"id": "phy0-6", "n": "6", "t": "5강. 여러 가지 운동 (5) - 개념 확인 예제 08번 (~21p)", "minutes": 53, "skip": false, "initial": false}, {"id": "phy0-7", "n": "7", "t": "6강. 여러 가지 운동 (6) - 수능 맛보기 04번 (~25p)", "minutes": 53, "skip": false, "initial": false}, {"id": "phy0-8", "n": "8", "t": "7강. 뉴턴 운동 법칙 (1) - 관성좌표계 (~27p)", "minutes": 32, "skip": false, "initial": false}, {"id": "phy0-9", "n": "9", "t": "8강. 뉴턴 운동 법칙 (2) - 힘과 운동의 관계 예제 ③ (~29p)", "minutes": 65, "skip": false, "initial": false}, {"id": "phy0-10", "n": "10", "t": "9강. 뉴턴 운동 법칙 (3) - 역학계 (~30p)", "minutes": 39, "skip": false, "initial": false}, {"id": "phy0-11", "n": "11", "t": "10강. 뉴턴 운동 법칙 (4) - 작용 반작용 법칙 (~31p)", "minutes": 47, "skip": false, "initial": false}, {"id": "phy0-12", "n": "12", "t": "11강. 뉴턴 운동 법칙 (5) - 개념 확인 예제 9 (~35p)", "minutes": 39, "skip": false, "initial": false}, {"id": "phy0-13", "n": "13", "t": "12강. 뉴턴 운동 법칙 (6) - 수능 맛보기 04번 (~39p)", "minutes": 31, "skip": false, "initial": false}, {"id": "phy0-14", "n": "14", "t": "13강. 운동량과 충격량 (1) - 예제 03번 (~42p)", "minutes": 52, "skip": false, "initial": false}, {"id": "phy0-15", "n": "15", "t": "14강. 운동량과 충격량 (2) - 힘과 시간에 따른 충격력 (~44p)", "minutes": 39, "skip": false, "initial": false}, {"id": "phy0-16", "n": "16", "t": "15강. 운동량과 충격량 (3) - 개념 확인 예제 08번 (~47p)", "minutes": 24, "skip": false, "initial": false}, {"id": "phy0-17", "n": "17", "t": "16강. 운동량과 충격량 (4) - 수능 맛보기 (~51p)", "minutes": 27, "skip": false, "initial": false}, {"id": "phy0-18", "n": "18", "t": "17강. 역학적 에너지 보존 (1) 실험 탐구 자료 (~56p)", "minutes": 52, "skip": false, "initial": false}, {"id": "phy0-19", "n": "19", "t": "18강. 역학적 에너지 보존 (2) - 퍼텐셜 에너지 (~59p)", "minutes": 43, "skip": false, "initial": false}, {"id": "phy0-20", "n": "20", "t": "19강. 역학적 에너지 보존 (3) - 탄성력 (~60p)", "minutes": 45, "skip": false, "initial": false}, {"id": "phy0-21", "n": "21", "t": "20강. 역학적 에너지 보존 (4) - 중력이 작용할 때 (~64p)", "minutes": 62, "skip": false, "initial": false}, {"id": "phy0-22", "n": "22", "t": "21강. 역학적 에너지 보존 (5) - 개념 확인 예제 (~67p)", "minutes": 41, "skip": false, "initial": false}, {"id": "phy0-23", "n": "23", "t": "22강. 역학적 에너지 보존 (6) - 수능 맛보기 (~71p)", "minutes": 42, "skip": false, "initial": false}, {"id": "phy0-24", "n": "24", "t": "23강. 열역학 법칙 (1) - 예제 02번 (~74p)", "minutes": 43, "skip": false, "initial": false}, {"id": "phy0-25", "n": "25", "t": "24강. 열역학 법칙 (2) - 열역학 제2법칙 (~78p)", "minutes": 48, "skip": false, "initial": false}, {"id": "phy0-26", "n": "26", "t": "25강. 열역학 법칙 (3) - 개념 확인 예제 (~81p)", "minutes": 16, "skip": false, "initial": false}, {"id": "phy0-27", "n": "27", "t": "26강. 열역학 법칙 (4) - 수능 맛보기 (~85p)", "minutes": 26, "skip": false, "initial": false}, {"id": "phy0-28", "n": "28", "t": "27강. 특수 상대성 이론 (1) - 마이컬슨 몰리 실험 (~89p)", "minutes": 36, "skip": true, "initial": false}, {"id": "phy0-29", "n": "29", "t": "28강. 특수 상대성 이론 (2) - 동시성의 상대성 (~91p 예제 ④)", "minutes": 57, "skip": true, "initial": false}, {"id": "phy0-30", "n": "30", "t": "29강. 특수 상대성 이론 (3) - 시간 지연, 길이 수축 (~94p)", "minutes": 52, "skip": true, "initial": false}, {"id": "phy0-31", "n": "31", "t": "30강. 특수 상대성 이론 (4) - 개념 확인 예제 11번 (~97p)", "minutes": 55, "skip": true, "initial": false}, {"id": "phy0-32", "n": "32", "t": "31강. 특수 상대성 이론 (5) - 수능 맛보기 (~101p)", "minutes": 38, "skip": true, "initial": false}, {"id": "phy0-33", "n": "33", "t": "32강. 질량과 에너지 (1) - 개념 확인 예제 (~106p)", "minutes": 26, "skip": true, "initial": false}, {"id": "phy0-34", "n": "34", "t": "33강. 질량과 에너지 (2) - 수능 맛보기 (~111p)", "minutes": 11, "skip": true, "initial": false}, {"id": "phy0-35", "n": "35", "t": "34강. 원자와 전기력 (1) - 원자에 속박된 전자의 에너지 (~118p)", "minutes": 29, "skip": true, "initial": false}, {"id": "phy0-36", "n": "36", "t": "35강. 원자와 전기력 (2) - Review 전기력합성유형 (~119p)", "minutes": 57, "skip": false, "initial": false}, {"id": "phy0-37", "n": "37", "t": "36강. 원자와 전기력 (3) - 수능 맛보기 (~125p)", "minutes": 26, "skip": false, "initial": false}, {"id": "phy0-38", "n": "38", "t": "37강. 원자의 스펙트럼 (1) - 수소의 선 스펙트럼 계열 (~128p)", "minutes": 37, "skip": true, "initial": false}, {"id": "phy0-39", "n": "39", "t": "38강. 원자의 스펙트럼 (2) - 수능 맛보기 (~135p)", "minutes": 15, "skip": true, "initial": false}, {"id": "phy0-40", "n": "40", "t": "39강. 에너지 띠와 반도체 (1) - 전기 전도도 (~138p)", "minutes": 39, "skip": false, "initial": false}, {"id": "phy0-41", "n": "41", "t": "40강. 에너지 띠와 반도체 (2) - 광 다이오드 (~142p)", "minutes": 43, "skip": false, "initial": false}, {"id": "phy0-42", "n": "42", "t": "41강. 에너지 띠와 반도체 (3) - 수능 맛보기 (~149p)", "minutes": 29, "skip": false, "initial": false}, {"id": "phy0-43", "n": "43", "t": "42강. 전류에 의한 자기 작용 (1) - 전류에 의한 자기장 (~154p)", "minutes": 30, "skip": false, "initial": false}, {"id": "phy0-44", "n": "44", "t": "43강. 전류에 의한 자기 작용 (2) - 전류에 의한 자기 작용의 이용 (~156p)", "minutes": 24, "skip": false, "initial": false}, {"id": "phy0-45", "n": "45", "t": "44강. 전류에 의한 자기작용 (3) - 수능 맛보기 (~163p)", "minutes": 41, "skip": false, "initial": false}, {"id": "phy0-46", "n": "46", "t": "45강. 물질의 자성 (1) - 자성체의 종류와 이용 (~166p)", "minutes": 29, "skip": false, "initial": false}, {"id": "phy0-47", "n": "47", "t": "46강. 물질의 자성 (2) - 수능 맛보기 (~173p)", "minutes": 15, "skip": false, "initial": false}, {"id": "phy0-48", "n": "48", "t": "47강. 전자기 유도 (1) - 패러데이 전자기 유도 법칙 (~175p)", "minutes": 25, "skip": false, "initial": false}, {"id": "phy0-49", "n": "49", "t": "48강. 전자기 유도 (2) - 전자기 유도의 이용 (~178p)", "minutes": 48, "skip": false, "initial": false}, {"id": "phy0-50", "n": "50", "t": "49강. 전자기 유도 (3) - 수능 맛보기 (~185p)", "minutes": 47, "skip": false, "initial": false}, {"id": "phy0-51", "n": "51", "t": "50강. 파동의 성질 (1) - 파동의 속력, 진동수, 파장의 관계 (~189p)", "minutes": 39, "skip": false, "initial": false}, {"id": "phy0-52", "n": "52", "t": "51강. 파동의 성질 (2) - 파동의 굴절 (~191p)", "minutes": 52, "skip": false, "initial": false}, {"id": "phy0-53", "n": "53", "t": "52강. 파동의 성질 (3) - 수능 맛보기 (~199p)", "minutes": 24, "skip": false, "initial": false}, {"id": "phy0-54", "n": "54", "t": "53강. 전반사와 광통신 (1) - 전반사 (~201p)", "minutes": 23, "skip": false, "initial": false}, {"id": "phy0-55", "n": "55", "t": "54강. 전반사와 광통신 (2) - 수능 맛 보기 4번 (~209p)", "minutes": 36, "skip": false, "initial": false}, {"id": "phy0-56", "n": "56", "t": "55강. 전자기파 - 전자기파의 종류와 이용 + 문제 풀이 (~217p)", "minutes": 22, "skip": false, "initial": false}, {"id": "phy0-57", "n": "57", "t": "56강. 파동의 간섭 (1) - 간섭 조건 (~218p)", "minutes": 49, "skip": false, "initial": false}, {"id": "phy0-58", "n": "58", "t": "57강. 파동의 간섭 (2) - 간섭의 이용 (~222p)", "minutes": 44, "skip": false, "initial": false}, {"id": "phy0-59", "n": "59", "t": "58강. 파동의 간섭 (3) - 수능 맛보기 (~229p)", "minutes": 27, "skip": false, "initial": false}, {"id": "phy0-60", "n": "60", "t": "59강. 빛의 이중성 (1) - 전하 결합 소자 (~234p)", "minutes": 45, "skip": true, "initial": false}, {"id": "phy0-61", "n": "61", "t": "60강. 빛의 이중성 (2) - 수능 맛 보기 (~241p)", "minutes": 22, "skip": true, "initial": false}, {"id": "phy0-62", "n": "62", "t": "61강. 물질의 이중성 - 수능 맛 보기 (~253p) ▶완강", "minutes": 55, "skip": true, "initial": false}]}, {"id": "phy3", "name": "고등기초 물리학Ⅱ", "kind": "study", "items": [{"id": "phy3-OT", "n": "OT", "t": "OT", "minutes": 20, "skip": false, "initial": false}, {"id": "phy3-1", "n": "1", "t": "01강. 힘의 합성과 분해 - 개념 설명 (6~8p) / OX Screen + 수능 맛보기 (10~13p)", "minutes": 60, "skip": false, "initial": false}, {"id": "phy3-2", "n": "2", "t": "02강. 물체의 평형 (1) - 돌림힘 평형 (16p 예제 03)", "minutes": 41, "skip": false, "initial": false}, {"id": "phy3-3", "n": "3", "t": "03강. 물체의 평형 (2) - 질량 중심 (18p 예제 05 ★)", "minutes": 40, "skip": false, "initial": false}, {"id": "phy3-4", "n": "4", "t": "04강. 물체의 평형 (3) - 무게 중심의 활용 (20p 개념 확인 예제⑧)", "minutes": 58, "skip": false, "initial": false}, {"id": "phy3-5", "n": "5", "t": "05강. 물체의 평형 (4) - 구조물의 안정성 (21p) / OX Screen + 수능 맛보기 (22~27p)", "minutes": 84, "skip": false, "initial": false}, {"id": "phy3-6", "n": "6", "t": "06강. 평면에서 등가속도 운동 (1) - 등가속도 직선 운동 (29p 개념 확인 예제②)", "minutes": 48, "skip": false, "initial": false}, {"id": "phy3-7", "n": "7", "t": "07강. 평면에서 등가속도 운동 (2) - 비스듬히 위로 던진 물체의 운동 (33p 개념 확인 예제⑥)", "minutes": 55, "skip": false, "initial": false}, {"id": "phy3-8", "n": "8", "t": "08강. 평면에서 등가속도 운동 (3) - 문제풀이 TIP (① 중력 제거, ② 축 돌리기_빗면 위 포물선 운동)", "minutes": 31, "skip": false, "initial": false}, {"id": "phy3-9", "n": "9", "t": "09강. 평면에서 등가속도 운동 (4) - OX Screen + 수능 맛보기 (34~40p)", "minutes": 59, "skip": false, "initial": false}, {"id": "phy3-10", "n": "10", "t": "[보충강의 ①] 등가속도 운동", "minutes": 13, "skip": false, "initial": false}, {"id": "phy3-11", "n": "11", "t": "10강. 등속 원운동 (1) - 원운동의 분석 (45p 개념 확인 예제②)", "minutes": 35, "skip": false, "initial": false}, {"id": "phy3-12", "n": "12", "t": "11강. 등속 원운동 (2) - OX Screen + 수능 맛보기 (46~49p)", "minutes": 35, "skip": false, "initial": false}, {"id": "phy3-13", "n": "13", "t": "12강. 행성의 운동 (1) - 인공위성의 원궤도 운동 (53p 개념 확인 예제⑦)", "minutes": 58, "skip": false, "initial": false}, {"id": "phy3-14", "n": "14", "t": "13강. 행성의 운동 (2) - OX Screen + 수능 맛보기 (54~59p)", "minutes": 41, "skip": false, "initial": false}, {"id": "phy3-15", "n": "15", "t": "14강. 등가 원리 (1) - 가속도 운동을 하는 버스 안에서 관성력 (60p 개념 확인 예제①)", "minutes": 46, "skip": false, "initial": false}, {"id": "phy3-16", "n": "16", "t": "15강. 등가 원리 (2) - 무중력 상태 (63p LINK_3 떨어지는 물병)", "minutes": 40, "skip": false, "initial": false}, {"id": "phy3-17", "n": "17", "t": "16강. 중력 렌즈와 블랙홀 (1) - 블랙홀 (69p 개념 확인 예제⑥)", "minutes": 72, "skip": true, "initial": false}, {"id": "phy3-18", "n": "18", "t": "17강. 등가 원리 (3) + 중력 렌즈와 블랙홀 (2) - OX Screen + 수능 맛보기 (64~65p, 70~71p)", "minutes": 19, "skip": true, "initial": false}, {"id": "phy3-19", "n": "19", "t": "18강. 일과 운동 에너지 - 개념 정리 / OX Screen + 수능 맛보기 (78~79p)", "minutes": 49, "skip": false, "initial": false}, {"id": "phy3-20", "n": "20", "t": "19강. 역학적 에너지 보존 (1) - 수평 방향으로 던진 물체의 역학적 에너지 보존 (83p)", "minutes": 27, "skip": false, "initial": false}, {"id": "phy3-21", "n": "21", "t": "20강. 역학적 에너지 보존 (2) - 단진동하는 물체의 운동 (85p 개념 확인 예제⑥)", "minutes": 28, "skip": false, "initial": false}, {"id": "phy3-22", "n": "22", "t": "21강. 역학적 에너지 보존 (3) - OX Screen + 수능 맛보기 (86~91p)", "minutes": 60, "skip": false, "initial": false}, {"id": "phy3-23", "n": "23", "t": "22강. 역학적 에너지 보존 (4) - [참고] 부등속 원운동", "minutes": 21, "skip": false, "initial": false}, {"id": "phy3-24", "n": "24", "t": "23강. 열과 일 (1) - 이상 기체의 일과 내부 에너지 (94p 개념 확인 예제④)", "minutes": 38, "skip": false, "initial": false}, {"id": "phy3-25", "n": "25", "t": "[보충강의①] 열역학적 과정 정리", "minutes": 20, "skip": false, "initial": false}, {"id": "phy3-26", "n": "26", "t": "[보충강의②] 이상 기체의 내부에너지 증명", "minutes": 20, "skip": false, "initial": false}, {"id": "phy3-27", "n": "27", "t": "24강. 열과 일 (2) - OX Screen + 수능 맛보기 (96~99p)", "minutes": 21, "skip": false, "initial": false}, {"id": "phy3-28", "n": "28", "t": "25강. 전기장과 정전기 유도 (1) - 검전기 (107p 개념 확인 예제⑧)", "minutes": 49, "skip": false, "initial": false}, {"id": "phy3-29", "n": "29", "t": "26강. 전기장과 정전기 유도 (2) - 생활 속의 정전기 유도 / OX Screen + 수능 맛보기 (110~113p)", "minutes": 40, "skip": false, "initial": false}, {"id": "phy3-30", "n": "30", "t": "[보충강의①] 점전하에 의한 전기장과 전위", "minutes": 19, "skip": false, "initial": false}, {"id": "phy3-31", "n": "31", "t": "[보충강의②] 전기장과 전위의 관계", "minutes": 26, "skip": false, "initial": false}, {"id": "phy3-32", "n": "32", "t": "27강. 직류 회로와 전기 에너지 (1) - 옴의 법칙 (116p 개념 확인 예제③)", "minutes": 46, "skip": false, "initial": false}, {"id": "phy3-33", "n": "33", "t": "28강. 직류 회로와 전기 에너지 (2) - 저항의 소비 전력 (119p 개념 확인 예제⑥)", "minutes": 34, "skip": false, "initial": false}, {"id": "phy3-34", "n": "34", "t": "[보충강의] 물리학Ⅰ- 에너지띠와 반도체 (1)", "minutes": 49, "skip": false, "initial": false}, {"id": "phy3-35", "n": "35", "t": "[보충강의] 물리학Ⅰ- 에너지띠와 반도체 (2)", "minutes": 54, "skip": false, "initial": false}, {"id": "phy3-36", "n": "36", "t": "29강. 직류 회로와 전기 에너지 (3) - OX Screen + 수능 맛보기 (120~124p)", "minutes": 37, "skip": false, "initial": false}, {"id": "phy3-37", "n": "37", "t": "30강. 트랜지스터 (1) - 트랜지스터의 활용 (129p 개념 확인 예제⑤)", "minutes": 49, "skip": false, "initial": false}, {"id": "phy3-38", "n": "38", "t": "31강. 트랜지스터 (2) - OX Screen + 수능 맛보기 (130~132p)", "minutes": 26, "skip": false, "initial": false}, {"id": "phy3-39", "n": "39", "t": "32강. 축전기 (1) - 생활 속에서의 축전기 사용 (137p 개념 확인 예제⑥)", "minutes": 48, "skip": false, "initial": false}, {"id": "phy3-40", "n": "40", "t": "33강. 축전기 (2) - OX Screen + 수능 맛보기 (138~142p)", "minutes": 29, "skip": false, "initial": false}, {"id": "phy3-41", "n": "41", "t": "34강. 전류에 의한 자기장 (1) - 솔레노이드에 흐르는 전류에 의한 자기장 (149p 개념 확인 예제⑤)", "minutes": 29, "skip": false, "initial": false}, {"id": "phy3-42", "n": "42", "t": "35강. 전류에 의한 자기장 (2) - OX Screen + 수능 맛보기 (150~153p)", "minutes": 24, "skip": false, "initial": false}, {"id": "phy3-43", "n": "43", "t": "36강. 전자기 유도 (1) - 발전기에서의 유도 기전력 (159p 개념 확인 예제⑦)", "minutes": 47, "skip": false, "initial": false}, {"id": "phy3-44", "n": "44", "t": "37강. 전자기 유도 (2) - OX Screen + 수능 맛보기 (160~166p)", "minutes": 38, "skip": false, "initial": false}, {"id": "phy3-45", "n": "45", "t": "[보충강의] (심화) 자체유도 / 상호유도 기전력", "minutes": 25, "skip": false, "initial": false}, {"id": "phy3-46", "n": "46", "t": "38강. 상호유도 (1) - 상호유도의 이용 예(170p 개념 확인 예제③)", "minutes": 27, "skip": false, "initial": false}, {"id": "phy3-47", "n": "47", "t": "39강. 상호유도 (2) - OX Screen + 수능 맛보기 (172~174p)", "minutes": 20, "skip": false, "initial": false}, {"id": "phy3-48", "n": "48", "t": "[보충강의] 물리학Ⅰ- 파동의 간섭 기초", "minutes": 23, "skip": false, "initial": false}, {"id": "phy3-49", "n": "49", "t": "40강. 전자기파의 간섭과 회절 (1) - 단일 슬릿에 의한 회절의 해석 (181p 개념 확인 예제④)", "minutes": 59, "skip": false, "initial": false}, {"id": "phy3-50", "n": "50", "t": "41강. 전자기파의 간섭과 회절 (2) - 회절 현상 (183p 개념 확인 예제⑥) / OX Screen + 수능 맛보기", "minutes": 29, "skip": false, "initial": false}, {"id": "phy3-51", "n": "51", "t": "[보충강의] 도플러 관계식 유도", "minutes": 24, "skip": false, "initial": false}, {"id": "phy3-52", "n": "52", "t": "42강. 도플러 효과 (1) - 도플러 효과 활용의 예 (192p 개념 확인 예제③)", "minutes": 21, "skip": false, "initial": false}, {"id": "phy3-53", "n": "53", "t": "43강. 도플러 효과 (2) - OX Screen + 수능 맛보기 (194~196p)", "minutes": 20, "skip": false, "initial": false}, {"id": "phy3-54", "n": "54", "t": "[보충강의] 교류회로의 이론적 기초", "minutes": 19, "skip": false, "initial": false}, {"id": "phy3-55", "n": "55", "t": "44강. 전자기파의 발생과 무선 통신 (1) - 교류 회로와 고유(공명) 진동수 (200p 개념 확인 예제③)", "minutes": 25, "skip": false, "initial": false}, {"id": "phy3-56", "n": "56", "t": "45강. 전자기파의 발생과 무선 통신 (2) - 전자기파와 정보 통신 (202p 개념 확인 예제⑤)", "minutes": 30, "skip": false, "initial": false}, {"id": "phy3-57", "n": "57", "t": "46강. 볼록 렌즈 (1) - 볼록 렌즈의 이용 (211p 개념 확인 예제④)", "minutes": 49, "skip": false, "initial": false}, {"id": "phy3-58", "n": "58", "t": "47강. 볼록 렌즈 (2) - OX Screen + 수능 맛보기 (212~214p)", "minutes": 14, "skip": false, "initial": false}, {"id": "phy3-59", "n": "59", "t": "48강. 광전 효과와 빛의 입자성 (1) - 광전 효과 그래프 (221p 개념 확인 예제④)", "minutes": 38, "skip": true, "initial": false}, {"id": "phy3-60", "n": "60", "t": "49강. 광전 효과와 빛의 입자성 (2) - OX Screen + 수능 맛보기 (222~225p)", "minutes": 19, "skip": true, "initial": false}, {"id": "phy3-61", "n": "61", "t": "50강. 물질파와 입자의 파동성 (1) - 가속된 전자와 드브로이 파장 (229p 개념 확인 예제④)", "minutes": 25, "skip": true, "initial": false}, {"id": "phy3-62", "n": "62", "t": "51강. 물질파와 입자의 파동성 (2) - OX Screen + 수능 맛보기 (230~233p)", "minutes": 15, "skip": true, "initial": false}, {"id": "phy3-63", "n": "63", "t": "52강. 불확정성 원리 ▶완강", "minutes": 45, "skip": true, "initial": false}]}, {"id": "uni13", "name": "일반물리학1 | 벡터와 운동", "kind": "study", "items": [{"id": "uni13-1", "n": "1", "t": "Chapter 3. 물리량의 표현", "minutes": 65, "skip": false, "initial": false}, {"id": "uni13-2", "n": "2", "t": "Chapter 3. 벡터와 좌표계", "minutes": 147, "skip": false, "initial": false}, {"id": "uni13-3", "n": "3", "t": "Chapter 2. 1차원 운동학 물리량", "minutes": 78, "skip": false, "initial": false}, {"id": "uni13-4", "n": "4", "t": "Chapter 2. 1차원 운동의 종류", "minutes": 63, "skip": false, "initial": false}, {"id": "uni13-5", "n": "5", "t": "Chapter 4. 2차원 운동과 좌표계", "minutes": 81, "skip": false, "initial": false}, {"id": "uni13-6", "n": "6", "t": "Chapter 4. 포물선 운동", "minutes": 52, "skip": false, "initial": false}, {"id": "uni13-7", "n": "7", "t": "Chapter 4. 원운동과 상대운동", "minutes": 78, "skip": false, "initial": false}]}, {"id": "uni14", "name": "일반물리학1 | 힘과 운동, 역학적 에너지", "kind": "study", "items": [{"id": "uni14-1", "n": "1", "t": "Chapter 5. 힘과 운동법칙", "minutes": 42, "skip": false, "initial": false}, {"id": "uni14-2", "n": "2", "t": "Chapter 5. 여러가지 힘과 운동법칙 활용 ①", "minutes": 36, "skip": false, "initial": false}, {"id": "uni14-3", "n": "3", "t": "Chapter 5. 여러가지 힘과 운동법칙 활용 ②", "minutes": 64, "skip": false, "initial": false}, {"id": "uni14-4", "n": "4", "t": "Chapter 6. 마찰력과 운동법칙 활용", "minutes": 46, "skip": false, "initial": false}, {"id": "uni14-5", "n": "5", "t": "Chapter 6. 저항력과 원운동 분석", "minutes": 47, "skip": false, "initial": false}, {"id": "uni14-6", "n": "6", "t": "Chapter 7. 일과 에너지", "minutes": 82, "skip": false, "initial": false}, {"id": "uni14-7", "n": "7", "t": "Chapter 7. 일과 일률", "minutes": 58, "skip": false, "initial": false}, {"id": "uni14-8", "n": "8", "t": "Chapter 8. 고립계와 역학적 에너지", "minutes": 65, "skip": false, "initial": false}, {"id": "uni14-9", "n": "9", "t": "Chapter 8. 역학적 에너지 보존", "minutes": 31, "skip": false, "initial": false}]}, {"id": "uni15", "name": "일반물리학1 | 선운동량, 회전, 탄성 운동", "kind": "study", "items": [{"id": "uni15-1", "n": "1", "t": "Chapter 9. 질량 중심과 선운동량", "minutes": 72, "skip": false, "initial": false}, {"id": "uni15-2", "n": "2", "t": "Chapter 9. 충돌과 분열", "minutes": 93, "skip": false, "initial": false}, {"id": "uni15-3", "n": "3", "t": "Chapter 10. 강체와 의전운동", "minutes": 72, "skip": false, "initial": false}, {"id": "uni15-4", "n": "4", "t": "Chapter 10. 강체와 회전관성", "minutes": 64, "skip": false, "initial": false}, {"id": "uni15-5", "n": "5", "t": "Chapter 11. 강체 운동법칙", "minutes": 43, "skip": false, "initial": false}, {"id": "uni15-6", "n": "6", "t": "Chapter 11. 굴림운동", "minutes": 74, "skip": false, "initial": false}, {"id": "uni15-7", "n": "7", "t": "Chapter 11. 각운동량과 토크", "minutes": 74, "skip": false, "initial": false}, {"id": "uni15-8", "n": "8", "t": "Chapter 12. 정적평형", "minutes": 76, "skip": false, "initial": false}, {"id": "uni15-9", "n": "9", "t": "Chapter 12. 탄성과 변형률", "minutes": 32, "skip": false, "initial": false}]}, {"id": "uni16", "name": "일반물리학1 | 유체, 파동, 열역학", "kind": "study", "items": [{"id": "uni16-1", "n": "1", "t": "Chapter 13. 중력과 에너지", "minutes": 102, "skip": false, "initial": false}, {"id": "uni16-2", "n": "2", "t": "Chapter 13. 케플러 법칙과 위성의 운동", "minutes": 62, "skip": false, "initial": false}, {"id": "uni16-3", "n": "3", "t": "Chapter 14. 유제 정역학", "minutes": 69, "skip": false, "initial": false}, {"id": "uni16-4", "n": "4", "t": "Chapter 14. 유체 동역학", "minutes": 44, "skip": false, "initial": false}, {"id": "uni16-5", "n": "5", "t": "Chapter 15. 단진동과 용수철 진자", "minutes": 60, "skip": false, "initial": false}, {"id": "uni16-6", "n": "6", "t": "Chapter 15. 단조화 진동 발전 개념", "minutes": 30, "skip": false, "initial": false}, {"id": "uni16-7", "n": "7", "t": "Chapter 15. 단진자와 물리진자", "minutes": 50, "skip": false, "initial": false}, {"id": "uni16-8", "n": "8", "t": "Chapter 16. 파동의 표현과 파동함수", "minutes": 69, "skip": false, "initial": false}, {"id": "uni16-9", "n": "9", "t": "Chapter 16. 파동의 중첩과 위상자", "minutes": 86, "skip": false, "initial": false}, {"id": "uni16-10", "n": "10", "t": "Chapter 16. 현에서의 정상파", "minutes": 43, "skip": false, "initial": false}, {"id": "uni16-11", "n": "11", "t": "Chapter 17. 음파의 표현과 세기", "minutes": 76, "skip": false, "initial": false}, {"id": "uni16-12", "n": "12", "t": "Chapter 17. 음파의 성질", "minutes": 57, "skip": false, "initial": false}, {"id": "uni16-13", "n": "13", "t": "Chapter 18. 온도와 열현상", "minutes": 47, "skip": false, "initial": false}, {"id": "uni16-14", "n": "14", "t": "Chapter 19. 기체분자 운동", "minutes": 35, "skip": false, "initial": false}, {"id": "uni16-15", "n": "15", "t": "Chapter 18,19. 열역학 1법칙과 열역학 과정", "minutes": 111, "skip": false, "initial": false}, {"id": "uni16-16", "n": "16", "t": "Chapter 18. 열전달", "minutes": 28, "skip": false, "initial": false}, {"id": "uni16-17", "n": "17", "t": "Chapter 20. 열역학 2법칙과 거시적 엔트로피 ▶종강", "minutes": 43, "skip": false, "initial": false}]}, {"id": "robot01", "name": "Python 기초", "kind": "robot", "items": [{"id": "robot01-1", "n": "1", "t": "변수", "minutes": null}, {"id": "robot01-2", "n": "2", "t": "대입문", "minutes": null}, {"id": "robot01-3", "n": "3", "t": "정수형과 실수형", "minutes": null}, {"id": "robot01-4", "n": "4", "t": "문자열", "minutes": null}, {"id": "robot01-5", "n": "5", "t": "불리언", "minutes": null}, {"id": "robot01-6", "n": "6", "t": "None", "minutes": null}, {"id": "robot01-7", "n": "7", "t": "산술 연산자", "minutes": null}, {"id": "robot01-8", "n": "8", "t": "비교 연산자", "minutes": null}, {"id": "robot01-9", "n": "9", "t": "논리 연산자", "minutes": null}, {"id": "robot01-10", "n": "10", "t": "형변환", "minutes": null}, {"id": "robot01-11", "n": "11", "t": "input과 print", "minutes": null}, {"id": "robot01-12", "n": "12", "t": "문자열 인덱싱", "minutes": null}, {"id": "robot01-13", "n": "13", "t": "문자열 슬라이싱", "minutes": null}, {"id": "robot01-14", "n": "14", "t": "문자열 메서드", "minutes": null}, {"id": "robot01-15", "n": "15", "t": "f-string", "minutes": null}, {"id": "robot01-16", "n": "16", "t": "리스트", "minutes": null}, {"id": "robot01-17", "n": "17", "t": "튜플", "minutes": null}, {"id": "robot01-18", "n": "18", "t": "딕셔너리", "minutes": null}, {"id": "robot01-19", "n": "19", "t": "집합", "minutes": null}, {"id": "robot01-20", "n": "20", "t": "if문", "minutes": null}, {"id": "robot01-21", "n": "21", "t": "elif문", "minutes": null}, {"id": "robot01-22", "n": "22", "t": "else문", "minutes": null}, {"id": "robot01-23", "n": "23", "t": "중첩 조건문", "minutes": null}, {"id": "robot01-24", "n": "24", "t": "for문", "minutes": null}, {"id": "robot01-25", "n": "25", "t": "range 함수", "minutes": null}, {"id": "robot01-26", "n": "26", "t": "while문", "minutes": null}, {"id": "robot01-27", "n": "27", "t": "break문", "minutes": null}, {"id": "robot01-28", "n": "28", "t": "continue문", "minutes": null}, {"id": "robot01-29", "n": "29", "t": "함수 정의", "minutes": null}, {"id": "robot01-30", "n": "30", "t": "매개변수와 인자", "minutes": null}, {"id": "robot01-31", "n": "31", "t": "return문", "minutes": null}, {"id": "robot01-32", "n": "32", "t": "지역변수와 전역변수", "minutes": null}, {"id": "robot01-33", "n": "33", "t": "기본 인자", "minutes": null}, {"id": "robot01-34", "n": "34", "t": "리스트 컴프리헨션", "minutes": null}, {"id": "robot01-35", "n": "35", "t": "모듈과 import", "minutes": null}, {"id": "robot01-36", "n": "36", "t": "파일 읽기와 쓰기", "minutes": null}, {"id": "robot01-37", "n": "37", "t": "with문", "minutes": null}, {"id": "robot01-38", "n": "38", "t": "CSV 읽기와 쓰기", "minutes": null}, {"id": "robot01-39", "n": "39", "t": "try-except문", "minutes": null}, {"id": "robot01-40", "n": "40", "t": "클래스와 객체", "minutes": null}, {"id": "robot01-41", "n": "41", "t": "NumPy 배열", "minutes": null}, {"id": "robot01-42", "n": "42", "t": "배열 shape와 dtype", "minutes": null}, {"id": "robot01-43", "n": "43", "t": "배열 인덱싱과 마스킹", "minutes": null}, {"id": "robot01-44", "n": "44", "t": "브로드캐스팅", "minutes": null}, {"id": "robot01-45", "n": "45", "t": "Matplotlib 그래프", "minutes": null}]}, {"id": "robot02", "name": "Linux·Git·테스트", "kind": "robot", "items": [{"id": "robot02-1", "n": "1", "t": "Linux 디렉터리 구조", "minutes": null}, {"id": "robot02-2", "n": "2", "t": "절대경로와 상대경로", "minutes": null}, {"id": "robot02-3", "n": "3", "t": "pwd와 cd", "minutes": null}, {"id": "robot02-4", "n": "4", "t": "ls와 파일 검색", "minutes": null}, {"id": "robot02-5", "n": "5", "t": "mkdir와 cp와 mv", "minutes": null}, {"id": "robot02-6", "n": "6", "t": "파일 내용 조회", "minutes": null}, {"id": "robot02-7", "n": "7", "t": "표준 입력과 출력", "minutes": null}, {"id": "robot02-8", "n": "8", "t": "리다이렉션과 파이프", "minutes": null}, {"id": "robot02-9", "n": "9", "t": "파일 권한", "minutes": null}, {"id": "robot02-10", "n": "10", "t": "프로세스와 종료 코드", "minutes": null}, {"id": "robot02-11", "n": "11", "t": "환경변수와 PATH", "minutes": null}, {"id": "robot02-12", "n": "12", "t": "패키지 관리", "minutes": null}, {"id": "robot02-13", "n": "13", "t": "Python 가상환경", "minutes": null}, {"id": "robot02-14", "n": "14", "t": "시리얼 장치 권한", "minutes": null}, {"id": "robot02-15", "n": "15", "t": "IP 주소와 포트", "minutes": null}, {"id": "robot02-16", "n": "16", "t": "SSH", "minutes": null}, {"id": "robot02-17", "n": "17", "t": "Git 저장소", "minutes": null}, {"id": "robot02-18", "n": "18", "t": "git status와 diff", "minutes": null}, {"id": "robot02-19", "n": "19", "t": "git add와 commit", "minutes": null}, {"id": "robot02-20", "n": "20", "t": "브랜치", "minutes": null}, {"id": "robot02-21", "n": "21", "t": "merge와 충돌 해결", "minutes": null}, {"id": "robot02-22", "n": "22", "t": "원격 저장소와 push/pull", "minutes": null}, {"id": "robot02-23", "n": "23", "t": "태그와 버전 복원", "minutes": null}, {"id": "robot02-24", "n": "24", "t": "README", "minutes": null}, {"id": "robot02-25", "n": "25", "t": "assert", "minutes": null}, {"id": "robot02-26", "n": "26", "t": "단위 테스트", "minutes": null}, {"id": "robot02-27", "n": "27", "t": "경계값 테스트", "minutes": null}, {"id": "robot02-28", "n": "28", "t": "로그와 오류 재현", "minutes": null}]}, {"id": "robot03", "name": "C/C++와 빌드", "kind": "robot", "items": [{"id": "robot03-1", "n": "1", "t": "C 기본 자료형", "minutes": null}, {"id": "robot03-2", "n": "2", "t": "변수와 상수", "minutes": null}, {"id": "robot03-3", "n": "3", "t": "연산자", "minutes": null}, {"id": "robot03-4", "n": "4", "t": "if문과 switch문", "minutes": null}, {"id": "robot03-5", "n": "5", "t": "for문과 while문", "minutes": null}, {"id": "robot03-6", "n": "6", "t": "배열", "minutes": null}, {"id": "robot03-7", "n": "7", "t": "문자 배열", "minutes": null}, {"id": "robot03-8", "n": "8", "t": "함수", "minutes": null}, {"id": "robot03-9", "n": "9", "t": "주소 연산자", "minutes": null}, {"id": "robot03-10", "n": "10", "t": "포인터", "minutes": null}, {"id": "robot03-11", "n": "11", "t": "포인터와 배열", "minutes": null}, {"id": "robot03-12", "n": "12", "t": "구조체", "minutes": null}, {"id": "robot03-13", "n": "13", "t": "메모리 할당과 해제", "minutes": null}, {"id": "robot03-14", "n": "14", "t": "변수 수명", "minutes": null}, {"id": "robot03-15", "n": "15", "t": "C++ 입출력", "minutes": null}, {"id": "robot03-16", "n": "16", "t": "참조", "minutes": null}, {"id": "robot03-17", "n": "17", "t": "const", "minutes": null}, {"id": "robot03-18", "n": "18", "t": "std::string", "minutes": null}, {"id": "robot03-19", "n": "19", "t": "std::vector", "minutes": null}, {"id": "robot03-20", "n": "20", "t": "범위 기반 for문", "minutes": null}, {"id": "robot03-21", "n": "21", "t": "클래스와 객체", "minutes": null}, {"id": "robot03-22", "n": "22", "t": "생성자와 소멸자", "minutes": null}, {"id": "robot03-23", "n": "23", "t": "캡슐화", "minutes": null}, {"id": "robot03-24", "n": "24", "t": "RAII", "minutes": null}, {"id": "robot03-25", "n": "25", "t": "unique_ptr와 shared_ptr", "minutes": null}, {"id": "robot03-26", "n": "26", "t": "템플릿 기초", "minutes": null}, {"id": "robot03-27", "n": "27", "t": "헤더와 소스 파일", "minutes": null}, {"id": "robot03-28", "n": "28", "t": "컴파일과 링크", "minutes": null}, {"id": "robot03-29", "n": "29", "t": "CMake", "minutes": null}, {"id": "robot03-30", "n": "30", "t": "컴파일 경고", "minutes": null}, {"id": "robot03-31", "n": "31", "t": "디버거와 중단점", "minutes": null}, {"id": "robot03-32", "n": "32", "t": "정수 오버플로와 카운터 래핑", "minutes": null}]}, {"id": "robot04", "name": "로봇 수학과 역학", "kind": "robot", "items": [{"id": "robot04-1", "n": "1", "t": "SI 단위", "minutes": null}, {"id": "robot04-2", "n": "2", "t": "단위 환산", "minutes": null}, {"id": "robot04-3", "n": "3", "t": "지수와 로그", "minutes": null}, {"id": "robot04-4", "n": "4", "t": "함수와 그래프", "minutes": null}, {"id": "robot04-5", "n": "5", "t": "삼각함수", "minutes": null}, {"id": "robot04-6", "n": "6", "t": "라디안", "minutes": null}, {"id": "robot04-7", "n": "7", "t": "벡터 성분", "minutes": null}, {"id": "robot04-8", "n": "8", "t": "벡터 내적", "minutes": null}, {"id": "robot04-9", "n": "9", "t": "벡터 외적", "minutes": null}, {"id": "robot04-10", "n": "10", "t": "행렬", "minutes": null}, {"id": "robot04-11", "n": "11", "t": "행렬 곱", "minutes": null}, {"id": "robot04-12", "n": "12", "t": "전치행렬", "minutes": null}, {"id": "robot04-13", "n": "13", "t": "역행렬", "minutes": null}, {"id": "robot04-14", "n": "14", "t": "연립방정식", "minutes": null}, {"id": "robot04-15", "n": "15", "t": "회전행렬", "minutes": null}, {"id": "robot04-16", "n": "16", "t": "동차변환행렬", "minutes": null}, {"id": "robot04-17", "n": "17", "t": "미분", "minutes": null}, {"id": "robot04-18", "n": "18", "t": "편미분 기초", "minutes": null}, {"id": "robot04-19", "n": "19", "t": "적분", "minutes": null}, {"id": "robot04-20", "n": "20", "t": "수치미분", "minutes": null}, {"id": "robot04-21", "n": "21", "t": "수치적분", "minutes": null}, {"id": "robot04-22", "n": "22", "t": "평균과 분산", "minutes": null}, {"id": "robot04-23", "n": "23", "t": "공분산", "minutes": null}, {"id": "robot04-24", "n": "24", "t": "확률과 조건부확률", "minutes": null}, {"id": "robot04-25", "n": "25", "t": "베이즈 정리", "minutes": null}, {"id": "robot04-26", "n": "26", "t": "정규분포", "minutes": null}, {"id": "robot04-27", "n": "27", "t": "최소제곱 기초", "minutes": null}, {"id": "robot04-28", "n": "28", "t": "위치와 속도", "minutes": null}, {"id": "robot04-29", "n": "29", "t": "가속도", "minutes": null}, {"id": "robot04-30", "n": "30", "t": "뉴턴 운동법칙", "minutes": null}, {"id": "robot04-31", "n": "31", "t": "힘과 모멘트", "minutes": null}, {"id": "robot04-32", "n": "32", "t": "자유물체도", "minutes": null}, {"id": "robot04-33", "n": "33", "t": "힘과 모멘트 평형", "minutes": null}, {"id": "robot04-34", "n": "34", "t": "마찰력", "minutes": null}, {"id": "robot04-35", "n": "35", "t": "일과 에너지", "minutes": null}, {"id": "robot04-36", "n": "36", "t": "동력과 효율", "minutes": null}, {"id": "robot04-37", "n": "37", "t": "무게중심", "minutes": null}, {"id": "robot04-38", "n": "38", "t": "지지 다각형", "minutes": null}, {"id": "robot04-39", "n": "39", "t": "전복 모멘트", "minutes": null}, {"id": "robot04-40", "n": "40", "t": "응력과 변형률", "minutes": null}, {"id": "robot04-41", "n": "41", "t": "굽힘과 비틀림", "minutes": null}]}, {"id": "robot05", "name": "CAD·3D 프린트·조립", "kind": "robot", "items": [{"id": "robot05-1", "n": "1", "t": "CAD 좌표계", "minutes": null}, {"id": "robot05-2", "n": "2", "t": "기준면", "minutes": null}, {"id": "robot05-3", "n": "3", "t": "2D 스케치", "minutes": null}, {"id": "robot05-4", "n": "4", "t": "기하 구속", "minutes": null}, {"id": "robot05-5", "n": "5", "t": "치수 구속", "minutes": null}, {"id": "robot05-6", "n": "6", "t": "완전 구속", "minutes": null}, {"id": "robot05-7", "n": "7", "t": "돌출", "minutes": null}, {"id": "robot05-8", "n": "8", "t": "회전 형상", "minutes": null}, {"id": "robot05-9", "n": "9", "t": "포켓과 구멍", "minutes": null}, {"id": "robot05-10", "n": "10", "t": "필렛과 모따기", "minutes": null}, {"id": "robot05-11", "n": "11", "t": "패턴", "minutes": null}, {"id": "robot05-12", "n": "12", "t": "설계 파라미터", "minutes": null}, {"id": "robot05-13", "n": "13", "t": "부품 조립", "minutes": null}, {"id": "robot05-14", "n": "14", "t": "조립 구속", "minutes": null}, {"id": "robot05-15", "n": "15", "t": "간섭 검사", "minutes": null}, {"id": "robot05-16", "n": "16", "t": "공차와 끼워맞춤", "minutes": null}, {"id": "robot05-17", "n": "17", "t": "나사와 너트", "minutes": null}, {"id": "robot05-18", "n": "18", "t": "베어링과 축", "minutes": null}, {"id": "robot05-19", "n": "19", "t": "커플러", "minutes": null}, {"id": "robot05-20", "n": "20", "t": "케이블 고정", "minutes": null}, {"id": "robot05-21", "n": "21", "t": "도면과 치수 기입", "minutes": null}, {"id": "robot05-22", "n": "22", "t": "BOM", "minutes": null}, {"id": "robot05-23", "n": "23", "t": "STL과 STEP", "minutes": null}, {"id": "robot05-24", "n": "24", "t": "슬라이서", "minutes": null}, {"id": "robot05-25", "n": "25", "t": "적층 방향", "minutes": null}, {"id": "robot05-26", "n": "26", "t": "레이어 높이", "minutes": null}, {"id": "robot05-27", "n": "27", "t": "벽 두께", "minutes": null}, {"id": "robot05-28", "n": "28", "t": "인필", "minutes": null}, {"id": "robot05-29", "n": "29", "t": "서포트", "minutes": null}, {"id": "robot05-30", "n": "30", "t": "출력 공차 시험편", "minutes": null}, {"id": "robot05-31", "n": "31", "t": "조립과 체결 점검", "minutes": null}, {"id": "robot05-32", "n": "32", "t": "균열과 풀림 검사", "minutes": null}]}, {"id": "robot06", "name": "전자·전원·비상정지", "kind": "robot", "items": [{"id": "robot06-1", "n": "1", "t": "전압", "minutes": null}, {"id": "robot06-2", "n": "2", "t": "전류", "minutes": null}, {"id": "robot06-3", "n": "3", "t": "저항", "minutes": null}, {"id": "robot06-4", "n": "4", "t": "옴의 법칙", "minutes": null}, {"id": "robot06-5", "n": "5", "t": "전력", "minutes": null}, {"id": "robot06-6", "n": "6", "t": "에너지와 배터리 용량", "minutes": null}, {"id": "robot06-7", "n": "7", "t": "직렬회로", "minutes": null}, {"id": "robot06-8", "n": "8", "t": "병렬회로", "minutes": null}, {"id": "robot06-9", "n": "9", "t": "키르히호프 법칙", "minutes": null}, {"id": "robot06-10", "n": "10", "t": "커패시터", "minutes": null}, {"id": "robot06-11", "n": "11", "t": "다이오드", "minutes": null}, {"id": "robot06-12", "n": "12", "t": "트랜지스터와 MOSFET 기초", "minutes": null}, {"id": "robot06-13", "n": "13", "t": "역기전력 보호", "minutes": null}, {"id": "robot06-14", "n": "14", "t": "멀티미터", "minutes": null}, {"id": "robot06-15", "n": "15", "t": "연속성 측정", "minutes": null}, {"id": "robot06-16", "n": "16", "t": "전압 측정", "minutes": null}, {"id": "robot06-17", "n": "17", "t": "전류 측정의 연결 방식", "minutes": null}, {"id": "robot06-18", "n": "18", "t": "극성", "minutes": null}, {"id": "robot06-19", "n": "19", "t": "신호 접지", "minutes": null}, {"id": "robot06-20", "n": "20", "t": "전압 레벨 변환", "minutes": null}, {"id": "robot06-21", "n": "21", "t": "전원 예산", "minutes": null}, {"id": "robot06-22", "n": "22", "t": "기동전류와 정지전류", "minutes": null}, {"id": "robot06-23", "n": "23", "t": "선재 정격", "minutes": null}, {"id": "robot06-24", "n": "24", "t": "커넥터 정격", "minutes": null}, {"id": "robot06-25", "n": "25", "t": "퓨즈", "minutes": null}, {"id": "robot06-26", "n": "26", "t": "DC-DC 변환기", "minutes": null}, {"id": "robot06-27", "n": "27", "t": "배터리 보호회로", "minutes": null}, {"id": "robot06-28", "n": "28", "t": "전용 충전기", "minutes": null}, {"id": "robot06-29", "n": "29", "t": "비상정지 회로", "minutes": null}, {"id": "robot06-30", "n": "30", "t": "구동 전원 차단", "minutes": null}, {"id": "robot06-31", "n": "31", "t": "재가동 방지", "minutes": null}, {"id": "robot06-32", "n": "32", "t": "잔류 에너지", "minutes": null}, {"id": "robot06-33", "n": "33", "t": "과열과 배터리 손상", "minutes": null}]}, {"id": "robot07", "name": "MCU·모터·엔코더", "kind": "robot", "items": [{"id": "robot07-1", "n": "1", "t": "MCU 구조", "minutes": null}, {"id": "robot07-2", "n": "2", "t": "GPIO", "minutes": null}, {"id": "robot07-3", "n": "3", "t": "디지털 입력과 출력", "minutes": null}, {"id": "robot07-4", "n": "4", "t": "풀업과 풀다운", "minutes": null}, {"id": "robot07-5", "n": "5", "t": "스위치 디바운싱", "minutes": null}, {"id": "robot07-6", "n": "6", "t": "ADC", "minutes": null}, {"id": "robot07-7", "n": "7", "t": "타이머", "minutes": null}, {"id": "robot07-8", "n": "8", "t": "인터럽트", "minutes": null}, {"id": "robot07-9", "n": "9", "t": "PWM", "minutes": null}, {"id": "robot07-10", "n": "10", "t": "DC 모터", "minutes": null}, {"id": "robot07-11", "n": "11", "t": "감속기", "minutes": null}, {"id": "robot07-12", "n": "12", "t": "토크-속도 특성", "minutes": null}, {"id": "robot07-13", "n": "13", "t": "모터 드라이버", "minutes": null}, {"id": "robot07-14", "n": "14", "t": "H브리지", "minutes": null}, {"id": "robot07-15", "n": "15", "t": "회전 방향", "minutes": null}, {"id": "robot07-16", "n": "16", "t": "엔코더 A상과 B상", "minutes": null}, {"id": "robot07-17", "n": "17", "t": "쿼드러처 디코딩", "minutes": null}, {"id": "robot07-18", "n": "18", "t": "분해능과 카운트 모드", "minutes": null}, {"id": "robot07-19", "n": "19", "t": "감속비와 틱 수", "minutes": null}, {"id": "robot07-20", "n": "20", "t": "UART", "minutes": null}, {"id": "robot07-21", "n": "21", "t": "I2C", "minutes": null}, {"id": "robot07-22", "n": "22", "t": "SPI", "minutes": null}, {"id": "robot07-23", "n": "23", "t": "CAN 기초", "minutes": null}, {"id": "robot07-24", "n": "24", "t": "직렬 메시지 프레임", "minutes": null}, {"id": "robot07-25", "n": "25", "t": "체크섬", "minutes": null}, {"id": "robot07-26", "n": "26", "t": "시퀀스 번호", "minutes": null}, {"id": "robot07-27", "n": "27", "t": "명령 타임아웃", "minutes": null}, {"id": "robot07-28", "n": "28", "t": "워치독", "minutes": null}, {"id": "robot07-29", "n": "29", "t": "펌웨어 로그", "minutes": null}, {"id": "robot07-30", "n": "30", "t": "무부하 구동 시험", "minutes": null}]}, {"id": "robot08", "name": "ROS 2 기초와 원격 주행", "kind": "robot", "items": [{"id": "robot08-1", "n": "1", "t": "ROS 2 설치 환경", "minutes": null}, {"id": "robot08-2", "n": "2", "t": "배포판과 의존성", "minutes": null}, {"id": "robot08-3", "n": "3", "t": "워크스페이스", "minutes": null}, {"id": "robot08-4", "n": "4", "t": "패키지", "minutes": null}, {"id": "robot08-5", "n": "5", "t": "package.xml", "minutes": null}, {"id": "robot08-6", "n": "6", "t": "ament와 colcon", "minutes": null}, {"id": "robot08-7", "n": "7", "t": "환경 설정과 source", "minutes": null}, {"id": "robot08-8", "n": "8", "t": "노드", "minutes": null}, {"id": "robot08-9", "n": "9", "t": "토픽", "minutes": null}, {"id": "robot08-10", "n": "10", "t": "메시지 타입", "minutes": null}, {"id": "robot08-11", "n": "11", "t": "Publisher", "minutes": null}, {"id": "robot08-12", "n": "12", "t": "Subscriber", "minutes": null}, {"id": "robot08-13", "n": "13", "t": "서비스", "minutes": null}, {"id": "robot08-14", "n": "14", "t": "액션", "minutes": null}, {"id": "robot08-15", "n": "15", "t": "파라미터", "minutes": null}, {"id": "robot08-16", "n": "16", "t": "launch 파일", "minutes": null}, {"id": "robot08-17", "n": "17", "t": "QoS", "minutes": null}, {"id": "robot08-18", "n": "18", "t": "타이머 콜백", "minutes": null}, {"id": "robot08-19", "n": "19", "t": "Executor 기초", "minutes": null}, {"id": "robot08-20", "n": "20", "t": "ros2 node", "minutes": null}, {"id": "robot08-21", "n": "21", "t": "ros2 topic", "minutes": null}, {"id": "robot08-22", "n": "22", "t": "ros2 service", "minutes": null}, {"id": "robot08-23", "n": "23", "t": "ros2 action", "minutes": null}, {"id": "robot08-24", "n": "24", "t": "rqt_graph", "minutes": null}, {"id": "robot08-25", "n": "25", "t": "Twist 메시지", "minutes": null}, {"id": "robot08-26", "n": "26", "t": "cmd_vel", "minutes": null}, {"id": "robot08-27", "n": "27", "t": "키보드 원격 조종", "minutes": null}, {"id": "robot08-28", "n": "28", "t": "MCU 통신 연결", "minutes": null}, {"id": "robot08-29", "n": "29", "t": "속도 제한", "minutes": null}, {"id": "robot08-30", "n": "30", "t": "명령 타임아웃", "minutes": null}]}, {"id": "robot09", "name": "차동구동 모델과 속도 제어", "kind": "robot", "items": [{"id": "robot09-1", "n": "1", "t": "차동구동 구조", "minutes": null}, {"id": "robot09-2", "n": "2", "t": "바퀴 반지름", "minutes": null}, {"id": "robot09-3", "n": "3", "t": "윤거", "minutes": null}, {"id": "robot09-4", "n": "4", "t": "바퀴 각속도", "minutes": null}, {"id": "robot09-5", "n": "5", "t": "선속도와 각속도", "minutes": null}, {"id": "robot09-6", "n": "6", "t": "차동구동 순운동학", "minutes": null}, {"id": "robot09-7", "n": "7", "t": "차동구동 역운동학", "minutes": null}, {"id": "robot09-8", "n": "8", "t": "샘플링 주기", "minutes": null}, {"id": "robot09-9", "n": "9", "t": "1차 시스템과 시정수", "minutes": null}, {"id": "robot09-10", "n": "10", "t": "이산시간 모델", "minutes": null}, {"id": "robot09-11", "n": "11", "t": "속도 측정", "minutes": null}, {"id": "robot09-12", "n": "12", "t": "목표값과 피드백", "minutes": null}, {"id": "robot09-13", "n": "13", "t": "제어 오차", "minutes": null}, {"id": "robot09-14", "n": "14", "t": "개루프 제어", "minutes": null}, {"id": "robot09-15", "n": "15", "t": "폐루프 제어", "minutes": null}, {"id": "robot09-16", "n": "16", "t": "P 제어", "minutes": null}, {"id": "robot09-17", "n": "17", "t": "I 제어", "minutes": null}, {"id": "robot09-18", "n": "18", "t": "D 제어", "minutes": null}, {"id": "robot09-19", "n": "19", "t": "미분 노이즈와 저역통과 필터", "minutes": null}, {"id": "robot09-20", "n": "20", "t": "PI 제어", "minutes": null}, {"id": "robot09-21", "n": "21", "t": "PID 제어", "minutes": null}, {"id": "robot09-22", "n": "22", "t": "출력 포화", "minutes": null}, {"id": "robot09-23", "n": "23", "t": "적분 와인드업", "minutes": null}, {"id": "robot09-24", "n": "24", "t": "안티와인드업", "minutes": null}, {"id": "robot09-25", "n": "25", "t": "데드존", "minutes": null}, {"id": "robot09-26", "n": "26", "t": "가속도 제한", "minutes": null}, {"id": "robot09-27", "n": "27", "t": "계단 응답", "minutes": null}, {"id": "robot09-28", "n": "28", "t": "오버슈트", "minutes": null}, {"id": "robot09-29", "n": "29", "t": "정착시간", "minutes": null}, {"id": "robot09-30", "n": "30", "t": "정상상태 오차", "minutes": null}, {"id": "robot09-31", "n": "31", "t": "좌우 모터 보정", "minutes": null}]}, {"id": "robot10", "name": "URDF·TF2·시뮬레이션", "kind": "robot", "items": [{"id": "robot10-1", "n": "1", "t": "URDF", "minutes": null}, {"id": "robot10-2", "n": "2", "t": "XML 기초", "minutes": null}, {"id": "robot10-3", "n": "3", "t": "link", "minutes": null}, {"id": "robot10-4", "n": "4", "t": "joint", "minutes": null}, {"id": "robot10-5", "n": "5", "t": "origin", "minutes": null}, {"id": "robot10-6", "n": "6", "t": "axis", "minutes": null}, {"id": "robot10-7", "n": "7", "t": "visual", "minutes": null}, {"id": "robot10-8", "n": "8", "t": "collision", "minutes": null}, {"id": "robot10-9", "n": "9", "t": "inertial", "minutes": null}, {"id": "robot10-10", "n": "10", "t": "질량과 관성모멘트", "minutes": null}, {"id": "robot10-11", "n": "11", "t": "Xacro", "minutes": null}, {"id": "robot10-12", "n": "12", "t": "고정 관절", "minutes": null}, {"id": "robot10-13", "n": "13", "t": "회전 관절", "minutes": null}, {"id": "robot10-14", "n": "14", "t": "연속 회전 관절", "minutes": null}, {"id": "robot10-15", "n": "15", "t": "관절 한계", "minutes": null}, {"id": "robot10-16", "n": "16", "t": "joint_states", "minutes": null}, {"id": "robot10-17", "n": "17", "t": "robot_state_publisher", "minutes": null}, {"id": "robot10-18", "n": "18", "t": "오른손 좌표계", "minutes": null}, {"id": "robot10-19", "n": "19", "t": "Euler 각", "minutes": null}, {"id": "robot10-20", "n": "20", "t": "쿼터니언", "minutes": null}, {"id": "robot10-21", "n": "21", "t": "회전 표현 변환", "minutes": null}, {"id": "robot10-22", "n": "22", "t": "base_link", "minutes": null}, {"id": "robot10-23", "n": "23", "t": "센서 좌표계", "minutes": null}, {"id": "robot10-24", "n": "24", "t": "TF 트리", "minutes": null}, {"id": "robot10-25", "n": "25", "t": "정적 TF", "minutes": null}, {"id": "robot10-26", "n": "26", "t": "동적 TF", "minutes": null}, {"id": "robot10-27", "n": "27", "t": "tf2 조회", "minutes": null}, {"id": "robot10-28", "n": "28", "t": "타임스탬프", "minutes": null}, {"id": "robot10-29", "n": "29", "t": "RViz", "minutes": null}, {"id": "robot10-30", "n": "30", "t": "Gazebo", "minutes": null}, {"id": "robot10-31", "n": "31", "t": "SDF 기초", "minutes": null}, {"id": "robot10-32", "n": "32", "t": "시뮬레이션 시간", "minutes": null}, {"id": "robot10-33", "n": "33", "t": "use_sim_time", "minutes": null}, {"id": "robot10-34", "n": "34", "t": "가상 센서", "minutes": null}]}, {"id": "robot11", "name": "센서와 로그", "kind": "robot", "items": [{"id": "robot11-1", "n": "1", "t": "센서 분해능", "minutes": null}, {"id": "robot11-2", "n": "2", "t": "정확도와 반복도", "minutes": null}, {"id": "robot11-3", "n": "3", "t": "측정 범위", "minutes": null}, {"id": "robot11-4", "n": "4", "t": "샘플링 주파수", "minutes": null}, {"id": "robot11-5", "n": "5", "t": "노이즈", "minutes": null}, {"id": "robot11-6", "n": "6", "t": "바이어스", "minutes": null}, {"id": "robot11-7", "n": "7", "t": "LiDAR 거리 측정", "minutes": null}, {"id": "robot11-8", "n": "8", "t": "LaserScan 메시지", "minutes": null}, {"id": "robot11-9", "n": "9", "t": "각도 범위와 각도 간격", "minutes": null}, {"id": "robot11-10", "n": "10", "t": "최소·최대 거리", "minutes": null}, {"id": "robot11-11", "n": "11", "t": "반사와 투명체", "minutes": null}, {"id": "robot11-12", "n": "12", "t": "사각지대", "minutes": null}, {"id": "robot11-13", "n": "13", "t": "IMU", "minutes": null}, {"id": "robot11-14", "n": "14", "t": "가속도계", "minutes": null}, {"id": "robot11-15", "n": "15", "t": "자이로스코프", "minutes": null}, {"id": "robot11-16", "n": "16", "t": "중력 성분", "minutes": null}, {"id": "robot11-17", "n": "17", "t": "센서 축 정렬", "minutes": null}, {"id": "robot11-18", "n": "18", "t": "Imu 메시지", "minutes": null}, {"id": "robot11-19", "n": "19", "t": "시간 동기화", "minutes": null}, {"id": "robot11-20", "n": "20", "t": "지연과 지터", "minutes": null}, {"id": "robot11-21", "n": "21", "t": "데이터 누락", "minutes": null}, {"id": "robot11-22", "n": "22", "t": "센서 가림", "minutes": null}, {"id": "robot11-23", "n": "23", "t": "rosbag 기록", "minutes": null}, {"id": "robot11-24", "n": "24", "t": "rosbag 재생", "minutes": null}, {"id": "robot11-25", "n": "25", "t": "로그 시각화", "minutes": null}]}, {"id": "robot12", "name": "휠 오도메트리와 센서 융합", "kind": "robot", "items": [{"id": "robot12-1", "n": "1", "t": "틱-거리 변환", "minutes": null}, {"id": "robot12-2", "n": "2", "t": "시간차 계산", "minutes": null}, {"id": "robot12-3", "n": "3", "t": "좌우 바퀴 이동량", "minutes": null}, {"id": "robot12-4", "n": "4", "t": "중점 적분", "minutes": null}, {"id": "robot12-5", "n": "5", "t": "평면 자세 x-y-yaw", "minutes": null}, {"id": "robot12-6", "n": "6", "t": "직진 오도메트리", "minutes": null}, {"id": "robot12-7", "n": "7", "t": "회전 오도메트리", "minutes": null}, {"id": "robot12-8", "n": "8", "t": "바퀴 반지름 보정", "minutes": null}, {"id": "robot12-9", "n": "9", "t": "윤거 보정", "minutes": null}, {"id": "robot12-10", "n": "10", "t": "미끄럼", "minutes": null}, {"id": "robot12-11", "n": "11", "t": "누적 드리프트", "minutes": null}, {"id": "robot12-12", "n": "12", "t": "Odometry 메시지", "minutes": null}, {"id": "robot12-13", "n": "13", "t": "odom 좌표계", "minutes": null}, {"id": "robot12-14", "n": "14", "t": "odom-base_link 변환", "minutes": null}, {"id": "robot12-15", "n": "15", "t": "센서 분산", "minutes": null}, {"id": "robot12-16", "n": "16", "t": "공분산 행렬", "minutes": null}, {"id": "robot12-17", "n": "17", "t": "상태 벡터", "minutes": null}, {"id": "robot12-18", "n": "18", "t": "운동 모델", "minutes": null}, {"id": "robot12-19", "n": "19", "t": "관측 모델", "minutes": null}, {"id": "robot12-20", "n": "20", "t": "칼만 필터 기초", "minutes": null}, {"id": "robot12-21", "n": "21", "t": "EKF 예측", "minutes": null}, {"id": "robot12-22", "n": "22", "t": "자코비안과 선형화", "minutes": null}, {"id": "robot12-23", "n": "23", "t": "EKF 갱신", "minutes": null}, {"id": "robot12-24", "n": "24", "t": "관측 잔차와 이상치", "minutes": null}, {"id": "robot12-25", "n": "25", "t": "robot_localization", "minutes": null}, {"id": "robot12-26", "n": "26", "t": "센서 입력 선택", "minutes": null}, {"id": "robot12-27", "n": "27", "t": "중복 정보와 상관", "minutes": null}, {"id": "robot12-28", "n": "28", "t": "융합 성능 평가", "minutes": null}]}, {"id": "robot13", "name": "SLAM과 지도 작성", "kind": "robot", "items": [{"id": "robot13-1", "n": "1", "t": "지도 표현", "minutes": null}, {"id": "robot13-2", "n": "2", "t": "점유격자", "minutes": null}, {"id": "robot13-3", "n": "3", "t": "격자 해상도", "minutes": null}, {"id": "robot13-4", "n": "4", "t": "자유 공간과 점유 공간", "minutes": null}, {"id": "robot13-5", "n": "5", "t": "미지 영역", "minutes": null}, {"id": "robot13-6", "n": "6", "t": "스캔 정합", "minutes": null}, {"id": "robot13-7", "n": "7", "t": "상대 자세 추정", "minutes": null}, {"id": "robot13-8", "n": "8", "t": "포즈 그래프", "minutes": null}, {"id": "robot13-9", "n": "9", "t": "루프 폐쇄", "minutes": null}, {"id": "robot13-10", "n": "10", "t": "SLAM Toolbox", "minutes": null}, {"id": "robot13-11", "n": "11", "t": "매핑 시작", "minutes": null}, {"id": "robot13-12", "n": "12", "t": "스캔 겹침", "minutes": null}, {"id": "robot13-13", "n": "13", "t": "주행 속도와 지도 품질", "minutes": null}, {"id": "robot13-14", "n": "14", "t": "지도 왜곡", "minutes": null}, {"id": "robot13-15", "n": "15", "t": "중복 벽", "minutes": null}, {"id": "robot13-16", "n": "16", "t": "지도 저장", "minutes": null}, {"id": "robot13-17", "n": "17", "t": "지도 메타데이터", "minutes": null}, {"id": "robot13-18", "n": "18", "t": "지도 원점", "minutes": null}, {"id": "robot13-19", "n": "19", "t": "지도 축척 검증", "minutes": null}, {"id": "robot13-20", "n": "20", "t": "지도 재로딩", "minutes": null}, {"id": "robot13-21", "n": "21", "t": "환경 변화", "minutes": null}]}, {"id": "robot14", "name": "지도 기반 위치 추정", "kind": "robot", "items": [{"id": "robot14-1", "n": "1", "t": "전역 좌표와 국소 좌표", "minutes": null}, {"id": "robot14-2", "n": "2", "t": "map 좌표계", "minutes": null}, {"id": "robot14-3", "n": "3", "t": "odom 좌표계", "minutes": null}, {"id": "robot14-4", "n": "4", "t": "base_link 좌표계", "minutes": null}, {"id": "robot14-5", "n": "5", "t": "map-odom 변환", "minutes": null}, {"id": "robot14-6", "n": "6", "t": "지도 서버", "minutes": null}, {"id": "robot14-7", "n": "7", "t": "AMCL", "minutes": null}, {"id": "robot14-8", "n": "8", "t": "파티클 필터", "minutes": null}, {"id": "robot14-9", "n": "9", "t": "운동 모델", "minutes": null}, {"id": "robot14-10", "n": "10", "t": "관측 모델", "minutes": null}, {"id": "robot14-11", "n": "11", "t": "초기 자세", "minutes": null}, {"id": "robot14-12", "n": "12", "t": "파티클 분포", "minutes": null}, {"id": "robot14-13", "n": "13", "t": "위치추정 수렴", "minutes": null}, {"id": "robot14-14", "n": "14", "t": "대칭 환경", "minutes": null}, {"id": "robot14-15", "n": "15", "t": "위치추정 불확실성", "minutes": null}, {"id": "robot14-16", "n": "16", "t": "재위치 추정", "minutes": null}, {"id": "robot14-17", "n": "17", "t": "TF 지연", "minutes": null}, {"id": "robot14-18", "n": "18", "t": "기준점 측정", "minutes": null}, {"id": "robot14-19", "n": "19", "t": "위치 오차", "minutes": null}, {"id": "robot14-20", "n": "20", "t": "방향 오차", "minutes": null}, {"id": "robot14-21", "n": "21", "t": "정지와 재초기화", "minutes": null}]}, {"id": "robot15", "name": "Nav2 경로계획과 장애물 대응", "kind": "robot", "items": [{"id": "robot15-1", "n": "1", "t": "Nav2 구성", "minutes": null}, {"id": "robot15-2", "n": "2", "t": "라이프사이클 노드", "minutes": null}, {"id": "robot15-3", "n": "3", "t": "전역 경로계획", "minutes": null}, {"id": "robot15-4", "n": "4", "t": "국소 경로 제어", "minutes": null}, {"id": "robot15-5", "n": "5", "t": "격자 그래프", "minutes": null}, {"id": "robot15-6", "n": "6", "t": "A* 기초", "minutes": null}, {"id": "robot15-7", "n": "7", "t": "global costmap", "minutes": null}, {"id": "robot15-8", "n": "8", "t": "local costmap", "minutes": null}, {"id": "robot15-9", "n": "9", "t": "장애물 층", "minutes": null}, {"id": "robot15-10", "n": "10", "t": "inflation layer", "minutes": null}, {"id": "robot15-11", "n": "11", "t": "footprint", "minutes": null}, {"id": "robot15-12", "n": "12", "t": "planner server", "minutes": null}, {"id": "robot15-13", "n": "13", "t": "controller server", "minutes": null}, {"id": "robot15-14", "n": "14", "t": "goal checker", "minutes": null}, {"id": "robot15-15", "n": "15", "t": "progress checker", "minutes": null}, {"id": "robot15-16", "n": "16", "t": "NavigateToPose", "minutes": null}, {"id": "robot15-17", "n": "17", "t": "목표 피드백", "minutes": null}, {"id": "robot15-18", "n": "18", "t": "목표 취소", "minutes": null}, {"id": "robot15-19", "n": "19", "t": "Behavior Tree 기초", "minutes": null}, {"id": "robot15-20", "n": "20", "t": "복구 행동", "minutes": null}, {"id": "robot15-21", "n": "21", "t": "후진과 회전 공간", "minutes": null}, {"id": "robot15-22", "n": "22", "t": "속도·가속도 제한", "minutes": null}, {"id": "robot15-23", "n": "23", "t": "장애물 회피", "minutes": null}, {"id": "robot15-24", "n": "24", "t": "막힌 경로", "minutes": null}, {"id": "robot15-25", "n": "25", "t": "목표 도달 판정", "minutes": null}]}, {"id": "robot16", "name": "생수 운반과 적재 검증", "kind": "robot", "items": [{"id": "robot16-1", "n": "1", "t": "적재하중", "minutes": null}, {"id": "robot16-2", "n": "2", "t": "트레이 구조", "minutes": null}, {"id": "robot16-3", "n": "3", "t": "하중 고정", "minutes": null}, {"id": "robot16-4", "n": "4", "t": "돌출물", "minutes": null}, {"id": "robot16-5", "n": "5", "t": "적재 무게중심", "minutes": null}, {"id": "robot16-6", "n": "6", "t": "지지면과 전복 여유", "minutes": null}, {"id": "robot16-7", "n": "7", "t": "가속 시 하중 이동", "minutes": null}, {"id": "robot16-8", "n": "8", "t": "회전 시 횡력", "minutes": null}, {"id": "robot16-9", "n": "9", "t": "제동과 정지거리", "minutes": null}, {"id": "robot16-10", "n": "10", "t": "바닥 마찰", "minutes": null}, {"id": "robot16-11", "n": "11", "t": "문턱과 경사", "minutes": null}, {"id": "robot16-12", "n": "12", "t": "생수 흔들림", "minutes": null}, {"id": "robot16-13", "n": "13", "t": "누수와 용기 손상", "minutes": null}, {"id": "robot16-14", "n": "14", "t": "적재 footprint", "minutes": null}, {"id": "robot16-15", "n": "15", "t": "운반 경로", "minutes": null}, {"id": "robot16-16", "n": "16", "t": "출발 전 점검", "minutes": null}, {"id": "robot16-17", "n": "17", "t": "도착 확인", "minutes": null}, {"id": "robot16-18", "n": "18", "t": "상품 인계", "minutes": null}, {"id": "robot16-19", "n": "19", "t": "배터리 상태별 성능", "minutes": null}, {"id": "robot16-20", "n": "20", "t": "반복 운반 기록", "minutes": null}]}, {"id": "robot17", "name": "카메라와 영상 처리", "kind": "robot", "items": [{"id": "robot17-1", "n": "1", "t": "디지털 이미지", "minutes": null}, {"id": "robot17-2", "n": "2", "t": "픽셀과 해상도", "minutes": null}, {"id": "robot17-3", "n": "3", "t": "프레임률", "minutes": null}, {"id": "robot17-4", "n": "4", "t": "노출", "minutes": null}, {"id": "robot17-5", "n": "5", "t": "화이트밸런스", "minutes": null}, {"id": "robot17-6", "n": "6", "t": "RGB와 BGR", "minutes": null}, {"id": "robot17-7", "n": "7", "t": "HSV", "minutes": null}, {"id": "robot17-8", "n": "8", "t": "그레이스케일", "minutes": null}, {"id": "robot17-9", "n": "9", "t": "NumPy 이미지 배열", "minutes": null}, {"id": "robot17-10", "n": "10", "t": "ROI", "minutes": null}, {"id": "robot17-11", "n": "11", "t": "리사이즈", "minutes": null}, {"id": "robot17-12", "n": "12", "t": "블러", "minutes": null}, {"id": "robot17-13", "n": "13", "t": "이진화", "minutes": null}, {"id": "robot17-14", "n": "14", "t": "형태학 연산", "minutes": null}, {"id": "robot17-15", "n": "15", "t": "에지 검출", "minutes": null}, {"id": "robot17-16", "n": "16", "t": "윤곽선", "minutes": null}, {"id": "robot17-17", "n": "17", "t": "바운딩 박스", "minutes": null}, {"id": "robot17-18", "n": "18", "t": "핀홀 카메라 모델", "minutes": null}, {"id": "robot17-19", "n": "19", "t": "초점거리", "minutes": null}, {"id": "robot17-20", "n": "20", "t": "주점", "minutes": null}, {"id": "robot17-21", "n": "21", "t": "렌즈 왜곡", "minutes": null}, {"id": "robot17-22", "n": "22", "t": "체커보드", "minutes": null}, {"id": "robot17-23", "n": "23", "t": "내부 파라미터", "minutes": null}, {"id": "robot17-24", "n": "24", "t": "카메라 보정", "minutes": null}, {"id": "robot17-25", "n": "25", "t": "재투영 오차", "minutes": null}, {"id": "robot17-26", "n": "26", "t": "왜곡 보정", "minutes": null}, {"id": "robot17-27", "n": "27", "t": "조명과 반사", "minutes": null}]}, {"id": "robot18", "name": "상품 인식과 평가", "kind": "robot", "items": [{"id": "robot18-1", "n": "1", "t": "SKU", "minutes": null}, {"id": "robot18-2", "n": "2", "t": "상품군과 개별 상품", "minutes": null}, {"id": "robot18-3", "n": "3", "t": "바코드", "minutes": null}, {"id": "robot18-4", "n": "4", "t": "마커 인식", "minutes": null}, {"id": "robot18-5", "n": "5", "t": "객체 검출", "minutes": null}, {"id": "robot18-6", "n": "6", "t": "이미지 수집", "minutes": null}, {"id": "robot18-7", "n": "7", "t": "바운딩 박스 라벨링", "minutes": null}, {"id": "robot18-8", "n": "8", "t": "클래스 정의", "minutes": null}, {"id": "robot18-9", "n": "9", "t": "학습·검증·평가 분할", "minutes": null}, {"id": "robot18-10", "n": "10", "t": "데이터 누출", "minutes": null}, {"id": "robot18-11", "n": "11", "t": "데이터 증강", "minutes": null}, {"id": "robot18-12", "n": "12", "t": "사전학습 모델", "minutes": null}, {"id": "robot18-13", "n": "13", "t": "텐서와 배치", "minutes": null}, {"id": "robot18-14", "n": "14", "t": "손실함수", "minutes": null}, {"id": "robot18-15", "n": "15", "t": "학습률과 에포크", "minutes": null}, {"id": "robot18-16", "n": "16", "t": "과적합과 조기 종료", "minutes": null}, {"id": "robot18-17", "n": "17", "t": "모델 저장과 불러오기", "minutes": null}, {"id": "robot18-18", "n": "18", "t": "추론 입력과 출력", "minutes": null}, {"id": "robot18-19", "n": "19", "t": "신뢰도 점수", "minutes": null}, {"id": "robot18-20", "n": "20", "t": "IoU", "minutes": null}, {"id": "robot18-21", "n": "21", "t": "NMS", "minutes": null}, {"id": "robot18-22", "n": "22", "t": "정밀도", "minutes": null}, {"id": "robot18-23", "n": "23", "t": "재현율", "minutes": null}, {"id": "robot18-24", "n": "24", "t": "혼동행렬", "minutes": null}, {"id": "robot18-25", "n": "25", "t": "미등록 상품", "minutes": null}, {"id": "robot18-26", "n": "26", "t": "유사 포장", "minutes": null}, {"id": "robot18-27", "n": "27", "t": "가림", "minutes": null}, {"id": "robot18-28", "n": "28", "t": "인식 보류", "minutes": null}, {"id": "robot18-29", "n": "29", "t": "추론 지연", "minutes": null}, {"id": "robot18-30", "n": "30", "t": "SKU별 평가", "minutes": null}]}, {"id": "robot20", "name": "로봇팔 기구학과 그리퍼", "kind": "robot", "items": [{"id": "robot20-1", "n": "1", "t": "관절과 링크", "minutes": null}, {"id": "robot20-2", "n": "2", "t": "자유도", "minutes": null}, {"id": "robot20-3", "n": "3", "t": "회전 관절", "minutes": null}, {"id": "robot20-4", "n": "4", "t": "직동 관절", "minutes": null}, {"id": "robot20-5", "n": "5", "t": "작업공간", "minutes": null}, {"id": "robot20-6", "n": "6", "t": "링크 좌표계", "minutes": null}, {"id": "robot20-7", "n": "7", "t": "동차변환", "minutes": null}, {"id": "robot20-8", "n": "8", "t": "순기구학", "minutes": null}, {"id": "robot20-9", "n": "9", "t": "DH 파라미터 기초", "minutes": null}, {"id": "robot20-10", "n": "10", "t": "역기구학", "minutes": null}, {"id": "robot20-11", "n": "11", "t": "복수 해", "minutes": null}, {"id": "robot20-12", "n": "12", "t": "관절 한계", "minutes": null}, {"id": "robot20-13", "n": "13", "t": "특이점", "minutes": null}, {"id": "robot20-14", "n": "14", "t": "자코비안 기초", "minutes": null}, {"id": "robot20-15", "n": "15", "t": "TCP", "minutes": null}, {"id": "robot20-16", "n": "16", "t": "끝단 자세", "minutes": null}, {"id": "robot20-17", "n": "17", "t": "관절 토크", "minutes": null}, {"id": "robot20-18", "n": "18", "t": "중력 하중", "minutes": null}, {"id": "robot20-19", "n": "19", "t": "가반하중", "minutes": null}, {"id": "robot20-20", "n": "20", "t": "상품 무게중심", "minutes": null}, {"id": "robot20-21", "n": "21", "t": "평행 그리퍼", "minutes": null}, {"id": "robot20-22", "n": "22", "t": "열림폭", "minutes": null}, {"id": "robot20-23", "n": "23", "t": "마찰과 파지력", "minutes": null}, {"id": "robot20-24", "n": "24", "t": "접촉 패드", "minutes": null}, {"id": "robot20-25", "n": "25", "t": "접근 자세", "minutes": null}, {"id": "robot20-26", "n": "26", "t": "미끄럼과 눌림", "minutes": null}]}, {"id": "robot21", "name": "팔 모델과 관절 제어", "kind": "robot", "items": [{"id": "robot21-1", "n": "1", "t": "팔 URDF", "minutes": null}, {"id": "robot21-2", "n": "2", "t": "관절 이름", "minutes": null}, {"id": "robot21-3", "n": "3", "t": "관절 축", "minutes": null}, {"id": "robot21-4", "n": "4", "t": "관절 부호", "minutes": null}, {"id": "robot21-5", "n": "5", "t": "영점", "minutes": null}, {"id": "robot21-6", "n": "6", "t": "관절 위치 한계", "minutes": null}, {"id": "robot21-7", "n": "7", "t": "속도 한계", "minutes": null}, {"id": "robot21-8", "n": "8", "t": "가속도 한계", "minutes": null}, {"id": "robot21-9", "n": "9", "t": "관성 모델", "minutes": null}, {"id": "robot21-10", "n": "10", "t": "그리퍼 모델", "minutes": null}, {"id": "robot21-11", "n": "11", "t": "ros2_control", "minutes": null}, {"id": "robot21-12", "n": "12", "t": "하드웨어 인터페이스", "minutes": null}, {"id": "robot21-13", "n": "13", "t": "상태 인터페이스", "minutes": null}, {"id": "robot21-14", "n": "14", "t": "명령 인터페이스", "minutes": null}, {"id": "robot21-15", "n": "15", "t": "controller_manager", "minutes": null}, {"id": "robot21-16", "n": "16", "t": "joint_state_broadcaster", "minutes": null}, {"id": "robot21-17", "n": "17", "t": "joint_trajectory_controller", "minutes": null}, {"id": "robot21-18", "n": "18", "t": "JointTrajectory", "minutes": null}, {"id": "robot21-19", "n": "19", "t": "궤적 시간", "minutes": null}, {"id": "robot21-20", "n": "20", "t": "현재 관절 상태", "minutes": null}, {"id": "robot21-21", "n": "21", "t": "안전 자세", "minutes": null}, {"id": "robot21-22", "n": "22", "t": "브레이크", "minutes": null}, {"id": "robot21-23", "n": "23", "t": "정지 시 낙하", "minutes": null}, {"id": "robot21-24", "n": "24", "t": "복구와 재원점", "minutes": null}]}, {"id": "robot19", "name": "상품 3D 위치와 카메라·팔 보정", "kind": "robot", "items": [{"id": "robot19-1", "n": "1", "t": "RGB-D 카메라", "minutes": null}, {"id": "robot19-2", "n": "2", "t": "깊이 단위", "minutes": null}, {"id": "robot19-3", "n": "3", "t": "RGB-깊이 정렬", "minutes": null}, {"id": "robot19-4", "n": "4", "t": "깊이 결측", "minutes": null}, {"id": "robot19-5", "n": "5", "t": "경계 픽셀", "minutes": null}, {"id": "robot19-6", "n": "6", "t": "포인트 클라우드", "minutes": null}, {"id": "robot19-7", "n": "7", "t": "픽셀 역투영", "minutes": null}, {"id": "robot19-8", "n": "8", "t": "카메라 내부행렬", "minutes": null}, {"id": "robot19-9", "n": "9", "t": "optical frame", "minutes": null}, {"id": "robot19-10", "n": "10", "t": "외부 파라미터", "minutes": null}, {"id": "robot19-11", "n": "11", "t": "회전과 평행이동", "minutes": null}, {"id": "robot19-12", "n": "12", "t": "변환 합성", "minutes": null}, {"id": "robot19-13", "n": "13", "t": "카메라-베이스 보정", "minutes": null}, {"id": "robot19-14", "n": "14", "t": "eye-to-hand", "minutes": null}, {"id": "robot19-15", "n": "15", "t": "eye-in-hand", "minutes": null}, {"id": "robot19-16", "n": "16", "t": "hand-eye calibration", "minutes": null}, {"id": "robot19-17", "n": "17", "t": "캘리브레이션 타깃", "minutes": null}, {"id": "robot19-18", "n": "18", "t": "시간 동기화", "minutes": null}, {"id": "robot19-19", "n": "19", "t": "물체 중심", "minutes": null}, {"id": "robot19-20", "n": "20", "t": "물체 자세", "minutes": null}, {"id": "robot19-21", "n": "21", "t": "검증점", "minutes": null}, {"id": "robot19-22", "n": "22", "t": "3D 위치 오차", "minutes": null}, {"id": "robot19-23", "n": "23", "t": "오차 예산", "minutes": null}]}, {"id": "robot22", "name": "MoveIt 2와 충돌 회피", "kind": "robot", "items": [{"id": "robot22-1", "n": "1", "t": "MoveIt 2 구성", "minutes": null}, {"id": "robot22-2", "n": "2", "t": "Setup Assistant", "minutes": null}, {"id": "robot22-3", "n": "3", "t": "SRDF", "minutes": null}, {"id": "robot22-4", "n": "4", "t": "Planning Group", "minutes": null}, {"id": "robot22-5", "n": "5", "t": "End Effector", "minutes": null}, {"id": "robot22-6", "n": "6", "t": "Virtual Joint", "minutes": null}, {"id": "robot22-7", "n": "7", "t": "자기 충돌 행렬", "minutes": null}, {"id": "robot22-8", "n": "8", "t": "IK 플러그인", "minutes": null}, {"id": "robot22-9", "n": "9", "t": "Planning Scene", "minutes": null}, {"id": "robot22-10", "n": "10", "t": "충돌 객체", "minutes": null}, {"id": "robot22-11", "n": "11", "t": "부착 객체", "minutes": null}, {"id": "robot22-12", "n": "12", "t": "Allowed Collision Matrix", "minutes": null}, {"id": "robot22-13", "n": "13", "t": "목표 관절값", "minutes": null}, {"id": "robot22-14", "n": "14", "t": "목표 끝단 자세", "minutes": null}, {"id": "robot22-15", "n": "15", "t": "모션 플래너", "minutes": null}, {"id": "robot22-16", "n": "16", "t": "경로 제약", "minutes": null}, {"id": "robot22-17", "n": "17", "t": "카르테시안 경로", "minutes": null}, {"id": "robot22-18", "n": "18", "t": "궤적 시간 매개화", "minutes": null}, {"id": "robot22-19", "n": "19", "t": "계획 요청", "minutes": null}, {"id": "robot22-20", "n": "20", "t": "계획 결과", "minutes": null}, {"id": "robot22-21", "n": "21", "t": "실행 요청", "minutes": null}, {"id": "robot22-22", "n": "22", "t": "실행 결과", "minutes": null}, {"id": "robot22-23", "n": "23", "t": "현재 상태 동기화", "minutes": null}, {"id": "robot22-24", "n": "24", "t": "충돌 회피", "minutes": null}, {"id": "robot22-25", "n": "25", "t": "도달 불가 처리", "minutes": null}]}, {"id": "robot23", "name": "인식 기반 집기·내려놓기", "kind": "robot", "items": [{"id": "robot23-1", "n": "1", "t": "집기 상태기계", "minutes": null}, {"id": "robot23-2", "n": "2", "t": "상품 검출", "minutes": null}, {"id": "robot23-3", "n": "3", "t": "자세 변환", "minutes": null}, {"id": "robot23-4", "n": "4", "t": "파지 후보", "minutes": null}, {"id": "robot23-5", "n": "5", "t": "접근 자세", "minutes": null}, {"id": "robot23-6", "n": "6", "t": "사전 파지 위치", "minutes": null}, {"id": "robot23-7", "n": "7", "t": "그리퍼 열기", "minutes": null}, {"id": "robot23-8", "n": "8", "t": "접근 궤적", "minutes": null}, {"id": "robot23-9", "n": "9", "t": "그리퍼 닫기", "minutes": null}, {"id": "robot23-10", "n": "10", "t": "파지 확인", "minutes": null}, {"id": "robot23-11", "n": "11", "t": "들어 올리기", "minutes": null}, {"id": "robot23-12", "n": "12", "t": "상품 부착 처리", "minutes": null}, {"id": "robot23-13", "n": "13", "t": "이송 궤적", "minutes": null}, {"id": "robot23-14", "n": "14", "t": "배치 자세", "minutes": null}, {"id": "robot23-15", "n": "15", "t": "내려놓기", "minutes": null}, {"id": "robot23-16", "n": "16", "t": "그리퍼 해제", "minutes": null}, {"id": "robot23-17", "n": "17", "t": "상품 분리 처리", "minutes": null}, {"id": "robot23-18", "n": "18", "t": "후퇴 궤적", "minutes": null}, {"id": "robot23-19", "n": "19", "t": "헛집기", "minutes": null}, {"id": "robot23-20", "n": "20", "t": "미끄럼과 낙하", "minutes": null}, {"id": "robot23-21", "n": "21", "t": "재인식", "minutes": null}, {"id": "robot23-22", "n": "22", "t": "제한 재시도", "minutes": null}, {"id": "robot23-23", "n": "23", "t": "슬롯 점유 확인", "minutes": null}]}, {"id": "robot24", "name": "벤치 반복성 시험", "kind": "robot", "items": [{"id": "robot24-1", "n": "1", "t": "측정 기준 좌표", "minutes": null}, {"id": "robot24-2", "n": "2", "t": "절대 오차", "minutes": null}, {"id": "robot24-3", "n": "3", "t": "반복도", "minutes": null}, {"id": "robot24-4", "n": "4", "t": "시험 조건표", "minutes": null}, {"id": "robot24-5", "n": "5", "t": "상품 위치 변화", "minutes": null}, {"id": "robot24-6", "n": "6", "t": "상품 각도 변화", "minutes": null}, {"id": "robot24-7", "n": "7", "t": "조명 변화", "minutes": null}, {"id": "robot24-8", "n": "8", "t": "상품 종류 변화", "minutes": null}, {"id": "robot24-9", "n": "9", "t": "통제 변수", "minutes": null}, {"id": "robot24-10", "n": "10", "t": "반복 횟수", "minutes": null}, {"id": "robot24-11", "n": "11", "t": "성공률", "minutes": null}, {"id": "robot24-12", "n": "12", "t": "중단율", "minutes": null}, {"id": "robot24-13", "n": "13", "t": "재시도 횟수", "minutes": null}, {"id": "robot24-14", "n": "14", "t": "평균 작업 시간", "minutes": null}, {"id": "robot24-15", "n": "15", "t": "최악 작업 시간", "minutes": null}, {"id": "robot24-16", "n": "16", "t": "실패 원인 분류", "minutes": null}, {"id": "robot24-17", "n": "17", "t": "영상 기록", "minutes": null}, {"id": "robot24-18", "n": "18", "t": "보정 변경 이력", "minutes": null}, {"id": "robot24-19", "n": "19", "t": "회귀시험", "minutes": null}, {"id": "robot24-20", "n": "20", "t": "통합 진입 기준", "minutes": null}]}, {"id": "robot25", "name": "이동 베이스와 팔 통합", "kind": "robot", "items": [{"id": "robot25-1", "n": "1", "t": "통합 TF 트리", "minutes": null}, {"id": "robot25-2", "n": "2", "t": "팔 장착 좌표", "minutes": null}, {"id": "robot25-3", "n": "3", "t": "카메라 장착 좌표", "minutes": null}, {"id": "robot25-4", "n": "4", "t": "전체 질량", "minutes": null}, {"id": "robot25-5", "n": "5", "t": "통합 무게중심", "minutes": null}, {"id": "robot25-6", "n": "6", "t": "전복 여유", "minutes": null}, {"id": "robot25-7", "n": "7", "t": "전원 예산", "minutes": null}, {"id": "robot25-8", "n": "8", "t": "배선과 노이즈", "minutes": null}, {"id": "robot25-9", "n": "9", "t": "기구 간섭", "minutes": null}, {"id": "robot25-10", "n": "10", "t": "수납 자세", "minutes": null}, {"id": "robot25-11", "n": "11", "t": "주행 footprint", "minutes": null}, {"id": "robot25-12", "n": "12", "t": "정차 안정성", "minutes": null}, {"id": "robot25-13", "n": "13", "t": "첫 구동 전 점검", "minutes": null}, {"id": "robot25-14", "n": "14", "t": "정지 시 팔 낙하", "minutes": null}, {"id": "robot25-15", "n": "15", "t": "베이스 정지 확인", "minutes": null}, {"id": "robot25-16", "n": "16", "t": "팔 동작 허용 조건", "minutes": null}, {"id": "robot25-17", "n": "17", "t": "팔 수납 확인", "minutes": null}, {"id": "robot25-18", "n": "18", "t": "주행 허용 조건", "minutes": null}, {"id": "robot25-19", "n": "19", "t": "인터록", "minutes": null}, {"id": "robot25-20", "n": "20", "t": "동시 명령 차단", "minutes": null}, {"id": "robot25-21", "n": "21", "t": "무부하 시험", "minutes": null}, {"id": "robot25-22", "n": "22", "t": "적재 통합 시험", "minutes": null}]}, {"id": "robot26", "name": "진열대 도킹과 정밀 정차", "kind": "robot", "items": [{"id": "robot26-1", "n": "1", "t": "전역 도착점", "minutes": null}, {"id": "robot26-2", "n": "2", "t": "도킹 좌표계", "minutes": null}, {"id": "robot26-3", "n": "3", "t": "선반 기준점", "minutes": null}, {"id": "robot26-4", "n": "4", "t": "마커 위치 추정", "minutes": null}, {"id": "robot26-5", "n": "5", "t": "상대 거리", "minutes": null}, {"id": "robot26-6", "n": "6", "t": "가로 오차", "minutes": null}, {"id": "robot26-7", "n": "7", "t": "방향 오차", "minutes": null}, {"id": "robot26-8", "n": "8", "t": "근접 접근 경로", "minutes": null}, {"id": "robot26-9", "n": "9", "t": "도킹 제어", "minutes": null}, {"id": "robot26-10", "n": "10", "t": "최종 접근 속도", "minutes": null}, {"id": "robot26-11", "n": "11", "t": "접근 시간 제한", "minutes": null}, {"id": "robot26-12", "n": "12", "t": "표식 상실", "minutes": null}, {"id": "robot26-13", "n": "13", "t": "도킹 실패", "minutes": null}, {"id": "robot26-14", "n": "14", "t": "재접근", "minutes": null}, {"id": "robot26-15", "n": "15", "t": "정차 후 안정화", "minutes": null}, {"id": "robot26-16", "n": "16", "t": "팔 도달 영역", "minutes": null}, {"id": "robot26-17", "n": "17", "t": "집기 오차 예산", "minutes": null}, {"id": "robot26-18", "n": "18", "t": "정차 반복도", "minutes": null}]}, {"id": "robot27", "name": "상품·선반 데이터와 배치 규칙", "kind": "robot", "items": [{"id": "robot27-1", "n": "1", "t": "상품 마스터", "minutes": null}, {"id": "robot27-2", "n": "2", "t": "SKU ID", "minutes": null}, {"id": "robot27-3", "n": "3", "t": "상품 규격", "minutes": null}, {"id": "robot27-4", "n": "4", "t": "상품 무게", "minutes": null}, {"id": "robot27-5", "n": "5", "t": "상품 방향", "minutes": null}, {"id": "robot27-6", "n": "6", "t": "선반 ID", "minutes": null}, {"id": "robot27-7", "n": "7", "t": "슬롯 ID", "minutes": null}, {"id": "robot27-8", "n": "8", "t": "선반 높이", "minutes": null}, {"id": "robot27-9", "n": "9", "t": "슬롯 너비와 깊이", "minutes": null}, {"id": "robot27-10", "n": "10", "t": "빈 슬롯", "minutes": null}, {"id": "robot27-11", "n": "11", "t": "슬롯 점유", "minutes": null}, {"id": "robot27-12", "n": "12", "t": "인접 상품 간섭", "minutes": null}, {"id": "robot27-13", "n": "13", "t": "접근 여유", "minutes": null}, {"id": "robot27-14", "n": "14", "t": "후퇴 여유", "minutes": null}, {"id": "robot27-15", "n": "15", "t": "배치 순서", "minutes": null}, {"id": "robot27-16", "n": "16", "t": "작업 지시", "minutes": null}, {"id": "robot27-17", "n": "17", "t": "잘못된 SKU", "minutes": null}, {"id": "robot27-18", "n": "18", "t": "크기 초과", "minutes": null}, {"id": "robot27-19", "n": "19", "t": "배치 완료 확인", "minutes": null}, {"id": "robot27-20", "n": "20", "t": "재고 상태 갱신", "minutes": null}, {"id": "robot27-21", "n": "21", "t": "배치표 버전", "minutes": null}]}, {"id": "robot28", "name": "업무 상태기계와 복구", "kind": "robot", "items": [{"id": "robot28-1", "n": "1", "t": "유한상태기계", "minutes": null}, {"id": "robot28-2", "n": "2", "t": "상태와 이벤트", "minutes": null}, {"id": "robot28-3", "n": "3", "t": "전이 조건", "minutes": null}, {"id": "robot28-4", "n": "4", "t": "작업 ID", "minutes": null}, {"id": "robot28-5", "n": "5", "t": "작업 접수", "minutes": null}, {"id": "robot28-6", "n": "6", "t": "운반 상태", "minutes": null}, {"id": "robot28-7", "n": "7", "t": "도킹 상태", "minutes": null}, {"id": "robot28-8", "n": "8", "t": "집기 상태", "minutes": null}, {"id": "robot28-9", "n": "9", "t": "배치 상태", "minutes": null}, {"id": "robot28-10", "n": "10", "t": "완료 확인", "minutes": null}, {"id": "robot28-11", "n": "11", "t": "타임아웃", "minutes": null}, {"id": "robot28-12", "n": "12", "t": "액션 취소", "minutes": null}, {"id": "robot28-13", "n": "13", "t": "제한 재시도", "minutes": null}, {"id": "robot28-14", "n": "14", "t": "오류 코드", "minutes": null}, {"id": "robot28-15", "n": "15", "t": "수동 인계", "minutes": null}, {"id": "robot28-16", "n": "16", "t": "이벤트 로그", "minutes": null}, {"id": "robot28-17", "n": "17", "t": "중복 요청", "minutes": null}, {"id": "robot28-18", "n": "18", "t": "멱등성", "minutes": null}, {"id": "robot28-19", "n": "19", "t": "응답 유실", "minutes": null}, {"id": "robot28-20", "n": "20", "t": "작업 상태 저장", "minutes": null}, {"id": "robot28-21", "n": "21", "t": "재시작 복구", "minutes": null}, {"id": "robot28-22", "n": "22", "t": "실제 상품 상태 대조", "minutes": null}]}, {"id": "robot29", "name": "통합 안전과 정지 검증", "kind": "robot", "items": [{"id": "robot29-1", "n": "1", "t": "작업별 위험 평가", "minutes": null}, {"id": "robot29-2", "n": "2", "t": "충돌 위험", "minutes": null}, {"id": "robot29-3", "n": "3", "t": "끼임 위험", "minutes": null}, {"id": "robot29-4", "n": "4", "t": "낙하 위험", "minutes": null}, {"id": "robot29-5", "n": "5", "t": "전복 위험", "minutes": null}, {"id": "robot29-6", "n": "6", "t": "전기 위험", "minutes": null}, {"id": "robot29-7", "n": "7", "t": "작업 구역", "minutes": null}, {"id": "robot29-8", "n": "8", "t": "관찰자와 정지 담당자", "minutes": null}, {"id": "robot29-9", "n": "9", "t": "정상 정지", "minutes": null}, {"id": "robot29-10", "n": "10", "t": "보호 정지", "minutes": null}, {"id": "robot29-11", "n": "11", "t": "비상정지", "minutes": null}, {"id": "robot29-12", "n": "12", "t": "전원 상실", "minutes": null}, {"id": "robot29-13", "n": "13", "t": "정지거리", "minutes": null}, {"id": "robot29-14", "n": "14", "t": "정지 중 잔류 운동", "minutes": null}, {"id": "robot29-15", "n": "15", "t": "재설정", "minutes": null}, {"id": "robot29-16", "n": "16", "t": "재가동 방지", "minutes": null}, {"id": "robot29-17", "n": "17", "t": "통신 단절", "minutes": null}, {"id": "robot29-18", "n": "18", "t": "센서 가림", "minutes": null}, {"id": "robot29-19", "n": "19", "t": "인터록 검증", "minutes": null}, {"id": "robot29-20", "n": "20", "t": "정비 에너지 격리", "minutes": null}, {"id": "robot29-21", "n": "21", "t": "점검 주기", "minutes": null}, {"id": "robot29-22", "n": "22", "t": "변경 후 재시험", "minutes": null}]}, {"id": "robot30", "name": "모의 매장 인수시험", "kind": "robot", "items": [{"id": "robot30-1", "n": "1", "t": "모의 통로", "minutes": null}, {"id": "robot30-2", "n": "2", "t": "모의 선반", "minutes": null}, {"id": "robot30-3", "n": "3", "t": "바닥 조건", "minutes": null}, {"id": "robot30-4", "n": "4", "t": "반사 환경", "minutes": null}, {"id": "robot30-5", "n": "5", "t": "시험 시나리오", "minutes": null}, {"id": "robot30-6", "n": "6", "t": "사전 합격 기준", "minutes": null}, {"id": "robot30-7", "n": "7", "t": "시험 버전", "minutes": null}, {"id": "robot30-8", "n": "8", "t": "운반 평가", "minutes": null}, {"id": "robot30-9", "n": "9", "t": "도킹 평가", "minutes": null}, {"id": "robot30-10", "n": "10", "t": "집기 평가", "minutes": null}, {"id": "robot30-11", "n": "11", "t": "진열 평가", "minutes": null}, {"id": "robot30-12", "n": "12", "t": "종단 간 평가", "minutes": null}, {"id": "robot30-13", "n": "13", "t": "통로 막힘", "minutes": null}, {"id": "robot30-14", "n": "14", "t": "가득 찬 칸", "minutes": null}, {"id": "robot30-15", "n": "15", "t": "인식 실패", "minutes": null}, {"id": "robot30-16", "n": "16", "t": "연결 단절", "minutes": null}, {"id": "robot30-17", "n": "17", "t": "성공·실패·중단 집계", "minutes": null}, {"id": "robot30-18", "n": "18", "t": "회귀시험", "minutes": null}, {"id": "robot30-19", "n": "19", "t": "미해결 항목", "minutes": null}, {"id": "robot30-20", "n": "20", "t": "현장 진입 판정", "minutes": null}]}, {"id": "robot31", "name": "실제 편의점 제한 운영", "kind": "robot", "items": [{"id": "robot31-1", "n": "1", "t": "매장 실측", "minutes": null}, {"id": "robot31-2", "n": "2", "t": "통로 폭", "minutes": null}, {"id": "robot31-3", "n": "3", "t": "선반 높이", "minutes": null}, {"id": "robot31-4", "n": "4", "t": "바닥과 문턱", "minutes": null}, {"id": "robot31-5", "n": "5", "t": "조명 조건", "minutes": null}, {"id": "robot31-6", "n": "6", "t": "현장 지도", "minutes": null}, {"id": "robot31-7", "n": "7", "t": "도킹 기준점", "minutes": null}, {"id": "robot31-8", "n": "8", "t": "시험 구역", "minutes": null}, {"id": "robot31-9", "n": "9", "t": "시험 시간", "minutes": null}, {"id": "robot31-10", "n": "10", "t": "매장 담당자", "minutes": null}, {"id": "robot31-11", "n": "11", "t": "운전자", "minutes": null}, {"id": "robot31-12", "n": "12", "t": "관찰자", "minutes": null}, {"id": "robot31-13", "n": "13", "t": "중단 권한", "minutes": null}, {"id": "robot31-14", "n": "14", "t": "현장 기동 점검", "minutes": null}, {"id": "robot31-15", "n": "15", "t": "모형 상품 운반", "minutes": null}, {"id": "robot31-16", "n": "16", "t": "실제 상품 운반", "minutes": null}, {"id": "robot31-17", "n": "17", "t": "제한 진열", "minutes": null}, {"id": "robot31-18", "n": "18", "t": "예상 밖 접근", "minutes": null}, {"id": "robot31-19", "n": "19", "t": "수동 인계", "minutes": null}, {"id": "robot31-20", "n": "20", "t": "상품 손상 확인", "minutes": null}, {"id": "robot31-21", "n": "21", "t": "현장 결과 기록", "minutes": null}]}, {"id": "robot32", "name": "운영·정비와 최종 인수", "kind": "robot", "items": [{"id": "robot32-1", "n": "1", "t": "기동 전 점검", "minutes": null}, {"id": "robot32-2", "n": "2", "t": "체결 점검", "minutes": null}, {"id": "robot32-3", "n": "3", "t": "배선 점검", "minutes": null}, {"id": "robot32-4", "n": "4", "t": "배터리 점검", "minutes": null}, {"id": "robot32-5", "n": "5", "t": "센서 청소", "minutes": null}, {"id": "robot32-6", "n": "6", "t": "비상정지 점검", "minutes": null}, {"id": "robot32-7", "n": "7", "t": "충전과 보관", "minutes": null}, {"id": "robot32-8", "n": "8", "t": "소모품 교체", "minutes": null}, {"id": "robot32-9", "n": "9", "t": "바퀴 교체 후 보정", "minutes": null}, {"id": "robot32-10", "n": "10", "t": "센서 재장착 보정", "minutes": null}, {"id": "robot32-11", "n": "11", "t": "그리퍼 교체 검증", "minutes": null}, {"id": "robot32-12", "n": "12", "t": "지도 백업", "minutes": null}, {"id": "robot32-13", "n": "13", "t": "설정 백업", "minutes": null}, {"id": "robot32-14", "n": "14", "t": "소스와 펌웨어 버전", "minutes": null}, {"id": "robot32-15", "n": "15", "t": "BOM 관리", "minutes": null}, {"id": "robot32-16", "n": "16", "t": "릴리스 묶음", "minutes": null}, {"id": "robot32-17", "n": "17", "t": "새 환경 복원", "minutes": null}, {"id": "robot32-18", "n": "18", "t": "운용 절차", "minutes": null}, {"id": "robot32-19", "n": "19", "t": "오류 대응표", "minutes": null}, {"id": "robot32-20", "n": "20", "t": "개인별 인수시험", "minutes": null}, {"id": "robot32-21", "n": "21", "t": "미해결 문제", "minutes": null}, {"id": "robot32-22", "n": "22", "t": "운용 범위", "minutes": null}]}], "road": [{"id": "P01", "name": "요구사항·위험 분석", "deps": []}, {"id": "P02", "name": "Linux·Git·Python", "deps": []}, {"id": "P03", "name": "로봇 수학·좌표", "deps": ["P02"]}, {"id": "P04", "name": "전원·배선 기초", "deps": ["P01"]}, {"id": "P05", "name": "MCU·센서 입출력", "deps": ["P02", "P04"]}, {"id": "P06", "name": "기구·하중 기초", "deps": ["P01", "P03"]}, {"id": "P07", "name": "CAD 설계", "deps": ["P06"]}, {"id": "P08", "name": "3D 프린팅·조립", "deps": ["P07"]}, {"id": "P09", "name": "이동 베이스 제어", "deps": ["P05", "P06", "P08"]}, {"id": "P10", "name": "ROS 2 원격 주행", "deps": ["P02", "P03", "P09"]}, {"id": "P11", "name": "적재 플랫폼 설계", "deps": ["P06", "P07", "P10"]}, {"id": "P12", "name": "LiDAR·IMU 장착", "deps": ["P05", "P07", "P10"]}, {"id": "P13", "name": "오도메트리·센서 융합", "deps": ["P09", "P12"]}, {"id": "P14", "name": "SLAM 지도 작성", "deps": ["P13"]}, {"id": "P15", "name": "지도 기반 위치 추정", "deps": ["P14"]}, {"id": "P16", "name": "Nav2 경로·장애물 회피", "deps": ["P15"]}, {"id": "P17", "name": "도킹·정차 정밀도", "deps": ["P16"]}, {"id": "P18", "name": "생수 적재 운반 검증", "deps": ["P11", "P16", "P17"]}, {"id": "P19", "name": "상품 데이터·라벨링", "deps": ["P01", "P02"]}, {"id": "P20", "name": "상품 인식·평가", "deps": ["P19"]}, {"id": "P21", "name": "RGB-D·카메라 보정", "deps": ["P03", "P12"]}, {"id": "P22", "name": "로봇팔 기구학", "deps": ["P03", "P06"]}, {"id": "P23", "name": "그리퍼 선정·치구 제작", "deps": ["P07", "P08", "P22"]}, {"id": "P24", "name": "MoveIt 2 충돌 회피", "deps": ["P10", "P22", "P23"]}, {"id": "P25", "name": "상품 집기·놓기", "deps": ["P20", "P21", "P24"]}, {"id": "P26", "name": "선반 진열 실습", "deps": ["P25"]}, {"id": "P27", "name": "작업 흐름·오류 복구", "deps": ["P18", "P26"]}, {"id": "P28", "name": "이동 베이스·팔 통합", "deps": ["P17", "P26", "P27"]}, {"id": "P29", "name": "안전 기능·고장시험", "deps": ["P04", "P18", "P28"]}, {"id": "P30", "name": "모의 매장 통합 검증", "deps": ["P20", "P28", "P29"]}, {"id": "P31", "name": "실매장 제한 시험", "deps": ["P30"]}, {"id": "P32", "name": "정비·인수·최종 발표", "deps": ["P31"]}]}</script>
 <script>
-"use strict";
-
-const KEY="robot-study-november-2026-v1";
-const GOAL=40000000;
-
-const subjects=[
- ["la","선형대수",15,65,"14강 LU 분해 이해 보완"],
- ["alg","고등대수",30,null,"31강 시청 완료"],
- ["calc","미적분 기초",9,47,"10강부터"],
- ["phy","고등물리",9,22,"10강부터"],
- ["ard","아두이노",10,28,"11강부터"],
- ["c","C언어",36,null,"RAM·포인터·이중 포인터 보완"],
- ["py","Python",22,null,"23~37강 시청 완료"]
+'use strict';
+const data=JSON.parse(document.querySelector('#catalog').textContent);
+const courses=Object.fromEntries(data.courses.map(c=>[c.id,c]));
+const lessons=Object.fromEntries(data.courses.flatMap(c=>c.items.map(x=>[x.id,{...x,course:c}])));
+const fields={study:{watch:'수강',review:'복습',practice:'문제풀이'},robot:{prep:'선학습',teach:'혜원언니 수업',self:'내 실습',partner:'혜원언니 실습',joint:'공동 적용'}};
+const storageKey='rprp-learning-dashboard-v1';
+const dayMs=86400000;
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+const iso=d=>new Date(d).toISOString().slice(0,10);
+const date=s=>Date.parse(s+'T00:00:00Z');
+const monday=s=>iso(date(s)-((new Date(date(s)).getUTCDay()+6)%7)*dayMs);
+const today=()=>new Intl.DateTimeFormat('sv-SE',{timeZone:'Asia/Seoul'}).format(new Date());
+const day=(start,n)=>iso(date(start)+n*dayMs);
+const fresh=()=>({version:1,start:monday(today()),marks:Object.fromEntries(Object.values(lessons).filter(x=>x.initial).map(x=>[x.id,{watch:true}])),notes:{},milestones:{},plans:{},holds:{}});
+let state=fresh();
+let tab='week', week=0, selected={study:'calc',robot:'robot01'}, query='',filter='all';
+const object=x=>x!==null&&typeof x==='object'&&!Array.isArray(x);
+const taskKey=t=>t.id+'/'+t.field;
+const complete=t=>!!state.marks[t.id]?.[t.field];
+const held=c=>state.holds[c.id]??!!c.hold;
+const validDate=s=>typeof s==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(s)&&Number.isFinite(date(s))&&iso(date(s))===s;
+function validate(raw){
+ if(!object(raw)||raw.version!==1||!validDate(raw.start)||monday(raw.start)!==raw.start) throw Error('지원되는 진도 백업 파일을 선택해 주세요.');
+ for(const key of ['marks','notes','milestones','plans','holds']) if(!object(raw[key])) throw Error('백업에 필요한 항목이 빠져 있습니다.');
+ for(const [id,record] of Object.entries(raw.marks)){
+  if(!Object.hasOwn(lessons,id)||!object(record)||Object.entries(record).some(([key,value])=>!Object.hasOwn(fields[lessons[id].course.kind],key)||typeof value!=='boolean')) throw Error('강의 체크 기록을 확인해 주세요.');
+ }
+ for(const [id,value] of Object.entries(raw.notes)) if(!Object.hasOwn(lessons,id)||typeof value!=='string') throw Error('메모 형식을 확인해 주세요.');
+ for(const [id,value] of Object.entries(raw.milestones)) if(!data.road.some(r=>r.id===id)||typeof value!=='boolean') throw Error('로드맵 기록을 확인해 주세요.');
+ for(const [id,value] of Object.entries(raw.holds)) if(!Object.hasOwn(courses,id)||courses[id].kind!=='study'||typeof value!=='boolean') throw Error('과목 보류 기록을 확인해 주세요.');
+ for(const [key,plan] of Object.entries(raw.plans)){
+  if(!/^\d+$/.test(key)||!Array.isArray(plan)||plan.some(t=>!object(t)||!Object.hasOwn(lessons,t.id)||!Object.hasOwn(fields[lessons[t.id].course.kind],t.field)||!Number.isInteger(t.day)||t.day<0||t.day>6||!Number.isFinite(t.cost)||t.cost<0||typeof t.slot!=='string')) throw Error('주간 계획 형식을 확인해 주세요.');
+ }
+ return raw;
+}
+function save(){
+ try{localStorage.setItem(storageKey,JSON.stringify(state));$('#save').textContent='자동 저장됨';}
+ catch{$('#save').textContent='자동 저장 실패 · JSON으로 백업해 주세요';}
+}
+try{const saved=localStorage.getItem(storageKey);if(saved) state=validate(JSON.parse(saved));}
+catch{$('#save').textContent='저장된 기록을 불러오지 못했습니다';}
+const firstRobot=[
+ {id:'robot01',name:'Python',test:()=>true},
+ {id:'robot03',name:'C언어',test:x=>+x.n<=14},
+ {id:'robot02',name:'Linux/Git',test:()=>true},
+ {id:'robot03',name:'C++',test:x=>+x.n>14}
 ];
-
-// 11월 2일: 실제 완료한 강의를 월요일로 모음.
-// 다른 날짜의 동일 강의 ID는 제거함.
-const monday=[
- ["py23","Python 23강","완료 강의","py",23],
- ["py24","Python 24강","완료 강의","py",24],
- ["py25","Python 25강","완료 강의","py",25],
- ["py26","Python 26강","완료 강의","py",26],
- ["py27","Python 27강","완료 강의","py",27],
- ["py28","Python 28강","완료 강의","py",28],
- ["py29","Python 29강","완료 강의","py",29],
- ["py30","Python 30강","완료 강의","py",30],
- ["py31","Python 31강","완료 강의","py",31],
- ["py32","Python 32강","완료 강의","py",32],
- ["py33","Python 33강","완료 강의","py",33],
- ["py34","Python 34강","완료 강의","py",34],
- ["py35","Python 35강","완료 강의","py",35],
- ["py36","Python 36강","완료 강의","py",36],
- ["py37","Python 37강","완료 강의","py",37],
- ["alg31","고등대수 31강","완료 강의","alg",31]
-];
-
-const plan=[
- {date:"11/2",day:"월",tasks:monday},
- {date:"11/3",day:"화",tasks:[
-  ["la14","선형대수 14강 LU 분해 예습·재수강","보완","la",14],
-  ["alg32","고등대수 32강","새 강의","alg",32],
-  ["calc10","미적분 기초 10강","새 강의","calc",10],
-  ["ram","C언어 RAM 필요성 복습","보완","c",null],
-  ["pointer","C언어 포인터·주소 연산","보완","c",null],
-  ["py38","Python 38강","새 강의","py",38]
- ]},
- {date:"11/4",day:"수",tasks:[]},
- {date:"11/5",day:"목",tasks:[
-  ["phy10","고등물리 10강","새 강의","phy",10],
-  ["phy11","고등물리 11강","새 강의","phy",11],
-  ["ard11","아두이노 11강","새 강의","ard",11],
-  ["ard12","아두이노 12강","새 강의","ard",12],
-  ["double","C언어 이중 포인터","보완","c",null],
-  ["py39","Python 39강","새 강의","py",39]
- ]},
- {date:"11/6",day:"금",tasks:[
-  ["la16","선형대수 16강 (LU 이해 후)","조건부","la",16],
-  ["calc11","미적분 기초 11강","새 강의","calc",11],
-  ["calc12","미적분 기초 12강","새 강의","calc",12],
-  ["change","C언어 change() 함수 분석","보완","c",null],
-  ["py40","Python 40강","새 강의","py",40]
- ]},
- {date:"11/7",day:"토",tasks:[
-  ["alg33","고등대수 33강","새 강의","alg",33],
-  ["alg34","고등대수 34강","새 강의","alg",34],
-  ["phy12","고등물리 12강","새 강의","phy",12],
-  ["ard13","아두이노 13강","새 강의","ard",13],
-  ["ard14","아두이노 14강","새 강의","ard",14],
-  ["ctest","C언어 포인터 코드 재시험","복습","c",null]
- ]},
- {date:"11/8",day:"일",tasks:[
-  ["mathrev","수학 누적 복습","복습",null,null],
-  ["coderev","C언어·Python 복습","복습",null,null],
-  ["robotrev","물리·아두이노 복습","복습",null,null]
- ]}
-];
-
-// 완료가 확인된 강의만 최초에 완료 상태 설정.
-const verifiedMonday=monday.map(x=>x[0]);
-
-const blockers=[
- ["b_lu","선형대수 LU 분해 이해 확인"],
- ["b_ram","C언어 RAM 필요성"],
- ["b_pointer","포인터·주소·역참조"],
- ["b_double","이중 포인터 **"],
- ["b_change","change() 함수 코드 분석"],
- ["b_test","포인터 코드 재시험·오답"]
-];
-
-const routines=[
- ["wake","기상·수면 일정"],
- ["study","오늘 공부"],
- ["exercise","운동"],
- ["protein","단백질 식사"],
- ["vegetable","식이섬유·채소"],
- ["supplement","영양제"],
- ["review","오늘 학습 정리"]
-];
-
-function initial(){
- const study={};
- verifiedMonday.forEach(id=>study[id]=true);
- return {
-  study:study,
-  reviews:{},
-  blockers:{},
-  routines:{},
-  money:26700000
+const order=['calc','linear','algebra','python','phy0','phy3','calc3','calc4','calc5','calc6','calc7','calc8','uni13','uni14','uni15','uni16','statics'];
+const cost=x=>x.minutes??(x.course.id==='python'?20:50);
+const label=x=>x.n==='OT'?'OT':x.course.kind==='study'?x.n+'강':x.n+'번';
+function makePlan(index,previous){
+ const plan=[];
+ const seen=new Set();
+ const add=(id,field,day,cost,slot,carry=false)=>{
+  const t={id,field,day,cost,slot,carry};
+  if(!seen.has(taskKey(t))&&!complete(t)){plan.push(t);seen.add(taskKey(t));}
  };
-}
-
-function load(){
- try{
-  const v=JSON.parse(localStorage.getItem(KEY)||"null");
-  if(v&&typeof v==="object")return v;
- }catch(e){}
- return initial();
-}
-
-let db=load();
-db.study=db.study||{};
-db.reviews=db.reviews||{};
-db.blockers=db.blockers||{};
-db.routines=db.routines||{};
-if(!Number.isFinite(db.money))db.money=26700000;
-
-// 기존 11월 데이터에서 오늘 확인된 완료 기록을 보완.
-// 기존 복습 상태는 건드리지 않음.
-verifiedMonday.forEach(id=>{
- if(db.study[id]!==true)db.study[id]=true;
-});
-
-function store(){
- try{
-  localStorage.setItem(KEY,JSON.stringify(db));
- }catch(e){console.warn("저장 실패",e)}
-}
-store();
-
-const $=id=>document.getElementById(id);
-function done(type,id){return !!db[type][id]}
-function setDone(type,id,value){
- db[type][id]=value;
- store();
- updateSummary();
- if(type==="study"){
-  renderCourses();
-  renderReviews();
+ const capacity=[240,240,240,180,180];
+ const remaining=[...capacity];
+ const robotRemaining=Array.from({length:7},(_,d)=>d<5?60:120);
+ const unfinished=previous.filter(t=>!complete(t));
+ const sticky=unfinished.filter(t=>lessons[t.id].course.kind==='study'&&!held(lessons[t.id].course));
+ const focus=[...new Set(sticky.map(t=>lessons[t.id].course.id))].slice(0,2);
+ for(const id of order){
+  if(focus.length<2&&!focus.includes(id)&&!held(courses[id])&&courses[id].items.some(x=>!x.skip&&(!state.marks[x.id]?.watch||x.review&&!state.marks[x.id]?.review))) focus.push(id);
  }
-}
-function check(id,label,type,kind){
- const row=document.createElement("div");
- row.className=type==="study"?"task":"review-row";
- const input=document.createElement("input");
- input.type="checkbox";
- input.id=type+"_"+id;
- input.checked=done(type,id);
- const text=document.createElement("label");
- text.htmlFor=input.id;
- if(kind){
-  const em=document.createElement("em");
-  em.textContent=kind;text.append(em);
+ function scheduleStudy(x,field,carry){
+  const duration=field==='review'?Math.min(40,cost(x)):cost(x);
+  const d=remaining.findIndex((m,i)=>m>=duration&& !plan.some(t=>t.day===i&&t.id===x.id&&t.field!==field));
+  if(d<0||seen.has(x.id+'/'+field)||complete({id:x.id,field}))return;
+  add(x.id,field,d,duration,'대학원',carry);
+  remaining[d]-=duration;
  }
- text.append(document.createTextNode(label));
- input.onchange=()=>setDone(type,id,input.checked);
- row.append(input,text);
- return row;
-}
-
-function renderCalendar(){
- const box=$("calendarGrid");
- box.replaceChildren();
- ["일","월","화","수","목","금","토"].forEach(d=>{
-  const x=document.createElement("span");
-  x.className="head";x.textContent=d;box.append(x);
- });
- for(let d=1;d<=30;d++){
-  const x=document.createElement("span");
-  x.textContent=d;
-  if(d>=2&&d<=8)x.className="thisweek";
-  const now=new Date();
-  if(now.getFullYear()===2026&&now.getMonth()===10&&
-     now.getDate()===d)x.className="today";
-  box.append(x);
- }
-}
-
-function renderWeek(){
- const grid=$("weekGrid");
- grid.replaceChildren();
- plan.forEach(day=>{
-  const card=document.createElement("div");
-  card.className="card day";
-  const head=document.createElement("div");
-  head.className="day-head";
-  const title=document.createElement("b");
-  title.textContent=day.date+" "+day.day;
-  const info=document.createElement("small");
-  info.textContent=day.tasks.length+
-   (day.tasks.length?"개 과제":" · 휴식");
-  head.append(title,info);card.append(head);
-  if(!day.tasks.length){
-   const rest=document.createElement("p");
-   rest.className="sub";
-   rest.textContent="완전 휴식";
-   card.append(rest);
-  }
-  day.tasks.forEach(t=>{
-   card.append(check(t[0],t[1],"study",t[2]));
-  });
-  const footer=document.createElement("div");
-  footer.className="day-count";
-  footer.id="day_"+day.date.replace("/","");
-  card.append(footer);
-  grid.append(card);
- });
-}
-
-function highest(s){
- let n=s[2];
- plan.forEach(day=>day.tasks.forEach(t=>{
-  if(t[3]===s[0]&&Number.isInteger(t[4])&&
-     done("study",t[0]))n=Math.max(n,t[4]);
+ for(const t of sticky) if(focus.includes(lessons[t.id].course.id))scheduleStudy(lessons[t.id],t.field,true);
+ const queues=focus.map(id=>courses[id].items.filter(x=>!x.skip).flatMap(x=>{
+  if(x.review&&!state.marks[x.id]?.review)return [[lessons[x.id],'review']];
+  return state.marks[x.id]?.watch?[]:[[lessons[x.id],'watch']];
  }));
- return n;
-}
-
-function renderCourses(){
- const grid=$("courseGrid");
- const mini=$("miniProgress");
- grid.replaceChildren();mini.replaceChildren();
- subjects.forEach(s=>{
-  const n=highest(s);
-  const card=document.createElement("div");
-  card.className="card";
-  const title=document.createElement("h3");
-  title.textContent=s[1];
-  const number=document.createElement("div");
-  number.className="course-number";
-  number.textContent=n+"강까지 시청 기록";
-  const status=document.createElement("div");
-  status.className="status";status.textContent=s[4];
-  const explain=document.createElement("p");
-  explain.className="sub";
-  explain.textContent="시청한 최고 강의 번호야. "+
-   "복습 완료와 이해 수준은 별도로 관리해.";
-  card.append(title,number,status,explain);
-  grid.append(card);
-
-  const row=document.createElement("div");
-  row.className="progress-row";
-  const labels=document.createElement("div");
-  const a=document.createElement("span");
-  a.textContent=s[1];
-  const b=document.createElement("small");
-  b.textContent=n+"강";
-  labels.append(a,b);
-  const bar=document.createElement("div");
-  bar.className="bar";
-  const fill=document.createElement("div");
-  fill.className="fill";
-  fill.style.width=s[3]?
-   Math.min(100,n/s[3]*100)+"%":"0%";
-  bar.append(fill);row.append(labels,bar);
-  mini.append(row);
- });
-}
-
-function renderReviews(){
- const bs=$("blockers"),rs=$("reviewList");
- bs.replaceChildren();rs.replaceChildren();
- blockers.forEach(t=>{
-  bs.append(check(t[0],t[1],"blockers",""));
- });
- const pending=[];
- plan.forEach(day=>{
-  const lessons=day.tasks.filter(t=>t[4]!==null);
-  if(!lessons.length)return;
-  const h=document.createElement("h3");
-  h.style.marginTop="17px";
-  h.textContent=day.date+" "+day.day+"요일";
-  rs.append(h);
-  lessons.forEach(t=>{
-   rs.append(check(t[0],t[1]+" · 복습시험과 오답",
-     "reviews",""));
-   if(done("study",t[0])&&!done("reviews",t[0])){
-    pending.push(t[1]);
-   }
-  });
- });
- const notice=document.createElement("div");
- notice.className="note";
- notice.textContent=pending.length?
-  "강의 시청 완료 · 복습 대기: "+pending.join(", "):
-  "현재 이번 주 시청 체크 중 복습 대기 없음";
- rs.prepend(notice);
-}
-
-function updateSummary(){
- const all=plan.flatMap(d=>d.tasks);
- const n=all.filter(t=>done("study",t[0])).length;
- $("weekTotal").textContent=n+"/"+all.length+"개 과제 완료";
- plan.forEach(day=>{
-  const count=day.tasks.filter(t=>done("study",t[0])).length;
-  const id="day_"+day.date.replace("/","");
-  if($(id))$(id).textContent=count+"/"+day.tasks.length+" 완료";
- });
- const todayData=getToday();
- const c=routines.filter(t=>todayData.checks[t[0]]).length;
- $("routineCount").textContent=c+"/"+routines.length;
-}
-
-function dateKey(){
- const d=new Date();
- return d.getFullYear()+"-"+
-  String(d.getMonth()+1).padStart(2,"0")+"-"+
-  String(d.getDate()).padStart(2,"0");
-}
-function getToday(){
- const key=dateKey();
- if(!db.routines[key]){
-  db.routines[key]={checks:{},water:0,memo:""};
+ for(let n=0;n<Math.max(0,...queues.map(q=>q.length));n++)for(const q of queues)if(q[n])scheduleStudy(...q[n],false);
+ const later=data.courses.filter(c=>c.kind==='robot'&&!['robot01','robot02','robot03'].includes(c.id));
+ const track=firstRobot[index]??{id:(later.find(c=>c.items.some(x=>!state.marks[x.id]?.teach))??later.at(-1)).id,test:()=>true};
+ const prepDays=index<2?[3,4,5]:[0,1,2,3,4];
+ const lessonDays=[5,6];
+ const robotUnits=courses[track.id].items.filter(track.test).filter(x=>!state.marks[x.id]?.teach&&!seen.has(x.id+'/teach'));
+ for(const x of robotUnits){
+  const p=prepDays.find(d=>robotRemaining[d]>=20);
+  const d=lessonDays.find(d=>robotRemaining[d]>=25);
+  if(d===undefined||(!state.marks[x.id]?.prep&&!seen.has(x.id+'/prep')&&p===undefined))continue;
+  if(!state.marks[x.id]?.prep&&!seen.has(x.id+'/prep')){add(x.id,'prep',p,20,index<2?'오전 복습':'선학습');robotRemaining[p]-=20;}
+  if(robotRemaining[d]>=25){add(x.id,'teach',d,25,d===5?'오후 혜원언니 수업':'혜원언니 수업');robotRemaining[d]-=25;}
  }
- db.routines[key].checks=db.routines[key].checks||{};
- return db.routines[key];
-}
-function renderRoutine(){
- const t=getToday();
- $("todayLabel").textContent=dateKey();
- $("waterValue").textContent=t.water||0;
- const box=$("routineList");
- box.replaceChildren();
- routines.forEach(([id,label])=>{
-  const row=document.createElement("div");
-  row.className="review-row";
-  const input=document.createElement("input");
-  input.type="checkbox";
-  input.id="routine_"+id;
-  input.checked=!!t.checks[id];
-  const name=document.createElement("label");
-  name.htmlFor=input.id;name.textContent=label;
-  input.onchange=()=>{
-   getToday().checks[id]=input.checked;
-   store();updateSummary();
-  };
-  row.append(input,name);box.append(row);
- });
- $("dayMemo").value=t.memo||"";
- updateSummary();
-}
-function addWater(value){
- const t=getToday();
- t.water=Math.max(0,(t.water||0)+value);
- store();renderRoutine();
-}
-$("dayMemo").oninput=e=>{
- getToday().memo=e.target.value;store();
-};
-
-function moneyText(n){
- return Number(n).toLocaleString("ko-KR")+"원";
-}
-function renderMoney(){
- const n=db.money;
- $("savingValue").textContent=moneyText(n);
- $("homeMoney").textContent=
-  (n/10000).toLocaleString("ko-KR")+"만 원";
- const remain=Math.max(0,GOAL-n);
- const percent=Math.min(100,n/GOAL*100);
- $("homeRemain").textContent=moneyText(remain)+" 남음";
- $("savingInfo").textContent=
-  percent.toFixed(1)+"% 달성 · "+moneyText(remain)+" 남음";
- $("homeMoneyBar").style.width=percent+"%";
- $("savingBar").style.width=percent+"%";
- $("savingInput").value=n;
-}
-function saveMoney(){
- const n=Number($("savingInput").value);
- if(!Number.isFinite(n)||n<0){
-  alert("0 이상의 금액을 입력해 줘.");return;
+ for(const t of unfinished.filter(t=>lessons[t.id].course.kind==='robot')){
+  const options=t.field==='teach'?lessonDays:prepDays;
+  const d=options.find(d=>robotRemaining[d]>=t.cost);
+  if(d!==undefined){add(t.id,t.field,d,t.cost,t.field==='teach'?'혜원언니 수업':'오전 준비',true);robotRemaining[d]-=t.cost;}
  }
- db.money=n;store();renderMoney();
- toast("저축액 저장 완료");
+ // Keep overflow in the backlog until there is room in a later week.
+ for(const t of unfinished)if(!seen.has(taskKey(t)))plan.push({...t,day:6,carry:true,slot:'이월 대기'});
+ return plan;
 }
-
-function renderHistory(){
- const rows=[
-  "선형대수 15강 체크 · 14강 LU 분해 이해 보완",
-  "고등대수 30강까지",
-  "미적분 기초 9강까지",
-  "고등물리 9강까지",
-  "아두이노 10강까지",
-  "C언어 36강까지 · 포인터 재학습 필요",
-  "Python 22강까지"
- ];
- const box=$("historyList");
- box.replaceChildren();
- rows.forEach(line=>{
-  const d=document.createElement("div");
-  d.className="status";
-  d.style.margin="8px 0";
-  d.textContent=line;box.append(d);
- });
+function planFor(index){
+ for(let i=0;i<=index;i++){
+  if(Object.hasOwn(state.plans,i))continue;
+  state.plans[i]=makePlan(i,state.plans[i-1]??[]);
+ }
+ return state.plans[index];
 }
-
-function go(id){
- document.querySelectorAll(".page").forEach(p=>{
-  p.classList.toggle("active",p.id===id);
- });
- document.querySelectorAll(".nav button").forEach(b=>{
-  b.classList.toggle("active",b.dataset.page===id);
- });
- if(id==="courses")renderCourses();
- if(id==="reviews")renderReviews();
- if(id==="routine")renderRoutine();
- if(id==="money")renderMoney();
- window.scrollTo(0,0);
+const ratio=(a,b)=>b?Math.round(100*a/b):0;
+function courseDone(x,c){return !!state.marks[x.id]?.[c.kind==='study'?'watch':'joint'];}
+function stats(plan){
+ const stat=(label,value)=>'<div class="stat"><strong>'+value+'%</strong><small>'+label+'</small></div>';
+ const study=data.courses.filter(c=>c.kind==='study'&&!held(c)).flatMap(c=>c.items).filter(x=>!x.skip);
+ const robotics=data.courses.filter(c=>c.kind==='robot').flatMap(c=>c.items);
+ const scheduled=plan.filter(t=>t.slot!=='이월 대기');
+ $('#stats').innerHTML=stat('대학원 수강',ratio(study.filter(x=>state.marks[x.id]?.watch).length,study.length))+stat('로봇 공동 적용',ratio(robotics.filter(x=>state.marks[x.id]?.joint).length,robotics.length))+stat('주간 완료',ratio(scheduled.filter(complete).length,scheduled.length));
 }
-document.querySelectorAll(".nav button").forEach(b=>{
- b.onclick=()=>go(b.dataset.page);
-});
-
-function exportData(){
- const obj={
-  format:"robot-study-november-2026-v1",
-  exportedAt:new Date().toISOString(),
-  data:db
+function check(id,field,title){
+ return '<input type="checkbox" data-id="'+id+'" data-field="'+field+'" aria-label="'+esc(title)+'" '+(complete({id,field})?'checked':'')+'>';
+}
+function weekView(plan){
+ const start=day(state.start,7*week);
+ const scheduled=plan.filter(t=>t.slot!=='이월 대기');
+ const backlog=plan.filter(t=>t.slot==='이월 대기'&&!complete(t));
+ const done=scheduled.filter(complete).length;
+ const focus=firstRobot[week]?.name??'로봇 제작';
+ const weekdays=['월','화','수','목','금','토','일'];
+ const task=t=>{
+  const x=lessons[t.id], kind=x.course.kind;
+  return '<label class="task '+kind+'">'+check(t.id,t.field,x.t+' '+fields[kind][t.field])+'<span><small>'+esc(t.slot)+' · '+esc(x.course.name)+' · '+label(x)+'</small>'+esc(x.t)+'<small>'+fields[kind][t.field]+' · '+(t.slot==='이월 대기'?'':(kind==='robot'||x.minutes===null||t.field==='review'?'약 ':'')+t.cost+'분')+(t.carry?' · 이월':'')+'</small></span></label>';
  };
- const blob=new Blob([JSON.stringify(obj,null,2)],
-  {type:"application/json"});
- const url=URL.createObjectURL(blob);
- const a=document.createElement("a");
- a.href=url;a.download="robot-study-backup.json";
- document.body.append(a);a.click();a.remove();
- setTimeout(()=>URL.revokeObjectURL(url),1000);
+ return '<section class="panel"><div class="toolbar"><div><h2>'+(week+1)+'주차 · '+start.slice(5).replace('-','.')+'–'+day(start,6).slice(5).replace('-','.')+'</h2><p class="muted">프로젝트 집중 · '+focus+'</p></div><div class="pills"><button data-step="-1" '+(!week?'disabled':'')+'>‹ 이전</button><button data-now>이번 주</button><button data-step="1">다음 ›</button></div></div><div class="toolbar"><span class="now">'+done+' / '+scheduled.length+' 완료 · '+ratio(done,scheduled.length)+'%</span><details class="settings"><summary>계획 설정</summary><label>첫 주 시작일 <input type="date" id="start" value="'+state.start+'"></label> <button id="apply-start">적용</button> <button id="replan">이번 주 다시 배정</button></details></div><progress class="progress" aria-label="주간 완료율" max="'+(scheduled.length||1)+'" value="'+done+'"></progress><div class="calendar">'+weekdays.map((name,i)=>{
+  const tasks=scheduled.filter(t=>t.day===i);
+  const local=day(start,i);
+  const study=tasks.filter(t=>lessons[t.id].course.kind==='study').reduce((a,t)=>a+t.cost,0);
+  return '<article class="day '+(i>4?'weekend ':'')+(local===today()?'today':'')+'"><header><b>'+name+'요일</b> <small>'+local.slice(5).replace('-','.')+'</small></header><p class="muted">'+(i<5?'대학원 '+study+'분 · 목표 '+(i<3?'3–5시간':'3시간'):'혜원언니 교육')+'</p>'+(tasks.length?tasks.map(task).join(''):'<p class="muted">예정 항목 없음</p>')+'</article>';
+ }).join('')+'</div>'+(backlog.length?'<details class="note"><summary>이월 대기 '+backlog.length+'개</summary>'+backlog.map(task).join('')+'</details>':'')+'</section>';
 }
-async function importData(e){
- const file=e.target.files[0];
+function catalogView(kind){
+ const list=data.courses.filter(c=>c.kind===kind);
+ const c=courses[selected[kind]];
+ return '<div class="layout"><aside class="panel course-list" aria-label="과목">'+list.map(c=>{
+  const eligible=c.items.filter(x=>!x.skip);
+  const done=eligible.filter(x=>courseDone(x,c)).length;
+  return '<button data-course="'+c.id+'" class="'+(selected[kind]===c.id?'active':'')+'">'+esc(c.name)+'<small>'+done+' / '+eligible.length+' 완료'+(kind==='study'&&held(c)?' · 보류':'')+'</small><progress aria-label="과목 완료율" max="'+eligible.length+'" value="'+done+'"></progress></button>';
+ }).join('')+'</aside><section class="panel"><div class="toolbar"><div><h2>'+esc(c.name)+'</h2><p class="muted">'+c.items.length+'개 '+(kind==='study'?'강의':'단원')+'</p></div>'+(kind==='study'?'<button data-hold="'+c.id+'">'+(held(c)?'보류 해제':'과목 보류')+'</button>':'')+'</div>'+(held(c)?'<p class="note">'+(c.id==='statics'?'전공 수학 보완까지 학습 보류':'주간 자동 배정 보류')+'</p>':'')+'<div class="toolbar"><input id="search" class="filter" type="search" placeholder="회차·제목 검색" aria-label="회차·제목 검색" value="'+esc(query)+'"><select id="filter" aria-label="상태 필터"><option value="all">전체</option><option value="todo">미완료</option><option value="done">완료</option>'+(kind==='study'?'<option value="skip">생략 추천</option><option value="review">복습 필요</option>':'')+'</select></div><div class="entries" id="entries"></div></section></div>';
+}
+function entries(){
+ const c=courses[selected[tab]];
+ const result=c.items.filter(x=>{
+  const matches=(label({...x,course:c})+' '+x.t).toLowerCase().includes(query.trim().toLowerCase());
+  const done=courseDone(x,c);
+  return matches&&(filter==='all'||filter==='todo'&&!done||filter==='done'&&done||filter==='skip'&&x.skip||filter==='review'&&x.review&&!state.marks[x.id]?.review);
+ });
+ $('#entries').innerHTML=result.map(x=>{
+  const tags=(x.skip?'<span class="badge amber">× 생략 추천</span>':'')+(x.review&&!state.marks[x.id]?.review?'<span class="badge blue">복습 필요</span>':'');
+  return '<article class="entry"><div class="pills"><span class="badge">'+label({...x,course:c})+'</span><strong>'+esc(x.t)+'</strong>'+(c.kind==='study'?'<small>'+(x.minutes===null?'시간 미기재':x.minutes+'분')+'</small>':'')+tags+'</div><div class="checks">'+Object.entries(fields[c.kind]).map(([field,title])=>'<label>'+check(x.id,field,x.t+' '+title)+title+'</label>').join('')+'</div><details><summary>학습 메모'+(state.notes[x.id]?' · 기록 있음':'')+'</summary><textarea data-note="'+x.id+'" aria-label="'+esc(x.t)+' 학습 메모">'+esc(state.notes[x.id])+'</textarea></details></article>';
+ }).join('')||'<p class="empty muted">조건에 맞는 항목이 없습니다.</p>';
+}
+function roadView(){
+ const names=['이동 로봇 기초','자율주행·생수 운반','상품 인식·집기·진열','통합·안전·매장 검증'];
+ const limits=[0,10,18,26,32];
+ return '<div class="road">'+names.map((name,i)=>'<section class="panel"><h3>'+(i+1)+'학기 · '+name+'</h3>'+data.road.slice(limits[i],limits[i+1]).map(r=>{
+  const pending=r.deps.filter(id=>!state.milestones[id]);
+  return '<article class="entry"><strong>'+r.id+' '+esc(r.name)+'</strong><small>선수 과목 · '+(r.deps.join(', ')||'없음')+'</small><div class="checks"><label><input type="checkbox" data-road="'+r.id+'" '+(state.milestones[r.id]?'checked':'')+'>완료</label>'+(pending.length?'<span class="badge amber">선수 미완료</span>':'')+'</div></article>';
+ }).join('')+'</section>').join('')+'</div>';
+}
+function currentWeek(){return Math.min(260,Math.max(0,Math.floor((date(today())-date(state.start))/(dayMs*7))));}
+function render(){
+ const plan=planFor(week);
+ stats(plan);
+ document.querySelectorAll('[data-tab]').forEach(b=>b.setAttribute('aria-current',String(tab===b.dataset.tab)));
+ $('#view').innerHTML=tab==='week'?weekView(plan):tab==='road'?roadView():catalogView(tab);
+ if(tab==='study'||tab==='robot'){$('#filter').value=filter;entries();}
+}
+document.querySelector('nav').addEventListener('click',e=>{
+ const b=e.target.closest('[data-tab]');if(!b)return;
+ tab=b.dataset.tab;query='';filter='all';render();
+});
+$('#view').addEventListener('click',e=>{
+ const b=e.target.closest('button');if(!b)return;
+ if(b.dataset.course){selected[tab]=b.dataset.course;query='';filter='all';}
+ else if(b.dataset.step)week=Math.min(260,Math.max(0,week+Number(b.dataset.step)));
+ else if(b.hasAttribute('data-now'))week=currentWeek();
+ else if(b.dataset.hold){const id=b.dataset.hold;state.holds[id]=!held(courses[id]);for(const k of Object.keys(state.plans))if(+k>=week)delete state.plans[k];}
+ else if(b.id==='apply-start'){
+  const value=$('#start').value;if(!validDate(value))return;
+  if(monday(value)!==state.start&&confirm('시작 주를 바꾸면 주간 배정을 새로 만듭니다. 적용할까요?')){state.start=monday(value);state.plans={};week=0;}
+ }
+ else if(b.id==='replan'){for(const k of Object.keys(state.plans))if(+k>=week)delete state.plans[k];}
+ else return;
+ render();save();
+});
+$('#view').addEventListener('change',e=>{
+ const el=e.target,{id,field,road}=el.dataset;
+ if(el.id==='filter'){filter=el.value;entries();return;}
+ if(id&&field){state.marks[id]??={};state.marks[id][field]=el.checked;}
+ else if(road)state.milestones[road]=el.checked;
+ else return;
+ const entry=el.closest('.entry');
+ const open=entry?.querySelector('details')?.open;
+ const position=tab==='week'?[...$('#view').querySelectorAll('input[type=checkbox]')].indexOf(el):-1;
+ render();save();
+ const replacement=position>=0?$('#view').querySelectorAll('input[type=checkbox]')[position]:id?$('#view').querySelector('[data-id="'+id+'"][data-field="'+field+'"]'):$('#view').querySelector('[data-road="'+road+'"]');
+ if(open&&replacement)replacement.closest('.entry').querySelector('details').open=true;
+ replacement?.focus({preventScroll:true});
+});
+$('#view').addEventListener('input',e=>{
+ const el=e.target;
+ if(el.id==='search'){query=el.value;entries();}
+ if(el.dataset.note){state.notes[el.dataset.note]=el.value;save();}
+});
+$('#backup').onclick=()=>{
+ const url=URL.createObjectURL(new Blob([JSON.stringify(state,null,2)],{type:'application/json'}));
+ const a=document.createElement('a');a.href=url;a.download='rprp-progress-'+today()+'.json';a.click();
+ setTimeout(()=>URL.revokeObjectURL(url),1000);
+};
+$('#restore').onclick=()=>$('#file').click();
+$('#file').onchange=async e=>{
+ const file=e.target.files[0];e.target.value='';
  if(!file)return;
  try{
-  const obj=JSON.parse(await file.text());
-  if(obj.format!=="robot-study-november-2026-v1"||
-     !obj.data||typeof obj.data!=="object")
-   throw Error("지원하지 않는 백업 파일");
-  if(!confirm("현재 기록을 백업으로 교체할까요?"))return;
-  db=obj.data;
-  db.study=db.study||{};
-  db.reviews=db.reviews||{};
-  db.blockers=db.blockers||{};
-  db.routines=db.routines||{};
-  store();location.reload();
- }catch(err){alert("불러오기 실패: "+err.message)}
- finally{e.target.value=""}
-}
-function toast(msg){
- $("toast").textContent=msg;
- $("toast").style.display="block";
- setTimeout(()=>$("toast").style.display="none",1700);
-}
-
-renderCalendar();
-renderWeek();
-renderCourses();
-renderReviews();
-renderHistory();
-renderRoutine();
-renderMoney();
-updateSummary();
+  const restored=validate(JSON.parse(await file.text()));
+  if(!confirm('현재 기록을 이 백업으로 교체할까요?'))return;
+  state=restored;week=currentWeek();render();save();
+ }catch(error){alert(error instanceof SyntaxError?'JSON 파일을 읽을 수 없습니다.':error.message);}
+};
+week=currentWeek();render();save();
 </script>
 </body>
 </html>
+
