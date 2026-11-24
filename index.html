@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0b1830"><title>ROBOT LAB — Study Workspace</title>
 <style>
@@ -61,33 +62,162 @@ body:has(#weekly.active) .sidebar{width:205px}
  #weekly .weekaside .panel{display:block}
  #weekly .weekaside .panel .sectionline{margin:20px 0 12px}
 }
+
+/* Full curriculum map: isolated styles, preserving weekly seven-column UI */
+.curr-tabs{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:20px}
+.curr-intro{background:linear-gradient(125deg,#152d52,#243e70);color:#fff;border-radius:18px;padding:22px 25px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.curr-intro h2{font-size:19px;margin:0 0 7px}.curr-intro p{color:#bacbe6;font-size:12px;margin:0;line-height:1.7}
+.curr-map-wrap{overflow-x:auto;padding-bottom:14px}
+.curr-map{min-width:1040px;display:grid;grid-template-columns:76px 70px 132px 132px 132px 1.45fr 170px 145px;gap:8px}
+.curr-h{padding:13px 7px;color:white;font-weight:800;font-size:12px;text-align:center;border-radius:11px}
+.curr-h.yr{background:#1e3765}.curr-h.math{background:#8265c8}.curr-h.phys{background:#397cce}.curr-h.mech{background:#239a89}.curr-h.robot{background:#396cc5}.curr-h.proj{background:#dba549}.curr-h.career{background:#cf819c}
+.curr-year{background:#e6effb;display:flex;align-items:center;justify-content:center;font-weight:800;text-align:center;color:#245ca2;border-radius:10px;font-size:13px;padding:12px}
+.curr-cell{background:#fff;border:1px solid #e2e9f3;border-radius:10px;padding:9px;min-height:85px;display:flex;flex-direction:column;gap:7px}
+.curr-cell.math{background:#f7f1ff}.curr-cell.phys{background:#f0f6ff}.curr-cell.mech{background:#effbf7}.curr-cell.robot{background:#f0f6ff}.curr-cell.proj{background:#fffaed}.curr-cell.career{background:#fff2f5}
+.curr-sem{background:#f0f4fb;border-radius:10px;padding:10px 5px;text-align:center;color:#425979;font-weight:800;font-size:12px;display:flex;align-items:center;justify-content:center}
+.curr-item{border:1px solid #dfe7f2;background:rgba(255,255,255,.88);border-radius:8px;padding:8px 9px;display:flex;align-items:center;gap:6px;line-height:1.35;font-size:11px;min-height:38px}
+.curr-item input{width:15px;height:15px;accent-color:#318b72;flex:0 0 auto}
+.curr-item.done{color:#7a8a93;background:#e8f6ef;border-color:#cde8d5}.curr-item.done .curr-name{text-decoration:line-through}
+.curr-item .curr-name{flex:1;min-width:0}.curr-link{background:none;border:0;color:#4469c9;padding:2px;font-size:11px;white-space:nowrap}
+.curr-section{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:26px 0 14px}.curr-section h2{margin:0;font-size:17px}
+.curr-projects{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px}
+.curr-project-phase{border:1px solid var(--edge);background:#fff;border-radius:14px;padding:17px;min-width:0}
+.curr-project-phase h3{font-size:14px;margin:0 0 5px}.curr-project-phase p{font-size:11px;color:var(--muted);line-height:1.6}
+.curr-project-link{display:flex;align-items:center;gap:9px;width:100%;border:1px solid #e5eaf2;background:#fafbff;padding:10px;margin-top:8px;border-radius:9px;text-align:left;font-size:11px;line-height:1.45;color:#29405f}
+.curr-project-link:hover{border-color:#9babda;background:#edf3ff}.curr-project-link b{font-size:11px;color:#536bd5}
+.curr-progress{height:6px;background:#e9edf6;border-radius:50px;overflow:hidden;margin-top:12px}.curr-progress>div{height:100%;background:#36ab95}
+.curr-summary{font-size:12px;color:#62718b;line-height:1.8;margin-top:12px}
+@media(max-width:900px){.curr-projects{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.curr-projects{grid-template-columns:1fr}.curr-intro{padding:17px;display:block}}
+
+/* Official PDF-based curriculum, 4-year map + project prerequisites */
+.map-actions{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:12px 0 16px;flex-wrap:wrap}
+.map-actions label{font-size:12px;color:#55647a}.map-actions select{padding:8px;border:1px solid #dbe3ed;border-radius:8px;margin-left:5px;background:white}
+.map-stats{display:flex;gap:8px;flex-wrap:wrap}.map-stat{font-size:12px;background:white;border:1px solid #dfe6ef;border-radius:6px;padding:8px 11px}
+.map-stat.필수{border-left:3px solid #5283ce}.map-stat.권장{border-left:3px solid #369584}.map-stat.선택{border-left:3px solid #aa79a6}
+.map-score{font-size:30px;text-align:right;white-space:nowrap}.map-score small{display:block;font-size:11px;color:#c6d3e6}
+.edu-years{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;min-width:860px}
+#curriculum:has(.edu-years) #curriculumBody{overflow-x:auto;padding-bottom:12px}
+.edu-year{background:#fff;border:1px solid #e3e9f1;border-radius:13px;overflow:hidden;min-width:0}
+.edu-year>h3{background:#1f3c61;color:white;font-size:15px;margin:0;padding:15px 16px}
+.edu-year>h3 small{font-size:10px;color:#ced9e8;font-weight:400}
+.edu-sem{padding:12px 11px;border-top:1px solid #e4e8ef}
+.edu-sem-head{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-bottom:10px}
+.edu-sem-head small{display:block;font-size:10px;color:#798699;margin-bottom:3px}
+.edu-sem-head strong{font-size:12px}.edu-sem-head span{font-size:10px;color:#738199;white-space:nowrap}
+.edu-course-list{display:grid;gap:6px}
+.edu-course{background:#f5f8fc;border:1px solid #e5eaf1;border-left:3px solid #5e88c8;padding:8px 9px;border-radius:7px;min-width:0}
+.edu-course.recommended{border-left-color:#40a48d;background:#f4faf7}.edu-course.elective{border-left-color:#b17baa;background:#fcf7fc}
+.edu-course.completed{background:#e4f3e8;border-color:#afd8bd}
+.edu-course-label{display:flex;gap:7px;align-items:center;cursor:pointer}.edu-course-label input{accent-color:#238562;flex-shrink:0}
+.edu-course-copy{display:flex;align-items:baseline;gap:5px;flex-wrap:wrap;min-width:0;line-height:1.3}
+.edu-course-copy b{font-size:10px;color:#5c779b;white-space:nowrap}.edu-course-copy strong{font-size:12px;overflow-wrap:anywhere}
+.edu-course-copy small{font-size:9px;color:#7b8898;margin-left:auto;white-space:nowrap}
+.edu-meta{font-size:10px;margin:6px 0 0 22px;color:#77859a;line-height:1.35}
+.edu-meta button{border:0;background:none;color:#3869ba;font-weight:700;font-size:10px;cursor:pointer}
+.p-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.p-sem{background:white;border:1px solid #e2e9f0;border-radius:12px;padding:15px;min-width:0}
+.p-sem-title{display:flex;gap:8px;align-items:center;justify-content:space-between;padding:9px 12px;margin:-15px -15px 12px;background:#1f466f;color:#fff;border-radius:12px 12px 0 0}
+.p-sem:nth-child(2) .p-sem-title{background:#176e69}.p-sem:nth-child(3) .p-sem-title{background:#61548b}.p-sem:nth-child(4) .p-sem-title{background:#906038}
+.p-sem-title h3{font-size:13px;margin:0}.p-sem-title span{font-size:10px;white-space:nowrap}
+.p-road{border-bottom:1px solid #e6ebf2;padding:10px 2px}.p-road:last-child{border-bottom:none}
+.p-road label{display:flex;gap:8px;align-items:center;font-size:12px;font-weight:650;cursor:pointer}
+.p-road label input{accent-color:#238562}.p-road label strong{font-size:11px;color:#406d9b}.p-road.completed{background:#eaf6ee}
+.p-pre{color:#7b8799;font-size:10px;margin:5px 0 2px 42px}
+.p-rel{display:flex;gap:5px;flex-wrap:wrap;margin:7px 0 0 42px}
+.p-rel button{background:#edf4ff;border:1px solid #d4e2f9;color:#385f9d;padding:5px 7px;border-radius:5px;font-size:10px;cursor:pointer}
+@media(max-width:700px){.p-grid{grid-template-columns:1fr}}
+
+
+/* Compact 7-day calendar: all original task strings and check states retained */
+#weekly .page-head{margin-bottom:12px}
+#weekly .page-head p{display:none}
+#weekly .day-card .day-top{padding:10px 10px;min-height:53px}
+#weekly .day-card .day-top span{font-size:10px;margin-top:3px}
+#weekly .checkrow{padding:9px 7px;gap:5px;align-items:flex-start}
+#weekly .checkrow .task-label{font-size:11px;line-height:1.45;min-width:0}
+#weekly .grad-task-tag{display:inline-block;font-size:9px;margin-bottom:2px}
+#weekly .inline-add{margin:7px 6px 0;padding-top:7px}
+#weekly .inline-add input{padding:7px 5px;font-size:10px}
+#weekly .inline-add button{font-size:10px;padding:6px}
+#weekly .weekaside .panel{display:block;padding:13px 18px}
+#weekly .weekaside .panel>h2,#weekly .weekaside .panel>.subtitle,#weekly .weekaside .mini-timeline{display:none!important}
+#weekly .weekaside .panel .sectionline{margin:0 0 8px}
+#weekly .weekaside textarea{min-height:68px}
+#weekly.weekly-compact .task-label .task-text{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+#weekly.weekly-compact .checkrow{min-height:45px}
+#weekly .week-toolbar .display-switch{padding:7px 9px;font-size:11px}
+@media(max-width:780px){#weekly .day-card .day-top{min-height:50px}}
+
+/* Unified, compact weekly execution board */
+#weekly .day-card .day-top{padding:12px 12px;min-height:57px}
+#weekly .day-card .day-body{padding:0 0 8px}
+#weekly .task-bundle{border-bottom:1px solid #e7ecf2}
+#weekly .task-bundle:last-of-type{border-bottom:0}
+#weekly .bundle-heading{display:flex;justify-content:space-between;align-items:center;padding:9px 10px 6px;gap:5px;font-size:12px;font-weight:800;background:#f2f8f5;color:#24705d}
+#weekly .task-bundle.material .bundle-heading{background:#f1f4ff;color:#425bba}
+#weekly .task-bundle.teaching .bundle-heading{background:#f1edfc;color:#65539f}
+#weekly .task-bundle.other .bundle-heading{background:#f6f7f9;color:#666f80}
+#weekly .bundle-heading span{font-size:10px;font-weight:600;opacity:.75}
+#weekly .bundle-row{display:flex;align-items:flex-start;gap:7px;padding:7px 9px;min-height:30px;cursor:pointer;border-top:1px solid #f4f5f7;line-height:1.35;font-size:11px}
+#weekly .bundle-row input{width:15px;height:15px;margin:0;flex-shrink:0;accent-color:#248b72}
+#weekly .task-bundle.material .bundle-row input{accent-color:#536be0}
+#weekly .task-bundle.teaching .bundle-row input{accent-color:#7960bd}
+#weekly .bundle-row>span{flex:1;min-width:0;overflow-wrap:anywhere}
+#weekly.weekly-compact .bundle-row>span{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+#weekly .bundle-row.completed{background:#e7f6ec}
+#weekly .bundle-row.completed>span{color:#3a7355}
+#weekly .bundle-remove{border:0;background:transparent;color:#b0b7c5;font-size:14px;padding:0;line-height:1;opacity:0;flex-shrink:0}
+#weekly .bundle-row:hover .bundle-remove,#weekly .bundle-remove:focus-visible{opacity:1}
+#weekly .no-task{color:#a1aaba;text-align:center;padding:20px 6px;font-size:11px}
+#weekly .weekaside{margin-top:13px}
+#weekly .weekaside .week-note-details{padding:10px 15px}
+#weekly .week-note-details summary{cursor:pointer;font-weight:700;color:#71809a;font-size:12px}
+#weekly .week-note-details textarea{min-height:62px}
+#weekly .page-head{margin-bottom:12px}
+#weekly #dayCards{grid-template-columns:repeat(7,minmax(145px,1fr));min-width:1075px;gap:9px}
+#weekly .inline-add{margin:auto 6px 0;padding-top:8px}
+.track-tabs{display:flex;gap:9px;margin-bottom:17px}
+.track-hint{font-size:12px;color:#78869b;margin:3px 0 17px}
+.progress-track[hidden]{display:none!important}
+#curriculum .edu-course-label{display:flex;align-items:center;padding-left:8px}
+#curriculum .edu-course.completed,#curriculum .p-road.completed{background:inherit}
+#curriculum .p-road .roadmap-subject{display:flex;gap:8px;align-items:center}
+#curriculum .p-road .roadmap-subject strong{font-size:11px;color:#406d9b}
+@media(max-width:780px){#weekly .bundle-row{font-size:11px}}
+
 </style></head>
 <body><div class="app">
 <aside class="sidebar"><div class="brand"><div class="logo">⌘</div><div><strong>ROBOT LAB</strong><small>STUDY WORKSPACE</small></div></div>
-<div class="side-label">WORKSPACE</div><div class="nav-list">
-<button class="nav-btn active" data-view="overview"><span class="glyph">◫</span>대시보드</button>
-<button class="nav-btn" data-view="weekly"><span class="glyph">▦</span>주간 계획표</button>
-<button class="nav-btn" data-view="graduate"><span class="glyph">◈</span>대학원 준비</button>
-<button class="nav-btn" data-view="project"><span class="glyph">⌘</span>로봇 프로젝트</button>
-<button class="nav-btn" data-view="joint"><span class="glyph">◎</span>공동 진도</button>
+<div class="side-label">LEARNING</div><div class="nav-list">
+<button class="nav-btn active" data-view="weekly"><span class="glyph">▦</span>주간 계획표</button>
+<button class="nav-btn" data-view="curriculum"><span class="glyph">▧</span>전체 커리큘럼</button>
+<button class="nav-btn" data-view="progress"><span class="glyph">◈</span>진도표</button>
 <button class="nav-btn" data-view="settings"><span class="glyph">⚙</span>설정 · 백업</button>
 </div><div class="side-bottom"><strong>Build together, learn deeply.</strong><p>나와 혜원언니의 학습을 연결하고, 로봇이 실제로 작동할 때까지 기록합니다.</p></div></aside>
 <div class="main"><div class="topbar"><div class="crumb">WORKSPACE <span style="margin:0 10px;color:#c4ccda">/</span> <b id="crumb">대시보드</b></div><div class="right"><span class="mini-tag">● 자동 저장 활성화</span><div class="avatar">R</div></div></div>
 <div class="content">
-<section class="view active" id="overview"><div class="page-head"><div><p class="eyebrow">MY LEARNING OVERVIEW</p><h1>오늘의 학습 현황</h1><p>대학원 준비와 편의점 로봇 제작, 두 목표를 하나의 공간에서.</p></div><button class="btn" onclick="go('weekly')">이번 주 계획 보기 ↗</button></div>
-<div class="grid kpis" id="kpis"></div><div class="grid dashboard-grid"><div class="panel"><div class="panel-head"><div><h2>이번 주 집중 계획</h2><p class="subtitle" id="dashboardDates"></p></div><span class="pill" id="dashWeekTag"></span></div><div class="feature"><div class="light">CURRENT FOCUS</div><h3 id="dashCourse"></h3><p id="dashDescription"></p></div><div class="metric-line"><span>주간 실행률</span><b id="dashPercent"></b></div><div class="meter"><div class="fill" id="dashBar"></div></div><div class="small-list" id="dashTasks"></div></div>
-<div class="panel"><div class="panel-head"><div><h2>두 공부의 균형</h2><p class="subtitle">완료 여부를 독립적으로 관리합니다.</p></div><span class="pill green">학습 트래커</span></div><div class="metric-line"><span>프로젝트 단원 체크</span><b id="projectMetric"></b></div><div class="meter"><div class="fill" id="projectBar"></div></div><div class="metric-line" style="margin-top:25px"><span>대학원 단원 완전 완료</span><b id="graduateMetric"></b></div><div class="meter"><div class="fill teal" id="graduateBar"></div></div><div class="sectionline"><h2>학습 운영 원칙</h2></div><div class="small-list"><div class="small-row"><div><strong>1~2주차</strong><small>목·금·토 오전 복습 / 주말 언니 수업</small></div><span class="pill muted">복습형</span></div><div class="small-row"><div><strong>3주차 이후</strong><small>월~금 선학습 / 토·일 설명·실습</small></div><span class="pill">선학습형</span></div><div class="small-row"><div><strong>완료 판정</strong><small>강의 시청 ≠ 실습·검증 완료</small></div><span class="pill green">검증형</span></div></div></div></div></section>
-<section class="view" id="weekly"><div class="page-head"><div><p class="eyebrow">WEEKLY ROADMAP</p><h1>주간 학습 계획표</h1><p>계획을 체크하고, 남은 과제는 다음 주로 옮기세요.</p></div></div><div class="grid weekly-layout"><div><div class="week-toolbar"><div><strong id="weekTitle" style="font-size:18px"></strong><p id="weekSubtitle" class="subtitle" style="margin:6px 0 0;color:#8994aa"></p></div><div class="week-step"><button class="btn" onclick="moveWeek(-1)">←</button><b id="weekStep"></b><button class="btn" onclick="moveWeek(1)">→</button></div></div><div class="panel" style="margin-bottom:15px"><div class="metric-line"><span>이번 주 달성률</span><b id="weekMetric"></b></div><div class="meter"><div class="fill" id="weekMeter"></div></div></div><div class="week-scroll"><div id="dayCards"></div></div></div><div class="weekaside"><div class="panel"><h2>이번 주 가이드</h2><p class="subtitle" id="weekGuide"></p><div class="mini-timeline" id="weekRhythm"></div><div class="sectionline"><h2>주간 메모</h2></div><textarea id="weekNote" placeholder="막힌 개념, 실습 오류, 다음 주 이월 내용"></textarea><button class="btn" style="width:100%;margin-top:12px" onclick="carryTasks()">미완료 항목 다음 주로 이월 →</button><p class="hint">메모와 체크는 즉시 이 브라우저에 저장돼요.</p></div></div></div></section>
-<section class="view" id="graduate"><div class="page-head"><div><p class="eyebrow">GRADUATE PREPARATION</p><h1>대학원 준비 공부</h1><p>강의 회차·수강·복습·문제풀이를 따로 기록합니다. 수강 표시와 실제 숙달은 구분합니다.</p></div><span class="pill orange">정역학 보류 · 수학 우선</span></div><div class="notice" style="margin-bottom:20px">아래는 기존 체크리스트에서 확인된 과목의 <b>개념별 관리용 단원</b>입니다. 정확한 강의 제목과 진도는 확정하지 않았으므로 과거 완료표시를 임의로 넣지 않았어요. 각 과목에 강의를 추가할 수 있습니다.</div><div class="filterbar"><input class="field" id="gradSearch" placeholder="과목·개념 검색" oninput="drawGraduate()"></div><div id="gradList" class="course-list"></div></section>
-<section class="view" id="project"><div class="page-head"><div><p class="eyebrow">PROJECT CURRICULUM</p><h1>편의점 로봇 프로젝트</h1><p>원본 PDF 32개 과목 · 842개 세부 단원, 누락 없이 수록.</p></div><span class="pill">총 32개 과목</span></div><div class="filterbar"><input class="field" id="courseSearch" placeholder="과목명·세부 단원 검색" oninput="drawProject()"><select id="coursePhase" onchange="drawProject()"><option value="all">전체 학습 단계</option><option value="0">기초·제작</option><option value="1">이동·자율주행</option><option value="2">비전·로봇팔</option><option value="3">통합·매장</option></select></div><div class="course-list" id="courseList"></div></section>
-<section class="view" id="joint"><div class="page-head"><div><p class="eyebrow">SHARED PROGRESS</p><h1>두 사람의 학습 진도</h1><p>둘 다 직접 할 수 있어야 다음 단계로 넘어갑니다.</p></div></div><div class="notice" style="margin-bottom:20px">이론 이해·실습·이해도 검증·주말 수업·공동 적용은 별도 기록입니다. 각 과목별 상태는 아래에서 관리합니다.</div><div class="filterbar"><select id="jointSelect" onchange="drawJoint()"></select></div><div id="jointContent"></div></section>
+
+<section class="view" id="weekly"><div class="page-head"><div><p class="eyebrow">WEEKLY ROADMAP</p><h1>주간 학습 계획표</h1><p>대학원 · 교재 작성 · 수업을 요일별로 확인하세요.</p></div></div><div class="grid weekly-layout"><div><div class="week-toolbar"><div><strong id="weekTitle" style="font-size:18px"></strong><p id="weekSubtitle" class="subtitle" style="margin:6px 0 0;color:#8994aa"></p></div><div class="week-step"><button class="btn" onclick="moveWeek(-1)">←</button><b id="weekStep"></b><button class="btn" onclick="moveWeek(1)">→</button><button class="btn display-switch" id="weekDisplayToggle" onclick="toggleWeekDisplay()">전체 보기</button></div></div><div class="panel" style="margin-bottom:15px"><div class="metric-line"><span>이번 주 달성률</span><b id="weekMetric"></b></div><div class="meter"><div class="fill" id="weekMeter"></div></div></div><div class="week-scroll"><div id="dayCards"></div></div></div><div class="weekaside"><details class="panel week-note-details"><summary>주간 메모 · 이월</summary><p id="weekGuide" class="subtitle" style="display:none"></p><div id="weekRhythm" style="display:none"></div><textarea id="weekNote" placeholder="수업 준비, 미완료 항목, 다음 주로 옮길 내용" style="margin-top:14px"></textarea><button class="btn" style="margin-top:10px" onclick="carryTasks()">미완료 항목 다음 주로 이월</button></details></div></div></section>
+<section class="view" id="curriculum"><div class="page-head"><div><p class="eyebrow">COMPLETE LEARNING MAP</p><h1>로봇공학 전체 커리큘럼</h1><p>로봇공학 8학기와 편의점 프로젝트 4학기 학습 순서.</p></div><span class="pill">전공 이수맵 + 프로젝트 32과목</span></div><div class="curr-tabs"><button id="curr-tab-academic" class="btn primary" onclick="setCurrTab('academic')">대학 전공 로드맵</button><button id="curr-tab-practical" class="btn" onclick="setCurrTab('practical')">편의점 프로젝트 32과목</button></div><div id="curriculumBody"></div></section>
+<section class="view" id="progress">
+<div class="page-head"><div><p class="eyebrow">STUDY RECORDS</p><h1>과목별 진도표</h1><p>실제 강의·단원 완료는 이곳에서만 기록합니다.</p></div></div>
+<div class="track-tabs"><button id="track-grad" class="btn primary" onclick="setProgressTab('graduate')">대학원 공부</button><button id="track-project" class="btn" onclick="setProgressTab('project')">편의점 프로젝트</button></div>
+<div id="progress-graduate" class="progress-track">
+<div class="track-hint">실제 강의별 수강 · 복습 · 문제풀이</div>
+<div class="filterbar"><input class="field" id="gradSearch" placeholder="과목·강의 검색" oninput="drawGraduate()"></div><div id="gradList" class="course-list"></div>
+</div>
+<div id="progress-project" class="progress-track" hidden>
+<div class="track-hint">32과목 · 842개 세부 단원</div>
+<div class="filterbar"><input class="field" id="courseSearch" placeholder="과목·세부 단원 검색" oninput="drawProject()"><select id="coursePhase" onchange="drawProject()"><option value="all">전체 학습 단계</option><option value="0">기초·제작</option><option value="1">이동·자율주행</option><option value="2">비전·로봇팔</option><option value="3">통합·매장</option></select></div><div class="course-list" id="courseList"></div>
+</div></section>
 <section class="view" id="settings"><div class="page-head"><div><p class="eyebrow">PREFERENCES & DATA</p><h1>설정과 기록 백업</h1><p>배포 후에도 기록을 안전하게 유지할 수 있도록 관리하세요.</p></div></div><div class="grid setting-grid"><div class="panel"><h2>첫 주 시작일</h2><p class="subtitle" style="margin:9px 0 20px">월요일을 선택하면 전체 주차 날짜가 함께 바뀝니다.</p><div style="display:flex;gap:10px"><input class="field" type="date" id="startDate"><button class="btn primary" onclick="setStart()">적용</button></div></div><div class="panel"><h2>전체 기록 백업</h2><p class="subtitle" style="margin:9px 0 20px">프로젝트·대학원·메모·진도를 한 파일로 저장해요.</p><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn primary" onclick="exportAll()">↓ JSON 백업</button><label class="btn" style="cursor:pointer">↑ JSON 복원<input type="file" accept=".json,application/json" hidden onchange="importAll(event)"></label></div></div><div class="panel"><h2>저장 방식 안내</h2><p class="subtitle" style="line-height:2;margin-top:10px">체크하면 <b>현재 브라우저 localStorage에 자동 저장</b>됩니다. GitHub Pages에 올려도 다른 기기와 실시간 동기화되지는 않습니다. 브라우저 데이터 삭제 전에 JSON을 백업하세요.</p></div><div class="panel"><h2>기록 초기화</h2><p class="subtitle" style="margin:9px 0 20px">전체 기록을 삭제합니다. 먼저 JSON 백업을 권장합니다.</p><button class="btn danger" onclick="clearAll()">전체 데이터 삭제</button></div></div></section>
 <div class="footnote">ROBOT LAB · 독학 + 공동 제작 학습 플래너 · 데이터는 내 브라우저에 저장됩니다.</div></div></div></div>
 <script>
 const SEED={"courses": [{"id": 1, "name": "Python 기초", "units": ["변수", "대입문", "정수형과 실수형", "문자열", "불리언", "None", "산술 연산자", "비교 연산자", "논리 연산자", "형변환", "input과 print", "문자열 인덱싱", "문자열 슬라이싱", "문자열 메서드", "f-string", "리스트", "튜플", "딕셔너리", "집합", "if문", "elif문", "else문", "중첩 조건문", "for문", "range 함수", "while문", "break문", "continue문", "함수 정의", "매개변수와 인자", "return문", "지역변수와 전역변수", "기본 인자", "리스트 컴프리헨션", "모듈과 import", "파일 읽기와 쓰기", "with문", "CSV 읽기와 쓰기", "try-except문", "클래스와 객체", "NumPy 배열", "배열 shape와 dtype", "배열 인덱싱과 마스킹", "브로드캐스팅", "Matplotlib 그래프"], "page": 4}, {"id": 2, "name": "Linux·Git·테스트", "units": ["Linux 디렉터리 구조", "절대경로와 상대경로", "pwd와 cd", "ls와 파일 검색", "mkdir와 cp와 mv", "파일 내용 조회", "표준 입력과 출력", "리다이렉션과 파이프", "파일 권한", "프로세스와 종료 코드", "환경변수와 PATH", "패키지 관리", "Python 가상환경", "시리얼 장치 권한", "IP 주소와 포트", "SSH", "Git 저장소", "git status와 diff", "git add와 commit", "브랜치", "merge와 충돌 해결", "원격 저장소와 push/pull", "태그와 버전 복원", "README", "assert", "단위 테스트", "경계값 테스트", "로그와 오류 재현"], "page": 7}, {"id": 3, "name": "C/C++와 빌드", "units": ["C 기본 자료형", "변수와 상수", "연산자", "if문과 switch문", "for문과 while문", "배열", "문자 배열", "함수", "주소 연산자", "포인터", "포인터와 배열", "구조체", "메모리 할당과 해제", "변수 수명", "C++ 입출력", "참조", "const", "std::string", "std::vector", "범위 기반 for문", "클래스와 객체", "생성자와 소멸자", "캡슐화", "RAII", "unique_ptr와 shared_ptr", "템플릿 기초", "헤더와 소스 파일", "컴파일과 링크", "CMake", "컴파일 경고", "디버거와 중단점", "정수 오버플로와 카운터 래핑"], "page": 10}, {"id": 4, "name": "로봇 수학과 역학", "units": ["SI 단위", "단위 환산", "지수와 로그", "함수와 그래프", "삼각함수", "라디안", "벡터 성분", "벡터 내적", "벡터 외적", "행렬", "행렬 곱", "전치행렬", "역행렬", "연립방정식", "회전행렬", "동차변환행렬", "미분", "편미분 기초", "적분", "수치미분", "수치적분", "평균과 분산", "공분산", "확률과 조건부확률", "베이즈 정리", "정규분포", "최소제곱 기초", "위치와 속도", "가속도", "뉴턴 운동법칙", "힘과 모멘트", "자유물체도", "힘과 모멘트 평형", "마찰력", "일과 에너지", "동력과 효율", "무게중심", "지지 다각형", "전복 모멘트", "응력과 변형률", "굽힘과 비틀림"], "page": 14}, {"id": 5, "name": "CAD·3D 프린트·조립", "units": ["CAD 좌표계", "기준면", "2D 스케치", "기하 구속", "치수 구속", "완전 구속", "돌출", "회전 형상", "포켓과 구멍", "필렛과 모따기", "패턴", "설계 파라미터", "부품 조립", "조립 구속", "간섭 검사", "공차와 끼워맞춤", "나사와 너트", "베어링과 축", "커플러", "케이블 고정", "도면과 치수 기입", "BOM", "STL과 STEP", "슬라이서", "적층 방향", "레이어 높이", "벽 두께", "인필", "서포트", "출력 공차 시험편", "조립과 체결 점검", "균열과 풀림 검사"], "page": 17}, {"id": 6, "name": "전자·전원·비상정지", "units": ["전압", "전류", "저항", "옴의 법칙", "전력", "에너지와 배터리 용량", "직렬회로", "병렬회로", "키르히호프 법칙", "커패시터", "다이오드", "트랜지스터와 MOSFET 기초", "역기전력 보호", "멀티미터", "연속성 측정", "전압 측정", "전류 측정의 연결 방식", "극성", "신호 접지", "전압 레벨 변환", "전원 예산", "기동전류와 정지전류", "선재 정격", "커넥터 정격", "퓨즈", "DC-DC 변환기", "배터리 보호회로", "전용 충전기", "비상정지 회로", "구동 전원 차단", "재가동 방지", "잔류 에너지", "과열과 배터리 손상"], "page": 20}, {"id": 7, "name": "MCU·모터·엔코더", "units": ["MCU 구조", "GPIO", "디지털 입력과 출력", "풀업과 풀다운", "스위치 디바운싱", "ADC", "타이머", "인터럽트", "PWM", "DC 모터", "감속기", "토크-속도 특성", "모터 드라이버", "H브리지", "회전 방향", "엔코더 A상과 B상", "쿼드러처 디코딩", "분해능과 카운트 모드", "감속비와 틱 수", "UART", "I2C", "SPI", "CAN 기초", "직렬 메시지 프레임", "체크섬", "시퀀스 번호", "명령 타임아웃", "워치독", "펌웨어 로그", "무부하 구동 시험"], "page": 24}, {"id": 8, "name": "ROS 2 기초와 원격 주행", "units": ["ROS 2 설치 환경", "배포판과 의존성", "워크스페이스", "패키지", "package.xml", "ament와 colcon", "환경 설정과 source", "노드", "토픽", "메시지 타입", "Publisher", "Subscriber", "서비스", "액션", "파라미터", "launch 파일", "QoS", "타이머 콜백", "Executor 기초", "ros2 node", "ros2 topic", "ros2 service", "ros2 action", "rqt_graph", "Twist 메시지", "cmd_vel", "키보드 원격 조종", "MCU 통신 연결", "속도 제한", "명령 타임아웃"], "page": 27}, {"id": 9, "name": "차동구동 모델과 속도 제어", "units": ["차동구동 구조", "바퀴 반지름", "윤거", "바퀴 각속도", "선속도와 각속도", "차동구동 순운동학", "차동구동 역운동학", "샘플링 주기", "1차 시스템과 시정수", "이산시간 모델", "속도 측정", "목표값과 피드백", "제어 오차", "개루프 제어", "폐루프 제어", "P 제어", "I 제어", "D 제어", "미분 노이즈와 저역통과 필터", "PI 제어", "PID 제어", "출력 포화", "적분 와인드업", "안티와인드업", "데드존", "가속도 제한", "계단 응답", "오버슈트", "정착시간", "정상상태 오차", "좌우 모터 보정"], "page": 30}, {"id": 10, "name": "URDF·TF2·시뮬레이션", "units": ["URDF", "XML 기초", "link", "joint", "origin", "axis", "visual", "collision", "inertial", "질량과 관성모멘트", "Xacro", "고정 관절", "회전 관절", "연속 회전 관절", "관절 한계", "joint_states", "robot_state_publisher", "오른손 좌표계", "Euler 각", "쿼터니언", "회전 표현 변환", "base_link", "센서 좌표계", "TF 트리", "정적 TF", "동적 TF", "tf2 조회", "타임스탬프", "RViz", "Gazebo", "SDF 기초", "시뮬레이션 시간", "use_sim_time", "가상 센서"], "page": 33}, {"id": 11, "name": "센서와 로그", "units": ["센서 분해능", "정확도와 반복도", "측정 범위", "샘플링 주파수", "노이즈", "바이어스", "LiDAR 거리 측정", "LaserScan 메시지", "각도 범위와 각도 간격", "최소·최대 거리", "반사와 투명체", "사각지대", "IMU", "가속도계", "자이로스코프", "중력 성분", "센서 축 정렬", "Imu 메시지", "시간 동기화", "지연과 지터", "데이터 누락", "센서 가림", "rosbag 기록", "rosbag 재생", "로그 시각화"], "page": 36}, {"id": 12, "name": "휠 오도메트리와 센서 융합", "units": ["틱-거리 변환", "시간차 계산", "좌우 바퀴 이동량", "중점 적분", "평면 자세 x-y-yaw", "직진 오도메트리", "회전 오도메트리", "바퀴 반지름 보정", "윤거 보정", "미끄럼", "누적 드리프트", "Odometry 메시지", "odom 좌표계", "odom-base_link 변환", "센서 분산", "공분산 행렬", "상태 벡터", "운동 모델", "관측 모델", "칼만 필터 기초", "EKF 예측", "자코비안과 선형화", "EKF 갱신", "관측 잔차와 이상치", "robot_localization", "센서 입력 선택", "중복 정보와 상관", "융합 성능 평가"], "page": 40}, {"id": 13, "name": "SLAM과 지도 작성", "units": ["지도 표현", "점유격자", "격자 해상도", "자유 공간과 점유 공간", "미지 영역", "스캔 정합", "상대 자세 추정", "포즈 그래프", "루프 폐쇄", "SLAM Toolbox", "매핑 시작", "스캔 겹침", "주행 속도와 지도 품질", "지도 왜곡", "중복 벽", "지도 저장", "지도 메타데이터", "지도 원점", "지도 축척 검증", "지도 재로딩", "환경 변화"], "page": 43}, {"id": 14, "name": "지도 기반 위치 추정", "units": ["전역 좌표와 국소 좌표", "map 좌표계", "odom 좌표계", "base_link 좌표계", "map-odom 변환", "지도 서버", "AMCL", "파티클 필터", "운동 모델", "관측 모델", "초기 자세", "파티클 분포", "위치추정 수렴", "대칭 환경", "위치추정 불확실성", "재위치 추정", "TF 지연", "기준점 측정", "위치 오차", "방향 오차", "정지와 재초기화"], "page": 46}, {"id": 15, "name": "Nav2 경로계획과 장애물 대응", "units": ["Nav2 구성", "라이프사이클 노드", "전역 경로계획", "국소 경로 제어", "격자 그래프", "A* 기초", "global costmap", "local costmap", "장애물 층", "inflation layer", "footprint", "planner server", "controller server", "goal checker", "progress checker", "NavigateToPose", "목표 피드백", "목표 취소", "Behavior Tree 기초", "복구 행동", "후진과 회전 공간", "속도·가속도 제한", "장애물 회피", "막힌 경로", "목표 도달 판정"], "page": 49}, {"id": 16, "name": "생수 운반과 적재 검증", "units": ["적재하중", "트레이 구조", "하중 고정", "돌출물", "적재 무게중심", "지지면과 전복 여유", "가속 시 하중 이동", "회전 시 횡력", "제동과 정지거리", "바닥 마찰", "문턱과 경사", "생수 흔들림", "누수와 용기 손상", "적재 footprint", "운반 경로", "출발 전 점검", "도착 확인", "상품 인계", "배터리 상태별 성능", "반복 운반 기록"], "page": 52}, {"id": 17, "name": "카메라와 영상 처리", "units": ["디지털 이미지", "픽셀과 해상도", "프레임률", "노출", "화이트밸런스", "RGB와 BGR", "HSV", "그레이스케일", "NumPy 이미지 배열", "ROI", "리사이즈", "블러", "이진화", "형태학 연산", "에지 검출", "윤곽선", "바운딩 박스", "핀홀 카메라 모델", "초점거리", "주점", "렌즈 왜곡", "체커보드", "내부 파라미터", "카메라 보정", "재투영 오차", "왜곡 보정", "조명과 반사"], "page": 55}, {"id": 18, "name": "상품 인식과 평가", "units": ["SKU", "상품군과 개별 상품", "바코드", "마커 인식", "객체 검출", "이미지 수집", "바운딩 박스 라벨링", "클래스 정의", "학습·검증·평가 분할", "데이터 누출", "데이터 증강", "사전학습 모델", "텐서와 배치", "손실함수", "학습률과 에포크", "과적합과 조기 종료", "모델 저장과 불러오기", "추론 입력과 출력", "신뢰도 점수", "IoU", "NMS", "정밀도", "재현율", "혼동행렬", "미등록 상품", "유사 포장", "가림", "인식 보류", "추론 지연", "SKU별 평가"], "page": 58}, {"id": 19, "name": "상품 3D 위치와 카메라·팔 보정", "units": ["RGB-D 카메라", "깊이 단위", "RGB-깊이 정렬", "깊이 결측", "경계 픽셀", "포인트 클라우드", "픽셀 역투영", "카메라 내부행렬", "optical frame", "외부 파라미터", "회전과 평행이동", "변환 합성", "카메라-베이스 보정", "eye-to-hand", "eye-in-hand", "hand-eye calibration", "캘리브레이션 타깃", "시간 동기화", "물체 중심", "물체 자세", "검증점", "3D 위치 오차", "오차 예산"], "page": 70}, {"id": 20, "name": "로봇팔 기구학과 그리퍼", "units": ["관절과 링크", "자유도", "회전 관절", "직동 관절", "작업공간", "링크 좌표계", "동차변환", "순기구학", "DH 파라미터 기초", "역기구학", "복수 해", "관절 한계", "특이점", "자코비안 기초", "TCP", "끝단 자세", "관절 토크", "중력 하중", "가반하중", "상품 무게중심", "평행 그리퍼", "열림폭", "마찰과 파지력", "접촉 패드", "접근 자세", "미끄럼과 눌림"], "page": 62}, {"id": 21, "name": "팔 모델과 관절 제어", "units": ["팔 URDF", "관절 이름", "관절 축", "관절 부호", "영점", "관절 위치 한계", "속도 한계", "가속도 한계", "관성 모델", "그리퍼 모델", "ros2_control", "하드웨어 인터페이스", "상태 인터페이스", "명령 인터페이스", "controller_manager", "joint_state_broadcaster", "joint_trajectory_controller", "JointTrajectory", "궤적 시간", "현재 관절 상태", "안전 자세", "브레이크", "정지 시 낙하", "복구와 재원점"], "page": 66}, {"id": 22, "name": "MoveIt 2와 충돌 회피", "units": ["MoveIt 2 구성", "Setup Assistant", "SRDF", "Planning Group", "End Effector", "Virtual Joint", "자기 충돌 행렬", "IK 플러그인", "Planning Scene", "충돌 객체", "부착 객체", "Allowed Collision Matrix", "목표 관절값", "목표 끝단 자세", "모션 플래너", "경로 제약", "카르테시안 경로", "궤적 시간 매개화", "계획 요청", "계획 결과", "실행 요청", "실행 결과", "현재 상태 동기화", "충돌 회피", "도달 불가 처리"], "page": 74}, {"id": 23, "name": "인식 기반 집기·내려놓기", "units": ["집기 상태기계", "상품 검출", "자세 변환", "파지 후보", "접근 자세", "사전 파지 위치", "그리퍼 열기", "접근 궤적", "그리퍼 닫기", "파지 확인", "들어 올리기", "상품 부착 처리", "이송 궤적", "배치 자세", "내려놓기", "그리퍼 해제", "상품 분리 처리", "후퇴 궤적", "헛집기", "미끄럼과 낙하", "재인식", "제한 재시도", "슬롯 점유 확인"], "page": 77}, {"id": 24, "name": "벤치 반복성 시험", "units": ["측정 기준 좌표", "절대 오차", "반복도", "시험 조건표", "상품 위치 변화", "상품 각도 변화", "조명 변화", "상품 종류 변화", "통제 변수", "반복 횟수", "성공률", "중단율", "재시도 횟수", "평균 작업 시간", "최악 작업 시간", "실패 원인 분류", "영상 기록", "보정 변경 이력", "회귀시험", "통합 진입 기준"], "page": 80}, {"id": 25, "name": "이동 베이스와 팔 통합", "units": ["통합 TF 트리", "팔 장착 좌표", "카메라 장착 좌표", "전체 질량", "통합 무게중심", "전복 여유", "전원 예산", "배선과 노이즈", "기구 간섭", "수납 자세", "주행 footprint", "정차 안정성", "첫 구동 전 점검", "정지 시 팔 낙하", "베이스 정지 확인", "팔 동작 허용 조건", "팔 수납 확인", "주행 허용 조건", "인터록", "동시 명령 차단", "무부하 시험", "적재 통합 시험"], "page": 84}, {"id": 26, "name": "진열대 도킹과 정밀 정차", "units": ["전역 도착점", "도킹 좌표계", "선반 기준점", "마커 위치 추정", "상대 거리", "가로 오차", "방향 오차", "근접 접근 경로", "도킹 제어", "최종 접근 속도", "접근 시간 제한", "표식 상실", "도킹 실패", "재접근", "정차 후 안정화", "팔 도달 영역", "집기 오차 예산", "정차 반복도"], "page": 87}, {"id": 27, "name": "상품·선반 데이터와 배치 규칙", "units": ["상품 마스터", "SKU ID", "상품 규격", "상품 무게", "상품 방향", "선반 ID", "슬롯 ID", "선반 높이", "슬롯 너비와 깊이", "빈 슬롯", "슬롯 점유", "인접 상품 간섭", "접근 여유", "후퇴 여유", "배치 순서", "작업 지시", "잘못된 SKU", "크기 초과", "배치 완료 확인", "재고 상태 갱신", "배치표 버전"], "page": 90}, {"id": 28, "name": "업무 상태기계와 복구", "units": ["유한상태기계", "상태와 이벤트", "전이 조건", "작업 ID", "작업 접수", "운반 상태", "도킹 상태", "집기 상태", "배치 상태", "완료 확인", "타임아웃", "액션 취소", "제한 재시도", "오류 코드", "수동 인계", "이벤트 로그", "중복 요청", "멱등성", "응답 유실", "작업 상태 저장", "재시작 복구", "실제 상품 상태 대조"], "page": 93}, {"id": 29, "name": "통합 안전과 정지 검증", "units": ["작업별 위험 평가", "충돌 위험", "끼임 위험", "낙하 위험", "전복 위험", "전기 위험", "작업 구역", "관찰자와 정지 담당자", "정상 정지", "보호 정지", "비상정지", "전원 상실", "정지거리", "정지 중 잔류 운동", "재설정", "재가동 방지", "통신 단절", "센서 가림", "인터록 검증", "정비 에너지 격리", "점검 주기", "변경 후 재시험"], "page": 96}, {"id": 30, "name": "모의 매장 인수시험", "units": ["모의 통로", "모의 선반", "바닥 조건", "반사 환경", "시험 시나리오", "사전 합격 기준", "시험 버전", "운반 평가", "도킹 평가", "집기 평가", "진열 평가", "종단 간 평가", "통로 막힘", "가득 찬 칸", "인식 실패", "연결 단절", "성공·실패·중단 집계", "회귀시험", "미해결 항목", "현장 진입 판정"], "page": 99}, {"id": 31, "name": "실제 편의점 제한 운영", "units": ["매장 실측", "통로 폭", "선반 높이", "바닥과 문턱", "조명 조건", "현장 지도", "도킹 기준점", "시험 구역", "시험 시간", "매장 담당자", "운전자", "관찰자", "중단 권한", "현장 기동 점검", "모형 상품 운반", "실제 상품 운반", "제한 진열", "예상 밖 접근", "수동 인계", "상품 손상 확인", "현장 결과 기록"], "page": 102}, {"id": 32, "name": "운영·정비와 최종 인수", "units": ["기동 전 점검", "체결 점검", "배선 점검", "배터리 점검", "센서 청소", "비상정지 점검", "충전과 보관", "소모품 교체", "바퀴 교체 후 보정", "센서 재장착 보정", "그리퍼 교체 검증", "지도 백업", "설정 백업", "소스와 펌웨어 버전", "BOM 관리", "릴리스 묶음", "새 환경 복원", "운용 절차", "오류 대응표", "개인별 인수시험", "미해결 문제", "운용 범위"], "page": 105}], "schedule": [1, 3, 2, 3, 4, 4, 5, 6, 7, 7, 8, 9, 10, 11, 12, 12, 13, 14, 15, 16, 17, 18, 20, 20, 21, 21, 19, 19, 22, 22, 23, 24, 25, 25, 26, 27, 28, 29, 30, 31, 32], "graduates": [{"id": "algebra", "name": "대수 · 시발점", "state": "진행 중", "note": "27강까지 수강 표시. 28강부터 확인", "topics": ["다항식", "방정식과 부등식", "지수·로그", "삼각함수", "수열"]}, {"id": "linear", "name": "선형대수학", "state": "진행 중", "note": "1~13강, 15~16강 표시. 14강 LU 분해 보충", "topics": ["연립일차방정식·소거", "행렬과 역행렬", "LU 분해", "행렬식", "벡터공간·기저", "고유값·고유벡터", "직교·최소제곱·SVD"]}, {"id": "basiccalc", "name": "기초 미적분학", "state": "진행 중", "note": "OT 및 1~9강 수강 표시. 10강부터 확인", "topics": ["함수·그래프", "극한·연속", "미분", "미분 활용", "적분", "적분 활용"]}, {"id": "calc1", "name": "미분적분학Ⅰ", "state": "학습 예정", "note": "세부 강좌별 정확한 강의명은 나중에 추가", "topics": ["실수계", "초등함수", "극한과 연속", "미분법", "정적분", "급수"]}, {"id": "phys1", "name": "일반물리학Ⅰ", "state": "진행 중", "note": "강좌별 진도 미확정, 기존 체크리스트와 대조 필요", "topics": ["벡터와 운동", "힘·뉴턴 법칙", "일·에너지", "선운동량·충돌", "회전운동", "중력·유체", "진동·파동·열"]}, {"id": "phys2", "name": "일반물리학Ⅱ", "state": "학습 예정", "note": "수강 여부 미확정", "topics": ["전기장·전위", "직류회로", "자기장", "전자기 유도", "교류회로", "광학"]}, {"id": "statics", "name": "정역학", "state": "보류", "note": "공간벡터 선수지식 부족으로 중단. 기존 X표를 완료로 보지 않음", "topics": ["정역학의 기초", "공간벡터·힘의 분해", "모멘트·우력", "힘의 계 환원", "강체 평형·자유물체도", "트러스·마찰", "도심·관성모멘트"]}, {"id": "py", "name": "Python · 대학원 과정", "state": "진행 중", "note": "기존 강의 1~38강 수강 표시, 후속 강의 재확인", "topics": ["기본문법", "반복·함수", "리스트·딕셔너리", "입출력", "클래스", "예외 처리·모듈"]}, {"id": "clang", "name": "C언어 · 대학원 과정", "state": "진행 중", "note": "포인터·배열·함수 보완 필요", "topics": ["자료형·연산자", "조건문·반복문", "함수", "배열·문자열", "포인터", "구조체·메모리"]}]};
 const COURSES=SEED.courses,ORDER=SEED.schedule,GRADS=SEED.graduates;
 /* 전기기능사 회로이론: 사용자가 11월 19일까지 4강을 완료했다고 확인함 */
-GRADS.push({id:'circuit',name:'회로이론 · 에듀클래스 전기이론',state:'진행 중',note:'처음부터 재수강 · 11월 19일 전류와 전압까지 완료 · 사진에 보이는 강의 기준',topics:['직류회로','교류회로','전기자기학']});
+GRADS.push({id:'circuit',name:'회로이론 · 에듀클래스 전기이론',state:'진행 중',note:'기초 강의 전류·전압까지 수강. Chapter 1 직류회로 출제예상문제 45~52번까지 진도 완료(11/22 기준)',topics:['직류회로','교류회로','전기자기학']});
 const KEY='robotlab_dashboard_2026_v2';
 const initial=()=>({version:2,start:'2026-11-16',tasks:{},notes:{},project:{},customUnits:{},grad:{},gradExtra:{},gradNotes:{},joint:{}});
 let db;try{db={...initial(),...JSON.parse(localStorage.getItem(KEY))};if(!db||!db.tasks)throw Error()}catch{db=initial()}
@@ -97,7 +227,7 @@ const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&
 const el=id=>document.getElementById(id);
 function addDays(start,n){let a=start.split('-').map(Number),d=new Date(a[0],a[1]-1,a[2]+n);return [d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-')}
 const currentCourse=w=>COURSES.find(c=>c.id===ORDER[Math.max(0,Math.min(w,ORDER.length-1))]);
-const weekName=w=>({0:'Python 집중 복습',1:'C언어 집중 복습',2:'Linux·Git·테스트',3:'C++·빌드 기초'})[w]||currentCourse(w).name;
+const weekName=w=>({0:'Python 집중 복습',1:'Python 전체 수업 · C언어 시작',2:'Linux·Git·테스트',3:'C++·빌드 기초'})[w]||currentCourse(w).name;
 function scheduleProjectWeek(w){let c=currentCourse(w),u=c.units; if(w===0)return [
  [],[],[],[],
  ['Python 기초 수업 순서·예제·환경 점검'],
@@ -114,7 +244,55 @@ function scheduleProjectWeek(w){let c=currentCourse(w),u=c.units; if(w===0)retur
   '혜원언니 Python 기초 과정 수업 완료·이해도 점검',
   'NumPy·Pandas·Matplotlib은 11월 23일 이후 심화 학습으로 이월']
  ];
-if(w===1)return [['기존 대학원 준비 공부'],['기존 대학원 준비 공부'],['기존 대학원 준비 공부'],['오전 · C 배열·함수·포인터 복습','오전 · 포인터와 메모리 문제풀이'],['오전 · 구조체·엔코더 데이터 실습','오전 · 오류 수정·수업 자료 준비'],['오전 · 수업 최종 준비','오후 · 혜원언니 C 기초 강의·실습'],['혜원언니 C 배열·함수·포인터 실습','두 사람 이해도 검증','선택 보충 · Python NumPy·Pandas 입문(기초 완료와 분리)']];
+if(w===1)return [
+ [], // 월: 사용자가 요청한 Python/C언어 휴식
+ ['[내 교재 작성] 나도코딩 8-1 표준입출력 · Colab 정리',
+  '[내 교재 작성] 8-2 다양한 출력 포맷 · Colab 정리',
+  '[내 교재 작성] 8-3 파일입출력 · 재고 CSV 저장 예제',
+  '[내 교재 작성] 8-4 pickle · 8-5 with · 예제 검토',
+  '[내 교재 작성] 8-6 퀴즈 #7 · 실습문제 추가'],
+ ['[내 교재 작성] 나도코딩 9-1 클래스 · Colab 정리',
+  '[내 교재 작성] 9-2 __init__ · 9-3 멤버변수',
+  '[내 교재 작성] 9-4 메소드 · 재고관리 객체 예제',
+  '[내 교재 작성] 9-5 상속 · 9-6 다중상속 · 9-7 오버라이딩',
+  '[내 교재 작성] 9-8 pass · 9-9 super',
+  '[내 교재 작성] 9-10~9-12 프로젝트·퀴즈 확인'],
+ ['[내 교재 작성] 나도코딩 10-1 예외처리 · Colab 정리',
+  '[내 교재 작성] 10-2 에러 발생시키기',
+  '[내 교재 작성] 10-3 사용자 정의 예외 · 재고 부족 예제',
+  '[내 교재 작성] 10-4 finally · 10-5 퀴즈 #9',
+  '[내 교재 작성] 교재 2~10장 코드 실행·오류 점검'],
+ ['[내 교재 작성] 나도코딩 11-1 모듈 · 11-2 패키지',
+  '[내 교재 작성] 11-3 __all__ · 11-4 모듈 직접 실행',
+  '[내 교재 작성] 11-5 패키지 위치 · 11-6 pip install',
+  '[내 교재 작성] 11-7 내장함수 · 11-8 외장함수',
+  '[내 교재 작성] 11-9 퀴즈 #10 · 12 Outro',
+  '[내 교재 검토] 기존 2~7장 + 신규 8~11장 Colab 설명·정답 점검',
+  '[수업 준비] Python 편의점 입고·재고·운반 목록 종합 실습 정리',
+  '[수업 준비] 일요일 C언어 기초 예제 준비'],
+ ['[혜원언니 Python] 변수',
+  '[혜원언니 Python] 자료형',
+  '[혜원언니 Python] 연산자',
+  '[혜원언니 Python] 문자열',
+  '[혜원언니 Python] 리스트',
+  '[혜원언니 Python] 튜플·딕셔너리·집합',
+  '[혜원언니 Python] 조건문 if',
+  '[혜원언니 Python] 반복문 for·while',
+  '[혜원언니 Python] 함수',
+  '[혜원언니 Python] 입출력·파일',
+  '[혜원언니 Python] 클래스',
+  '[혜원언니 Python] 예외처리',
+  '[혜원언니 Python] 모듈·패키지',
+  '[혜원언니 Python] 재고·운반 목록 실습'],
+ ['[혜원언니 C언어] 개발 환경·컴파일',
+  '[혜원언니 C언어] 변수·자료형',
+  '[혜원언니 C언어] printf·scanf',
+  '[혜원언니 C언어] 연산자',
+  '[혜원언니 C언어] 조건문',
+  '[혜원언니 C언어] 반복문',
+  '[혜원언니 C언어] 함수',
+  '[혜원언니 C언어] 간단한 독립 코딩 실습']
+ ];
 if(w===2)return [['Linux 셸·경로 명령과 파일 탐색'],['권한·프로세스·가상환경 실습'],['Git add·commit·branch·merge'],['GitHub 저장소 만들기·README·테스트'],['실행 환경 재현·수업 준비'],['혜원언니 Linux 기본 명령 독립 실습'],['혜원언니 Git 저장·복원 실습·검증']];
 if(w===3)return [['C++ 참조·const·string'],['vector·클래스·객체'],['생성자·소멸자·RAII'],['헤더·소스·CMake·디버거'],['가상 엔코더 기록기 완성·검증'],['혜원언니 C++ 문법·클래스 수업'],['혜원언니 독립 코딩·수정·검증']];
 let chunk=n=>u.slice(Math.floor(n*u.length/4),Math.floor((n+1)*u.length/4));return [0,1,2,3].map(n=>[(n===0?'핵심 개념':n===1?'이론·예제':n===2?'핵심 단원':'제작 실습')+' · '+chunk(n).join(' · ')]).concat([['오류 수정·직접 구현·수업 준비'],['혜원언니 개념 설명·기초 실습'],['혜원언니 독립 구현·이해도 검증']]);}
@@ -200,6 +378,24 @@ function graduatePlan(w){
   [studyTask('회로이론 핵심 07 · 전지의 접속 (30:07)','수강'),studyTask('회로이론 핵심 08 · 전압과 전류의 측정 (23:04)','수강'),studyTask('이번 주 회로이론 복습·오답 정리','복습')]
  ];
  // 이후 주차에도 선형대수는 계획표에 넣지 않는다.
+ if(w===1)return [
+  [studyTask('회로이론 Chapter 1 직류회로 · 출제예상문제 06 · 53~60번 (30:05)','문제풀이'),
+   studyTask('직류회로 45~52번 오답만 짧게 복습 · Python/C언어는 쉬기','복습'),
+   studyTask('회로이론 직류회로 핵심 공식 정리 · 30분','복습')],
+  [studyTask('회로이론 Chapter 1 직류회로 · 출제예상문제 07 · 61~70번 (31:18)','문제풀이'),
+   studyTask('직류회로 1~70번 중 틀린 문제 다시 풀기 · 60~90분','복습'),
+   studyTask('기초 미적분 18강 · 3.4 로그함수 (73분)','수강')],
+  [studyTask('회로이론 교류회로 핵심 01 · 자기장과 전자 유도 현상 (34:20)','수강'),
+   studyTask('회로이론 교류회로 핵심 02 · 교류 전기 (25:56)','수강'),
+   studyTask('기초 미적분 19강 · 3.5 삼각함수① (67분)','수강')],
+  [studyTask('회로이론 교류회로 핵심 03 · 사인파 [정현파] (37:48)','수강'),
+   studyTask('회로이론 교류회로 핵심 04 · 사인파 교류의 표현 (33:43)','수강'),
+   studyTask('삼각함수·정현파 연결 문제 3개 직접 계산','문제풀이')],
+  [studyTask('회로이론 교류회로 핵심 05-1 · 리액턴스와 임피던스 1 (29:11)','수강'),
+   studyTask('회로이론 교류회로 핵심 05-2 · 리액턴스와 임피던스 2 (32:40)','수강'),
+   studyTask('주간 회로이론 오답·공식 복습 · 45분','복습')],
+  [],[]
+ ];
  const p=CIRCUIT_WEEK_PLAN[w-1];
  if(p){
   return [
@@ -253,21 +449,113 @@ function migrateGraduateTasks(){
 function weekData(w){if(!db.tasks[w]){db.tasks[w]=scheduleWeek(w).map(xs=>xs.map(text=>({text,done:false})));save()}return db.tasks[w]}
 const wstats=w=>{let t=weekData(w).flat();return {all:t.length,done:t.filter(x=>x.done).length}};
 const percent=(n,d)=>Math.round(100*n/Math.max(1,d));
-function go(v){document.querySelectorAll('.view').forEach(e=>e.classList.toggle('active',e.id===v));document.querySelectorAll('.nav-btn').forEach(e=>e.classList.toggle('active',e.dataset.view===v));el('crumb').textContent=({overview:'대시보드',weekly:'주간 계획표',graduate:'대학원 준비',project:'로봇 프로젝트',joint:'공동 진도',settings:'설정 · 백업'})[v];render(v);window.scrollTo(0,0)}
+let progressMode='graduate';
+function setProgressTab(tab){progressMode=tab;renderProgress();}
+function renderProgress(){
+  el('progress-graduate').hidden=progressMode!=='graduate';
+  el('progress-project').hidden=progressMode!=='project';
+  el('track-grad').classList.toggle('primary',progressMode==='graduate');
+  el('track-project').classList.toggle('primary',progressMode==='project');
+  if(progressMode==='graduate')drawGraduate();else drawProject();
+}
+function go(v){
+  if(v==='graduate'||v==='project'){progressMode=v;v='progress';}
+  document.querySelectorAll('.view').forEach(e=>e.classList.toggle('active',e.id===v));
+  document.querySelectorAll('.nav-btn').forEach(e=>e.classList.toggle('active',e.dataset.view===v));
+  el('crumb').textContent=({weekly:'주간 계획표',curriculum:'전체 커리큘럼',progress:'과목별 진도표',settings:'설정 · 백업'})[v]||'주간 계획표';
+  render(v);window.scrollTo(0,0);
+}
 document.querySelectorAll('.nav-btn').forEach(b=>b.onclick=()=>go(b.dataset.view));
 const projKey=(i,j)=>i+':'+j;const gradKey=(id,i,step)=>id+':'+i+':'+step;
 function graduateCount(){let total=0,done=0;GRADS.forEach(g=>{let x=gradProgress(g);total+=x.total;done+=x.complete});return {total,done}}
 function projectCount(){let total=COURSES.reduce((a,c)=>a+c.units.length,0),done=COURSES.reduce((a,c)=>a+c.units.filter((_,i)=>db.project[projKey(c.id,i)]).length,0);return {done,total}}
-function drawOverview(){let p=projectCount(),g=graduateCount(),w=wstats(selectedWeek),allDone=COURSES.filter(c=>(db.joint[c.id]||[]).filter(Boolean).length===7).length;
-el('kpis').innerHTML=[['프로젝트 세부 단원',`${p.done} <span style="font-size:15px;color:#a1abc0">/ ${p.total}</span>`,'원본 PDF 842개 단원','▤'],['대학원 학습 단원',`${g.done} <span style="font-size:15px;color:#a1abc0">/ ${g.total}</span>`,'수강·복습·문제풀이 완료','◈'],['이번 주 체크',`${percent(w.done,w.all)}%`,'주간 실행률','◷'],['공동 완료 과목',`${allDone} <span style="font-size:15px;color:#a1abc0">/ 32</span>`,'7단계 검증 통과','◎']].map(x=>`<div class="kpi"><span class="meta">${x[0]}</span><div class="dot">${x[3]}</div><strong>${x[1]}</strong><span class="sub">${x[2]}</span></div>`).join('');
+function drawOverview(){let p=projectCount(),g=graduateCount(),w=wstats(selectedWeek);
+el('kpis').innerHTML=[['프로젝트 세부 단원',`${p.done} <span style="font-size:15px;color:#a1abc0">/ ${p.total}</span>`,'원본 PDF 842개 단원','▤'],['대학원 학습 단원',`${g.done} <span style="font-size:15px;color:#a1abc0">/ ${g.total}</span>`,'수강·복습·문제풀이 완료','◈'],['이번 주 체크',`${percent(w.done,w.all)}%`,'주간 실행률','◷'],['전체 프로젝트 과목','32','공식 커리큘럼','▧']].map(x=>`<div class="kpi"><span class="meta">${x[0]}</span><div class="dot">${x[3]}</div><strong>${x[1]}</strong><span class="sub">${x[2]}</span></div>`).join('');
 el('dashboardDates').textContent=`${addDays(db.start,selectedWeek*7)} — ${addDays(db.start,selectedWeek*7+6)} · ${selectedWeek+1}주 차`;el('dashWeekTag').textContent=selectedWeek<2?'복습 집중':'선학습';el('dashCourse').textContent=weekName(selectedWeek);el('dashDescription').textContent=selectedWeek<2?'목·금·토 오전에 먼저 실습하고, 주말에 혜원언니와 다시 구현합니다.':'평일에 개념과 실습을 마친 뒤 주말에는 혜원언니에게 가르칩니다.';el('dashPercent').textContent=`${w.done} / ${w.all} · ${percent(w.done,w.all)}%`;el('dashBar').style.width=percent(w.done,w.all)+'%';el('projectMetric').textContent=`${p.done}/${p.total}`;el('projectBar').style.width=percent(p.done,p.total)+'%';el('graduateMetric').textContent=`${g.done}/${g.total}`;el('graduateBar').style.width=percent(g.done,g.total)+'%';let wd=weekData(selectedWeek);el('dashTasks').innerHTML=wd.flatMap((ds,d)=>ds.filter(t=>!t.done).slice(0,d<3&&selectedWeek<2?0:1).map(t=>`<div class="small-row"><div><strong>${['월','화','수','목','금','토','일'][d]}요일</strong><small>${esc(t.text)}</small></div><span class="pill muted">미완료</span></div>`)).slice(0,5).join('')||'<div class="under">이번 주 등록된 미완료 주요 과제가 없습니다.</div>'}
 function moveWeek(n){selectedWeek=Math.max(0,Math.min(ORDER.length-1,selectedWeek+n));drawWeekly()}
-function drawWeekly(){let w=selectedWeek,ws=weekData(w),s=wstats(w);el('weekTitle').textContent=weekName(w);el('weekSubtitle').textContent=`${addDays(db.start,w*7)} — ${addDays(db.start,w*7+6)}`;el('weekStep').textContent=`${w+1} / ${ORDER.length}주`;el('weekMetric').textContent=`${s.done}/${s.all}개 · ${percent(s.done,s.all)}%`;el('weekMeter').style.width=percent(s.done,s.all)+'%';el('weekGuide').textContent=w<2?'월~수는 대학원 공부를 보호하고 목·금·토 오전에 집중 복습, 주말에는 가르치기.':'월~금 대학원 공부와 프로젝트 선학습을 병행하고, 토·일은 혜원언니 수업·검증.';
-el('weekRhythm').innerHTML=(w<2?[['월~수','대학원 개인 공부'],['목~토 오전','프로젝트 집중 복습'],['토 오후~일','혜원언니 수업·실습']]:[['월~수','이론·예제·구현'],['목~금','제작 실습·검증'],['토~일','혜원언니 수업·독립 실습']]).map(z=>`<div><b>${z[0]}</b><p>${z[1]}</p></div>`).join('');el('dayCards').innerHTML=ws.map((tasks,d)=>`<div class="day-card ${addDays(db.start,w*7+d)===new Date().toLocaleDateString('sv-SE',{timeZone:'Asia/Seoul'})?'today':''}"><div class="day-top"><b>${['월','화','수','목','금','토','일'][d]}요일 · ${addDays(db.start,w*7+d)}</b><span>${tasks.filter(t=>t.done).length}/${tasks.length} 완료</span></div><div class="day-body">${tasks.map((t,i)=>`<div class="checkrow ${t.done?'completed':''} ${t.text.startsWith('[대학원]')?'graduate-task':''}"><input aria-label="완료" type="checkbox" ${t.done?'checked':''} onchange="toggleTask(${w},${d},${i},this.checked)"><div class="task-label">${t.text.startsWith('[대학원]')?'<span class="grad-task-tag">대학원</span> '+esc(t.text.slice(6)):esc(t.text)}</div><button class="icon-btn" aria-label="삭제" onclick="removeTask(${w},${d},${i})">×</button></div>`).join('')}<div class="inline-add"><input class="field" id="day-add-${d}" placeholder="이 날의 할 일 추가" onkeydown="if(event.key==='Enter')addTask(${d})"><button class="btn" onclick="addTask(${d})">+ 추가</button></div></div></div>`).join('');el('weekNote').value=db.notes[w]||'';el('weekNote').oninput=e=>{db.notes[w]=e.target.value;save()}}
+// One weekly board. Groups are visual; underlying task IDs and completion data are unchanged.
+let weekCompact=true;
+function toggleWeekDisplay(){weekCompact=!weekCompact;drawWeekly()}
+function classifyTask(raw){
+  const s=String(raw||'').replace(/^\[(이전 완료 기록|이전 기록 유지|이월)\]\s*/, '');
+  if(/^\[대학원/.test(s))return ['graduate','대학원'];
+  const teaching=s.match(/^\[혜원언니\s+(Python|C언어|C\+\+|Linux|Git)\]/);
+  if(teaching)return ['teaching','수업',teaching[1]];
+  if(/혜원언니/.test(s)){
+    const name=(s.match(/(?:혜원언니\s*)(Python|C언어|C\+\+|Linux|Git|ROS\s*2)/)||[])[1]||'프로젝트';
+    return ['teaching','수업',name];
+  }
+  if(/^\[(내 교재 작성|내 교재 검토|수업 준비)\]/.test(s)||/Python 기초 수업 순서|Python 기초 수업 준비/.test(s))return ['material','교재 작성'];
+  return ['other','기타'];
+}
+function shortTask(raw,type,subject){
+  let s=String(raw||'').replace(/^\[(이전 완료 기록|이전 기록 유지|이월)\]\s*/, '');
+  if(type==='graduate'){
+    s=s.replace(/^\[대학원(?:\s*·\s*[^\]]+)?\]\s*/,'');
+    s=s.replace(/\s*\(\d+(?::\d+)?(?:분)?\)\s*$/,'');
+    s=s.replace(/^회로이론 Chapter 1 직류회로 · 출제예상문제 \d+ · /,'회로이론 · ');
+    s=s.replace(/^회로이론 교류회로 핵심 \S+ · /,'회로이론 · ');
+    s=s.replace(/^회로이론 핵심 \S+ · /,'회로이론 · ');
+    s=s.replace(/^기초 미적분 (\d+)강 · [^·:]*[:：]?\s*/,'미적분 $1강 · ');
+    s=s.replace(/\s*·\s*(?:수강|복습|문제풀이|문풀)\s*$/,'');
+    return s;
+  }
+  if(type==='material'){
+    s=s.replace(/^\[(내 교재 작성|내 교재 검토|수업 준비)\]\s*/,'');
+    s=s.replace(/^나도코딩\s*/,'');
+    s=s.replace(/\s*·\s*Colab 정리/g,'');
+    s=s.replace(/\s*·\s*예제 검토/g,'');
+    s=s.replace(/^기존 2~7장 \+ 신규 8~11장 Colab 설명·정답 점검$/,'전체 노트 점검');
+    return s;
+  }
+  if(type==='teaching'){
+    s=s.replace(/^\[혜원언니\s+[^\]]+\]\s*/,'');
+    s=s.replace(/^(오후|오전)\s*·\s*/,'');
+    s=s.replace(/^혜원언니\s+(Python|C언어|C\+\+|Linux|Git)\s*/,'');
+    s=s.replace(/^(Python|C언어)\s*\d+강\s*·\s*/,'');
+    return s;
+  }
+  return s.replace(/^\[(?:이월|이전 완료 기록)\]\s*/,'');
+}
+function dayGroups(tasks){
+  const groups=new Map();
+  tasks.forEach((t,i)=>{
+    const [type,label,subject]=classifyTask(t.text);
+    const key=type==='teaching'?type+':'+(subject||'프로젝트'):type;
+    if(!groups.has(key))groups.set(key,{key,type,label:titleForGroup(type,label,subject),tasks:[]});
+    groups.get(key).tasks.push({task:t,index:i,subject});
+  });
+  const rank={graduate:0,material:1,teaching:2,other:3};
+  return [...groups.values()].sort((a,b)=>rank[a.type]-rank[b.type]);
+}
+function titleForGroup(type,label,subject){return type==='teaching'?(subject||'프로젝트'):label}
+function drawWeekly(){
+ const w=selectedWeek,ws=weekData(w),s=wstats(w);
+ el('weekly').classList.toggle('weekly-compact',weekCompact);
+ el('weekDisplayToggle').textContent=weekCompact?'전체 보기':'간단히 보기';
+ el('weekTitle').textContent=weekName(w);
+ el('weekSubtitle').textContent=`${addDays(db.start,w*7)} — ${addDays(db.start,w*7+6)}`;
+ el('weekStep').textContent=`${w+1} / ${ORDER.length}주`;
+ el('weekMetric').textContent=`${s.done}/${s.all} · ${percent(s.done,s.all)}%`;
+ el('weekMeter').style.width=percent(s.done,s.all)+'%';
+ el('weekGuide').textContent='주간 계획';el('weekRhythm').innerHTML='';
+ const today=new Date().toLocaleDateString('sv-SE',{timeZone:'Asia/Seoul'});
+ el('dayCards').innerHTML=ws.map((tasks,d)=>{
+  const groups=dayGroups(tasks);
+  const groupHtml=groups.map(g=>{
+    let complete=g.tasks.filter(r=>r.task.done).length;
+    return `<section class="task-bundle ${g.type}"><div class="bundle-heading"><b>${esc(g.label)}</b><span>${complete}/${g.tasks.length}</span></div>`+
+      g.tasks.map(({task:t,index:i,subject})=>`<label class="bundle-row ${t.done?'completed':''}"><input aria-label="${esc(shortTask(t.text,g.type,subject))} 완료" type="checkbox" ${t.done?'checked':''} onchange="toggleTask(${w},${d},${i},this.checked)"><span title="${esc(t.text)}">${esc(shortTask(t.text,g.type,subject))}</span><button type="button" class="bundle-remove" title="삭제" aria-label="항목 삭제" onclick="event.preventDefault();event.stopPropagation();removeTask(${w},${d},${i})">×</button></label>`).join('')+'</section>';
+  }).join('');
+  return `<article class="day-card ${addDays(db.start,w*7+d)===today?'today':''}"><div class="day-top"><b>${['월','화','수','목','금','토','일'][d]}요일 · ${addDays(db.start,w*7+d).slice(5).replace('-','.')}</b><span>${tasks.filter(t=>t.done).length}/${tasks.length} 완료</span></div><div class="day-body">${groupHtml||'<p class="no-task">계획 없음</p>'}<div class="inline-add"><input class="field" id="day-add-${d}" placeholder="할 일 추가" onkeydown="if(event.key==='Enter')addTask(${d})"><button class="btn" onclick="addTask(${d})">+</button></div></div></article>`;
+ }).join('');
+ el('weekNote').value=db.notes[w]||'';
+ el('weekNote').oninput=e=>{db.notes[w]=e.target.value;save()};
+}
 function toggleTask(w,d,i,v){weekData(w)[d][i].done=v;save();drawWeekly()}function addTask(d){let input=el('day-add-'+d),t=input.value.trim();if(!t)return;weekData(selectedWeek)[d].push({text:t,done:false});save();drawWeekly()}function removeTask(w,d,i){if(!confirm('해당 할 일을 삭제할까요?'))return;weekData(w)[d].splice(i,1);save();drawWeekly()}
 function carryTasks(){if(selectedWeek===ORDER.length-1)return alert('마지막 주입니다.');let n=0,dest=weekData(selectedWeek+1)[0];weekData(selectedWeek).flat().filter(t=>!t.done&&!t.text.includes('기존 대학원 준비 공부')).forEach(t=>{let name='[이월] '+t.text;if(!dest.some(z=>z.text===name)){dest.push({text:name,done:false});n++}});save();moveWeek(1);alert(n+'개 항목을 다음 주 월요일에 추가했어요.')}
 const phase=id=>id<=8?0:id<=16?1:id<=24?2:3;
-function drawProject(){let q=el('courseSearch').value.toLowerCase().trim(),p=el('coursePhase').value;el('courseList').innerHTML=COURSES.filter(c=>(p==='all'||phase(c.id)===Number(p))&&(!q||c.name.toLowerCase().includes(q)||c.units.some(u=>u.toLowerCase().includes(q)))).map(c=>{let done=c.units.filter((_,i)=>db.project[projKey(c.id,i)]).length;return `<div class="course-card ${openProject===c.id?'open':''}"><div class="course-head" onclick="openProject=openProject===${c.id}?null:${c.id};drawProject()"><div class="num">${String(c.id).padStart(2,'0')}</div><div><div class="name">${esc(c.name)}</div><small>PDF ${c.page}쪽 · ${c.units.length}개 세부 단원</small></div><div class="end"><strong>${done}/${c.units.length}</strong><small>${percent(done,c.units.length)}% 완료　${openProject===c.id?'⌃':'⌄'}</small></div></div><div class="course-details"><div class="meter"><div class="fill" style="width:${percent(done,c.units.length)}%"></div></div><div class="unit-grid">${c.units.map((t,i)=>`<label class="unit ${db.project[projKey(c.id,i)]?'done':''}"><input type="checkbox" ${db.project[projKey(c.id,i)]?'checked':''} onchange="toggleProject(${c.id},${i},this.checked)"><span>${String(i+1).padStart(2,'0')}. ${esc(t)}</span></label>`).join('')}</div><div class="course-controls"><p class="hint">이 체크는 세부 단원 학습 확인입니다. 개인·혜원언니 실습 및 공동 적용은 ‘공동 진도’에서 별도 기록해요.</p><button class="btn" onclick="go('joint');el('jointSelect').value='${c.id}';drawJoint()">이 과목의 공동 진도 보기 ↗</button></div></div></div>`}).join('')||'<div class="panel">검색 결과가 없습니다.</div>'}
+function drawProject(){let q=el('courseSearch').value.toLowerCase().trim(),p=el('coursePhase').value;el('courseList').innerHTML=COURSES.filter(c=>(p==='all'||phase(c.id)===Number(p))&&(!q||c.name.toLowerCase().includes(q)||c.units.some(u=>u.toLowerCase().includes(q)))).map(c=>{let done=c.units.filter((_,i)=>db.project[projKey(c.id,i)]).length;return `<div class="course-card ${openProject===c.id?'open':''}"><div class="course-head" onclick="openProject=openProject===${c.id}?null:${c.id};drawProject()"><div class="num">${String(c.id).padStart(2,'0')}</div><div><div class="name">${esc(c.name)}</div><small>PDF ${c.page}쪽 · ${c.units.length}개 세부 단원</small></div><div class="end"><strong>${done}/${c.units.length}</strong><small>${percent(done,c.units.length)}% 완료　${openProject===c.id?'⌃':'⌄'}</small></div></div><div class="course-details"><div class="meter"><div class="fill" style="width:${percent(done,c.units.length)}%"></div></div><div class="unit-grid">${c.units.map((t,i)=>`<label class="unit ${db.project[projKey(c.id,i)]?'done':''}"><input type="checkbox" ${db.project[projKey(c.id,i)]?'checked':''} onchange="toggleProject(${c.id},${i},this.checked)"><span>${String(i+1).padStart(2,'0')}. ${esc(t)}</span></label>`).join('')}</div><div class="course-controls"><p class="hint">세부 단원 완료 여부를 체크하세요. 공동 실습 메모는 주간 계획표에 기록할 수 있습니다.</p></div></div></div>`}).join('')||'<div class="panel">검색 결과가 없습니다.</div>'}
 function toggleProject(id,j,v){db.project[projKey(id,j)]=v;save();drawProject()}
 function lectureRows(g){
  const source=GRAD_LECTURES[g.id]||{total:0,done:[],names:{}};
@@ -332,9 +620,9 @@ function drawJoint(){let id=Number(el('jointSelect').value||1),c=COURSES.find(x=
 function jointCheck(id,i,v){let arr=db.joint[id]??=Array(7).fill(false);arr[i]=v;save();drawJoint()}
 function setStart(){let s=el('startDate').value;if(!s)return;let p=s.split('-').map(Number);if(new Date(p[0],p[1]-1,p[2]).getDay()!==1)return alert('월요일 날짜를 선택하세요.');db.start=s;save();render('settings');alert('시작일을 변경했어요.')}
 function exportAll(){save();let data=JSON.stringify(db,null,2),b=new Blob([data],{type:'application/json'}),url=URL.createObjectURL(b),a=document.createElement('a');a.href=url;a.download='robot-lab-backup-'+new Date().toISOString().slice(0,10)+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1500)}
-async function importAll(event){let f=event.target.files[0];if(!f)return;try{let n=JSON.parse(await f.text());if(n.version!==2||typeof n.tasks!=='object'||typeof n.project!=='object'||typeof n.grad!=='object')throw Error();if(!confirm('현재 기록 전체를 백업 데이터로 교체할까요?'))return;db={...initial(),...n};save();render('settings');alert('복원 완료')}catch{alert('이 사이트에서 생성한 올바른 백업 파일이 아닙니다.')}event.target.value=''}
+async function importAll(event){let f=event.target.files[0];if(!f)return;try{let n=JSON.parse(await f.text());if(n.version!==2||typeof n.tasks!=='object'||typeof n.project!=='object'||typeof n.grad!=='object')throw Error();if(!confirm('현재 기록 전체를 백업 데이터로 교체할까요?'))return;db={...initial(),...n};migrateSimpleWeekly();save();render('settings');alert('복원 완료')}catch{alert('이 사이트에서 생성한 올바른 백업 파일이 아닙니다.')}event.target.value=''}
 function clearAll(){if(!confirm('전체 기록을 삭제할까요?'))return;if(!confirm('정말 삭제할까요? 복구하려면 JSON 백업이 필요합니다.'))return;localStorage.removeItem(KEY);db=initial();selectedWeek=0;render('settings')}
-function render(which){if(which==='overview')drawOverview();if(which==='weekly')drawWeekly();if(which==='graduate')drawGraduate();if(which==='project')drawProject();if(which==='joint'){let sel=el('jointSelect');if(!sel.options.length)sel.innerHTML=COURSES.map(c=>`<option value="${c.id}">${String(c.id).padStart(2,'0')} · ${esc(c.name)}</option>`).join('');drawJoint()}if(which==='settings')el('startDate').value=db.start}
+function render(which){if(which==='weekly')drawWeekly();if(which==='curriculum')drawCurriculum();if(which==='progress')renderProgress();if(which==='settings')el('startDate').value=db.start}
 /* 2026-11-16~22 수정: 완료한 기존 행은 보존, 미완료 기존 주간 계획만 교체. */
 function migrateNovember2026(){
  if(db.nov2026ScheduleVersion===2)return;
@@ -376,7 +664,180 @@ function migrateNovember2026(){
  db.nov2026ScheduleVersion=2;
  save();
 }
+
+/* 2026-11-22 사용자 정정: 11/21~22 Python 수업 연기 / 11/23~29 토 Python, 일 C.
+ * 기존 체크는 어떤 날짜에서든 삭제하지 않고 완료 이력으로 저장한다.
+ * 이전 미완료 자동 과제만 최신 계획으로 변경한다. */
+function migrateWeekNov23(){
+ if(db.nov23PlanVersion===2)return;
+ db.archivedCompleted??=[];
+ // 해당 주가 이미 열렸어도 기존 체크 항목은 보관한다.
+ const oldThis=db.tasks[1];
+ const next=scheduleWeek(1).map(day=>day.map(text=>({text,done:false})));
+ if(Array.isArray(oldThis)){
+  oldThis.forEach((day,d)=>(day||[]).forEach(t=>{
+   if(!t.done){
+    // Manual additions are retained; obsolete generated prep/syllabus tasks are replaced.
+    if(!t.text.startsWith('[대학원]') && !t.text.startsWith('[혜원언니') && !t.text.startsWith('[내 교재') && !t.text.startsWith('[수업 준비]') && !/Python 토요일 수업용|Python 재고 관리 미니|토요일 Python 강의 순서|일요일 C언어 수업용|NumPy·Pandas/.test(t.text)) {
+      if(!next[d].some(x=>x.text===t.text))next[d].push({...t});
+    }
+    return;
+   }
+   const existing=next[d].find(x=>x.text===t.text);
+   if(existing)existing.done=true;
+   else{
+    next[d].push({text:'[이전 완료 기록] '+t.text,done:true});
+    if(!db.archivedCompleted.some(x=>x.week===1&&x.day===d&&x.text===t.text))
+     db.archivedCompleted.push({week:1,day:d,text:t.text,done:true});
+   }
+  }));
+ }
+ db.tasks[1]=next;
+ // 11/21~22에 하지 못한 Python 수업은 원래 주차에서 미완료로 두지 않고 이월한다.
+ if(Array.isArray(db.tasks[0])){
+  [5,6].forEach(d=>{
+   const old=db.tasks[0][d]||[];
+   db.tasks[0][d]=old.filter(t=>t.done || !(/Python|파이썬|혜원언니|NumPy|Pandas|Matplotlib/.test(t.text)));
+  });
+ }
+ // 전기이론 Chapter 1 출제예상문제 45~52번까지 완료.
+ // 예전 강의 5~10번은 증거가 없으므로 자동 완료하지 않는다.
+ db.gradLectures??={};
+ [11,12,13,14,15].forEach(n=>{
+   const key='circuit::L'+n+'::lecture';
+   if(!Object.prototype.hasOwnProperty.call(db.gradLectures,key))db.gradLectures[key]=true;
+ });
+ db.circuitProgress={chapter:'1과목 전기이론 · Chapter 1 직류회로',lastProblem:52,updated:'2026-11-22'};
+ db.pythonNotebook={completedThrough:'7-6 지역변수와 전역변수',source:'Python_Final_Ver_편의점프로젝트_보강(1).ipynb',recorded:'2026-11-22',taughtToCousin:false};
+ db.nov23PlanVersion=2;
+ save();
+}
 migrateNovember2026();
 migrateGraduateTasks();
+migrateWeekNov23();
+function migrateSimpleWeekly(){
+ if(db.simpleWeeklyVersion===1)return;
+ db.archivedCompleted??=[];
+ const w=1;
+ // Only replace the two teaching-day checklists. Weekdays remain intact.
+ if(Array.isArray(db.tasks[w]))[5,6].forEach(d=>{
+   const old=db.tasks[w][d]||[];
+   const items=scheduleProjectWeek(w)[d];
+   const next=items.map(text=>({text,done:false}));
+   const keep=[];
+   old.forEach(task=>{
+     const isTeaching=/^\[혜원언니\s+(Python|C언어)\]/.test(task.text)||/^C 포인터·배열·구조체/.test(task.text);
+     if(!isTeaching){keep.push({...task});return;}
+     if(task.done){
+       if(!db.archivedCompleted.some(x=>x.week===w&&x.day===d&&x.text===task.text))
+         db.archivedCompleted.push({week:w,day:d,text:task.text,done:true});
+       const oldCore=task.text.replace(/^\[혜원언니\s+[^\]]+\]\s*/,'');
+       next.forEach(newTask=>{
+         const core=newTask.text.replace(/^\[혜원언니\s+[^\]]+\]\s*/,'');
+         if(core===oldCore || (core.length>=2 && oldCore.includes(core)))newTask.done=true;
+       });
+     }
+   });
+   db.tasks[w][d]=[...next,...keep];
+ });
+ db.simpleWeeklyVersion=1;
+ save();
+}
+migrateSimpleWeekly();
+selectedWeek=1;
 go('weekly');
+
+/* Official curriculum sources: robotics-semester-map, robotics-roadmap,
+   store-robot-roadmap, convenience-store-robot-planner-practice-focused.
+   R01~R89 and P01~P32 are DIFFERENT numbering systems. */
+const ACADEMIC_MAP = [{"id":"R01","name":"기초수학","priority":"필수","year":1,"sem":1,"slot":0,"order":1,"prereq":[]},{"id":"R02","name":"미적분학Ⅰ","priority":"필수","year":1,"sem":1,"slot":0,"order":5,"prereq":["R01"]},{"id":"R03","name":"미적분학Ⅱ","priority":"필수","year":1,"sem":2,"slot":0,"order":1,"prereq":["R02"]},{"id":"R04","name":"선형대수학","priority":"필수","year":1,"sem":1,"slot":1,"order":5,"prereq":["R01"]},{"id":"R05","name":"공학수학Ⅰ","priority":"필수","year":1,"sem":2,"slot":0,"order":0,"prereq":["R02"]},{"id":"R06","name":"공학수학Ⅱ","priority":"권장","year":2,"sem":2,"slot":1,"order":3,"prereq":["R05"]},{"id":"R07","name":"확률 및 통계","priority":"필수","year":1,"sem":2,"slot":1,"order":0,"prereq":["R02"]},{"id":"R08","name":"수치해석","priority":"권장","year":1,"sem":2,"slot":1,"order":1,"prereq":["R02","R04","R14"]},{"id":"R09","name":"최적화","priority":"필수","year":3,"sem":1,"slot":0,"order":0,"prereq":["R03","R04"]},{"id":"R10","name":"이산수학 기초","priority":"권장","year":1,"sem":2,"slot":1,"order":3,"prereq":[]},{"id":"R11","name":"일반물리학Ⅰ","priority":"필수","year":1,"sem":1,"slot":0,"order":2,"prereq":["R01"]},{"id":"R12","name":"일반물리학Ⅱ","priority":"권장","year":1,"sem":2,"slot":0,"order":2,"prereq":["R01"]},{"id":"R13","name":"일반물리학 실험Ⅰ","priority":"권장","year":1,"sem":2,"slot":1,"order":2,"prereq":[]},{"id":"R14","name":"Python","priority":"필수","year":1,"sem":1,"slot":0,"order":0,"prereq":[]},{"id":"R15","name":"일반물리학 실험Ⅱ","priority":"권장","year":1,"sem":2,"slot":0,"order":3,"prereq":[]},{"id":"R16","name":"정역학","priority":"필수","year":1,"sem":1,"slot":0,"order":3,"prereq":["R11"]},{"id":"R17","name":"동역학","priority":"필수","year":2,"sem":1,"slot":0,"order":3,"prereq":["R02","R11"]},{"id":"R18","name":"재료역학","priority":"권장","year":2,"sem":1,"slot":0,"order":4,"prereq":["R16"]},{"id":"R19","name":"진동학","priority":"권장","year":2,"sem":1,"slot":0,"order":5,"prereq":["R05","R17"]},{"id":"R20","name":"접촉역학 기초","priority":"권장","year":3,"sem":1,"slot":1,"order":0,"prereq":["R16"]},{"id":"R21","name":"C언어","priority":"필수","year":1,"sem":1,"slot":1,"order":0,"prereq":[]},{"id":"R22","name":"C++","priority":"필수","year":1,"sem":2,"slot":1,"order":4,"prereq":[]},{"id":"R23","name":"객체지향 프로그래밍","priority":"권장","year":1,"sem":2,"slot":1,"order":5,"prereq":["R14"]},{"id":"R24","name":"자료구조","priority":"필수","year":1,"sem":2,"slot":0,"order":4,"prereq":["R14"]},{"id":"R25","name":"알고리즘","priority":"필수","year":1,"sem":2,"slot":0,"order":5,"prereq":["R24"]},{"id":"R26","name":"Linux","priority":"필수","year":1,"sem":1,"slot":1,"order":1,"prereq":[]},{"id":"R27","name":"Git","priority":"필수","year":1,"sem":1,"slot":1,"order":2,"prereq":[]},{"id":"R28","name":"소프트웨어 설계","priority":"권장","year":2,"sem":1,"slot":0,"order":0,"prereq":["R23"]},{"id":"R29","name":"디버깅 및 테스트","priority":"필수","year":1,"sem":1,"slot":1,"order":3,"prereq":["R14"]},{"id":"R30","name":"컴퓨터구조 기초","priority":"권장","year":2,"sem":1,"slot":0,"order":1,"prereq":["R33"]},{"id":"R31","name":"운영체제 기초","priority":"권장","year":2,"sem":1,"slot":1,"order":1,"prereq":["R21","R26"]},{"id":"R32","name":"회로이론","priority":"권장","year":2,"sem":1,"slot":1,"order":3,"prereq":["R05"]},{"id":"R33","name":"디지털논리회로","priority":"권장","year":2,"sem":1,"slot":1,"order":0,"prereq":[]},{"id":"R34","name":"전자회로","priority":"권장","year":2,"sem":1,"slot":1,"order":5,"prereq":["R32"]},{"id":"R35","name":"신호 및 시스템","priority":"필수","year":2,"sem":2,"slot":0,"order":4,"prereq":["R05"]},{"id":"R36","name":"마이크로프로세서","priority":"권장","year":2,"sem":1,"slot":1,"order":4,"prereq":["R21","R33"]},{"id":"R37","name":"통신 프로토콜","priority":"권장","year":2,"sem":2,"slot":0,"order":0,"prereq":[]},{"id":"R38","name":"임베디드 시스템","priority":"권장","year":2,"sem":2,"slot":0,"order":1,"prereq":["R36"]},{"id":"R39","name":"센서공학","priority":"필수","year":2,"sem":2,"slot":1,"order":5,"prereq":["R35"]},{"id":"R40","name":"모터 및 액추에이터","priority":"권장","year":2,"sem":2,"slot":1,"order":0,"prereq":["R17","R32"]},{"id":"R41","name":"모터 구동과 전력전자","priority":"선택","year":4,"sem":2,"slot":0,"order":0,"prereq":["R34","R40"]},{"id":"R42","name":"실시간 시스템","priority":"권장","year":2,"sem":2,"slot":1,"order":1,"prereq":["R31","R36"]},{"id":"R43","name":"CAD","priority":"권장","year":2,"sem":1,"slot":1,"order":2,"prereq":[]},{"id":"R44","name":"기계요소설계","priority":"권장","year":2,"sem":2,"slot":0,"order":2,"prereq":["R18"]},{"id":"R45","name":"기계제작·3D 프린팅","priority":"권장","year":2,"sem":2,"slot":1,"order":2,"prereq":["R43"]},{"id":"R46","name":"기구 및 하드웨어 조립","priority":"권장","year":2,"sem":2,"slot":0,"order":3,"prereq":["R45"]},{"id":"R47","name":"로봇 기구설계","priority":"권장","year":3,"sem":2,"slot":0,"order":0,"prereq":["R44","R55"]},{"id":"R48","name":"메카트로닉스","priority":"권장","year":3,"sem":1,"slot":0,"order":1,"prereq":["R38","R40"]},{"id":"R49","name":"시스템 모델링","priority":"필수","year":2,"sem":2,"slot":1,"order":4,"prereq":["R05","R17"]},{"id":"R50","name":"제어공학Ⅰ","priority":"필수","year":2,"sem":2,"slot":0,"order":5,"prereq":["R35","R49"]},{"id":"R51","name":"제어공학Ⅱ","priority":"필수","year":3,"sem":1,"slot":1,"order":1,"prereq":["R04","R50"]},{"id":"R52","name":"상태추정·센서 융합","priority":"필수","year":3,"sem":2,"slot":0,"order":5,"prereq":["R07","R51"]},{"id":"R53","name":"최적제어","priority":"권장","year":3,"sem":2,"slot":1,"order":5,"prereq":["R09","R51"]},{"id":"R54","name":"로봇공학개론","priority":"필수","year":1,"sem":1,"slot":1,"order":4,"prereq":[]},{"id":"R55","name":"좌표계·로봇 운동학","priority":"필수","year":3,"sem":1,"slot":0,"order":2,"prereq":["R04"]},{"id":"R56","name":"로봇 동역학","priority":"필수","year":3,"sem":1,"slot":1,"order":5,"prereq":["R17","R55"]},{"id":"R57","name":"운동계획","priority":"필수","year":3,"sem":2,"slot":0,"order":1,"prereq":["R25","R55"]},{"id":"R58","name":"로봇 조작·파지","priority":"필수","year":3,"sem":2,"slot":0,"order":2,"prereq":["R55","R57"]},{"id":"R59","name":"힘·임피던스 제어","priority":"권장","year":3,"sem":2,"slot":1,"order":3,"prereq":["R20","R51","R56"]},{"id":"R60","name":"작업·행동 계획","priority":"필수","year":3,"sem":2,"slot":1,"order":2,"prereq":["R25"]},{"id":"R61","name":"ROS 2 기초","priority":"필수","year":1,"sem":1,"slot":0,"order":4,"prereq":["R14","R26"]},{"id":"R62","name":"ROS 2 응용","priority":"필수","year":3,"sem":1,"slot":0,"order":3,"prereq":["R55","R61"]},{"id":"R63","name":"로봇 시뮬레이션","priority":"필수","year":3,"sem":1,"slot":0,"order":4,"prereq":["R62"]},{"id":"R64","name":"MoveIt 2 조작 실습","priority":"필수","year":3,"sem":2,"slot":0,"order":3,"prereq":["R58","R63"]},{"id":"R65","name":"Nav2 주행 실습","priority":"필수","year":4,"sem":1,"slot":0,"order":2,"prereq":["R63","R77"]},{"id":"R66","name":"로봇 SW 아키텍처·통합","priority":"필수","year":3,"sem":2,"slot":0,"order":4,"prereq":["R60","R62"]},{"id":"R67","name":"컴퓨터비전·카메라 보정","priority":"필수","year":3,"sem":1,"slot":1,"order":2,"prereq":["R04","R14"]},{"id":"R68","name":"3D 비전","priority":"필수","year":3,"sem":1,"slot":1,"order":3,"prereq":["R55","R67"]},{"id":"R69","name":"머신러닝","priority":"권장","year":3,"sem":1,"slot":1,"order":4,"prereq":["R07","R09","R14"]},{"id":"R70","name":"딥러닝·객체 검출","priority":"권장","year":3,"sem":1,"slot":0,"order":5,"prereq":["R67","R69"]},{"id":"R71","name":"모방학습·VLA","priority":"선택","year":4,"sem":2,"slot":0,"order":1,"prereq":["R58","R70"]},{"id":"R72","name":"강화학습","priority":"선택","year":4,"sem":2,"slot":1,"order":1,"prereq":["R69"]},{"id":"R73","name":"Sim-to-Real","priority":"선택","year":4,"sem":2,"slot":0,"order":2,"prereq":["R63","R70"]},{"id":"R74","name":"오도메트리·위치추정","priority":"필수","year":4,"sem":1,"slot":0,"order":0,"prereq":["R52","R55"]},{"id":"R75","name":"2D SLAM","priority":"필수","year":4,"sem":1,"slot":0,"order":1,"prereq":["R57","R74"]},{"id":"R76","name":"3D SLAM","priority":"선택","year":4,"sem":1,"slot":1,"order":2,"prereq":["R68","R75"]},{"id":"R77","name":"이동로봇 자율주행","priority":"필수","year":4,"sem":1,"slot":1,"order":1,"prereq":["R50","R57","R74"]},{"id":"R78","name":"보행로봇 기초","priority":"선택","year":4,"sem":1,"slot":0,"order":4,"prereq":["R20","R56"]},{"id":"R79","name":"보행계획·전신제어","priority":"선택","year":4,"sem":2,"slot":1,"order":2,"prereq":["R53","R78"]},{"id":"R80","name":"휴머노이드 제어","priority":"선택","year":4,"sem":2,"slot":0,"order":3,"prereq":["R79"]},{"id":"R81","name":"4족보행 제어","priority":"선택","year":4,"sem":2,"slot":1,"order":3,"prereq":["R79"]},{"id":"R82","name":"다중로봇·물류 최적화","priority":"선택","year":4,"sem":2,"slot":1,"order":4,"prereq":["R09","R77"]},{"id":"R83","name":"로봇 안전·시스템 검증","priority":"필수","year":3,"sem":2,"slot":1,"order":1,"prereq":["R54"]},{"id":"R84","name":"시스템 보정·계측","priority":"권장","year":3,"sem":2,"slot":1,"order":0,"prereq":["R39","R68"]},{"id":"R85","name":"편의점 물류 자동화","priority":"필수","year":4,"sem":1,"slot":0,"order":3,"prereq":["R64","R65","R66","R68","R83"]},{"id":"R86","name":"연구 방법론·포트폴리오","priority":"필수","year":2,"sem":1,"slot":0,"order":2,"prereq":["R07","R27"]},{"id":"R87","name":"인간–로봇 상호작용","priority":"권장","year":3,"sem":2,"slot":1,"order":4,"prereq":["R54"]},{"id":"R88","name":"열·유체공학 기초","priority":"선택","year":4,"sem":2,"slot":1,"order":0,"prereq":["R02","R11"]},{"id":"R89","name":"로봇 전원·배터리","priority":"선택","year":4,"sem":2,"slot":0,"order":4,"prereq":["R32"]}];
+const P_MAP = [{"id":"P01","name":"요구사항·위험 분석","sem":1,"prereq":[],"related":[]},{"id":"P02","name":"Linux·Git·Python","sem":1,"prereq":[],"related":[1,2,3]},{"id":"P03","name":"로봇 수학·좌표","sem":1,"prereq":["P02"],"related":[4]},{"id":"P04","name":"전원·배선 기초","sem":1,"prereq":["P01"],"related":[6]},{"id":"P05","name":"MCU·센서 입출력","sem":1,"prereq":["P02","P04"],"related":[7]},{"id":"P06","name":"기구·하중 기초","sem":1,"prereq":["P01","P03"],"related":[4,16]},{"id":"P07","name":"CAD 설계","sem":1,"prereq":["P06"],"related":[5]},{"id":"P08","name":"3D 프린팅·조립","sem":1,"prereq":["P07"],"related":[5]},{"id":"P09","name":"이동 베이스 제어","sem":1,"prereq":["P05","P06","P08"],"related":[7,9]},{"id":"P10","name":"ROS 2 원격 주행","sem":1,"prereq":["P02","P03","P09"],"related":[8]},{"id":"P11","name":"적재 플랫폼 설계","sem":2,"prereq":["P06","P07","P10"],"related":[5,16]},{"id":"P12","name":"LiDAR·IMU 장착","sem":2,"prereq":["P05","P07","P10"],"related":[11]},{"id":"P13","name":"오도메트리·센서 융합","sem":2,"prereq":["P09","P12"],"related":[12]},{"id":"P14","name":"SLAM 지도 작성","sem":2,"prereq":["P13"],"related":[13]},{"id":"P15","name":"지도 기반 위치 추정","sem":2,"prereq":["P14"],"related":[14]},{"id":"P16","name":"Nav2 경로·장애물 회피","sem":2,"prereq":["P15"],"related":[15]},{"id":"P17","name":"도킹·정차 정밀도","sem":2,"prereq":["P16"],"related":[26]},{"id":"P18","name":"생수 적재 운반 검증","sem":2,"prereq":["P11","P16","P17"],"related":[16]},{"id":"P19","name":"상품 데이터·라벨링","sem":3,"prereq":["P01","P02"],"related":[18,27]},{"id":"P20","name":"상품 인식·평가","sem":3,"prereq":["P19"],"related":[18]},{"id":"P21","name":"RGB-D·카메라 보정","sem":3,"prereq":["P03","P12"],"related":[17,19]},{"id":"P22","name":"로봇팔 기구학","sem":3,"prereq":["P03","P06"],"related":[20]},{"id":"P23","name":"그리퍼 선정·치구 제작","sem":3,"prereq":["P07","P08","P22"],"related":[20]},{"id":"P24","name":"MoveIt 2 충돌 회피","sem":3,"prereq":["P10","P22","P23"],"related":[22]},{"id":"P25","name":"상품 집기·놓기","sem":3,"prereq":["P20","P21","P24"],"related":[23]},{"id":"P26","name":"선반 진열 실습","sem":3,"prereq":["P25"],"related":[23,27]},{"id":"P27","name":"작업 흐름·오류 복구","sem":4,"prereq":["P18","P26"],"related":[28]},{"id":"P28","name":"이동 베이스·팔 통합","sem":4,"prereq":["P17","P26","P27"],"related":[25]},{"id":"P29","name":"안전 기능·고장시험","sem":4,"prereq":["P04","P18","P28"],"related":[29]},{"id":"P30","name":"모의 매장 통합 검증","sem":4,"prereq":["P20","P28","P29"],"related":[30]},{"id":"P31","name":"실매장 제한 시험","sem":4,"prereq":["P30"],"related":[31]},{"id":"P32","name":"정비·인수·최종 발표","sem":4,"prereq":["P31"],"related":[32]}];
+const ROADMAP_SEMESTERS = [
+ '재학습과 공학 기초','수학·물리·컴퓨팅',
+ '역학·회로·컴퓨터 시스템','제작·임베디드·피드백 제어',
+ '로봇 모델·비전·현대제어','조작·안전·상태추정',
+ '지도·주행·편의점 로봇','Physical AI·보행·운영 확장'
+];
+const PROJECT_SEMESTERS = [
+ '이동 로봇 기초','자율주행·생수 운반','상품 인식·집기·진열','통합·안전·매장 검증'
+];
+const GRAD_LINKS = {R01:'basiccalc',R02:'calc1',R04:'linear',R11:'phys1',R12:'phys2',R14:'py',R16:'statics',R21:'clang',R32:'circuit'};
+let currTab = 'academic';
+let currentAcademicFilter = 'all';
+function newCurrState(){
+  // Save in new independent keys; older curriculum and study check histories untouched.
+  db.curriculumCourses ||= {};
+  db.projectRoadmap ||= {};
+}
+function academicDone(id,v){newCurrState();db.curriculumCourses[id]=v;save();drawCurriculum();}
+function practicalDone(id,v){newCurrState();db.projectRoadmap[id]=v;save();drawCurriculum();}
+function setCurrTab(tab){currTab=tab;drawCurriculum();}
+function setAcademicFilter(value){currentAcademicFilter=value;drawCurriculum();}
+function linkToGrad(id){
+  const k=GRAD_LINKS[id];
+  go('graduate');
+  if(k){openGrad=k;drawGraduate();}
+}
+function jumpToProject(number){
+  if(!number)return;
+  go('project');
+  openProject=number;
+  drawProject();
+}
+function curriculumAcademic(){
+ newCurrState();
+ const done=0;
+ const stats=['필수','권장','선택'].map(p=>{
+   const all=ACADEMIC_MAP.filter(x=>x.priority===p);
+   return `<span class="map-stat ${p}">${p} <b>${all.length}과목</b></span>`;
+ }).join('');
+ const controls=`<div class="map-actions"><div class="map-stats">${stats}</div><label>표시 <select onchange="setAcademicFilter(this.value)"><option value="all" ${currentAcademicFilter==='all'?'selected':''}>전체 89과목</option>${['필수','권장','선택'].map(p=>`<option value="${p}" ${currentAcademicFilter===p?'selected':''}>${p}</option>`).join('')}</select></label></div>`;
+ const years=[1,2,3,4].map(year=>{
+   const semesters=[1,2].map(sem=>{
+     const index=(year-1)*2+sem-1;
+     const all=ACADEMIC_MAP.filter(x=>x.year===year&&x.sem===sem).sort((a,b)=>a.order-b.order||a.slot-b.slot);
+     const filtered=all.filter(z=>currentAcademicFilter==='all'||z.priority===currentAcademicFilter);
+     return `<div class="edu-sem"><div class="edu-sem-head"><div><small>${sem}학기</small><strong>${esc(ROADMAP_SEMESTERS[index])}</strong></div><span>${all.length}과목</span></div>
+       <div class="edu-course-list">${filtered.map(z=>{
+         const checked=false;
+         const pre=z.prereq.map(a=>ACADEMIC_MAP.find(x=>x.id===a)).filter(Boolean);
+         return `<div class="edu-course ${z.priority==='필수'?'required':z.priority==='권장'?'recommended':'elective'}">
+           <div class="edu-course-label"><span class="edu-course-copy"><b>${z.id}</b><strong>${esc(z.name)}</strong><small>${esc(z.priority)}</small></span></div>
+           <div class="edu-meta">${pre.length?`선수: ${pre.map(x=>x.id).join(' · ')}`:'독립 시작'}${GRAD_LINKS[z.id]?` <button onclick="linkToGrad('${z.id}')">강의 진도 ↗</button>`:''}</div>
+         </div>`;
+       }).join('')||'<p class="curr-summary">해당 유형의 과목이 없습니다.</p>'}</div></div>`;
+   }).join('');
+   return `<section class="edu-year"><h3>${year}학년 <small>· 학기별 이수</small></h3>${semesters}</section>`;
+ }).join('');
+ return `<div class="curr-intro"><div><h2>로봇공학 4학년 8학기 · R01~R89</h2><p>원본 이수표와 동일한 과목 ID·학기·필수 등급을 유지했어. 아래 학년은 독학용 편성이며, 선수과목 순서로 앞당겨 학습할 수 있어.<br>필수 44 · 권장 33 · 선택 12 / 완료 체크는 진도표에서만 해.</p></div><strong class="map-score">89<small>과목</small></strong></div>${controls}<div class="edu-years">${years}</div><p class="curr-summary">출처: robotics-semester-map(1).pdf / robotics-roadmap(1).pdf. R번호는 대학원 커리큘럼의 고유 ID야. 실제 강의 진도는 진도표에서 관리해.</p>`;
+}
+function curriculumPractical(){
+ newCurrState();
+ const done=0;
+ const sections=[1,2,3,4].map(sem=>{
+   const all=P_MAP.filter(z=>z.sem===sem);
+   return `<section class="p-sem"><div class="p-sem-title"><h3>${sem}학기 · ${esc(PROJECT_SEMESTERS[sem-1])}</h3><span>${all.length}과목</span></div>
+   ${all.map(z=>{
+     const checked=false;
+     const links=z.related.filter(id=>COURSES.some(c=>c.id===id));
+     return `<div class="p-road"><div class="roadmap-subject"><strong>${z.id}</strong><span>${esc(z.name)}</span></div>
+     <div class="p-pre">${z.prereq.length?`선수: ${z.prereq.join(' · ')}`:'독립 시작'}</div>
+     ${links.length?`<div class="p-rel">105쪽 실습 과목 ${links.map(id=>`<button onclick="jumpToProject(${id})">${String(id).padStart(2,'0')} · ${esc(COURSES.find(c=>c.id===id).name)}</button>`).join('')}</div>`:'<div class="p-pre">105쪽 세부 학습표의 일대일 대응 과목 없음</div>'}
+     </div>`;
+   }).join('')}</section>`;
+ }).join('');
+ const units=COURSES.reduce((n,c)=>n+c.units.length,0);
+ return `<div class="curr-intro"><div><h2>편의점 물류 자동화 로봇 · P01~P32</h2><p>원본 4학기 로드맵의 선수관계를 그대로 표시했어. 과목 아래 연결된 별도 105페이지 학습표의 32과목·${units}개 세부 단원을 눌러 실제 체크를 진행해.<br><b>주의:</b> P01과 실습 01은 같은 과목이 아니야. 두 PDF의 번호는 별개로 유지했어.</p></div><strong class="map-score">32<small>과목</small></strong></div><div class="p-grid">${sections}</div><p class="curr-summary">출처: store-robot-roadmap(1).pdf / convenience-store-robot-planner-practice-focused(1).pdf. 완료 체크는 진도표의 상세 단원에서만 관리해.</p>`;
+}
+function drawCurriculum(){
+ const out=el('curriculumBody');if(!out)return;
+ el('curr-tab-academic').classList.toggle('primary',currTab==='academic');
+ el('curr-tab-practical').classList.toggle('primary',currTab==='practical');
+ out.innerHTML=currTab==='academic'?curriculumAcademic():curriculumPractical();
+}
+
 </script></body></html>
+
+
+
+
